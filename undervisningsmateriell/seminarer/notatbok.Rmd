@@ -7,9 +7,12 @@ output:
     self_contained: true
     default_style: "dark"
     downcute_theme: "chaos"
-    highlight: breezedark
+    highlight: navy
     number_sections: true
     code_folding: show
+    toc_depth: 4
+bibliography: stv2022.bib
+csl: american-political-science-association.csl
 ---
 
 
@@ -27,9 +30,7 @@ output:
 <!--       smooth_scroll: true -->
 <!-- --- -->
 
-```{r}
-#| echo: false
-#| message: false
+```{r setup, echo=FALSE}
 
 library(tidyverse)
 
@@ -45,9 +46,105 @@ Her er intro
 - [Arbeidsbøker for R ved UiO](https://shinyibv02.uio.no/connect/#/apps/55/access)
 - [R materiale for STV1020](https://github.com/liserodland/STV1020)
 
+## Pensum
+
+### Generelt
+
+Under er en liste over bidrag som vil bli dekket kontinuerlig gjennom hele kurset:
+
+1. @Silge2017
+2. @Grimmer2022
+3. @Benoit2017
+2. @Jurafsky2021b (anbefalt)
+4. @Wickham2016 (anbefalt)
+
+### Uke 34. Introduksjon (Solveig og Martin)
+
+1. @Grimmer2022 kap. 1-2 og 22 (36 sider)
+2. @Lucas2015 (24 sider)
+3. @Silge2017 kap. 1 (9 sider)
+4. @Pang2008 kap. 1 (10 sider)
+
+### Uke 35. Anskaffelse og innlasting av tekst (Martin)
+
+1. @Grimmer2022 kap. 3-4 (14 sider)
+1. @Cooksey2014 kap. 1 (4 sider)
+2. @Wickham2020 (8 sider)
+3. @Hoyland2019 (22 sider)
+
+### Uke 36. Forbehandling av tekst 1 (Martin)
+
+1. @Grimmer2022 kap. 5 (11 sider)
+1. @Silge2017 kap. 3 (9 sider)
+3. @Joergensen2019 (10 sider)
+4. @Barnes2019 (12 sider)
+5. @Benoit2020 (11 sider)
+
+**Seminar 1: Anskaffe tekst og lage dtm i R**
+
+### Uke 37. Forbehandling av tekst 2 (Solveig)
+
+1. @Grimmer2022 kap. 9 (7 sider)
+1. @Silge2017 kap. 4 (15 sider)
+3. @Denny2018 (21 sider)
+
+### Uke 38. Bruke API -- Case: Stortinget (Martin)
+
+1. @datastortinget2022 (1 sider)
+2. @Soeyland2022 (1 sider)
+3. @Finseraas2021 (10 sider)
+
+**Seminar 2: Preprosessering av tekstdata i R**
+
+### Uke 39. INGEN UNDERVISNING
+
+### Uke 40. INGEN UNDERVISNING
+
+### Uke 41. Veiledet læring og ikke-veiledet læring (Solveig)
+
+1. @Grimmer2022 kap. 10 og 17 (24 sider)
+1. @dorazio_separating_2014 (18 sider)
+2. @feldman_sanger_20061 (17 sider)
+3. @feldman_sanger_20062 (11 sider)
+4. @muchlinski_siroky_he_kocher_2016 (16 sider)
+
+### Uke 42. Ordbøker, tekstlikhet og sentiment (Solveig)
+
+1. @Grimmer2022 kap. 7 og 16 (12 sider)
+1. @Silge2017 kap. 2 (11 sider)
+2. @Pang2008 kap. 3-4 (26 sider)
+3. @liu_introduction_2015 (15 sider)
+4. @liu_problem_2015 (30 sider)
+
+**Seminar 3: Sup vs. unsup i R**
+
+### Uke 43. Klassifisering av tekst -- Temamodellering (Martin)
+
+1. @Grimmer2022 kap. 13 og  (13 sider)
+1. @Blei2012 (8 sider)
+2. @Silge2017 kap. 6 (14 sider)
+3. @Roberts2014 (19 sider)
+
+### Uke 44. Estimere latent posisjon fra tekst (Solveig)
+
+1. @Laver2003 (20 sider)
+2. @Slapin2008 (18 sider)
+3. @Lowe2017 (15 sider)
+4. @Lauderdale2016 (20 sider)
+3. @Peterson2018 (8 sider)
+
+**Seminar 4: Modelleringsmetoder i R**
+
+### Uke 46. Oppsummering (Solveig og Martin)
+
+1. @Grimmer2022 kap 28 (5 sider)
+1. @Wilkerson2017 (19 sider)
+
+**Seminar 5: Fra tekst til funn -- Q&A/Oppg.hjelp**
+
+
 # Skrape data
 
-Skraping er gøy!
 
 ## .html-skraping
 
@@ -77,21 +174,12 @@ Preprosessering er ganske viktig.
 
 *Alle* tekster er unike!
 
-Ta for eksempel spor 6 på No.4-albumet vi allerede har jobbet med:
+Ta for eksempel spor 6 på No.4-albumet vi allerede har jobbet med -- *Regndans i skinnjakke*. Hvis vi skal følge en vanlig antagelse i kvantitativ tekstanalyse -- "sekk med ord" eller *bag of words* -- skal vi kunne forstå innholdet i en tekst hvis vi deler opp teksten i segmenter, putter det i en pose, rister posen og tømmer det på et bord. Da vil denne sangen for eksempel se slik ut:
 
-```{r}
+```{r bow}
 library(stringr)
 
 regndans <- readLines("./data/regndans.txt")
-regndans
-
-```
-
-Denne teksten gir oss mening bare ved å lese den. Tolkninger kan variere fra individ til individ og den "riktige" tolkningen (om det finnes en riktig tolkning), er det bare forfatteren som vet hva er. Personlig tolker jeg denne teksten som et utløp for frustrasjon under corona-pandemien, og prospektene ved livet når samfunnet gjenåpnes.
-
-Hovedpoenget er at teksten gir en eller annen form mening. Men hvordan kan vi kvantitativt trekke ut mening fra en tekst som dette? Her kommer en antagelse man gjør i så og si alle typer tekstanalyse inn: sekk med ord-antagelsen eller "Bag of words". Denne antagelsen sier at hvis man deler opp teksten i segmenter, legger det i en pose, rister posen og heller innholdet ut igjen, skal teksten fortsatt gi mening. Dette er en veldig stor antagelse å gjøre. Hvis vi gjør et eksperiment med eksempelteksten vår, der vi gjør denne prosessen, vil resultatet se ut som dette:
-
-```{r}
 
 bow <- regndans %>% str_split("\\s") %>% unlist()
 
@@ -99,9 +187,29 @@ set.seed(984301)
 
 bow[sample(1:length(bow))]
 
+```
+
+De fleste (som ikke kan sangen fra før) vil ha vanskelig å forstå hva den egentlig handler om bare ved å se på dette. Vi kan identifisere meningsbærende ord som "Oslofjorden", "Grille", "trampoline", "dragepust", med mer. Likevel er det vanskelig å skjønne hva låtskriveren egentlig vil formidle med denne teksten. Det er dette som gjør "sekk med ord"-antagelsen veldig streng. Språk er veldig komplekst og ordene i en tekst kan endre mening drastisk bare ved å se på en liten del av konteksten de dukker opp i. Om vi bare ser på linjen som inneholder orded "dragepust", innser vi fort at konteksten rundt ordet gir oss et veldig tydelig bilde av hva låtskriveren mener med akkurat den linjen:
+
+
+```{r dragepust}
+
+regndans[which(str_detect(regndans, "dragepust"))]
 
 ```
 
+Likevel gir det oss ikke et godt bilde på hva teksten handler om i sin helhet. Det får vi bare sett ved å se på hele teksten:
+
+```{r regndans_full, echo=FALSE}
+cat(paste(regndans, collapse = "\n"))
+```
+
+
+Nå teksten gir mening! Tolkninger kan selvfølgelig variere fra individ til individ og den "riktige" tolkningen, er det bare forfatteren som vet hva er. Personlig tolker jeg denne teksten som et utløp for frustrasjon under corona-pandemien, og prospektene ved livet når samfunnet gjenåpnes, fordi jeg hørte den for første gang under nedstengningen. 
+
+
+
+<!-- mange gifte par vs. gifte et par -->
 
 
 ## Fjerne trekk?
@@ -120,3 +228,7 @@ bow[sample(1:length(bow))]
 ## ngrams
 
 ## Taledeler (parts of speech)
+
+---
+
+# Referanser

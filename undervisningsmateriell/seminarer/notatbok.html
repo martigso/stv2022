@@ -1654,6 +1654,34 @@ Prism.languages.r={comment:/#.*/,string:{pattern:/(['"])(?:\\.|(?!\1)[^\\\r\n])*
             <ul>
             <li><a href="#nyttige-ressurser"><span class="toc-section-number">1.1</span> Nyttige
             ressurser</a></li>
+            <li><a href="#pensum"><span class="toc-section-number">1.2</span> Pensum</a>
+            <ul>
+            <li><a href="#generelt"><span class="toc-section-number">1.2.1</span> Generelt</a></li>
+            <li><a href="#uke-34.-introduksjon-solveig-og-martin"><span class="toc-section-number">1.2.2</span> Uke 34. Introduksjon
+            (Solveig og Martin)</a></li>
+            <li><a href="#uke-35.-anskaffelse-og-innlasting-av-tekst-martin"><span class="toc-section-number">1.2.3</span> Uke 35. Anskaffelse
+            og innlasting av tekst (Martin)</a></li>
+            <li><a href="#uke-36.-forbehandling-av-tekst-1-martin"><span class="toc-section-number">1.2.4</span> Uke 36.
+            Forbehandling av tekst 1 (Martin)</a></li>
+            <li><a href="#uke-37.-forbehandling-av-tekst-2-solveig"><span class="toc-section-number">1.2.5</span> Uke 37.
+            Forbehandling av tekst 2 (Solveig)</a></li>
+            <li><a href="#uke-38.-bruke-api-case-stortinget-martin"><span class="toc-section-number">1.2.6</span> Uke 38. Bruke API –
+            Case: Stortinget (Martin)</a></li>
+            <li><a href="#uke-39.-ingen-undervisning"><span class="toc-section-number">1.2.7</span> Uke 39. INGEN
+            UNDERVISNING</a></li>
+            <li><a href="#uke-40.-ingen-undervisning"><span class="toc-section-number">1.2.8</span> Uke 40. INGEN
+            UNDERVISNING</a></li>
+            <li><a href="#uke-41.-veiledet-læring-og-ikke-veiledet-læring-solveig"><span class="toc-section-number">1.2.9</span> Uke 41. Veiledet
+            læring og ikke-veiledet læring (Solveig)</a></li>
+            <li><a href="#uke-42.-ordbøker-tekstlikhet-og-sentiment-solveig"><span class="toc-section-number">1.2.10</span> Uke 42. Ordbøker,
+            tekstlikhet og sentiment (Solveig)</a></li>
+            <li><a href="#uke-43.-klassifisering-av-tekst-temamodellering-martin"><span class="toc-section-number">1.2.11</span> Uke 43.
+            Klassifisering av tekst – Temamodellering (Martin)</a></li>
+            <li><a href="#uke-44.-estimere-latent-posisjon-fra-tekst-solveig"><span class="toc-section-number">1.2.12</span> Uke 44. Estimere
+            latent posisjon fra tekst (Solveig)</a></li>
+            <li><a href="#uke-46.-oppsummering-solveig-og-martin"><span class="toc-section-number">1.2.13</span> Uke 46.
+            Oppsummering (Solveig og Martin)</a></li>
+            </ul></li>
             </ul></li>
             <li><a href="#skrape-data"><span class="toc-section-number">2</span> Skrape data</a>
             <ul>
@@ -1668,13 +1696,23 @@ Prism.languages.r={comment:/#.*/,string:{pattern:/(['"])(?:\\.|(?!\1)[^\\\r\n])*
             <li><a href="#preprosessering"><span class="toc-section-number">3</span> Preprosessering</a>
             <ul>
             <li><a href="#sekk-med-ord"><span class="toc-section-number">3.1</span> Sekk med ord</a></li>
-            <li><a href="#fjerne-trekk"><span class="toc-section-number">3.2</span> Fjerne trekk?</a></li>
-            <li><a href="#rotform-av-ord"><span class="toc-section-number">3.3</span> Rotform av
-            ord</a></li>
+            <li><a href="#fjerne-trekk"><span class="toc-section-number">3.2</span> Fjerne trekk?</a>
+            <ul>
+            <li><a href="#punktsetting"><span class="toc-section-number">3.2.1</span>
+            Punktsetting</a></li>
+            <li><a href="#stoppord"><span class="toc-section-number">3.2.2</span> Stoppord</a></li>
+            </ul></li>
+            <li><a href="#rotform-av-ord"><span class="toc-section-number">3.3</span> Rotform av ord</a>
+            <ul>
+            <li><a href="#stemming"><span class="toc-section-number">3.3.1</span> Stemming</a></li>
+            <li><a href="#lemmatisering"><span class="toc-section-number">3.3.2</span>
+            Lemmatisering</a></li>
+            </ul></li>
             <li><a href="#ngrams"><span class="toc-section-number">3.4</span> ngrams</a></li>
             <li><a href="#taledeler-parts-of-speech"><span class="toc-section-number">3.5</span> Taledeler (parts of
             speech)</a></li>
             </ul></li>
+            <li><a href="#referanser">Referanser</a></li>
             </ul>
           </div>
           <div data-position="sidebar:post-end" class="InjectedComponents"><div class="dark-theme-toggler"><div class="toggle checked"><div class="toggle-track"><div class="toggle-track-check"><img src="data:image/png;base64,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" role="presentation" style="pointer-events: none;" width="16" height="16"></div> <div class="toggle-track-x"><img src="data:image/png;base64,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" role="presentation" style="pointer-events: none;" width="16" height="16"></div></div> <div class="toggle-thumb"></div></div> <input type="checkbox" aria-label="Switch between Dark and Default theme" class="toggler-screen-reader-only"></div></div>
@@ -1718,6 +1756,14 @@ Bjørkholt og Martin Søyland
 <!--       collapsed: true -->
 <!--       smooth_scroll: true -->
 <!-- --- -->
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
+## ✔ tibble  3.1.6     ✔ dplyr   1.0.9
+## ✔ tidyr   1.2.0     ✔ stringr 1.4.0
+## ✔ readr   2.1.2     ✔ forcats 0.5.1</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <div id="introduksjon" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Introduksjon</h1>
 <p>Her er intro</p>
@@ -1731,10 +1777,168 @@ for R ved UiO</a></li>
 STV1020</a></li>
 </ul>
 </div>
+<div id="pensum" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Pensum</h2>
+<div id="generelt" class="section level3" number="1.2.1">
+<h3><span class="header-section-number">1.2.1</span> Generelt</h3>
+<p>Under er en liste over bidrag som vil bli dekket kontinuerlig gjennom
+hele kurset:</p>
+<ol style="list-style-type: decimal">
+<li><span class="citation">Silge and Robinson (2017)</span></li>
+<li><span class="citation">Grimmer, Roberts, and Stewart
+(2022)</span></li>
+<li><span class="citation">Benoit et al. (2017)</span></li>
+<li><span class="citation">Jurafsky and Martin (2021)</span>
+(anbefalt)</li>
+<li><span class="citation">Wickham (2016)</span> (anbefalt)</li>
+</ol>
+</div>
+<div id="uke-34.-introduksjon-solveig-og-martin" class="section level3" number="1.2.2">
+<h3><span class="header-section-number">1.2.2</span> Uke 34.
+Introduksjon (Solveig og Martin)</h3>
+<ol style="list-style-type: decimal">
+<li><span class="citation">Grimmer, Roberts, and Stewart (2022)</span>
+kap. 1-2 og 22 (36 sider)</li>
+<li><span class="citation">Lucas et al. (2015)</span> (24 sider)</li>
+<li><span class="citation">Silge and Robinson (2017)</span> kap. 1 (9
+sider)</li>
+<li><span class="citation">Pang, Lee, et al. (2008)</span> kap. 1 (10
+sider)</li>
+</ol>
+</div>
+<div id="uke-35.-anskaffelse-og-innlasting-av-tekst-martin" class="section level3" number="1.2.3">
+<h3><span class="header-section-number">1.2.3</span> Uke 35. Anskaffelse
+og innlasting av tekst (Martin)</h3>
+<ol style="list-style-type: decimal">
+<li><span class="citation">Grimmer, Roberts, and Stewart (2022)</span>
+kap. 3-4 (14 sider)</li>
+<li><span class="citation">Cooksey (2014)</span> kap. 1 (4 sider)</li>
+<li><span class="citation">Wickham (2020)</span> (8 sider)</li>
+<li><span class="citation">Høyland and Søyland (2019)</span> (22
+sider)</li>
+</ol>
+</div>
+<div id="uke-36.-forbehandling-av-tekst-1-martin" class="section level3" number="1.2.4">
+<h3><span class="header-section-number">1.2.4</span> Uke 36.
+Forbehandling av tekst 1 (Martin)</h3>
+<ol style="list-style-type: decimal">
+<li><span class="citation">Grimmer, Roberts, and Stewart (2022)</span>
+kap. 5 (11 sider)</li>
+<li><span class="citation">Silge and Robinson (2017)</span> kap. 3 (9
+sider)</li>
+<li><span class="citation">Jørgensen et al. (2019)</span> (10
+sider)</li>
+<li><span class="citation">Barnes et al. (2019)</span> (12 sider)</li>
+<li><span class="citation">Benoit and Matsuo (2020)</span> (11
+sider)</li>
+</ol>
+<p><strong>Seminar 1: Anskaffe tekst og lage dtm i R</strong></p>
+</div>
+<div id="uke-37.-forbehandling-av-tekst-2-solveig" class="section level3" number="1.2.5">
+<h3><span class="header-section-number">1.2.5</span> Uke 37.
+Forbehandling av tekst 2 (Solveig)</h3>
+<ol style="list-style-type: decimal">
+<li><span class="citation">Grimmer, Roberts, and Stewart (2022)</span>
+kap. 9 (7 sider)</li>
+<li><span class="citation">Silge and Robinson (2017)</span> kap. 4 (15
+sider)</li>
+<li><span class="citation">Denny and Spirling (2018)</span> (21
+sider)</li>
+</ol>
+</div>
+<div id="uke-38.-bruke-api-case-stortinget-martin" class="section level3" number="1.2.6">
+<h3><span class="header-section-number">1.2.6</span> Uke 38. Bruke API –
+Case: Stortinget (Martin)</h3>
+<ol style="list-style-type: decimal">
+<li><span class="citation">Stortinget (2022)</span> (1 sider)</li>
+<li><span class="citation">Søyland (2022)</span> (1 sider)</li>
+<li><span class="citation">Finseraas, Høyland, and Søyland (2021)</span>
+(10 sider)</li>
+</ol>
+<p><strong>Seminar 2: Preprosessering av tekstdata i R</strong></p>
+</div>
+<div id="uke-39.-ingen-undervisning" class="section level3" number="1.2.7">
+<h3><span class="header-section-number">1.2.7</span> Uke 39. INGEN
+UNDERVISNING</h3>
+</div>
+<div id="uke-40.-ingen-undervisning" class="section level3" number="1.2.8">
+<h3><span class="header-section-number">1.2.8</span> Uke 40. INGEN
+UNDERVISNING</h3>
+</div>
+<div id="uke-41.-veiledet-læring-og-ikke-veiledet-læring-solveig" class="section level3" number="1.2.9">
+<h3><span class="header-section-number">1.2.9</span> Uke 41. Veiledet
+læring og ikke-veiledet læring (Solveig)</h3>
+<ol style="list-style-type: decimal">
+<li><span class="citation">Grimmer, Roberts, and Stewart (2022)</span>
+kap. 10 og 17 (24 sider)</li>
+<li><span class="citation">D’Orazio et al. (2014)</span> (18 sider)</li>
+<li><span class="citation">Feldman and Sanger (2006a)</span> (17
+sider)</li>
+<li><span class="citation">Feldman and Sanger (2006b)</span> (11
+sider)</li>
+<li><span class="citation">Muchlinski et al. (2016)</span> (16
+sider)</li>
+</ol>
+</div>
+<div id="uke-42.-ordbøker-tekstlikhet-og-sentiment-solveig" class="section level3" number="1.2.10">
+<h3><span class="header-section-number">1.2.10</span> Uke 42. Ordbøker,
+tekstlikhet og sentiment (Solveig)</h3>
+<ol style="list-style-type: decimal">
+<li><span class="citation">Grimmer, Roberts, and Stewart (2022)</span>
+kap. 7 og 16 (12 sider)</li>
+<li><span class="citation">Silge and Robinson (2017)</span> kap. 2 (11
+sider)</li>
+<li><span class="citation">Pang, Lee, et al. (2008)</span> kap. 3-4 (26
+sider)</li>
+<li><span class="citation">Liu (2015a)</span> (15 sider)</li>
+<li><span class="citation">Liu (2015b)</span> (30 sider)</li>
+</ol>
+<p><strong>Seminar 3: Sup vs. unsup i R</strong></p>
+</div>
+<div id="uke-43.-klassifisering-av-tekst-temamodellering-martin" class="section level3" number="1.2.11">
+<h3><span class="header-section-number">1.2.11</span> Uke 43.
+Klassifisering av tekst – Temamodellering (Martin)</h3>
+<ol style="list-style-type: decimal">
+<li><span class="citation">Grimmer, Roberts, and Stewart (2022)</span>
+kap. 13 og (13 sider)</li>
+<li><span class="citation">Blei (2012)</span> (8 sider)</li>
+<li><span class="citation">Silge and Robinson (2017)</span> kap. 6 (14
+sider)</li>
+<li><span class="citation">Roberts et al. (2014)</span> (19 sider)</li>
+</ol>
+</div>
+<div id="uke-44.-estimere-latent-posisjon-fra-tekst-solveig" class="section level3" number="1.2.12">
+<h3><span class="header-section-number">1.2.12</span> Uke 44. Estimere
+latent posisjon fra tekst (Solveig)</h3>
+<ol style="list-style-type: decimal">
+<li><span class="citation">Laver, Benoit, and Garry (2003)</span> (20
+sider)</li>
+<li><span class="citation">Slapin and Proksch (2008)</span> (18
+sider)</li>
+<li><span class="citation">Lowe (2017)</span> (15 sider)</li>
+<li><span class="citation">Lauderdale and Herzog (2016)</span> (20
+sider)</li>
+<li><span class="citation">Peterson and Spirling (2018)</span> (8
+sider)</li>
+</ol>
+<p><strong>Seminar 4: Modelleringsmetoder i R</strong></p>
+</div>
+<div id="uke-46.-oppsummering-solveig-og-martin" class="section level3" number="1.2.13">
+<h3><span class="header-section-number">1.2.13</span> Uke 46.
+Oppsummering (Solveig og Martin)</h3>
+<ol style="list-style-type: decimal">
+<li><span class="citation">Grimmer, Roberts, and Stewart (2022)</span>
+kap 28 (5 sider)</li>
+<li><span class="citation">Wilkerson and Casas (2017)</span> (19
+sider)</li>
+</ol>
+<p><strong>Seminar 5: Fra tekst til funn –
+Q&amp;A/Oppg.hjelp</strong></p>
+</div>
+</div>
 </div>
 <div id="skrape-data" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Skrape data</h1>
-<p>Skraping er gøy!</p>
 <div id="html-skraping" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> .html-skraping</h2>
 <p>Dette kan være lite gøy</p>
@@ -1762,52 +1966,17 @@ STV1020</a></li>
 <div id="sekk-med-ord" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> Sekk med ord</h2>
 <p><em>Alle</em> tekster er unike!</p>
-<p>Ta for eksempel spor 6 på No.4-albumet vi allerede har jobbet
-med:</p>
+<p>Ta for eksempel spor 6 på No.4-albumet vi allerede har jobbet med –
+<em>Regndans i skinnjakke</em>. Hvis vi skal følge en vanlig antagelse i
+kvantitativ tekstanalyse – “sekk med ord” eller <em>bag of words</em> –
+skal vi kunne forstå innholdet i en tekst hvis vi deler opp teksten i
+segmenter, putter det i en pose, rister posen og tømmer det på et bord.
+Da vil denne sangen for eksempel se slik ut:</p>
 <pre class="r"><code>library(stringr)
 
 regndans &lt;- readLines(&quot;./data/regndans.txt&quot;)
-regndans</code></pre>
-<pre><code>##  [1] &quot;I kveld er nå, og året, alt av det&quot;                 
-##  [2] &quot;Bare hele livet&quot;                                    
-##  [3] &quot;Løpe under busskur når det begynner å hagle&quot;        
-##  [4] &quot;Ikke rekke flyet, ligge sammen i Botanisk Hage&quot;     
-##  [5] &quot;Nakenbade i Oslofjorden&quot;                            
-##  [6] &quot;Ringe på hos noen i nabolaget&quot;                      
-##  [7] &quot;Lage TV-middager&quot;                                   
-##  [8] &quot;[?]&quot;                                                
-##  [9] &quot;Hente i barnehager, altså&quot;                          
-## [10] &quot;Regndanse i skinnjakke&quot;                             
-## [11] &quot;Ta T-banen til Hasle&quot;                               
-## [12] &quot;Drikke hundre glass med øl, ass&quot;                    
-## [13] &quot;Tusen koppеr kaffe&quot;                                 
-## [14] &quot;Grille bratwürst på [?]&quot;                            
-## [15] &quot;Våkne opp mеd dragepust&quot;                            
-## [16] &quot;Se varmluftsballonger&quot;                              
-## [17] &quot;Bjørkeblader i august blir gule&quot;                    
-## [18] &quot;Også rustfarva, og løsne og fly avgårde&quot;            
-## [19] &quot;Gresstrå på høsten, ass&quot;                            
-## [20] &quot;Hårfestet begynner å gråne&quot;                         
-## [21] &quot;Gå hjem og går forbi&quot;                               
-## [22] &quot;En gutt tar backflip på en trampoline&quot;              
-## [23] &quot;Se endorfinene krystalliserer seg i smilehulla dine&quot;
-## [24] &quot;Prøver jeg å si&quot;                                    
-## [25] &quot;I kveld er hele livet&quot;</code></pre>
-<p>Denne teksten gir oss mening bare ved å lese den. Tolkninger kan
-variere fra individ til individ og den “riktige” tolkningen (om det
-finnes en riktig tolkning), er det bare forfatteren som vet hva er.
-Personlig tolker jeg denne teksten som et utløp for frustrasjon under
-corona-pandemien, og prospektene ved livet når samfunnet gjenåpnes.</p>
-<p>Hovedpoenget er at teksten gir en eller annen form mening. Men
-hvordan kan vi kvantitativt trekke ut mening fra en tekst som dette? Her
-kommer en antagelse man gjør i så og si alle typer tekstanalyse inn:
-sekk med ord-antagelsen eller “Bag of words”. Denne antagelsen sier at
-hvis man deler opp teksten i segmenter, legger det i en pose, rister
-posen og heller innholdet ut igjen, skal teksten fortsatt gi mening.
-Dette er en veldig stor antagelse å gjøre. Hvis vi gjør et eksperiment
-med eksempelteksten vår, der vi gjør denne prosessen, vil resultatet se
-ut som dette:</p>
-<pre class="r"><code>bow &lt;- regndans %&gt;% str_split(&quot;\\s&quot;) %&gt;% unlist()
+
+bow &lt;- regndans %&gt;% str_split(&quot;\\s&quot;) %&gt;% unlist()
 
 set.seed(984301)
 
@@ -1852,6 +2021,53 @@ bow[sample(1:length(bow))]</code></pre>
 ## [112] &quot;Grille&quot;             &quot;kveld&quot;              &quot;hos&quot;               
 ## [115] &quot;på&quot;                 &quot;seg&quot;                &quot;august&quot;            
 ## [118] &quot;Botanisk&quot;</code></pre>
+<p>De fleste (som ikke kan sangen fra før) vil ha vanskelig å forstå hva
+den egentlig handler om bare ved å se på dette. Vi kan identifisere
+meningsbærende ord som “Oslofjorden”, “Grille”, “trampoline”,
+“dragepust”, med mer. Likevel er det vanskelig å skjønne hva
+låtskriveren egentlig vil formidle med denne teksten. Det er dette som
+gjør “sekk med ord”-antagelsen veldig streng. Språk er veldig komplekst
+og ordene i en tekst kan endre mening drastisk bare ved å se på en liten
+del av konteksten de dukker opp i. Om vi bare ser på linjen som
+inneholder orded “dragepust”, innser vi fort at konteksten rundt ordet
+gir oss et veldig tydelig bilde av hva låtskriveren mener med akkurat
+den linjen:</p>
+<pre class="r"><code>regndans[which(str_detect(regndans, &quot;dragepust&quot;))]</code></pre>
+<pre><code>## [1] &quot;Våkne opp mеd dragepust&quot;</code></pre>
+<p>Likevel gir det oss ikke et godt bilde på hva teksten handler om i
+sin helhet. Det får vi bare sett ved å se på hele teksten:</p>
+<pre><code>## I kveld er nå, og året, alt av det
+## Bare hele livet
+## Løpe under busskur når det begynner å hagle
+## Ikke rekke flyet, ligge sammen i Botanisk Hage
+## Nakenbade i Oslofjorden
+## Ringe på hos noen i nabolaget
+## Lage TV-middager
+## [?]
+## Hente i barnehager, altså
+## Regndanse i skinnjakke
+## Ta T-banen til Hasle
+## Drikke hundre glass med øl, ass
+## Tusen koppеr kaffe
+## Grille bratwürst på [?]
+## Våkne opp mеd dragepust
+## Se varmluftsballonger
+## Bjørkeblader i august blir gule
+## Også rustfarva, og løsne og fly avgårde
+## Gresstrå på høsten, ass
+## Hårfestet begynner å gråne
+## Gå hjem og går forbi
+## En gutt tar backflip på en trampoline
+## Se endorfinene krystalliserer seg i smilehulla dine
+## Prøver jeg å si
+## I kveld er hele livet</code></pre>
+<p>Nå teksten gir mening! Tolkninger kan selvfølgelig variere fra
+individ til individ og den “riktige” tolkningen, er det bare forfatteren
+som vet hva er. Personlig tolker jeg denne teksten som et utløp for
+frustrasjon under corona-pandemien, og prospektene ved livet når
+samfunnet gjenåpnes, fordi jeg hørte den for første gang under
+nedstengningen.</p>
+<!-- mange gifte par vs. gifte et par -->
 </div>
 <div id="fjerne-trekk" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> Fjerne trekk?</h2>
@@ -1877,6 +2093,177 @@ bow[sample(1:length(bow))]</code></pre>
 <div id="taledeler-parts-of-speech" class="section level2" number="3.5">
 <h2><span class="header-section-number">3.5</span> Taledeler (parts of
 speech)</h2>
+<hr />
+</div>
+</div>
+<div id="referanser" class="section level1 unnumbered">
+<h1 class="unnumbered">Referanser</h1>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Barnes2019" class="csl-entry">
+Barnes, Jeremy, Samia Touileb, Lilja Øvrelid, and Erik Velldal. 2019.
+<span>“Lexicon Information in Neural Sentiment Analysis: A Multi-Task
+Learning Approach.”</span> In <em>Proceedings of the 22nd Nordic
+Conference on Computational Linguistics</em>, Turku, Finland:
+Link<span>ö</span>ping University Electronic Press, 175–86. <a href="https://aclanthology.org/W19-6119">https://aclanthology.org/W19-6119</a>.
+</div>
+<div id="ref-Benoit2017" class="csl-entry">
+Benoit, Kenneth et al. 2017. <em>Quanteda: <span>Q</span>uantitative
+<span>A</span>nalysis of <span>T</span>extual <span>D</span>ata</em>. <a href="http://quanteda.io">http://quanteda.io</a>.
+</div>
+<div id="ref-Benoit2020" class="csl-entry">
+Benoit, Kenneth, and Akitaka Matsuo. 2020. <em>Spacyr: Wrapper to the
+’spaCy’ ’NLP’ Library</em>. <a href="https://CRAN.R-project.org/package=spacyr">https://CRAN.R-project.org/package=spacyr</a>.
+</div>
+<div id="ref-Blei2012" class="csl-entry">
+Blei, David M. 2012. <span>“<span>P</span>robabilistic
+<span>T</span>opic <span>M</span>odels.”</span> <em>Communications of
+the ACM</em> 55(4): 77–84.
+</div>
+<div id="ref-Cooksey2014" class="csl-entry">
+Cooksey, Brian. 2014. <span>“An Introduction to
+<span>API</span>s.”</span> <em>Zapier, Inc.</em> <a href="https://cdn.zapier.com/storage/learn_ebooks/e06a35cfcf092ec6dd22670383d9fd12.pdf">https://cdn.zapier.com/storage/learn_ebooks/e06a35cfcf092ec6dd22670383d9fd12.pdf</a>.
+</div>
+<div id="ref-dorazio_separating_2014" class="csl-entry">
+D’Orazio, Vito, Steven T. Landis, Glenn Palmer, and Philip Schrodt.
+2014. <span>“<a href="https://doi.org/10.1093/pan/mpt030">Separating the
+Wheat from the Chaff: Applications of Automated Document Classification
+Using Support Vector Machines</a>.”</span> <em>Political Analysis</em>
+22(2): 224–42.
+</div>
+<div id="ref-Denny2018" class="csl-entry">
+Denny, Matthew J., and Arthur Spirling. 2018. <span>“<span>T</span>ext
+<span>P</span>reprocessing <span>F</span>or <span>U</span>nsupervised
+<span>L</span>earning: <span>W</span>hy <span>I</span>t
+<span>M</span>atters, <span>W</span>hen <span>I</span>t
+<span>M</span>isleads, <span>A</span>nd <span>W</span>hat
+<span>T</span>o <span>D</span>o <span>A</span>bout
+<span>I</span>t.”</span> <em>Political Analysis</em> 26(2): 168–89. <a href="https://doi.org/10.1017/pan.2017.44">https://doi.org/10.1017/pan.2017.44</a>.
+</div>
+<div id="ref-feldman_sanger_20061" class="csl-entry">
+Feldman, Ronen, and James Sanger. 2006a. <span>“<a href="https://doi.org/10.1017/CBO9780511546914.005">Categorization</a>.”</span>
+In <em>The Text Mining Handbook: Advanced Approaches in Analyzing
+Unstructured Data</em>, Cambridge University Press, 64–81.
+</div>
+<div id="ref-feldman_sanger_20062" class="csl-entry">
+———. 2006b. <span>“<a href="https://doi.org/10.1017/CBO9780511546914.006">Clustering</a>.”</span>
+In <em>The Text Mining Handbook: Advanced Approaches in Analyzing
+Unstructured Data</em>, Cambridge University Press, 82–93.
+</div>
+<div id="ref-Finseraas2021" class="csl-entry">
+Finseraas, Henning, Bjørn Høyland, and Martin G. Søyland. 2021.
+<span>“Climate Politics in Hard Times: How Local Economic Shocks
+Influence MPs Attention to Climate Change.”</span> <em>European Journal
+of Political Research</em> 60(3): 738–47. <a href="https://ejpr.onlinelibrary.wiley.com/doi/abs/10.1111/1475-6765.12415">https://ejpr.onlinelibrary.wiley.com/doi/abs/10.1111/1475-6765.12415</a>.
+</div>
+<div id="ref-Grimmer2022" class="csl-entry">
+Grimmer, Justin, Margaret E. Roberts, and Brandon M. Stewart. 2022.
+<em>Text as Data: A New Framework for Machine Learning and the Social
+Sciences</em>. Princeton University Press.
+</div>
+<div id="ref-Hoyland2019" class="csl-entry">
+Høyland, Bjørn, and Martin Søyland. 2019. <span>“<a href="https://doi.org/10.1111/lsq.12237">Electoral Reform and
+Parliamentary Debates</a>.”</span> <em>Legislative Studies
+Quarterly</em> 44(4): 593–615.
+</div>
+<div id="ref-Joergensen2019" class="csl-entry">
+Jørgensen, Fredrik et al. 2019. <span>“NorNE: Annotating Named Entities
+for Norwegian.”</span> <a href="https://arxiv.org/abs/1911.12146">https://arxiv.org/abs/1911.12146</a>.
+</div>
+<div id="ref-Jurafsky2021b" class="csl-entry">
+Jurafsky, Daniel, and James H. Martin. 2021. <em>Speech and Language
+Processing</em>. Online draft. <a href="https://web.stanford.edu/~jurafsky/slp3/">https://web.stanford.edu/~jurafsky/slp3/</a>.
+</div>
+<div id="ref-Lauderdale2016" class="csl-entry">
+Lauderdale, Benjamin E., and Alexander Herzog. 2016. <span>“<a href="https://doi.org/10.1093/pan/mpw017">Measuring Political Positions
+from Legislative Speech</a>.”</span> <em>Political Analysis</em> 24(3):
+374–94.
+</div>
+<div id="ref-Laver2003" class="csl-entry">
+Laver, Michael, Kenneth Benoit, and John Garry. 2003.
+<span>“<span>E</span>xtracting <span>P</span>olicy
+<span>P</span>ositions from <span>P</span>olitical <span>T</span>exts
+<span>U</span>sing <span>W</span>ords as <span>D</span>ata.”</span>
+<em>American Political Science Review</em> 97(02): 311–31.
+</div>
+<div id="ref-liu_introduction_2015" class="csl-entry">
+Liu, Bing. 2015a. <span>“Introduction.”</span> In <em>Sentiment
+Analysis: Mining Opinions, Sentiments, and Emotions</em>, Cambridge
+University Press, 1–15. <a href="https://www.cambridge.org/core/books/sentiment-analysis/3F0F24BE12E66764ACE8F179BCDA42E9">https://www.cambridge.org/core/books/sentiment-analysis/3F0F24BE12E66764ACE8F179BCDA42E9</a>.
+</div>
+<div id="ref-liu_problem_2015" class="csl-entry">
+———. 2015b. <span>“The Problem of Sentiment Analysis.”</span> In
+<em>Sentiment Analysis: Mining Opinions, Sentiments, and Emotions</em>,
+Cambridge University Press, 16–46. <a href="https://www.cambridge.org/core/services/aop-cambridge-core/content/view/A0AFE2C49D72C5914C34DAC763BCD931/9781139084789c2_p16-46_CBO.pdf/problem_of_sentiment_analysis.pdf">https://www.cambridge.org/core/services/aop-cambridge-core/content/view/A0AFE2C49D72C5914C34DAC763BCD931/9781139084789c2_p16-46_CBO.pdf/problem_of_sentiment_analysis.pdf</a>.
+</div>
+<div id="ref-Lowe2017" class="csl-entry">
+Lowe, Will. 2017. <span>“<a href="https://doi.org/10.1093/pan/mpn004">Understanding
+Wordscores</a>.”</span> <em>Political Analysis</em> 16(4): 356–71.
+</div>
+<div id="ref-Lucas2015" class="csl-entry">
+Lucas, Christopher et al. 2015. <span>“<a href="https://doi.org/10.1093/pan/mpu019">Computer-<span>A</span>ssisted
+<span>T</span>ext <span>A</span>nalysis for <span>C</span>omparative
+<span>P</span>olitics</a>.”</span> <em>Political Analysis</em> 23(2):
+254–77.
+</div>
+<div id="ref-muchlinski_siroky_he_kocher_2016" class="csl-entry">
+Muchlinski, David, David Siroky, Jingrui He, and Matthew Kocher. 2016.
+<span>“<a href="https://doi.org/10.1093/pan/mpv024">Comparing Random
+Forest with Logistic Regression for Predicting Class-Imbalanced Civil
+War Onset Data</a>.”</span> <em>Political Analysis</em> 24(1): 87–103.
+</div>
+<div id="ref-Pang2008" class="csl-entry">
+Pang, Bo, Lillian Lee, et al. 2008. <span>“Opinion Mining and Sentiment
+Analysis.”</span> <em>Foundations and Trends<span></span> in information
+retrieval</em> 2(1–2): 1–135. <a href="https://www.cs.cornell.edu/home/llee/omsa/omsa.pdf">https://www.cs.cornell.edu/home/llee/omsa/omsa.pdf</a>.
+</div>
+<div id="ref-Peterson2018" class="csl-entry">
+Peterson, Andrew, and Arthur Spirling. 2018.
+<span>“<span>C</span>lassification <span>A</span>ccuracy as a
+<span>S</span>ubstantive <span>Q</span>uantity of <span>I</span>nterest:
+<span>M</span>easuring <span>P</span>olarization in
+<span>W</span>estminster <span>S</span>ystems.”</span> <em>Political
+Analysis</em> 26(1).
+</div>
+<div id="ref-Roberts2014" class="csl-entry">
+Roberts, Margaret E. et al. 2014. <span>“<span>S</span>tructural
+<span>T</span>opic <span>M</span>odels for
+<span>O</span>pen-<span>E</span>nded <span>S</span>urvey
+<span>R</span>esponses.”</span> <em>American Journal of Political
+Science</em> 58(4): 1064–82.
+</div>
+<div id="ref-Silge2017" class="csl-entry">
+Silge, Julia, and David Robinson. 2017. <em>Text Mining with
+<span>R</span>: A Tidy Approach</em>. O’Reilly Media, Inc. <a href="https://www.tidytextmining.com/">https://www.tidytextmining.com/</a>.
+</div>
+<div id="ref-Slapin2008" class="csl-entry">
+Slapin, Jonathan B., and Sven-Oliver Proksch. 2008.
+<span>“<span>A</span> <span>S</span>caling <span>M</span>odel for
+<span>E</span>stimating <span>T</span>ime-<span>S</span>eries
+<span>P</span>arty <span>P</span>ositions from
+<span>T</span>exts.”</span> <em>American Journal of Political
+Science</em> 52(3): 705–22.
+</div>
+<div id="ref-Soeyland2022" class="csl-entry">
+Søyland, Martin. 2022. <em>Stortingscrape: <span>S</span>crape and
+Structure Raw Data from the <span>N</span>orwegian Parliament’s
+API</em>. <a href="https://github.com/martigso/stortingscrape">https://github.com/martigso/stortingscrape</a>.
+</div>
+<div id="ref-datastortinget2022" class="csl-entry">
+Stortinget. 2022. <em>Stortingets Datatjeneste</em>. <a href="https://data.stortinget.no">https://data.stortinget.no</a>.
+</div>
+<div id="ref-Wickham2016" class="csl-entry">
+Wickham, Hadley. 2016. <em>Ggplot2: Elegant Graphics for Data
+Analysis</em>. Springer. <a href="https://ggplot2-book.org/">https://ggplot2-book.org/</a>.
+</div>
+<div id="ref-Wickham2020" class="csl-entry">
+———. 2020. <em>Httr: Tools for Working with URLs and HTTP</em>. <a href="https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html">https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html</a>.
+</div>
+<div id="ref-Wilkerson2017" class="csl-entry">
+Wilkerson, John, and Andreu Casas. 2017. <span>“Large-Scale Computerized
+Text Analysis in Political Science: Opportunities and
+Challenges.”</span> <em>Annual Review of Political Science</em> 20(1):
+529–44. <a href="https://doi.org/10.1146/annurev-polisci-052615-025542">https://doi.org/10.1146/annurev-polisci-052615-025542</a>.
+</div>
 </div>
 </div>
 </div>
