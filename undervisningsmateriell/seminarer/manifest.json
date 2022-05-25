@@ -2797,6 +2797,9 @@
     }
   },
   "files": {
+    "data/regndans.txt": {
+      "checksum": "dca3dbf588816b56aab69c0b9783413a"
+    },
     "seminar_notat_files/figure-html/unnamed-chunk-3-1.png": {
       "checksum": "d9be2301b9d115edaafae03d13b48ebe"
     },
@@ -2843,10 +2846,10 @@
       "checksum": "d828775275749701b48bd9d958814111"
     },
     "seminar_notat.html": {
-      "checksum": "e63016584d1a13f19857ec3c65aa807b"
+      "checksum": "30bcb13b6d307baed4cc664ed420e15f"
     },
     "seminar_notat.qmd": {
-      "checksum": "f016ea07b1e5119729627704140924af"
+      "checksum": "35dcdc0221afe679fcbabb8cc5f90fa9"
     }
   },
   "users": null
