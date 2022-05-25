@@ -1,0 +1,122 @@
+---
+title: "STV2022 -- Store tekstdata"
+date: "`r Sys.Date()`"
+author: Solveig Bjørkholt og Martin Søyland
+output:
+  rmdformats::downcute:
+    self_contained: true
+    default_style: "dark"
+    downcute_theme: "chaos"
+    highlight: breezedark
+    number_sections: true
+    code_folding: show
+---
+
+
+<!-- --- -->
+<!-- title: "STV2022 -- Store tekstdata" -->
+<!-- author: Solveig Bjørkholt og Martin Søyland -->
+<!-- output: -->
+<!--   rmdformats::readthedown -->
+<!--     downcute_theme: chaos -->
+<!--     highlight: breezedark -->
+<!--     number_sections: true -->
+<!--     toc: true -->
+<!--     toc_float: -->
+<!--       collapsed: true -->
+<!--       smooth_scroll: true -->
+<!-- --- -->
+
+```{r}
+#| echo: false
+#| message: false
+
+library(tidyverse)
+
+```
+
+
+# Introduksjon
+
+Her er intro
+
+## Nyttige ressurser
+
+- [Arbeidsbøker for R ved UiO](https://shinyibv02.uio.no/connect/#/apps/55/access)
+- [R materiale for STV1020](https://github.com/liserodland/STV1020)
+
+# Skrape data
+
+Skraping er gøy!
+
+## .html-skraping
+
+Dette kan være lite gøy
+
+## .xml-skraping
+
+Dette er enklere enn html
+
+## .json-skraping
+
+Dette liker jeg ikke. Veldig rar datastrukturering
+
+## Curl
+
+Ja, må vi egentlig snakke om curl
+
+## APIer
+
+Kanskje bruke Stortinget som eksempel.
+
+# Preprosessering
+
+Preprosessering er ganske viktig.
+
+## Sekk med ord
+
+*Alle* tekster er unike!
+
+Ta for eksempel spor 6 på No.4-albumet vi allerede har jobbet med:
+
+```{r}
+library(stringr)
+
+regndans <- readLines("./data/regndans.txt")
+regndans
+
+```
+
+Denne teksten gir oss mening bare ved å lese den. Tolkninger kan variere fra individ til individ og den "riktige" tolkningen (om det finnes en riktig tolkning), er det bare forfatteren som vet hva er. Personlig tolker jeg denne teksten som et utløp for frustrasjon under corona-pandemien, og prospektene ved livet når samfunnet gjenåpnes.
+
+Hovedpoenget er at teksten gir en eller annen form mening. Men hvordan kan vi kvantitativt trekke ut mening fra en tekst som dette? Her kommer en antagelse man gjør i så og si alle typer tekstanalyse inn: sekk med ord-antagelsen eller "Bag of words". Denne antagelsen sier at hvis man deler opp teksten i segmenter, legger det i en pose, rister posen og heller innholdet ut igjen, skal teksten fortsatt gi mening. Dette er en veldig stor antagelse å gjøre. Hvis vi gjør et eksperiment med eksempelteksten vår, der vi gjør denne prosessen, vil resultatet se ut som dette:
+
+```{r}
+
+bow <- regndans %>% str_split("\\s") %>% unlist()
+
+set.seed(984301)
+
+bow[sample(1:length(bow))]
+
+
+```
+
+
+
+## Fjerne trekk?
+
+### Punktsetting
+
+### Stoppord
+
+## Rotform av ord
+
+### Stemming
+
+### Lemmatisering
+
+
+## ngrams
+
+## Taledeler (parts of speech)
