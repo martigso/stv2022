@@ -73,7 +73,7 @@ Ta for eksempel spor 6 på No.4-albumet vi allerede har jobbet med:
 ```{r}
 library(stringr)
 
-regndans <- readLines("../data/regndans.txt")
+regndans <- readLines("./data/regndans.txt")
 regndans
 
 ```
