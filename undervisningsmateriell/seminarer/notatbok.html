@@ -2045,7 +2045,7 @@ segmenter, putter det i en pose, rister posen og tømmer det på et bord.
 Da vil denne sangen for eksempel se slik ut:</p>
 <pre class="r"><code>library(stringr)
 
-regndans &lt;- readLines(&quot;../data/regndans.txt&quot;)
+regndans &lt;- readLines(&quot;./data/regndans.txt&quot;)
 
 bow &lt;- regndans %&gt;% str_split(&quot;\\s&quot;) %&gt;% unlist()
 
