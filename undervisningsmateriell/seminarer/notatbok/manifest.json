@@ -4,7 +4,7 @@
   "platform": "4.2.0",
   "metadata": {
     "appmode": "rmd-static",
-    "primary_rmd": "index.Rmd",
+    "primary_rmd": "./index.Rmd",
     "primary_html": null,
     "content_category": null,
     "has_parameters": false
@@ -997,25 +997,25 @@
       "checksum": "588d9770bb6e9b983c6106194075f1e8"
     },
     "404.html": {
-      "checksum": "1c34b9d7003f8644024e65ca27226a8b"
+      "checksum": "842b4a81bbb08ac7dcd82ac27b70e88e"
     },
     "anskaff.html": {
-      "checksum": "5a6625d34c39ffc3e21b8b2e6e273d39"
+      "checksum": "cad082310993cf780d1631d0b51c54b7"
     },
     "book.bib": {
       "checksum": "da9d9311a3433b995b206816a36a529d"
     },
-    "file1f69163f2a26d.html": {
-      "checksum": "67de314f9144fc109664d8999f15dc8c"
+    "file1f6917a3d6001.html": {
+      "checksum": "56b63d475be96ec1f9aea716e8e20fc3"
     },
     "index.Rmd": {
       "checksum": "77c0dea1c43b23bb56279921a7bc2c69"
     },
     "introduksjon.html": {
-      "checksum": "7bf285ee6a97ef4ce2cc4c684e5959fb"
+      "checksum": "c8024bd7ac69abc4ca7f97bed4b6ed6e"
     },
     "lastetekst.html": {
-      "checksum": "62dfa510a2b5f860630d1080857fdc1e"
+      "checksum": "d3a43c489ee275d6c12451f221a3bd3a"
     },
     "libs/anchor-sections-1.1.0/anchor-sections-hash.css": {
       "checksum": "cc71c646c089ba898bbfdc599c3b08a1"
@@ -1093,28 +1093,28 @@
       "checksum": "6efc5d663aaacac2024153fa0d4bafcd"
     },
     "oppsummering.html": {
-      "checksum": "ed90d177d5c9ef1c400f2127846525e6"
+      "checksum": "3510b445041d06576d87fb956eee4591"
     },
     "ordboker.html": {
-      "checksum": "22bade956a108b78b9191f2964fe0293"
+      "checksum": "7280397854793ad1bb10917ae9f84184"
     },
     "packages.bib": {
       "checksum": "8a4b29c4335959c300db42bf901d9418"
     },
     "posisjon.html": {
-      "checksum": "e334db6aac56550be2b0162b0fd4270b"
+      "checksum": "09ab943bd269caebe1bbd349f53584b2"
     },
     "preamble.tex": {
       "checksum": "1fd1a3c59e951f9f95b6b39785d600ff"
     },
     "prepros.html": {
-      "checksum": "120bdc582800283dcc166cf80defe344"
+      "checksum": "e9c52aae0b6f10e6afb1150cc78f2bed"
     },
     "README.md": {
       "checksum": "c21d220bab1c9744affb5b383f7e5a38"
     },
     "sentiment.html": {
-      "checksum": "ca4bfc614a6542261de558b22ea0bcfd"
+      "checksum": "bc8f18efe1322db5030ab383a4de9eda"
     },
     "stv2022.bib": {
       "checksum": "5094e3c7ce528af39be88483f85135ed"
@@ -1123,22 +1123,22 @@
       "checksum": "a1b2cd5d2a469e53935161d7ba83e119"
     },
     "sup.html": {
-      "checksum": "82a07b35096ea90456dc48d0b24c0552"
+      "checksum": "527faf6d736ab17779a6f392b7ae14ef"
     },
     "tekststats.html": {
-      "checksum": "a23115c56e394c0c0dbeae8184109512"
+      "checksum": "e0571b1024087709fb9bb8160e992a4c"
     },
     "toc.css": {
       "checksum": "0261077fd6d0b1e28d59a785a3085f1e"
     },
     "topicmod.html": {
-      "checksum": "aa1e90cb32d0141e8a45d233c4c7ea07"
+      "checksum": "ef27fe3b5da42846cbc1ba910facc8fe"
     },
     "undervisning.html": {
-      "checksum": "e665ac8fa69b8247046280e68d378a9a"
+      "checksum": "c8f93f4b4582e51b8f0310973f7ee239"
     },
     "unsup.html": {
-      "checksum": "41ef278b90c4346c11ff173af3e39b0b"
+      "checksum": "6bb2d9d3677960500c6968ab39c87cbd"
     }
   },
   "users": null
