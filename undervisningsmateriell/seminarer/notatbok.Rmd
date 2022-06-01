@@ -51,13 +51,32 @@ library(tidyverse)
 
 Velkommen til STV2022 -- Store teksdata!
 
-Hvordan samler man effektivt og redelig store mengder politiske tekster? Hva må til for å gjøre slike tekster klare for analyse? Og hvordan kan vi analysere tekstene?
+Dette er en arbeidsbok som går gjennom de forskjellige delene i kurset, med tilhørende R-kode. Meningen med arbeidsboken, er at den kan brukes som forslag til implementering av metoder i semesteroppgaven. Merk likevel at dette ikke er en fasit!
 
-Politikere og politiske partier produserer store mengder tekst hver dag. Om det er gjennom debatter, taler på Stortinget, lovforslag fra regjeringen, høringer, offentlige utredninger med mer, er digitaliserte politiske tekster i det offentlige blitt mer tilgjengelig de siste tiårene. Dette har åpnet et mulighetsrom for tekstanalyse som ikke var mulig/veldig vanskelig og tidkrevende før.
+## Kort om kurset
 
-Det kan ofte være vanskelig å finne mønster som kan svare på spørsmål og teorier vi har i statsvitenskap i disse store tekstsamlingene. Derfor kan vi se til metoder innenfor maskinlæring for å analysere store samlinger av tekst systematisk. Samtidig er ikke alltid digitaliserte politiske tekster er tilrettelagt for å analysers direkte. I disse tilfellene er god strukturering av rådata viktig.
+I kurset skal vi bli kjent med analyseprosessen av store tekstdata: Hvordan samler man effektivt og redelig store mengder politiske tekster? Hva må til for å gjøre slike tekster klare for analyse? Og hvordan kan vi analysere tekstene?
 
-I dette kurset vil du lære å søke i store mengder dokumenter, oppsummere disse på meningsfulle måter og indentifisere riktige analysemetoder for å teste statsvitenskaplige teorier. Kurset vil dekke samling av store volum tekst fra offentlige kilder, strukturering og klargjøring av tekst for analyse og kvantitative tekstanalysemetoder.
+Politikere og politiske partier produserer store mengder tekst hver dag. Om det er gjennom debatter, taler på Stortinget, lovforslag fra regjeringen, høringer, offentlige utredninger med mer, er digitaliserte politiske tekster i det offentlige blitt mer tilgjengelig de siste tiårene. Dette har åpnet et mulighetsrom for tekstanalyse som ikke var mulig/veldig vanskelig og tidkrevende før.
+
+Det kan ofte være vanskelig å finne mønster som kan svare på spørsmål og teorier vi har i statsvitenskap i disse store tekstsamlingene. Derfor kan vi se til metoder innenfor maskinlæring for å analysere store samlinger av tekst systematisk. Samtidig er ikke alltid digitaliserte politiske tekster tilrettelagt for å analysers direkte. I disse tilfellene er god strukturering av rådata viktig.
+
+Gjennom å delta i dette kurset vil du lære å søke i store mengder dokumenter, oppsummere disse på meningsfulle måter og indentifisere riktige analysemetoder for å teste statsvitenskaplige teorier med store tekstdata. Kurset vil dekke samling av store volum tekst fra offentlige kilder, strukturering og klargjøring av tekst for analyse og kvantitative tekstanalysemetoder.
+
+## Oppbygging av arbeidsboken
+
+Under vil vi gå gjennom undervisningsopplegget, som arbeidsboken er lagt opp etter. Delene av boken er strukturert som følgende:
+
+1.  [Anskaffelse av tekst](#anskaff)
+2.  [Laste inn eksisterende tekstkilder](#lastetekst)
+3.  [Forbehandling av tekst (preprosessering)](#prepros)
+4.  [Veiledet læring (supervised)](#sup)
+5.  [Ikke-veiledet læring (unsupervised)](#unsup)
+6.  [Ordbøker](#ordboker)
+7.  [Tekstsatistikk](#tekststats)
+8.  [Sentiment](#sentiment)
+9.  [Temamodellering](#topicmod)
+10. [Latente posisjoner i tekst](#posisjon)
 
 # Undervisning
 
@@ -82,15 +101,13 @@ Det er sterkt anbefalt at man ser over pensum før forelesning og seminar.
 
 ## Pensum
 
-### Generelt
+Pensum i kurset legger stor vekt på de metodiske konseptene ved kvantitativ tekstanalyse, Under er en liste over bidrag som vil bli dekket kontinuerlig gjennom hele kurset:
 
-Under er en liste over bidrag som vil bli dekket kontinuerlig gjennom hele kurset:
-
-1.  @Silge2017
-2.  @Grimmer2022
-3.  @Benoit2017
-4.  @Jurafsky2021b (anbefalt)
-5.  @Wickham2016 (anbefalt)
+1.  @Grimmer2022 -- Grunnbok
+2.  @Silge2017 -- Tidytext
+3.  @Benoit2017 -- quanteda
+4.  @Jurafsky2021b (anbefalt) -- avanserte metoder
+5.  @Wickham2016 (anbefalt) -- ggplot
 
 ### Uke 34. Introduksjon (Solveig og Martin)
 
@@ -180,6 +197,8 @@ Den første uken vil vi fokusere på de genrelle konseptene innenfor kvantitativ
 
 -   [Arbeidsbøker for R ved UiO](https://shinyibv02.uio.no/connect/#/apps/55/access)
 -   [R materiale for STV1020](https://github.com/liserodland/STV1020)
+
+# Laste inn tekstdata {#lastetekst}
 
 # Anskaffelse av tekst {#anskaff}
 
@@ -287,3 +306,11 @@ Nå teksten gir mening! Tolkninger kan selvfølgelig variere fra individ til ind
 # Oppsummering {#oppsummering}
 
 `r if (knitr::is_html_output()) ' # Referanser {-} '`
+
+```{r writeManifest, echo=FALSE}
+
+# Oppdaterer manifest
+rsconnect::writeManifest("./")
+
+```
+
