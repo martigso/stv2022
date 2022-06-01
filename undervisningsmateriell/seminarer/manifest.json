@@ -2854,14 +2854,20 @@
     }
   },
   "files": {
+    "american-political-science-association.csl": {
+      "checksum": "755340d9c4df0e140380ecafb6e40b2b"
+    },
     "data/regndans.txt": {
       "checksum": "dca3dbf588816b56aab69c0b9783413a"
     },
     "notatbok.html": {
-      "checksum": "a7207771b2b6aee10c33edfdf5268228"
+      "checksum": "3ab089529e28a522040d88b5b64b57fe"
     },
     "notatbok.Rmd": {
-      "checksum": "b4c366c534db119d2355e2981c65c645"
+      "checksum": "27c74f0d2afc6027600d12b50a1ede53"
+    },
+    "stv2022.bib": {
+      "checksum": "5094e3c7ce528af39be88483f85135ed"
     }
   },
   "users": null
