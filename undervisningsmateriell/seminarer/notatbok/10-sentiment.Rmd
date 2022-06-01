@@ -1,4 +1,0 @@
-# Sentiment {#sentiment}
-
-
-## NorSentLex
