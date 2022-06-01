@@ -2059,9 +2059,7 @@ kvantitativ tekstanalyse – “sekk med ord” eller <em>bag of words</em> –
 skal vi kunne forstå innholdet i en tekst hvis vi deler opp teksten i
 segmenter, putter det i en pose, rister posen og tømmer det på et bord.
 Da vil denne sangen for eksempel se slik ut:</p>
-<pre class="r"><code>library(stringr)
-
-regndans &lt;- readLines(&quot;./data/regndans.txt&quot;)
+<pre class="r"><code>regndans &lt;- readLines(&quot;./data/regndans.txt&quot;)
 
 bow &lt;- regndans %&gt;% str_split(&quot;\\s&quot;) %&gt;% unlist()
 
