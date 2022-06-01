@@ -227,7 +227,7 @@ Nå teksten gir mening! Tolkninger kan selvfølgelig variere fra individ til ind
 
 `r if (knitr::is_html_output()) ' # Referanser {-} '`
 
-```{r writeManifest, echo=FALSE}
+```{r writeManifest, echo=FALSE, eval=FALSE}
 
 # Oppdaterer manifest
 rsconnect::writeManifest("./")
