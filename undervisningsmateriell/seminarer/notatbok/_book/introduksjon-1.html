@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Introduksjon | STV2022 – Store tekstdata</title>
+  <meta name="description" content="Sett inn en beskrivelse her." />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Introduksjon | STV2022 – Store tekstdata" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Sett inn en beskrivelse her." />
+  <meta name="github-repo" content="martigso/stv2022" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Introduksjon | STV2022 – Store tekstdata" />
+  
+  <meta name="twitter:description" content="Sett inn en beskrivelse her." />
+  
+
+<meta name="author" content="Solveig Bjørkholt og Martin Søyland" />
+
+
+<meta name="date" content="2022-05-31" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="cross.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduksjon</a></li>
+<li class="chapter" data-level="2" data-path="introduksjon-1.html"><a href="introduksjon-1.html"><i class="fa fa-check"></i><b>2</b> Introduksjon</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introduksjon-1.html"><a href="introduksjon-1.html#nyttige-ressurser"><i class="fa fa-check"></i><b>2.1</b> Nyttige ressurser</a></li>
+<li class="chapter" data-level="2.2" data-path="introduksjon-1.html"><a href="introduksjon-1.html#pensum"><i class="fa fa-check"></i><b>2.2</b> Pensum</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="introduksjon-1.html"><a href="introduksjon-1.html#generelt"><i class="fa fa-check"></i><b>2.2.1</b> Generelt</a></li>
+<li class="chapter" data-level="2.2.2" data-path="introduksjon-1.html"><a href="introduksjon-1.html#uke-34.-introduksjon-solveig-og-martin"><i class="fa fa-check"></i><b>2.2.2</b> Uke 34. Introduksjon (Solveig og Martin)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="introduksjon-1.html"><a href="introduksjon-1.html#uke-35.-anskaffelse-og-innlasting-av-tekst-martin"><i class="fa fa-check"></i><b>2.2.3</b> Uke 35. Anskaffelse og innlasting av tekst (Martin)</a></li>
+<li class="chapter" data-level="2.2.4" data-path="introduksjon-1.html"><a href="introduksjon-1.html#uke-36.-forbehandling-av-tekst-1-martin"><i class="fa fa-check"></i><b>2.2.4</b> Uke 36. Forbehandling av tekst 1 (Martin)</a></li>
+<li class="chapter" data-level="2.2.5" data-path="introduksjon-1.html"><a href="introduksjon-1.html#uke-37.-forbehandling-av-tekst-2-solveig"><i class="fa fa-check"></i><b>2.2.5</b> Uke 37. Forbehandling av tekst 2 (Solveig)</a></li>
+<li class="chapter" data-level="2.2.6" data-path="introduksjon-1.html"><a href="introduksjon-1.html#uke-38.-bruke-api-case-stortinget-martin"><i class="fa fa-check"></i><b>2.2.6</b> Uke 38. Bruke API – Case: Stortinget (Martin)</a></li>
+<li class="chapter" data-level="2.2.7" data-path="introduksjon-1.html"><a href="introduksjon-1.html#uke-39.-ingen-undervisning"><i class="fa fa-check"></i><b>2.2.7</b> Uke 39. INGEN UNDERVISNING</a></li>
+<li class="chapter" data-level="2.2.8" data-path="introduksjon-1.html"><a href="introduksjon-1.html#uke-40.-ingen-undervisning"><i class="fa fa-check"></i><b>2.2.8</b> Uke 40. INGEN UNDERVISNING</a></li>
+<li class="chapter" data-level="2.2.9" data-path="introduksjon-1.html"><a href="introduksjon-1.html#uke-41.-veiledet-læring-og-ikke-veiledet-læring-solveig"><i class="fa fa-check"></i><b>2.2.9</b> Uke 41. Veiledet læring og ikke-veiledet læring (Solveig)</a></li>
+<li class="chapter" data-level="2.2.10" data-path="introduksjon-1.html"><a href="introduksjon-1.html#uke-42.-ordbøker-tekstlikhet-og-sentiment-solveig"><i class="fa fa-check"></i><b>2.2.10</b> Uke 42. Ordbøker, tekstlikhet og sentiment (Solveig)</a></li>
+<li class="chapter" data-level="2.2.11" data-path="introduksjon-1.html"><a href="introduksjon-1.html#uke-43.-klassifisering-av-tekst-temamodellering-martin"><i class="fa fa-check"></i><b>2.2.11</b> Uke 43. Klassifisering av tekst – Temamodellering (Martin)</a></li>
+<li class="chapter" data-level="2.2.12" data-path="introduksjon-1.html"><a href="introduksjon-1.html#uke-44.-estimere-latent-posisjon-fra-tekst-solveig"><i class="fa fa-check"></i><b>2.2.12</b> Uke 44. Estimere latent posisjon fra tekst (Solveig)</a></li>
+<li class="chapter" data-level="2.2.13" data-path="introduksjon-1.html"><a href="introduksjon-1.html#uke-46.-oppsummering-solveig-og-martin"><i class="fa fa-check"></i><b>2.2.13</b> Uke 46. Oppsummering (Solveig og Martin)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="cross.html"><a href="cross.html"><i class="fa fa-check"></i><b>3</b> Cross-references</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="cross.html"><a href="cross.html#chapters-and-sub-chapters"><i class="fa fa-check"></i><b>3.1</b> Chapters and sub-chapters</a></li>
+<li class="chapter" data-level="3.2" data-path="cross.html"><a href="cross.html#captioned-figures-and-tables"><i class="fa fa-check"></i><b>3.2</b> Captioned figures and tables</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="parts.html"><a href="parts.html"><i class="fa fa-check"></i><b>4</b> Parts</a></li>
+<li class="chapter" data-level="5" data-path="footnotes-and-citations.html"><a href="footnotes-and-citations.html"><i class="fa fa-check"></i><b>5</b> Footnotes and citations</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="footnotes-and-citations.html"><a href="footnotes-and-citations.html#footnotes"><i class="fa fa-check"></i><b>5.1</b> Footnotes</a></li>
+<li class="chapter" data-level="5.2" data-path="footnotes-and-citations.html"><a href="footnotes-and-citations.html#citations"><i class="fa fa-check"></i><b>5.2</b> Citations</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="blocks.html"><a href="blocks.html"><i class="fa fa-check"></i><b>6</b> Blocks</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="blocks.html"><a href="blocks.html#equations"><i class="fa fa-check"></i><b>6.1</b> Equations</a></li>
+<li class="chapter" data-level="6.2" data-path="blocks.html"><a href="blocks.html#theorems-and-proofs"><i class="fa fa-check"></i><b>6.2</b> Theorems and proofs</a></li>
+<li class="chapter" data-level="6.3" data-path="blocks.html"><a href="blocks.html#callout-blocks"><i class="fa fa-check"></i><b>6.3</b> Callout blocks</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="sharing-your-book.html"><a href="sharing-your-book.html"><i class="fa fa-check"></i><b>7</b> Sharing your book</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="sharing-your-book.html"><a href="sharing-your-book.html#publishing"><i class="fa fa-check"></i><b>7.1</b> Publishing</a></li>
+<li class="chapter" data-level="7.2" data-path="sharing-your-book.html"><a href="sharing-your-book.html#pages"><i class="fa fa-check"></i><b>7.2</b> 404 pages</a></li>
+<li class="chapter" data-level="7.3" data-path="sharing-your-book.html"><a href="sharing-your-book.html#metadata-for-sharing"><i class="fa fa-check"></i><b>7.3</b> Metadata for sharing</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">STV2022 – Store tekstdata</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="introduksjon-1" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Introduksjon<a href="introduksjon-1.html#introduksjon-1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Her er intro</p>
+<div id="nyttige-ressurser" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Nyttige ressurser<a href="introduksjon-1.html#nyttige-ressurser" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><a href="https://shinyibv02.uio.no/connect/#/apps/55/access">Arbeidsbøker for R ved UiO</a></li>
+<li><a href="https://github.com/liserodland/STV1020">R materiale for STV1020</a></li>
+</ul>
+</div>
+<div id="pensum" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Pensum<a href="introduksjon-1.html#pensum" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="generelt" class="section level3 hasAnchor" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Generelt<a href="introduksjon-1.html#generelt" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Under er en liste over bidrag som vil bli dekket kontinuerlig gjennom hele kurset:</p>
+<ol style="list-style-type: decimal">
+<li><span class="citation">Silge and Robinson (<a href="#ref-Silge2017" role="doc-biblioref">2017</a>)</span></li>
+<li><span class="citation">Grimmer, Roberts, and Stewart (<a href="#ref-Grimmer2022" role="doc-biblioref">2022</a>)</span></li>
+<li><span class="citation">Benoit et al. (<a href="#ref-Benoit2017" role="doc-biblioref">2017</a>)</span></li>
+<li><span class="citation">Jurafsky and Martin (<a href="#ref-Jurafsky2021b" role="doc-biblioref">2021</a>)</span> (anbefalt)</li>
+<li><span class="citation">Wickham (<a href="#ref-Wickham2016" role="doc-biblioref">2016</a>)</span> (anbefalt)</li>
+</ol>
+</div>
+<div id="uke-34.-introduksjon-solveig-og-martin" class="section level3 hasAnchor" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> Uke 34. Introduksjon (Solveig og Martin)<a href="introduksjon-1.html#uke-34.-introduksjon-solveig-og-martin" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Den første uken vil vi fokusere på de genrelle konseptene innenfor kvantitativ tekstanalyse, prosessen med å gå fra rå tekst til slutningsanalyse, potensielle fallgruver, med mer.</p>
+<ol style="list-style-type: decimal">
+<li><span class="citation">Grimmer, Roberts, and Stewart (<a href="#ref-Grimmer2022" role="doc-biblioref">2022</a>)</span> kap. 1-2 og 22 (36 sider)</li>
+<li><span class="citation">Lucas et al. (<a href="#ref-Lucas2015" role="doc-biblioref">2015</a>)</span> (24 sider)</li>
+<li><span class="citation">Silge and Robinson (<a href="#ref-Silge2017" role="doc-biblioref">2017</a>)</span> kap. 1 (9 sider)</li>
+<li><span class="citation">Pang, Lee, et al. (<a href="#ref-Pang2008" role="doc-biblioref">2008</a>)</span> kap. 1 (10 sider)</li>
+</ol>
+</div>
+<div id="uke-35.-anskaffelse-og-innlasting-av-tekst-martin" class="section level3 hasAnchor" number="2.2.3">
+<h3><span class="header-section-number">2.2.3</span> Uke 35. Anskaffelse og innlasting av tekst (Martin)<a href="introduksjon-1.html#uke-35.-anskaffelse-og-innlasting-av-tekst-martin" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li><span class="citation">Grimmer, Roberts, and Stewart (<a href="#ref-Grimmer2022" role="doc-biblioref">2022</a>)</span> kap. 3-4 (14 sider)</li>
+<li><span class="citation">Cooksey (<a href="#ref-Cooksey2014" role="doc-biblioref">2014</a>)</span> kap. 1 (4 sider)</li>
+<li><span class="citation">Wickham (<a href="#ref-Wickham2020" role="doc-biblioref">2020</a>)</span> (8 sider)</li>
+<li><span class="citation">Høyland and Søyland (<a href="#ref-Hoyland2019" role="doc-biblioref">2019</a>)</span> (22 sider)</li>
+</ol>
+</div>
+<div id="uke-36.-forbehandling-av-tekst-1-martin" class="section level3 hasAnchor" number="2.2.4">
+<h3><span class="header-section-number">2.2.4</span> Uke 36. Forbehandling av tekst 1 (Martin)<a href="introduksjon-1.html#uke-36.-forbehandling-av-tekst-1-martin" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li><span class="citation">Grimmer, Roberts, and Stewart (<a href="#ref-Grimmer2022" role="doc-biblioref">2022</a>)</span> kap. 5 (11 sider)</li>
+<li><span class="citation">Silge and Robinson (<a href="#ref-Silge2017" role="doc-biblioref">2017</a>)</span> kap. 3 (9 sider)</li>
+<li><span class="citation">Jørgensen et al. (<a href="#ref-Joergensen2019" role="doc-biblioref">2019</a>)</span> (10 sider)</li>
+<li><span class="citation">Barnes et al. (<a href="#ref-Barnes2019" role="doc-biblioref">2019</a>)</span> (12 sider)</li>
+<li><span class="citation">Benoit and Matsuo (<a href="#ref-Benoit2020" role="doc-biblioref">2020</a>)</span> (11 sider)</li>
+</ol>
+<p><strong>Seminar 1: Anskaffe tekst og lage dtm i R</strong></p>
+</div>
+<div id="uke-37.-forbehandling-av-tekst-2-solveig" class="section level3 hasAnchor" number="2.2.5">
+<h3><span class="header-section-number">2.2.5</span> Uke 37. Forbehandling av tekst 2 (Solveig)<a href="introduksjon-1.html#uke-37.-forbehandling-av-tekst-2-solveig" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li><span class="citation">Grimmer, Roberts, and Stewart (<a href="#ref-Grimmer2022" role="doc-biblioref">2022</a>)</span> kap. 9 (7 sider)</li>
+<li><span class="citation">Silge and Robinson (<a href="#ref-Silge2017" role="doc-biblioref">2017</a>)</span> kap. 4 (15 sider)</li>
+<li><span class="citation">Denny and Spirling (<a href="#ref-Denny2018" role="doc-biblioref">2018</a>)</span> (21 sider)</li>
+</ol>
+</div>
+<div id="uke-38.-bruke-api-case-stortinget-martin" class="section level3 hasAnchor" number="2.2.6">
+<h3><span class="header-section-number">2.2.6</span> Uke 38. Bruke API – Case: Stortinget (Martin)<a href="introduksjon-1.html#uke-38.-bruke-api-case-stortinget-martin" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li><span class="citation">Stortinget (<a href="#ref-datastortinget2022" role="doc-biblioref">2022</a>)</span> (1 sider)</li>
+<li><span class="citation">Søyland (<a href="#ref-Soeyland2022" role="doc-biblioref">2022</a>)</span> (1 sider)</li>
+<li><span class="citation">Finseraas, Høyland, and Søyland (<a href="#ref-Finseraas2021" role="doc-biblioref">2021</a>)</span> (10 sider)</li>
+</ol>
+<p><strong>Seminar 2: Preprosessering av tekstdata i R</strong></p>
+</div>
+<div id="uke-39.-ingen-undervisning" class="section level3 hasAnchor" number="2.2.7">
+<h3><span class="header-section-number">2.2.7</span> Uke 39. INGEN UNDERVISNING<a href="introduksjon-1.html#uke-39.-ingen-undervisning" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="uke-40.-ingen-undervisning" class="section level3 hasAnchor" number="2.2.8">
+<h3><span class="header-section-number">2.2.8</span> Uke 40. INGEN UNDERVISNING<a href="introduksjon-1.html#uke-40.-ingen-undervisning" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="uke-41.-veiledet-læring-og-ikke-veiledet-læring-solveig" class="section level3 hasAnchor" number="2.2.9">
+<h3><span class="header-section-number">2.2.9</span> Uke 41. Veiledet læring og ikke-veiledet læring (Solveig)<a href="introduksjon-1.html#uke-41.-veiledet-læring-og-ikke-veiledet-læring-solveig" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li><span class="citation">Grimmer, Roberts, and Stewart (<a href="#ref-Grimmer2022" role="doc-biblioref">2022</a>)</span> kap. 10 og 17 (24 sider)</li>
+<li><span class="citation">D’Orazio et al. (<a href="#ref-dorazio_separating_2014" role="doc-biblioref">2014</a>)</span> (18 sider)</li>
+<li><span class="citation">Feldman and Sanger (<a href="#ref-feldman_sanger_20061" role="doc-biblioref">2006a</a>)</span> (17 sider)</li>
+<li><span class="citation">Feldman and Sanger (<a href="#ref-feldman_sanger_20062" role="doc-biblioref">2006b</a>)</span> (11 sider)</li>
+<li><span class="citation">Muchlinski et al. (<a href="#ref-muchlinski_siroky_he_kocher_2016" role="doc-biblioref">2016</a>)</span> (16 sider)</li>
+</ol>
+</div>
+<div id="uke-42.-ordbøker-tekstlikhet-og-sentiment-solveig" class="section level3 hasAnchor" number="2.2.10">
+<h3><span class="header-section-number">2.2.10</span> Uke 42. Ordbøker, tekstlikhet og sentiment (Solveig)<a href="introduksjon-1.html#uke-42.-ordbøker-tekstlikhet-og-sentiment-solveig" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li><span class="citation">Grimmer, Roberts, and Stewart (<a href="#ref-Grimmer2022" role="doc-biblioref">2022</a>)</span> kap. 7 og 16 (12 sider)</li>
+<li><span class="citation">Silge and Robinson (<a href="#ref-Silge2017" role="doc-biblioref">2017</a>)</span> kap. 2 (11 sider)</li>
+<li><span class="citation">Pang, Lee, et al. (<a href="#ref-Pang2008" role="doc-biblioref">2008</a>)</span> kap. 3-4 (26 sider)</li>
+<li><span class="citation">Liu (<a href="#ref-liu_introduction_2015" role="doc-biblioref">2015a</a>)</span> (15 sider)</li>
+<li><span class="citation">Liu (<a href="#ref-liu_problem_2015" role="doc-biblioref">2015b</a>)</span> (30 sider)</li>
+</ol>
+<p><strong>Seminar 3: Sup vs. unsup i R</strong></p>
+</div>
+<div id="uke-43.-klassifisering-av-tekst-temamodellering-martin" class="section level3 hasAnchor" number="2.2.11">
+<h3><span class="header-section-number">2.2.11</span> Uke 43. Klassifisering av tekst – Temamodellering (Martin)<a href="introduksjon-1.html#uke-43.-klassifisering-av-tekst-temamodellering-martin" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li><span class="citation">Grimmer, Roberts, and Stewart (<a href="#ref-Grimmer2022" role="doc-biblioref">2022</a>)</span> kap. 13 og (13 sider)</li>
+<li><span class="citation">Blei (<a href="#ref-Blei2012" role="doc-biblioref">2012</a>)</span> (8 sider)</li>
+<li><span class="citation">Silge and Robinson (<a href="#ref-Silge2017" role="doc-biblioref">2017</a>)</span> kap. 6 (14 sider)</li>
+<li><span class="citation">Roberts et al. (<a href="#ref-Roberts2014" role="doc-biblioref">2014</a>)</span> (19 sider)</li>
+</ol>
+</div>
+<div id="uke-44.-estimere-latent-posisjon-fra-tekst-solveig" class="section level3 hasAnchor" number="2.2.12">
+<h3><span class="header-section-number">2.2.12</span> Uke 44. Estimere latent posisjon fra tekst (Solveig)<a href="introduksjon-1.html#uke-44.-estimere-latent-posisjon-fra-tekst-solveig" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li><span class="citation">Laver, Benoit, and Garry (<a href="#ref-Laver2003" role="doc-biblioref">2003</a>)</span> (20 sider)</li>
+<li><span class="citation">Slapin and Proksch (<a href="#ref-Slapin2008" role="doc-biblioref">2008</a>)</span> (18 sider)</li>
+<li><span class="citation">Lowe (<a href="#ref-Lowe2017" role="doc-biblioref">2017</a>)</span> (15 sider)</li>
+<li><span class="citation">Lauderdale and Herzog (<a href="#ref-Lauderdale2016" role="doc-biblioref">2016</a>)</span> (20 sider)</li>
+<li><span class="citation">Peterson and Spirling (<a href="#ref-Peterson2018" role="doc-biblioref">2018</a>)</span> (8 sider)</li>
+</ol>
+<p><strong>Seminar 4: Modelleringsmetoder i R</strong></p>
+</div>
+<div id="uke-46.-oppsummering-solveig-og-martin" class="section level3 hasAnchor" number="2.2.13">
+<h3><span class="header-section-number">2.2.13</span> Uke 46. Oppsummering (Solveig og Martin)<a href="introduksjon-1.html#uke-46.-oppsummering-solveig-og-martin" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li><span class="citation">Grimmer, Roberts, and Stewart (<a href="#ref-Grimmer2022" role="doc-biblioref">2022</a>)</span> kap 28 (5 sider)</li>
+<li><span class="citation">Wilkerson and Casas (<a href="#ref-Wilkerson2017" role="doc-biblioref">2017</a>)</span> (19 sider)</li>
+</ol>
+<p><strong>Seminar 5: Fra tekst til funn – Q&amp;A/Oppg.hjelp</strong></p>
+
+</div>
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Barnes2019" class="csl-entry">
+Barnes, Jeremy, Samia Touileb, Lilja Øvrelid, and Erik Velldal. 2019. <span>“Lexicon Information in Neural Sentiment Analysis: A Multi-Task Learning Approach.”</span> In <em>Proceedings of the 22nd Nordic Conference on Computational Linguistics</em>, 175–86. Turku, Finland: Link<span>ö</span>ping University Electronic Press. <a href="https://aclanthology.org/W19-6119">https://aclanthology.org/W19-6119</a>.
+</div>
+<div id="ref-Benoit2020" class="csl-entry">
+Benoit, Kenneth, and Akitaka Matsuo. 2020. <em>Spacyr: Wrapper to the ’spaCy’ ’NLP’ Library</em>. <a href="https://CRAN.R-project.org/package=spacyr">https://CRAN.R-project.org/package=spacyr</a>.
+</div>
+<div id="ref-Benoit2017" class="csl-entry">
+Benoit, Kenneth, Kohei Watanabe, Paul Nulty, Adam Obeng, Haiyan Wang, Benjamin Lauderdale, and Will Lowe. 2017. <em>Quanteda: <span>Q</span>uantitative <span>A</span>nalysis of <span>T</span>extual <span>D</span>ata</em>. <a href="http://quanteda.io">http://quanteda.io</a>.
+</div>
+<div id="ref-Blei2012" class="csl-entry">
+Blei, David M. 2012. <span>“<span>P</span>robabilistic <span>T</span>opic <span>M</span>odels.”</span> <em>Communications of the ACM</em> 55 (4): 77–84.
+</div>
+<div id="ref-Cooksey2014" class="csl-entry">
+Cooksey, Brian. 2014. <span>“An Introduction to <span>API</span>s.”</span> <em>Zapier, Inc.</em> <a href="https://cdn.zapier.com/storage/learn_ebooks/e06a35cfcf092ec6dd22670383d9fd12.pdf">https://cdn.zapier.com/storage/learn_ebooks/e06a35cfcf092ec6dd22670383d9fd12.pdf</a>.
+</div>
+<div id="ref-dorazio_separating_2014" class="csl-entry">
+D’Orazio, Vito, Steven T. Landis, Glenn Palmer, and Philip Schrodt. 2014. <span>“Separating the Wheat from the Chaff: Applications of Automated Document Classification Using Support Vector Machines.”</span> <em>Political Analysis</em> 22 (2): 224–42. https://doi.org/<a href="https://doi.org/10.1093/pan/mpt030">https://doi.org/10.1093/pan/mpt030</a>.
+</div>
+<div id="ref-Denny2018" class="csl-entry">
+Denny, Matthew J., and Arthur Spirling. 2018. <span>“<span>T</span>ext <span>P</span>reprocessing <span>F</span>or <span>U</span>nsupervised <span>L</span>earning: <span>W</span>hy <span>I</span>t <span>M</span>atters, <span>W</span>hen <span>I</span>t <span>M</span>isleads, <span>A</span>nd <span>W</span>hat <span>T</span>o <span>D</span>o <span>A</span>bout <span>I</span>t.”</span> <em>Political Analysis</em> 26 (2): 168–89. <a href="https://doi.org/10.1017/pan.2017.44">https://doi.org/10.1017/pan.2017.44</a>.
+</div>
+<div id="ref-feldman_sanger_20061" class="csl-entry">
+Feldman, Ronen, and James Sanger. 2006a. <span>“Categorization.”</span> In <em>The Text Mining Handbook: Advanced Approaches in Analyzing Unstructured Data</em>, 64–81. Cambridge University Press. <a href="https://doi.org/10.1017/CBO9780511546914.005">https://doi.org/10.1017/CBO9780511546914.005</a>.
+</div>
+<div id="ref-feldman_sanger_20062" class="csl-entry">
+———. 2006b. <span>“Clustering.”</span> In <em>The Text Mining Handbook: Advanced Approaches in Analyzing Unstructured Data</em>, 82–93. Cambridge University Press. <a href="https://doi.org/10.1017/CBO9780511546914.006">https://doi.org/10.1017/CBO9780511546914.006</a>.
+</div>
+<div id="ref-Finseraas2021" class="csl-entry">
+Finseraas, Henning, Bjørn Høyland, and Martin G. Søyland. 2021. <span>“Climate Politics in Hard Times: How Local Economic Shocks Influence MPs Attention to Climate Change.”</span> <em>European Journal of Political Research</em> 60 (3): 738–47. <a href="https://ejpr.onlinelibrary.wiley.com/doi/abs/10.1111/1475-6765.12415">https://ejpr.onlinelibrary.wiley.com/doi/abs/10.1111/1475-6765.12415</a>.
+</div>
+<div id="ref-Grimmer2022" class="csl-entry">
+Grimmer, Justin, Margaret E. Roberts, and Brandon M. Stewart. 2022. <em>Text as Data: A New Framework for Machine Learning and the Social Sciences</em>. Princeton University Press.
+</div>
+<div id="ref-Hoyland2019" class="csl-entry">
+Høyland, Bjørn, and Martin Søyland. 2019. <span>“Electoral Reform and Parliamentary Debates.”</span> <em>Legislative Studies Quarterly</em> 44 (4): 593–615. <a href="https://doi.org/10.1111/lsq.12237">https://doi.org/10.1111/lsq.12237</a>.
+</div>
+<div id="ref-Joergensen2019" class="csl-entry">
+Jørgensen, Fredrik, Tobias Aasmoe, Anne-Stine Ruud Husevåg, Lilja Øvrelid, and Erik Velldal. 2019. <span>“NorNE: Annotating Named Entities for Norwegian.”</span> arXiv. <a href="https://arxiv.org/abs/1911.12146">https://arxiv.org/abs/1911.12146</a>.
+</div>
+<div id="ref-Jurafsky2021b" class="csl-entry">
+Jurafsky, Daniel, and James H. Martin. 2021. <em>Speech and Language Processing</em>. Online draft. <a href="https://web.stanford.edu/~jurafsky/slp3/">https://web.stanford.edu/~jurafsky/slp3/</a>.
+</div>
+<div id="ref-Lauderdale2016" class="csl-entry">
+Lauderdale, Benjamin E., and Alexander Herzog. 2016. <span>“Measuring Political Positions from Legislative Speech.”</span> <em>Political Analysis</em> 24 (3): 374–94. <a href="https://doi.org/10.1093/pan/mpw017">https://doi.org/10.1093/pan/mpw017</a>.
+</div>
+<div id="ref-Laver2003" class="csl-entry">
+Laver, Michael, Kenneth Benoit, and John Garry. 2003. <span>“<span>E</span>xtracting <span>P</span>olicy <span>P</span>ositions from <span>P</span>olitical <span>T</span>exts <span>U</span>sing <span>W</span>ords as <span>D</span>ata.”</span> <em>American Political Science Review</em> 97 (02): 311–31.
+</div>
+<div id="ref-liu_introduction_2015" class="csl-entry">
+Liu, Bing. 2015a. <span>“Introduction.”</span> In <em>Sentiment Analysis: Mining Opinions, Sentiments, and Emotions</em>, 1–15. Cambridge University Press. <a href="https://www.cambridge.org/core/books/sentiment-analysis/3F0F24BE12E66764ACE8F179BCDA42E9">https://www.cambridge.org/core/books/sentiment-analysis/3F0F24BE12E66764ACE8F179BCDA42E9</a>.
+</div>
+<div id="ref-liu_problem_2015" class="csl-entry">
+———. 2015b. <span>“The Problem of Sentiment Analysis.”</span> In <em>Sentiment Analysis: Mining Opinions, Sentiments, and Emotions</em>, 16–46. Cambridge University Press. <a href="https://www.cambridge.org/core/services/aop-cambridge-core/content/view/A0AFE2C49D72C5914C34DAC763BCD931/9781139084789c2_p16-46_CBO.pdf/problem_of_sentiment_analysis.pdf">https://www.cambridge.org/core/services/aop-cambridge-core/content/view/A0AFE2C49D72C5914C34DAC763BCD931/9781139084789c2_p16-46_CBO.pdf/problem_of_sentiment_analysis.pdf</a>.
+</div>
+<div id="ref-Lowe2017" class="csl-entry">
+Lowe, Will. 2017. <span>“Understanding Wordscores.”</span> <em>Political Analysis</em> 16 (4): 356–71. <a href="https://doi.org/10.1093/pan/mpn004">https://doi.org/10.1093/pan/mpn004</a>.
+</div>
+<div id="ref-Lucas2015" class="csl-entry">
+Lucas, Christopher, Richard A. Nielsen, Margaret E. Roberts, Brandon M. Stewart, Alex Storer, and Dustin Tingley. 2015. <span>“Computer-<span>A</span>ssisted <span>T</span>ext <span>A</span>nalysis for <span>C</span>omparative <span>P</span>olitics.”</span> <em>Political Analysis</em> 23 (2): 254–77. <a href="https://doi.org/10.1093/pan/mpu019">https://doi.org/10.1093/pan/mpu019</a>.
+</div>
+<div id="ref-muchlinski_siroky_he_kocher_2016" class="csl-entry">
+Muchlinski, David, David Siroky, Jingrui He, and Matthew Kocher. 2016. <span>“Comparing Random Forest with Logistic Regression for Predicting Class-Imbalanced Civil War Onset Data.”</span> <em>Political Analysis</em> 24 (1): 87–103. <a href="https://doi.org/10.1093/pan/mpv024">https://doi.org/10.1093/pan/mpv024</a>.
+</div>
+<div id="ref-Pang2008" class="csl-entry">
+Pang, Bo, Lillian Lee, et al. 2008. <span>“Opinion Mining and Sentiment Analysis.”</span> <em>Foundations and Trends<span></span> in Information Retrieval</em> 2 (1–2): 1–135. <a href="https://www.cs.cornell.edu/home/llee/omsa/omsa.pdf">https://www.cs.cornell.edu/home/llee/omsa/omsa.pdf</a>.
+</div>
+<div id="ref-Peterson2018" class="csl-entry">
+Peterson, Andrew, and Arthur Spirling. 2018. <span>“<span>C</span>lassification <span>A</span>ccuracy as a <span>S</span>ubstantive <span>Q</span>uantity of <span>I</span>nterest: <span>M</span>easuring <span>P</span>olarization in <span>W</span>estminster <span>S</span>ystems.”</span> <em>Political Analysis</em> 26 (1).
+</div>
+<div id="ref-Roberts2014" class="csl-entry">
+Roberts, Margaret E., Brandon M. Stewart, Dustin Tingley, Christopher Lucas, Jetson Leder-Luis, Shana Kushner Gadarian, Bethany Albertson, and David G. Rand. 2014. <span>“<span>S</span>tructural <span>T</span>opic <span>M</span>odels for <span>O</span>pen-<span>E</span>nded <span>S</span>urvey <span>R</span>esponses.”</span> <em>American Journal of Political Science</em> 58 (4): 1064–82.
+</div>
+<div id="ref-Silge2017" class="csl-entry">
+Silge, Julia, and David Robinson. 2017. <em>Text Mining with <span>R</span>: A Tidy Approach</em>. O’Reilly Media, Inc. <a href="https://www.tidytextmining.com/">https://www.tidytextmining.com/</a>.
+</div>
+<div id="ref-Slapin2008" class="csl-entry">
+Slapin, Jonathan B., and Sven-Oliver Proksch. 2008. <span>“<span>A</span> <span>S</span>caling <span>M</span>odel for <span>E</span>stimating <span>T</span>ime-<span>S</span>eries <span>P</span>arty <span>P</span>ositions from <span>T</span>exts.”</span> <em>American Journal of Political Science</em> 52 (3): 705–22.
+</div>
+<div id="ref-Soeyland2022" class="csl-entry">
+Søyland, Martin. 2022. <em>Stortingscrape: <span>S</span>crape and Structure Raw Data from the <span>N</span>orwegian Parliament’s API</em>. <a href="https://github.com/martigso/stortingscrape">https://github.com/martigso/stortingscrape</a>.
+</div>
+<div id="ref-datastortinget2022" class="csl-entry">
+Stortinget. 2022. <em>Stortingets Datatjeneste</em>. <a href="https://data.stortinget.no">https://data.stortinget.no</a>.
+</div>
+<div id="ref-Wickham2016" class="csl-entry">
+Wickham, Hadley. 2016. <em>Ggplot2: Elegant Graphics for Data Analysis</em>. Springer. <a href="https://ggplot2-book.org/">https://ggplot2-book.org/</a>.
+</div>
+<div id="ref-Wickham2020" class="csl-entry">
+———. 2020. <em>Httr: Tools for Working with URLs and HTTP</em>. <a href="https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html">https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html</a>.
+</div>
+<div id="ref-Wilkerson2017" class="csl-entry">
+Wilkerson, John, and Andreu Casas. 2017. <span>“Large-Scale Computerized Text Analysis in Political Science: Opportunities and Challenges.”</span> <em>Annual Review of Political Science</em> 20 (1): 529–44. <a href="https://doi.org/10.1146/annurev-polisci-052615-025542">https://doi.org/10.1146/annurev-polisci-052615-025542</a>.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="cross.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/01-undervisning.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

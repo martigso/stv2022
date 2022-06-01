@@ -1,0 +1,26 @@
+--- 
+title: "STV2022 -- Store tekstdata"
+date: "`r Sys.Date()`"
+author: Solveig Bjørkholt og Martin Søyland
+site: bookdown::bookdown_site
+bibliography: [stv2022.bib, book.bib, packages.bib]
+documentclass: book
+# url: your book url like https://bookdown.org/yihui/bookdown
+# cover-image: path to the social sharing image like images/cover.jpg
+description: |
+  Sett inn en beskrivelse her.
+link-citations: yes
+github-repo: martigso/stv2022
+---
+
+# Introduksjon
+
+Velkommen til STV2022 -- Store teksdata!
+
+Hvordan samler man effektivt og redelig store mengder politiske tekster? Hva må til for å gjøre slike tekster klare for analyse? Og hvordan kan vi analysere tekstene?
+
+Politikere og politiske partier produserer store mengder tekst hver dag. Om det er gjennom debatter, taler på Stortinget, lovforslag fra regjeringen, høringer, offentlige utredninger med mer, er digitaliserte politiske tekster i det offentlige blitt mer tilgjengelig de siste tiårene. Dette har åpnet et mulighetsrom for tekstanalyse som ikke var mulig/veldig vanskelig og tidkrevende før.
+
+Det kan ofte være vanskelig å finne mønster som kan svare på spørsmål og teorier vi har i statsvitenskap i disse store tekstsamlingene. Derfor kan vi se til metoder innenfor maskinlæring for å analysere store samlinger av tekst systematisk. Samtidig er ikke alltid digitaliserte politiske tekster er tilrettelagt for å analysers direkte. I disse tilfellene er god strukturering av rådata viktig.
+
+I dette kurset vil du lære å søke i store mengder dokumenter, oppsummere disse på meningsfulle måter og indentifisere riktige analysemetoder for å teste statsvitenskaplige teorier. Kurset vil dekke samling av store volum tekst fra offentlige kilder, strukturering og klargjøring av tekst for analyse og kvantitative tekstanalysemetoder.

@@ -26,15 +26,14 @@ library(tidyverse)
 
 ```
 
-
 # Introduksjon
 
 Her er intro
 
 ## Nyttige ressurser
 
-- [Arbeidsbøker for R ved UiO](https://shinyibv02.uio.no/connect/#/apps/55/access)
-- [R materiale for STV1020](https://github.com/liserodland/STV1020)
+-   [Arbeidsbøker for R ved UiO](https://shinyibv02.uio.no/connect/#/apps/55/access)
+-   [R materiale for STV1020](https://github.com/liserodland/STV1020)
 
 # Skrape data
 
@@ -93,8 +92,6 @@ bow[sample(1:length(bow))]
 
 ```
 
-
-
 ## Fjerne trekk?
 
 ### Punktsetting
@@ -107,9 +104,6 @@ bow[sample(1:length(bow))]
 
 ### Lemmatisering
 
-
 ## ngrams
 
 ## Taledeler (parts of speech)
-
-

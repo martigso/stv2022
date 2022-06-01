@@ -20,7 +20,6 @@ editor_options:
 
 ---
 
-#  {data-background-gradient="inear-gradient(to right, #2274cc 0%,#26c5d3 36%,#61bf61 100%); /* W3C, IE10+, FF16+, Chrome26+,  Opera12+, Safari7+ */"}
 
 
 <font size=12>STV2022 -- Store tekstdata</font></br>
@@ -58,16 +57,16 @@ library(tidyverse)
 ## Forelesninger {data-background=eq.png}
 
 
-1. <p style='background-color:black; color:#24D4A7'>Intro! (uke 34)</p>
-2. <p style='background-color:black; color:#D13F11'>Anskaffelse og innlasting av tekst  (uke 35)</p>
-3. <p style='background-color:black; color:#D13F11'>Forbehandling av tekst 1 (uke 36)</p>
-4. <p style='background-color:black; color:#D13F11'>Forbehandling av tekst 2 (uke 37)</p>
-5. <p style='background-color:black; color:#5B28D4'>Bruke API (Stortinget) (uke 38)</p>
-6. <p style='background-color:black; color:#42D225'>Veiledet versus ikke-veiledet læring (uke 41)</p>
-7. <p style='background-color:black; color:#42D225'>Ordbøker, tekstlikhet og sentiment (uke 42)</p>
-8. <p style='background-color:black; color:#42D225'>Klassifisering av tekst -- temamodellering (uke 43)</p>
-9. <p style='background-color:black; color:#42D225'>Estimere latent posisjon fra tekst (uke 44)</p>
-10. <p style='background-color:black; color:#24D4A7'>Oppsummering! (uke 46)</p>
+1. <p style='color:#24D4A7'>Intro! (uke 34)</p>
+2. <p style='color:#D13F11'>Anskaffelse og innlasting av tekst  (uke 35)</p>
+3. <p style='color:#D13F11'>Forbehandling av tekst 1 (uke 36)</p>
+4. <p style='color:#D13F11'>Forbehandling av tekst 2 (uke 37)</p>
+5. <p style='color:#5B28D4'>Bruke API (Stortinget) (uke 38)</p>
+6. <p style='color:#42D225'>Veiledet versus ikke-veiledet læring (uke 41)</p>
+7. <p style='color:#42D225'>Ordbøker, tekstlikhet og sentiment (uke 42)</p>
+8. <p style='color:#42D225'>Klassifisering av tekst -- temamodellering (uke 43)</p>
+9. <p style='color:#42D225'>Estimere latent posisjon fra tekst (uke 44)</p>
+10. <p style='color:#24D4A7'>Oppsummering! (uke 46)</p>
 
 
 ## Seminarer {data-background=rkode.png}
@@ -84,28 +83,39 @@ library(tidyverse)
 
 Hvordan gjøre...
 
-1. ... scraping
-2. ... preprosessering
-3. ... visualisering
-4. ... modellering 1
-5. ... modellering 2
+1. ... scraping (uke 36)
+2. ... preprosessering (uke 38)
+3. ... visualisering (uke 43)
+4. ... modellering 1 (uke 44)
+5. ... modellering 2 (uke 46)
 
 
 
 </div>
 
 ## Pensum {data-background=book.jpg}
+
+<div class='left' style='float:left;width:35%'>
+
+</div>
+
+. . .
+
+<div class='right' style='float:right;width:60%'>
+
 <font size=5>
 
 - <p style='background-color:rgba(0, 0, 0, .7); color:#D1B41B'>`r capture.output(print(refs["Grimmer2022"]))`</p>
     - <p style='background-color:rgba(0, 0, 0, .7); color:#ffffff'>Grunnbok!</p>
 - <p style='background-color:rgba(0, 0, 0, .7); color:#D1B41B'>`r capture.output(print(refs["Silge2017"]))`</p>
-    - <p style='background-color:rgba(0, 0, 0, .7); color:#00807D'>Tidy tekstformat</p>
+    - <p style='background-color:rgba(0, 0, 0, .7); color:#ffffff'>Tidy tekstformat</p>
 - <p style='background-color:rgba(0, 0, 0, .7); color:#D1B41B'>`r capture.output(print(refs["Benoit2017"]))`</p>
-    - <p style='background-color:rgba(0, 0, 0, .7); color:#00807D'>Tekstmodellering</p>
+    - <p style='background-color:rgba(0, 0, 0, .7); color:#ffffff'>Tekstmodellering</p>
 - <p style='background-color:rgba(0, 0, 0, .7); color:#D1B41B'>\+ En hau med artikler og mindre bidrag</p>
     
 </font>
+
+</div>
 
 # Prosessen
 
@@ -127,17 +137,17 @@ Hvordan gjøre...
 1. Analysere data
     - Kan vi gjøre slutninger?
 
-## <font color="white">\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Finne og hente data</font> {data-background=genius.png data-background-size="2500px"}
+## <font color="white">\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Finne og hente data</font> {data-background=genius.png data-background-size="1900px"}
 
 </br></br>
 
-<div class='left' style='float:left;width:30%'>
+<div class='left' style='float:left;width:35%'>
 
 </div>
 
 . . .
 
-<div class='right' style='float:right;width:65%'>
+<div class='right' style='float:right;width:60%'>
 
 <font size=5>
 
@@ -216,7 +226,77 @@ no4 %>%
 
 
 
-## Strukturere og preprosessere data
+## Fra tekst til tall
+
+<div class='left' style='float:left;width:50%'>
+
+```{r unnest, echo=TRUE}
+# Grunnpakke for tekstprosessering
+library(tidytext) 
+
+no4_tokens <- no4 %>% 
+  group_by(spor) %>% 
+  unnest_tokens(output = ord, 
+                input = tekst) %>% 
+  count(ord)
+
+no4_tokens %>% head(6)
+
+```
+
+</div>
+
+. . .
+
+<div class='right' style='float:right;width:50%'>
+
+```{r top_ord, echo=TRUE}
+no4_tokens %>%
+  select(spor, ord, n) %>% 
+  slice_max(n = 1, 
+            order_by = n, 
+            with_ties = FALSE)
+```
+
+
+</div>
+
+## Fra tekst til tall (uten stoppord)
+
+<div class='left' style='float:left;width:50%'>
+
+```{r unnest2, echo=TRUE}
+# Grunnpakke for tekstprosessering
+library(tidytext) 
+
+no4_tokens <- no4 %>% 
+  group_by(spor) %>% 
+  unnest_tokens(output = ord, 
+                input = tekst) %>% 
+  count(ord) %>% 
+  filter(ord %in% quanteda::stopwords("no") == FALSE)
+
+no4_tokens %>% head(6)
+
+```
+
+</div>
+
+. . .
+
+<div class='right' style='float:right;width:50%'>
+
+```{r top_ord2, echo=TRUE}
+no4_tokens %>%
+  select(spor, ord, n) %>% 
+  slice_max(n = 1, 
+            order_by = n, 
+            with_ties = FALSE)
+```
+
+
+</div>
+
 
 ## Visualisere data
 

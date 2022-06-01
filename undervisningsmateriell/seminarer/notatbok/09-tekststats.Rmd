@@ -1,0 +1,9 @@
+# Tekststatistikk {#tekststats}
+
+## Likhet
+
+## Avstand
+
+## Lesbarhet
+
+## Uttrykk
