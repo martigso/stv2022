@@ -15,19 +15,30 @@ bibliography: stv2022.bib
 csl: american-political-science-association.csl
 ---
 
-
 <!-- --- -->
+
 <!-- title: "STV2022 -- Store tekstdata" -->
+
 <!-- author: Solveig Bjørkholt og Martin Søyland -->
+
 <!-- output: -->
+
 <!--   rmdformats::readthedown -->
+
 <!--     downcute_theme: chaos -->
+
 <!--     highlight: breezedark -->
+
 <!--     number_sections: true -->
+
 <!--     toc: true -->
+
 <!--     toc_float: -->
+
 <!--       collapsed: true -->
+
 <!--       smooth_scroll: true -->
+
 <!-- --- -->
 
 ```{r setup, echo=FALSE, message=FALSE, error=FALSE}
@@ -36,8 +47,7 @@ library(tidyverse)
 
 ```
 
-
-# Introduksjon
+# Introduksjon {#introduksjon}
 
 Velkommen til STV2022 -- Store teksdata!
 
@@ -51,14 +61,14 @@ I dette kurset vil du lære å søke i store mengder dokumenter, oppsummere dis
 
 # Undervisning
 
-Under beskrives undervisningen i STV2022. 
+Under beskrives undervisningen i STV2022.
 
 ## Forelesninger
 
 Kurset har 10 forelesninger:
 
 1.  [Intro!](#introduksjon) (uke 34)
-2.  [Anskaffelse](#anskaff) og [innlasting av tekst](#lastetekst)  (uke 35)
+2.  [Anskaffelse](#anskaff) og [innlasting av tekst](#lastetekst) (uke 35)
 3.  [Forbehandling av tekst 1](#prepros) (uke 36)
 4.  [Forbehandling av tekst 2](#prepros) (uke 37)
 5.  [Bruke API](#anskaff) (Stortinget) (uke 38)
@@ -76,49 +86,47 @@ Det er sterkt anbefalt at man ser over pensum før forelesning og seminar.
 
 Under er en liste over bidrag som vil bli dekket kontinuerlig gjennom hele kurset:
 
-1. @Silge2017
-2. @Grimmer2022
-3. @Benoit2017
-2. @Jurafsky2021b (anbefalt)
-4. @Wickham2016 (anbefalt)
+1.  @Silge2017
+2.  @Grimmer2022
+3.  @Benoit2017
+4.  @Jurafsky2021b (anbefalt)
+5.  @Wickham2016 (anbefalt)
 
 ### Uke 34. Introduksjon (Solveig og Martin)
 
-Den første uken vil vi fokusere på de genrelle konseptene innenfor kvantitativ tekstanalyse, prosessen med å gå fra rå tekst til slutningsanalyse, potensielle fallgruver, med mer. 
+Den første uken vil vi fokusere på de genrelle konseptene innenfor kvantitativ tekstanalyse, prosessen med å gå fra rå tekst til slutningsanalyse, potensielle fallgruver, med mer.
 
-1. @Grimmer2022 kap. 1-2 og 22 (36 sider)
-2. @Lucas2015 (24 sider)
-3. @Silge2017 kap. 1 (9 sider)
-4. @Pang2008 kap. 1 (10 sider)
+1.  @Grimmer2022 kap. 1-2 og 22 (36 sider)
+2.  @Lucas2015 (24 sider)
+3.  @Silge2017 kap. 1 (9 sider)
+4.  @Pang2008 kap. 1 (10 sider)
 
 ### Uke 35. Anskaffelse og innlasting av tekst (Martin)
 
-1. @Grimmer2022 kap. 3-4 (14 sider)
-1. @Cooksey2014 kap. 1 (4 sider)
-2. @Wickham2020 (8 sider)
-3. @Hoyland2019 (22 sider)
+1.  @Grimmer2022 kap. 3-4 (14 sider)
+2.  @Cooksey2014 kap. 1 (4 sider)
+3.  @Wickham2020 (8 sider)
+4.  @Hoyland2019 (22 sider)
 
 ### Uke 36. Forbehandling av tekst 1 (Martin)
 
-1. @Grimmer2022 kap. 5 (11 sider)
-1. @Silge2017 kap. 3 (9 sider)
-3. @Joergensen2019 (10 sider)
-4. @Barnes2019 (12 sider)
-5. @Benoit2020 (11 sider)
-
+1.  @Grimmer2022 kap. 5 (11 sider)
+2.  @Silge2017 kap. 3 (9 sider)
+3.  @Joergensen2019 (10 sider)
+4.  @Barnes2019 (12 sider)
+5.  @Benoit2020 (11 sider)
 
 ### Uke 37. Forbehandling av tekst 2 (Solveig)
 
-1. @Grimmer2022 kap. 9 (7 sider)
-1. @Silge2017 kap. 4 (15 sider)
-3. @Denny2018 (21 sider)
+1.  @Grimmer2022 kap. 9 (7 sider)
+2.  @Silge2017 kap. 4 (15 sider)
+3.  @Denny2018 (21 sider)
 
 ### Uke 38. Bruke API -- Case: Stortinget (Martin)
 
-1. @datastortinget2022 (1 sider)
-2. @Soeyland2022 (1 sider)
-3. @Finseraas2021 (10 sider)
-
+1.  @datastortinget2022 (1 sider)
+2.  @Soeyland2022 (1 sider)
+3.  @Finseraas2021 (10 sider)
 
 ### Uke 39. INGEN UNDERVISNING
 
@@ -126,61 +134,54 @@ Den første uken vil vi fokusere på de genrelle konseptene innenfor kvantitativ
 
 ### Uke 41. Veiledet læring og ikke-veiledet læring (Solveig)
 
-1. @Grimmer2022 kap. 10 og 17 (24 sider)
-1. @dorazio_separating_2014 (18 sider)
-2. @feldman_sanger_20061 (17 sider)
-3. @feldman_sanger_20062 (11 sider)
-4. @muchlinski_siroky_he_kocher_2016 (16 sider)
+1.  @Grimmer2022 kap. 10 og 17 (24 sider)
+2.  @dorazio_separating_2014 (18 sider)
+3.  @feldman_sanger_20061 (17 sider)
+4.  @feldman_sanger_20062 (11 sider)
+5.  @muchlinski_siroky_he_kocher_2016 (16 sider)
 
 ### Uke 42. Ordbøker, tekstlikhet og sentiment (Solveig)
 
-1. @Grimmer2022 kap. 7 og 16 (12 sider)
-1. @Silge2017 kap. 2 (11 sider)
-2. @Pang2008 kap. 3-4 (26 sider)
-3. @liu_introduction_2015 (15 sider)
-4. @liu_problem_2015 (30 sider)
-
+1.  @Grimmer2022 kap. 7 og 16 (12 sider)
+2.  @Silge2017 kap. 2 (11 sider)
+3.  @Pang2008 kap. 3-4 (26 sider)
+4.  @liu_introduction_2015 (15 sider)
+5.  @liu_problem_2015 (30 sider)
 
 ### Uke 43. Klassifisering av tekst -- Temamodellering (Martin)
 
-1. @Grimmer2022 kap. 13 og  (13 sider)
-1. @Blei2012 (8 sider)
-2. @Silge2017 kap. 6 (14 sider)
-3. @Roberts2014 (19 sider)
+1.  @Grimmer2022 kap. 13 og (13 sider)
+2.  @Blei2012 (8 sider)
+3.  @Silge2017 kap. 6 (14 sider)
+4.  @Roberts2014 (19 sider)
 
 ### Uke 44. Estimere latent posisjon fra tekst (Solveig)
 
-1. @Laver2003 (20 sider)
-2. @Slapin2008 (18 sider)
-3. @Lowe2017 (15 sider)
-4. @Lauderdale2016 (20 sider)
-3. @Peterson2018 (8 sider)
-
+1.  @Laver2003 (20 sider)
+2.  @Slapin2008 (18 sider)
+3.  @Lowe2017 (15 sider)
+4.  @Lauderdale2016 (20 sider)
+5.  @Peterson2018 (8 sider)
 
 ### Uke 46. Oppsummering (Solveig og Martin)
 
-1. @Grimmer2022 kap 28 (5 sider)
-1. @Wilkerson2017 (19 sider)
-
-
+1.  @Grimmer2022 kap 28 (5 sider)
+2.  @Wilkerson2017 (19 sider)
 
 ## Seminarer
 
-- **Seminar 1: Anskaffe tekst og lage dtm i R**
-- **Seminar 2: Preprosessering av tekstdata i R**
-- **Seminar 3: Sup vs. unsup i R**
-- **Seminar 4: Modelleringsmetoder i R**
-- **Seminar 5: Fra tekst til funn -- Q&A/Oppg.hjelp**
-
+-   **Seminar 1: Anskaffe tekst og lage dtm i R**
+-   **Seminar 2: Preprosessering av tekstdata i R**
+-   **Seminar 3: Sup vs. unsup i R**
+-   **Seminar 4: Modelleringsmetoder i R**
+-   **Seminar 5: Fra tekst til funn -- Q&A/Oppg.hjelp**
 
 ## Nyttige ressurser
 
-- [Arbeidsbøker for R ved UiO](https://shinyibv02.uio.no/connect/#/apps/55/access)
-- [R materiale for STV1020](https://github.com/liserodland/STV1020)
-
+-   [Arbeidsbøker for R ved UiO](https://shinyibv02.uio.no/connect/#/apps/55/access)
+-   [R materiale for STV1020](https://github.com/liserodland/STV1020)
 
 # Anskaffelse av tekst {#anskaff}
-
 
 ## .html-skraping
 
@@ -227,7 +228,6 @@ bow[sample(1:length(bow))]
 
 De fleste (som ikke kan sangen fra før) vil ha vanskelig å forstå hva den egentlig handler om bare ved å se på dette. Vi kan identifisere meningsbærende ord som "Oslofjorden", "Grille", "trampoline", "dragepust", med mer. Likevel er det vanskelig å skjønne hva låtskriveren egentlig vil formidle med denne teksten. Det er dette som gjør "sekk med ord"-antagelsen veldig streng. Språk er veldig komplekst og ordene i en tekst kan endre mening drastisk bare ved å se på en liten del av konteksten de dukker opp i. Om vi bare ser på linjen som inneholder orded "dragepust", innser vi fort at konteksten rundt ordet gir oss et veldig tydelig bilde av hva låtskriveren mener med akkurat den linjen:
 
-
 ```{r dragepust}
 
 regndans[which(str_detect(regndans, "dragepust"))]
@@ -240,13 +240,9 @@ Likevel gir det oss ikke et godt bilde på hva teksten handler om i sin helhet. 
 cat(paste(regndans, collapse = "\n"))
 ```
 
-
-Nå teksten gir mening! Tolkninger kan selvfølgelig variere fra individ til individ og den "riktige" tolkningen, er det bare forfatteren som vet hva er. Personlig tolker jeg denne teksten som et utløp for frustrasjon under corona-pandemien, og prospektene ved livet når samfunnet gjenåpnes, fordi jeg hørte den for første gang under nedstengningen. 
-
-
+Nå teksten gir mening! Tolkninger kan selvfølgelig variere fra individ til individ og den "riktige" tolkningen, er det bare forfatteren som vet hva er. Personlig tolker jeg denne teksten som et utløp for frustrasjon under corona-pandemien, og prospektene ved livet når samfunnet gjenåpnes, fordi jeg hørte den for første gang under nedstengningen.
 
 <!-- mange gifte par vs. gifte et par -->
-
 
 ## Fjerne trekk?
 
@@ -263,7 +259,6 @@ Nå teksten gir mening! Tolkninger kan selvfølgelig variere fra individ til ind
 ## ngrams
 
 ## Taledeler (parts of speech)
-
 
 # Veildedet læring {#sup}
 
@@ -283,18 +278,12 @@ Nå teksten gir mening! Tolkninger kan selvfølgelig variere fra individ til ind
 
 # Sentiment {#sentiment}
 
-
 ## NorSentLex
 
 # Temamodellering {#topicmod}
-
 
 # Latente posisjoner {#posisjon}
 
 # Oppsummering {#oppsummering}
 
-
-`r if (knitr::is_html_output()) '
-# Referanser {-}
-'`
-
+`r if (knitr::is_html_output()) ' # Referanser {-} '`
