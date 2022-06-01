@@ -2,7 +2,9 @@
 title: "STV2022 -- Store tekstdata"
 date: "`r Sys.Date()`"
 author: Solveig Bjørkholt og Martin Søyland
-github: https://github.com/martigso/stv2022
+navbar:
+  right:
+    - href: https://github.com/martigso/stv2022
 output:
   rmdformats::downcute:
     self_contained: true
