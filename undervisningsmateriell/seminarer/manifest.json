@@ -704,14 +704,26 @@
     "data/regndans.txt": {
       "checksum": "dca3dbf588816b56aab69c0b9783413a"
     },
+    "index.html": {
+      "checksum": "e8bcdeb60ec51c5016972f1459699c33"
+    },
     "notatbok.html": {
-      "checksum": "a1cf9e9681e1260b2740dac727a2ccf7"
+      "checksum": "10851307fb365d97e548cbe8a623cca8"
     },
     "notatbok.Rmd": {
-      "checksum": "20d1c6ddc994cfcc223a7291f3847368"
+      "checksum": "2808928a6f647ab24b555f2ed369a700"
     },
     "stv2022.bib": {
-      "checksum": "5094e3c7ce528af39be88483f85135ed"
+      "checksum": "23b3d745d6a3b342d1a84b37b3200740"
+    },
+    "stv2022.bib.bak": {
+      "checksum": "c84d19725439dba8ee7f04ce839545c3"
+    },
+    "stv2022.bib.sav.tmp": {
+      "checksum": "64f742d90381980aea173b08b4c651e6"
+    },
+    "test.html": {
+      "checksum": "e8bcdeb60ec51c5016972f1459699c33"
     }
   },
   "users": null

@@ -296,7 +296,7 @@
 
 <<<<<<< HEAD
 
-@InCollection{Liu2015,
+@InCollection{liu_introduction_2015,
   author    = {Liu, Bing},
   booktitle = {Sentiment Analysis: Mining Opinions, Sentiments, and Emotions},
   publisher = {Cambridge University Press},
@@ -307,7 +307,7 @@
   url       = {https://www.cambridge.org/core/books/sentiment-analysis/3F0F24BE12E66764ACE8F179BCDA42E9},
 }
 
-@InCollection{Liu2015a,
+@InCollection{liu_problem_2015,
   author    = {Liu, Bing},
   booktitle = {Sentiment Analysis: Mining Opinions, Sentiments, and Emotions},
   publisher = {Cambridge University Press},
