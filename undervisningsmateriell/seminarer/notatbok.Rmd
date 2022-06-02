@@ -153,7 +153,7 @@ Preprosessering er ganske viktig.
 
 Ta for eksempel spor 6 på No.4-albumet vi allerede har jobbet med -- *Regndans i skinnjakke*. Hvis vi skal følge en vanlig antagelse i kvantitativ tekstanalyse -- "sekk med ord" eller *bag of words* -- skal vi kunne forstå innholdet i en tekst hvis vi deler opp teksten i segmenter, putter det i en pose, rister posen og tømmer det på et bord. Da vil denne sangen for eksempel se slik ut:
 
-```{r bow}
+```{r bow, tidy=TRUE, results='markup'}
 
 regndans <- readLines("./data/regndans.txt")
 
@@ -161,7 +161,7 @@ bow <- regndans %>% str_split("\\s") %>% unlist()
 
 set.seed(984301)
 
-bow[sample(1:length(bow))]
+cat(bow[sample(1:length(bow))])
 
 ```
 
@@ -181,9 +181,27 @@ cat(paste(regndans, collapse = "\n"))
 
 Nå teksten gir mening! Tolkninger kan selvfølgelig variere fra individ til individ og den "riktige" tolkningen, er det bare forfatteren som vet hva er. Personlig tolker jeg denne teksten som et utløp for frustrasjon under corona-pandemien, og prospektene ved livet når samfunnet gjenåpnes, fordi jeg hørte den for første gang under nedstengningen.
 
+Hovedpoenget med å vise dette er at *sekk med ord*-antagelsen er veldig streng og ofte veldig urealistisk. Tekster (og språk generelt) er ekstremt komplekst. Det kan variere mellom geografiske områder (nasjoner, dialekter, osv), aldersgrupper, arenaer (talestol, dialog, monolog, osv), og individuell stil. Oppi alt dette skal vi prøve å finne mønster som sier noe om likhet/ulikhet mellom tekster. Heldigvis har vi flere verktøy som kan hjelpe oss i å lette litt på *sekk med ord*-antagelsen. Men antagelsen vil likevel alltid være der, i en eller annen form. La oss se litt på hvilke teknikker vi kan bruke for å gjøre modellering av tekst noe mer omgripelig¸ men aller først skal vi se litt på hvilke trekk som muligens ikke gir oss så mye informasjon om det vi er ute etter, eller støy, som vi ofte vil fjerne.
+
 <!-- mange gifte par vs. gifte et par -->
 
 ## Fjerne trekk?
+
+```{r}
+library(tidytext)
+
+load("./data/no4.rda")
+
+no4_tokens <- no4 %>%
+  group_by(spor, titler) %>% 
+  unnest_tokens(output = token,
+                input = tekst) %>% 
+  count(token)
+
+no4_tokens %>% slice_max(n, n = 1, with_ties = FALSE)
+
+```
+
 
 ### Punktsetting
 
@@ -198,6 +216,7 @@ Nå teksten gir mening! Tolkninger kan selvfølgelig variere fra individ til ind
 ## ngrams
 
 ## Taledeler (parts of speech)
+
 
 # Veildedet læring {#sup}
 
@@ -229,7 +248,9 @@ Nå teksten gir mening! Tolkninger kan selvfølgelig variere fra individ til ind
 
 ```{r writeManifest, echo=FALSE, eval=FALSE}
 
-# Oppdaterer manifest
+# Oppdaterer manifest -- jeg tror vi må kjøre denne manuelt hver
+# gang før vi pusher til github. uio-serveren er hvertfall ikke fornøyd
+# når jeg ikke gjør det.
 rsconnect::writeManifest("./")
 
 ```

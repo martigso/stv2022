@@ -7,7 +7,7 @@
 
         <meta name="author" content="Solveig Bjørkholt og Martin Søyland" />
     
-        <meta name="date" content="2022-06-01" />
+        <meta name="date" content="2022-06-02" />
     
     <title>STV2022 – Store tekstdata</title>
 
@@ -1739,7 +1739,7 @@ Prism.languages.r={comment:/#.*/,string:{pattern:/(['"])(?:\\.|(?!\1)[^\\\r\n])*
            <span class="glyphicon glyphicon-user"></span> Solveig
 Bjørkholt og Martin Søyland
       </p>
-         <p class="date"><span class="glyphicon glyphicon-calendar"></span> 2022-06-01</p>
+         <p class="date"><span class="glyphicon glyphicon-calendar"></span> 2022-06-02</p>
            
 
    
@@ -2061,51 +2061,14 @@ segmenter, putter det i en pose, rister posen og tømmer det på et bord.
 Da vil denne sangen for eksempel se slik ut:</p>
 <pre class="r"><code>regndans &lt;- readLines(&quot;./data/regndans.txt&quot;)
 
-bow &lt;- regndans %&gt;% str_split(&quot;\\s&quot;) %&gt;% unlist()
+bow &lt;- regndans %&gt;%
+    str_split(&quot;\\s&quot;) %&gt;%
+    unlist()
 
 set.seed(984301)
 
-bow[sample(1:length(bow))]</code></pre>
-<pre><code>##   [1] &quot;begynner&quot;           &quot;kaffe&quot;              &quot;i&quot;                 
-##   [4] &quot;på&quot;                 &quot;Ta&quot;                 &quot;backflip&quot;          
-##   [7] &quot;Prøver&quot;             &quot;rustfarva,&quot;         &quot;når&quot;               
-##  [10] &quot;Gresstrå&quot;           &quot;Drikke&quot;             &quot;skinnjakke&quot;        
-##  [13] &quot;er&quot;                 &quot;I&quot;                  &quot;på&quot;                
-##  [16] &quot;I&quot;                  &quot;TV-middager&quot;        &quot;av&quot;                
-##  [19] &quot;Bare&quot;               &quot;Se&quot;                 &quot;med&quot;               
-##  [22] &quot;krystalliserer&quot;     &quot;mеd&quot;                &quot;hele&quot;              
-##  [25] &quot;Se&quot;                 &quot;Bjørkeblader&quot;       &quot;hele&quot;              
-##  [28] &quot;i&quot;                  &quot;i&quot;                  &quot;hjem&quot;              
-##  [31] &quot;i&quot;                  &quot;smilehulla&quot;         &quot;jeg&quot;               
-##  [34] &quot;livet&quot;              &quot;Tusen&quot;              &quot;varmluftsballonger&quot;
-##  [37] &quot;noen&quot;               &quot;dine&quot;               &quot;det&quot;               
-##  [40] &quot;i&quot;                  &quot;[?]&quot;                &quot;nå,&quot;               
-##  [43] &quot;opp&quot;                &quot;avgårde&quot;            &quot;bratwürst&quot;         
-##  [46] &quot;det&quot;                &quot;endorfinene&quot;        &quot;Hårfestet&quot;         
-##  [49] &quot;Gå&quot;                 &quot;Hasle&quot;              &quot;gule&quot;              
-##  [52] &quot;høsten,&quot;            &quot;ass&quot;                &quot;Oslofjorden&quot;       
-##  [55] &quot;gutt&quot;               &quot;og&quot;                 &quot;barnehager,&quot;       
-##  [58] &quot;alt&quot;                &quot;og&quot;                 &quot;løsne&quot;             
-##  [61] &quot;busskur&quot;            &quot;å&quot;                  &quot;året,&quot;             
-##  [64] &quot;[?]&quot;                &quot;Også&quot;               &quot;til&quot;               
-##  [67] &quot;Regndanse&quot;          &quot;T-banen&quot;            &quot;altså&quot;             
-##  [70] &quot;hundre&quot;             &quot;livet&quot;              &quot;Hente&quot;             
-##  [73] &quot;gråne&quot;              &quot;glass&quot;              &quot;blir&quot;              
-##  [76] &quot;rekke&quot;              &quot;begynner&quot;           &quot;Våkne&quot;             
-##  [79] &quot;dragepust&quot;          &quot;forbi&quot;              &quot;er&quot;                
-##  [82] &quot;hagle&quot;              &quot;tar&quot;                &quot;å&quot;                 
-##  [85] &quot;koppеr&quot;             &quot;i&quot;                  &quot;Løpe&quot;              
-##  [88] &quot;på&quot;                 &quot;å&quot;                  &quot;Hage&quot;              
-##  [91] &quot;Lage&quot;               &quot;si&quot;                 &quot;En&quot;                
-##  [94] &quot;øl,&quot;                &quot;Ikke&quot;               &quot;og&quot;                
-##  [97] &quot;en&quot;                 &quot;ass&quot;                &quot;flyet,&quot;            
-## [100] &quot;sammen&quot;             &quot;nabolaget&quot;          &quot;trampoline&quot;        
-## [103] &quot;ligge&quot;              &quot;Ringe&quot;              &quot;og&quot;                
-## [106] &quot;kveld&quot;              &quot;i&quot;                  &quot;fly&quot;               
-## [109] &quot;under&quot;              &quot;Nakenbade&quot;          &quot;går&quot;               
-## [112] &quot;Grille&quot;             &quot;kveld&quot;              &quot;hos&quot;               
-## [115] &quot;på&quot;                 &quot;seg&quot;                &quot;august&quot;            
-## [118] &quot;Botanisk&quot;</code></pre>
+cat(bow[sample(1:length(bow))])</code></pre>
+<pre><code>## begynner kaffe i på Ta backflip Prøver rustfarva, når Gresstrå Drikke skinnjakke er I på I TV-middager av Bare Se med krystalliserer mеd hele Se Bjørkeblader hele i i hjem i smilehulla jeg livet Tusen varmluftsballonger noen dine det i [?] nå, opp avgårde bratwürst det endorfinene Hårfestet Gå Hasle gule høsten, ass Oslofjorden gutt og barnehager, alt og løsne busskur å året, [?] Også til Regndanse T-banen altså hundre livet Hente gråne glass blir rekke begynner Våkne dragepust forbi er hagle tar å koppеr i Løpe på å Hage Lage si En øl, Ikke og en ass flyet, sammen nabolaget trampoline ligge Ringe og kveld i fly under Nakenbade går Grille kveld hos på seg august Botanisk</code></pre>
 <p>De fleste (som ikke kan sangen fra før) vil ha vanskelig å forstå hva
 den egentlig handler om bare ved å se på dette. Vi kan identifisere
 meningsbærende ord som “Oslofjorden”, “Grille”, “trampoline”,
@@ -2152,10 +2115,49 @@ som vet hva er. Personlig tolker jeg denne teksten som et utløp for
 frustrasjon under corona-pandemien, og prospektene ved livet når
 samfunnet gjenåpnes, fordi jeg hørte den for første gang under
 nedstengningen.</p>
+<p>Hovedpoenget med å vise dette er at <em>sekk med ord</em>-antagelsen
+er veldig streng og ofte veldig urealistisk. Tekster (og språk generelt)
+er ekstremt komplekst. Det kan variere mellom geografiske områder
+(nasjoner, dialekter, osv), aldersgrupper, arenaer (talestol, dialog,
+monolog, osv), og individuell stil. Oppi alt dette skal vi prøve å finne
+mønster som sier noe om likhet/ulikhet mellom tekster. Heldigvis har vi
+flere verktøy som kan hjelpe oss i å lette litt på <em>sekk med
+ord</em>-antagelsen. Men antagelsen vil likevel alltid være der, i en
+eller annen form. La oss se litt på hvilke teknikker vi kan bruke for å
+gjøre modellering av tekst noe mer omgripelig¸ men aller først skal vi
+se litt på hvilke trekk som muligens ikke gir oss så mye informasjon om
+det vi er ute etter, eller støy, som vi ofte vil fjerne.</p>
 <!-- mange gifte par vs. gifte et par -->
 </div>
 <div id="fjerne-trekk" class="section level2" number="5.2">
 <h2><span class="header-section-number">5.2</span> Fjerne trekk?</h2>
+<pre class="r"><code>library(tidytext)
+
+load(&quot;./data/no4.rda&quot;)
+
+no4_tokens &lt;- no4 %&gt;%
+  group_by(spor, titler) %&gt;% 
+  unnest_tokens(output = token,
+                input = tekst) %&gt;% 
+  count(token)
+
+no4_tokens %&gt;% slice_max(n, n = 1, with_ties = FALSE)</code></pre>
+<pre><code>## # A tibble: 12 × 4
+## # Groups:   spor, titler [12]
+##     spor titler                                     token       n
+##    &lt;int&gt; &lt;chr&gt;                                      &lt;chr&gt;   &lt;int&gt;
+##  1     1 Parentes                                   at          5
+##  2     2 En av de levende                           jeg        32
+##  3     3 Hvilket vi                                 hvilket    11
+##  4     4 Hold deg fast                              du         15
+##  5     5 Feil sted                                  du         27
+##  6     6 Regndanse i skinnjakke (Ft. Fredrik Høyer) i           9
+##  7     7 Hele livet (Ft. Fredrik Høyer)             oh         60
+##  8     8 Hjemme hos meg                             du         22
+##  9     9 Alt vi ikke er                             det        27
+## 10    10 Så lenge vi finnes                         finnes     40
+## 11    11 Du trenger ikke å bli stor                 du         14
+## 12    12 Våre beste år                              år         14</code></pre>
 <div id="punktsetting" class="section level3" number="5.2.1">
 <h3><span class="header-section-number">5.2.1</span> Punktsetting</h3>
 </div>
