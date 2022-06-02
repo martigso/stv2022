@@ -2131,33 +2131,16 @@ det vi er ute etter, eller støy, som vi ofte vil fjerne.</p>
 </div>
 <div id="fjerne-trekk" class="section level2" number="5.2">
 <h2><span class="header-section-number">5.2</span> Fjerne trekk?</h2>
-<pre class="r"><code>library(tidytext)
-
-load(&quot;./data/no4.rda&quot;)
-
-no4_tokens &lt;- no4 %&gt;%
-  group_by(spor, titler) %&gt;% 
-  unnest_tokens(output = token,
-                input = tekst) %&gt;% 
-  count(token)
-
-no4_tokens %&gt;% slice_max(n, n = 1, with_ties = FALSE)</code></pre>
-<pre><code>## # A tibble: 12 × 4
-## # Groups:   spor, titler [12]
-##     spor titler                                     token       n
-##    &lt;int&gt; &lt;chr&gt;                                      &lt;chr&gt;   &lt;int&gt;
-##  1     1 Parentes                                   at          5
-##  2     2 En av de levende                           jeg        32
-##  3     3 Hvilket vi                                 hvilket    11
-##  4     4 Hold deg fast                              du         15
-##  5     5 Feil sted                                  du         27
-##  6     6 Regndanse i skinnjakke (Ft. Fredrik Høyer) i           9
-##  7     7 Hele livet (Ft. Fredrik Høyer)             oh         60
-##  8     8 Hjemme hos meg                             du         22
-##  9     9 Alt vi ikke er                             det        27
-## 10    10 Så lenge vi finnes                         finnes     40
-## 11    11 Du trenger ikke å bli stor                 du         14
-## 12    12 Våre beste år                              år         14</code></pre>
+<!-- ```{r} -->
+<!-- library(tidytext) -->
+<!-- load("./data/no4.rda") -->
+<!-- no4_tokens <- no4 %>% -->
+<!--   group_by(spor, titler) %>%  -->
+<!--   unnest_tokens(output = token, -->
+<!--                 input = tekst) %>%  -->
+<!--   count(token) -->
+<!-- no4_tokens %>% slice_max(n, n = 1, with_ties = FALSE) -->
+<!-- ``` -->
 <div id="punktsetting" class="section level3" number="5.2.1">
 <h3><span class="header-section-number">5.2.1</span> Punktsetting</h3>
 </div>

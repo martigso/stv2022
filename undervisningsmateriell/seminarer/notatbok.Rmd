@@ -19,7 +19,7 @@ csl: american-political-science-association.csl
 library(stringr)
 library(dplyr)
 
-if("tidytext" %in% installed.packages() == FALSE) install.packages("tidytext")
+# if("tidytext" %in% installed.packages() == FALSE) install.packages("tidytext")
 
 ```
 
@@ -188,20 +188,22 @@ Hovedpoenget med å vise dette er at *sekk med ord*-antagelsen er veldig streng 
 
 ## Fjerne trekk?
 
-```{r}
-library(tidytext)
 
-load("./data/no4.rda")
+<!-- ```{r} -->
+<!-- library(tidytext) -->
 
-no4_tokens <- no4 %>%
-  group_by(spor, titler) %>% 
-  unnest_tokens(output = token,
-                input = tekst) %>% 
-  count(token)
+<!-- load("./data/no4.rda") -->
 
-no4_tokens %>% slice_max(n, n = 1, with_ties = FALSE)
+<!-- no4_tokens <- no4 %>% -->
+<!--   group_by(spor, titler) %>%  -->
+<!--   unnest_tokens(output = token, -->
+<!--                 input = tekst) %>%  -->
+<!--   count(token) -->
 
-```
+<!-- no4_tokens %>% slice_max(n, n = 1, with_ties = FALSE) -->
+
+<!-- ``` -->
+
 
 
 ### Punktsetting
