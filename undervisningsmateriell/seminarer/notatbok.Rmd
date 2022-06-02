@@ -19,6 +19,7 @@ csl: american-political-science-association.csl
 library(stringr)
 library(dplyr)
 
+if("tidytext" %in% installed.packages() == FALSE) install.packages("tidytext")
 
 ```
 
@@ -247,7 +248,7 @@ no4_tokens %>% slice_max(n, n = 1, with_ties = FALSE)
 `r if (knitr::is_html_output()) ' # Referanser {-} '`
 
 ```{r writeManifest, echo=FALSE, eval=FALSE}
-
+installed.packages()
 # Oppdaterer manifest -- jeg tror vi må kjøre denne manuelt hver
 # gang før vi pusher til github. uio-serveren er hvertfall ikke fornøyd
 # når jeg ikke gjør det.
