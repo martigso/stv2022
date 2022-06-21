@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Kapittel 8 Preprosessering | STV2022 – Store tekstdata</title>
+  <meta name="description" content="<p>Dette er en notatbok for implementering og forklaring av kode
+i STV2022</p>" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Kapittel 8 Preprosessering | STV2022 – Store tekstdata" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="<p>Dette er en notatbok for implementering og forklaring av kode
+i STV2022</p>" />
+  <meta name="github-repo" content="martigso/stv2022" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Kapittel 8 Preprosessering | STV2022 – Store tekstdata" />
+  
+  <meta name="twitter:description" content="<p>Dette er en notatbok for implementering og forklaring av kode
+i STV2022</p>" />
+  
+
+<meta name="author" content="Solveig Bjørkholt og Martin Søyland" />
+
+
+<meta name="date" content="2022-06-22" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="anskaff.html"/>
+<link rel="next" href="sup.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    background-color: #232629;
+    color: #7a7c7d;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d;  padding-left: 4px; }
+div.sourceCode
+  { color: #cfcfc2; background-color: #232629; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span { color: #cfcfc2; } /* Normal */
+code span.al { color: #95da4c; background-color: #4d1f24; font-weight: bold; } /* Alert */
+code span.an { color: #3f8058; } /* Annotation */
+code span.at { color: #2980b9; } /* Attribute */
+code span.bn { color: #f67400; } /* BaseN */
+code span.bu { color: #7f8c8d; } /* BuiltIn */
+code span.cf { color: #fdbc4b; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #3daee9; } /* Char */
+code span.cn { color: #27aeae; font-weight: bold; } /* Constant */
+code span.co { color: #7a7c7d; } /* Comment */
+code span.cv { color: #7f8c8d; } /* CommentVar */
+code span.do { color: #a43340; } /* Documentation */
+code span.dt { color: #2980b9; } /* DataType */
+code span.dv { color: #f67400; } /* DecVal */
+code span.er { color: #da4453; text-decoration: underline; } /* Error */
+code span.ex { color: #0099ff; font-weight: bold; } /* Extension */
+code span.fl { color: #f67400; } /* Float */
+code span.fu { color: #8e44ad; } /* Function */
+code span.im { color: #27ae60; } /* Import */
+code span.in { color: #c45b00; } /* Information */
+code span.kw { color: #cfcfc2; font-weight: bold; } /* Keyword */
+code span.op { color: #cfcfc2; } /* Operator */
+code span.ot { color: #27ae60; } /* Other */
+code span.pp { color: #27ae60; } /* Preprocessor */
+code span.re { color: #2980b9; background-color: #153042; } /* RegionMarker */
+code span.sc { color: #3daee9; } /* SpecialChar */
+code span.ss { color: #da4453; } /* SpecialString */
+code span.st { color: #f44f4f; } /* String */
+code span.va { color: #27aeae; } /* Variable */
+code span.vs { color: #da4453; } /* VerbatimString */
+code span.wa { color: #da4453; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">STV2022</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduksjon</a></li>
+<li class="chapter" data-level="2" data-path="om-kurset.html"><a href="om-kurset.html"><i class="fa fa-check"></i><b>2</b> Om kurset</a></li>
+<li class="chapter" data-level="3" data-path="oppbygging-av-arbeidsboken.html"><a href="oppbygging-av-arbeidsboken.html"><i class="fa fa-check"></i><b>3</b> Oppbygging av arbeidsboken</a></li>
+<li class="chapter" data-level="4" data-path="anbefalte-forberedelser.html"><a href="anbefalte-forberedelser.html"><i class="fa fa-check"></i><b>4</b> Anbefalte forberedelser</a></li>
+<li class="chapter" data-level="5" data-path="undervisning.html"><a href="undervisning.html"><i class="fa fa-check"></i><b>5</b> Undervisning</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="undervisning.html"><a href="undervisning.html#forelesninger"><i class="fa fa-check"></i><b>5.1</b> Forelesninger</a></li>
+<li class="chapter" data-level="5.2" data-path="undervisning.html"><a href="undervisning.html#seminarer"><i class="fa fa-check"></i><b>5.2</b> Seminarer</a></li>
+<li class="chapter" data-level="5.3" data-path="undervisning.html"><a href="undervisning.html#pensum"><i class="fa fa-check"></i><b>5.3</b> Pensum</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="lastetekst.html"><a href="lastetekst.html"><i class="fa fa-check"></i><b>6</b> Laste inn tekstdata</a></li>
+<li class="chapter" data-level="7" data-path="anskaff.html"><a href="anskaff.html"><i class="fa fa-check"></i><b>7</b> Anskaffelse av tekst</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="anskaff.html"><a href="anskaff.html#html-skraping"><i class="fa fa-check"></i><b>7.1</b> .html-skraping</a></li>
+<li class="chapter" data-level="7.2" data-path="anskaff.html"><a href="anskaff.html#xml-skraping"><i class="fa fa-check"></i><b>7.2</b> .xml-skraping</a></li>
+<li class="chapter" data-level="7.3" data-path="anskaff.html"><a href="anskaff.html#json-skraping"><i class="fa fa-check"></i><b>7.3</b> .json-skraping</a></li>
+<li class="chapter" data-level="7.4" data-path="anskaff.html"><a href="anskaff.html#curl"><i class="fa fa-check"></i><b>7.4</b> Curl</a></li>
+<li class="chapter" data-level="7.5" data-path="anskaff.html"><a href="anskaff.html#apier"><i class="fa fa-check"></i><b>7.5</b> APIer</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="prepros.html"><a href="prepros.html"><i class="fa fa-check"></i><b>8</b> Preprosessering</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="prepros.html"><a href="prepros.html#sekk-med-ord"><i class="fa fa-check"></i><b>8.1</b> Sekk med ord</a></li>
+<li class="chapter" data-level="8.2" data-path="prepros.html"><a href="prepros.html#fjerne-trekk"><i class="fa fa-check"></i><b>8.2</b> Fjerne trekk?</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="prepros.html"><a href="prepros.html#punktsetting"><i class="fa fa-check"></i><b>8.2.1</b> Punktsetting</a></li>
+<li class="chapter" data-level="8.2.2" data-path="prepros.html"><a href="prepros.html#stoppord"><i class="fa fa-check"></i><b>8.2.2</b> Stoppord</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="prepros.html"><a href="prepros.html#rotform-av-ord"><i class="fa fa-check"></i><b>8.3</b> Rotform av ord</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="prepros.html"><a href="prepros.html#stemming"><i class="fa fa-check"></i><b>8.3.1</b> Stemming</a></li>
+<li class="chapter" data-level="8.3.2" data-path="prepros.html"><a href="prepros.html#lemmatisering"><i class="fa fa-check"></i><b>8.3.2</b> Lemmatisering</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="prepros.html"><a href="prepros.html#ngrams"><i class="fa fa-check"></i><b>8.4</b> ngrams</a></li>
+<li class="chapter" data-level="8.5" data-path="prepros.html"><a href="prepros.html#taledeler-parts-of-speech"><i class="fa fa-check"></i><b>8.5</b> Taledeler (parts of speech)</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="sup.html"><a href="sup.html"><i class="fa fa-check"></i><b>9</b> Veildedet læring</a></li>
+<li class="chapter" data-level="10" data-path="unsup.html"><a href="unsup.html"><i class="fa fa-check"></i><b>10</b> Ikke-veiledet læring</a></li>
+<li class="chapter" data-level="11" data-path="ordboker.html"><a href="ordboker.html"><i class="fa fa-check"></i><b>11</b> Ordbøker</a></li>
+<li class="chapter" data-level="12" data-path="tekststats.html"><a href="tekststats.html"><i class="fa fa-check"></i><b>12</b> Tekststatistikk</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="tekststats.html"><a href="tekststats.html#likhet"><i class="fa fa-check"></i><b>12.1</b> Likhet</a></li>
+<li class="chapter" data-level="12.2" data-path="tekststats.html"><a href="tekststats.html#avstand"><i class="fa fa-check"></i><b>12.2</b> Avstand</a></li>
+<li class="chapter" data-level="12.3" data-path="tekststats.html"><a href="tekststats.html#lesbarhet"><i class="fa fa-check"></i><b>12.3</b> Lesbarhet</a></li>
+<li class="chapter" data-level="12.4" data-path="tekststats.html"><a href="tekststats.html#uttrykk"><i class="fa fa-check"></i><b>12.4</b> Uttrykk</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="sentiment.html"><a href="sentiment.html"><i class="fa fa-check"></i><b>13</b> Sentiment</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="sentiment.html"><a href="sentiment.html#norsentlex"><i class="fa fa-check"></i><b>13.1</b> NorSentLex</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="topicmod.html"><a href="topicmod.html"><i class="fa fa-check"></i><b>14</b> Temamodellering</a></li>
+<li class="chapter" data-level="15" data-path="posisjon.html"><a href="posisjon.html"><i class="fa fa-check"></i><b>15</b> Latente posisjoner</a></li>
+<li class="chapter" data-level="16" data-path="oppsummering.html"><a href="oppsummering.html"><i class="fa fa-check"></i><b>16</b> Oppsummering</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/martigso/stv2022" target="blank">Kildekode</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">STV2022 – Store tekstdata</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="prepros" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">Kapittel 8</span> Preprosessering<a href="prepros.html#prepros" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Preprosessering er ganske viktig.</p>
+<div id="sekk-med-ord" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> Sekk med ord<a href="prepros.html#sekk-med-ord" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><em>Alle</em> tekster er unike!</p>
+<p>Ta for eksempel spor 6 på No.4-albumet vi allerede har jobbet med – <em>Regndans i skinnjakke</em>. Hvis vi skal følge en vanlig antagelse i kvantitativ tekstanalyse – “sekk med ord” eller <em>bag of words</em> – skal vi kunne forstå innholdet i en tekst hvis vi deler opp teksten i segmenter, putter det i en pose, rister posen og tømmer det på et bord. Da vil denne sangen for eksempel se slik ut:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="prepros.html#cb1-1" aria-hidden="true" tabindex="-1"></a>regndans <span class="ot">&lt;-</span> <span class="fu">readLines</span>(<span class="st">&quot;./data/regndans.txt&quot;</span>)</span>
+<span id="cb1-2"><a href="prepros.html#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="prepros.html#cb1-3" aria-hidden="true" tabindex="-1"></a>bow <span class="ot">&lt;-</span> regndans <span class="sc">%&gt;%</span></span>
+<span id="cb1-4"><a href="prepros.html#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_split</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">s&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-5"><a href="prepros.html#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unlist</span>()</span>
+<span id="cb1-6"><a href="prepros.html#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="prepros.html#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">984301</span>)</span>
+<span id="cb1-8"><a href="prepros.html#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="prepros.html#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(bow[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(bow))])</span></code></pre></div>
+<pre><code>## begynner kaffe i på Ta backflip Prøver rustfarva, når Gresstrå Drikke skinnjakke er I på I TV-middager av Bare Se med krystalliserer mеd hele Se Bjørkeblader hele i i hjem i smilehulla jeg livet Tusen varmluftsballonger noen dine det i [?] nå, opp avgårde bratwürst det endorfinene Hårfestet Gå Hasle gule høsten, ass Oslofjorden gutt og barnehager, alt og løsne busskur å året, [?] Også til Regndanse T-banen altså hundre livet Hente gråne glass blir rekke begynner Våkne dragepust forbi er hagle tar å koppеr i Løpe på å Hage Lage si En øl, Ikke og en ass flyet, sammen nabolaget trampoline ligge Ringe og kveld i fly under Nakenbade går Grille kveld hos på seg august Botanisk</code></pre>
+<p>De fleste (som ikke kan sangen fra før) vil ha vanskelig å forstå hva den egentlig handler om bare ved å se på dette. Vi kan identifisere meningsbærende ord som “Oslofjorden”, “Grille”, “trampoline”, “dragepust”, med mer. Likevel er det vanskelig å skjønne hva låtskriveren egentlig vil formidle med denne teksten. Det er dette som gjør “sekk med ord”-antagelsen veldig streng. Språk er veldig komplekst og ordene i en tekst kan endre mening drastisk bare ved å se på en liten del av konteksten de dukker opp i. Om vi bare ser på linjen som inneholder orded “dragepust”, innser vi fort at konteksten rundt ordet gir oss et veldig tydelig bilde av hva låtskriveren mener med akkurat den linjen:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="prepros.html#cb3-1" aria-hidden="true" tabindex="-1"></a>regndans[<span class="fu">which</span>(<span class="fu">str_detect</span>(regndans, <span class="st">&quot;dragepust&quot;</span>))]</span></code></pre></div>
+<pre><code>## [1] &quot;Våkne opp mеd dragepust&quot;</code></pre>
+<p>Likevel gir det oss ikke et godt bilde på hva teksten handler om i sin helhet. Det får vi bare sett ved å se på hele teksten:</p>
+<pre><code>## I kveld er nå, og året, alt av det
+## Bare hele livet
+## Løpe under busskur når det begynner å hagle
+## Ikke rekke flyet, ligge sammen i Botanisk Hage
+## Nakenbade i Oslofjorden
+## Ringe på hos noen i nabolaget
+## Lage TV-middager
+## [?]
+## Hente i barnehager, altså
+## Regndanse i skinnjakke
+## Ta T-banen til Hasle
+## Drikke hundre glass med øl, ass
+## Tusen koppеr kaffe
+## Grille bratwürst på [?]
+## Våkne opp mеd dragepust
+## Se varmluftsballonger
+## Bjørkeblader i august blir gule
+## Også rustfarva, og løsne og fly avgårde
+## Gresstrå på høsten, ass
+## Hårfestet begynner å gråne
+## Gå hjem og går forbi
+## En gutt tar backflip på en trampoline
+## Se endorfinene krystalliserer seg i smilehulla dine
+## Prøver jeg å si
+## I kveld er hele livet</code></pre>
+<p>Nå teksten gir mening! Tolkninger kan selvfølgelig variere fra individ til individ og den “riktige” tolkningen, er det bare forfatteren som vet hva er. Personlig tolker jeg denne teksten som et utløp for frustrasjon under corona-pandemien, og prospektene ved livet når samfunnet gjenåpnes, fordi jeg hørte den for første gang under nedstengningen.</p>
+<p>Hovedpoenget med å vise dette er at <em>sekk med ord</em>-antagelsen er veldig streng og ofte veldig urealistisk. Tekster (og språk generelt) er ekstremt komplekst. Det kan variere mellom geografiske områder (nasjoner, dialekter, osv), aldersgrupper, arenaer (talestol, dialog, monolog, osv), og individuell stil. Oppi alt dette skal vi prøve å finne mønster som sier noe om likhet/ulikhet mellom tekster. Heldigvis har vi flere verktøy som kan hjelpe oss i å lette litt på <em>sekk med ord</em>-antagelsen. Men antagelsen vil likevel alltid være der, i en eller annen form. La oss se litt på hvilke teknikker vi kan bruke for å gjøre modellering av tekst noe mer omgripelig¸ men aller først skal vi se litt på hvilke trekk som muligens ikke gir oss så mye informasjon om det vi er ute etter, eller støy, som vi ofte vil fjerne.</p>
+<!-- mange gifte par vs. gifte et par -->
+</div>
+<div id="fjerne-trekk" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> Fjerne trekk?<a href="prepros.html#fjerne-trekk" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!-- ```{r} -->
+<!-- library(tidytext) -->
+<!-- load("./data/no4.rda") -->
+<!-- no4_tokens <- no4 %>% -->
+<!--   group_by(spor, titler) %>%  -->
+<!--   unnest_tokens(output = token, -->
+<!--                 input = tekst) %>%  -->
+<!--   count(token) -->
+<!-- no4_tokens %>% slice_max(n, n = 1, with_ties = FALSE) -->
+<!-- ``` -->
+<div id="punktsetting" class="section level3 hasAnchor" number="8.2.1">
+<h3><span class="header-section-number">8.2.1</span> Punktsetting<a href="prepros.html#punktsetting" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="stoppord" class="section level3 hasAnchor" number="8.2.2">
+<h3><span class="header-section-number">8.2.2</span> Stoppord<a href="prepros.html#stoppord" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+</div>
+<div id="rotform-av-ord" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> Rotform av ord<a href="prepros.html#rotform-av-ord" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="stemming" class="section level3 hasAnchor" number="8.3.1">
+<h3><span class="header-section-number">8.3.1</span> Stemming<a href="prepros.html#stemming" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="lemmatisering" class="section level3 hasAnchor" number="8.3.2">
+<h3><span class="header-section-number">8.3.2</span> Lemmatisering<a href="prepros.html#lemmatisering" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+</div>
+<div id="ngrams" class="section level2 hasAnchor" number="8.4">
+<h2><span class="header-section-number">8.4</span> ngrams<a href="prepros.html#ngrams" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="taledeler-parts-of-speech" class="section level2 hasAnchor" number="8.5">
+<h2><span class="header-section-number">8.5</span> Taledeler (parts of speech)<a href="prepros.html#taledeler-parts-of-speech" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="anskaff.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="sup.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "night",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

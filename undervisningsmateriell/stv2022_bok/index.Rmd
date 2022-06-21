@@ -1,0 +1,28 @@
+--- 
+title: "STV2022 -- Store tekstdata"
+date: "`r Sys.Date()`"
+author: Solveig Bjørkholt og Martin Søyland
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: stv2022.bib
+# url: your book url like https://bookdown.org/yihui/bookdown
+# cover-image: path to the social sharing image like images/cover.jpg
+description: |
+  Dette er en notatbok for implementering og forklaring av kode
+  i STV2022
+link-citations: yes
+github-repo: martigso/stv2022
+csl: american-political-science-association.csl
+editor_options: 
+  chunk_output_type: console
+---
+
+
+
+# Introduksjon {#introduksjon}
+
+Velkommen til STV2022 -- Store teksdata!
+
+Dette er en arbeidsbok som går gjennom de forskjellige delene i kurset, med tilhørende R-kode. Meningen med arbeidsboken, er at den kan brukes som forslag til implementering av metoder i semesteroppgaven. Merk likevel at dette ikke er en fasit!
+
+
