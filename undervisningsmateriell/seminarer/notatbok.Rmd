@@ -4,18 +4,35 @@ date: "`r Sys.Date()`"
 author: Solveig Bjørkholt og Martin Søyland
 output:
   rmdformats::downcute:
+    highlight: 
     self_contained: true
     default_style: "dark"
     downcute_theme: "chaos"
-    highlight: navy
     number_sections: true
     code_folding: show
     toc_depth: 4
+    use_bookdown: true
+pkgdown:
+  as_is: true
 bibliography: stv2022.bib
 csl: american-political-science-association.csl
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, echo=FALSE, message=FALSE, error=FALSE}
+
+# set.wd("./undervisningsmateriell/seminarer")
+library(knitr)
+library(rmdformats)
+
+## Global options
+# options(max.print = "75")
+knitr::opts_chunk$set(
+  message = FALSE, warning = FALSE, highlight = TRUE
+)
+#opts_knit$set(width = 75)
+
 library(stringr)
 library(dplyr)
 
@@ -40,6 +57,8 @@ Det kan ofte være vanskelig å finne mønster som kan svare på spørsmål og t
 Gjennom å delta i dette kurset vil du lære å søke i store mengder dokumenter, oppsummere disse på meningsfulle måter og indentifisere riktige analysemetoder for å teste statsvitenskaplige teorier med store tekstdata. Kurset vil dekke samling av store volum tekst fra offentlige kilder, strukturering og klargjøring av tekst for analyse og kvantitative tekstanalysemetoder.
 
 ## Oppbygging av arbeidsboken
+
+Denne arbeidsboken er ment som supplement til pensum i kurset forøvrig. Her vil vi gå gjennom de ulike delene av kurset, og spesielt legge oss tett opp til seminarundervisningen.
 
 Under vil vi gå gjennom undervisningsopplegget, som arbeidsboken er lagt opp etter. Delene av boken er strukturert som følgende:
 
@@ -75,7 +94,7 @@ Merk at det etter hvert seminar skal leveres inn et utkast av oppgaven for temae
 De ti forelesningene har følgende timeplan (høsten 2022):
 
 | Dato         | Tid         | Aktivitet                          | Sted       | Foreleser                  | Ressurser/pensum                                                                        |
-|:-------------|:------------|:-----------------------------------|:-----------|:---------------------------|:------------|
+|:-------------|:------------|:-----------------------------------|:-----------|:---------------------------|:----------------------------------------------------------------------------------------|
 | ti. 23. aug. | 10:15–12:00 | Introduksjon                       |	ES, Aud. 5 | S. Bjørkholt og M. Søyland | @Grimmer2022 kap. 1-2 og 22, @Lucas2015, @Silge2017 kap. 1, @Pang2008 kap. 1            |
 | ti. 30. aug. | 10:15–12:00 | Anskaffelse og innlasting av tekst | ES, Aud. 5 | M. Søyland                 | @Grimmer2022 kap. 3-4, @Cooksey2014 kap. 1, @Wickham2020, @Hoyland2019                  |
 | ti. 6.  sep. | 10:15–12:00 | Forbehandling av tekst 1           | ES, Aud. 5 | M. Søyland                 | @Grimmer2022 kap. 5, @Silge2017 kap. 3, @Joergensen2019, @Barnes2019, @Benoit2020       |
@@ -114,9 +133,129 @@ Vi har også lagt inn noen bidrag som anvender metodene vi går gjennom i løpet
 
 # Laste inn tekstdata {#lastetekst}
 
+I denne delen av arbeidsboken vil vi gå gjennom noen eksempler på hvordan vi kan laste inn tekstdata i R.
+
+Tekstdata kan komme i uendelig mange forskjellige formater, og det er umulig å gå gjennom alle. Vi har likevel noen typer data som er mer vanlig innenfor statsvitenskap enn andre. Under vil vi gå gjennom 1) lasting av ulike to-dimensjonale datasett (.rda/.Rdata, .csv, .sav og .dta), 2) rå tekstfiler (.txt), 3) tekstfiler med overhead (.pdf og .docx).
+
+## To-dimensjonale datasett
+
+Det vanligste formatet på eksisterende data innenfor politisk analyse er to-dimensjonale datasett. Et datasett består av rader (vanligvis observasjoner/enheter) og kolonner (vanligvis variabler). Disse datasettene kommer i mange forskjellige format, men de aller fleste (eller alle) kan leses inn i R om man finner de rette funksjonene.
+
+Under vil vi illustre de forskjellige måtene å laste inn data på med eksempeldata fra pakken `stortingscrape`, som inneholder meta data på alle saker Stortinget behandlet i 2019-2020-sesjonen:
+
+```{r laste_data_data}
+
+saker <- stortingscrape::cases$root
+
+saker %>% 
+  select(id, document_group, status, title_short) %>% 
+  mutate(title_short = str_sub(title_short, 1, 30)) %>% 
+  tail()
+
+```
+
+### .rda og .Rdata
+
+R har sin egen type filformat med filtypene `.rda` og `.Rdata` (`.Rds` finnes også, men vi hopper over det her). Disse to formatene er faktisk akkurat det samme formatet; `.rda` er bare en forkortelse for `.Rdata`. Disse filene er komprimerte versjoner av objekter i *Environment*, som man kan lagre lokalt. Fordi denne filtypen har veldig god kompresjon og selvfølgelig virker sømløst sammen med R, er det et veldig nyttig format å bruke. Dette gjelder særlig når man jobber med store tekstdata. 
+
+Som eksempel på lagring kan jeg trekke ut data fra `stortingscrape`-pakken og lagre disse lokalt med `save()`-funksjonen:
+
+```{r rda_save, eval=FALSE}
+
+save(saker, file = "./data/saker.rda")
+
+```
+
+Om man har flere objekter i *Environment* man vil lagre samtidig som `.rda / .Rdata`, er dette mulig å gjøre med funksjonen `save.image()`.
+
+For å laste inn `.rda / .Rdata` bruker man funksjonen `load()`:
+
+```{r rda_load}
+
+load("./data/saker.rda")
+
+```
+
+En ting som ofte er litt forvirrende, er at filnavnet til `.rda` ikke nødvendigvis samsvarer med navnet man får opp på objektene i R; objektene i *Environment* vil alltid ha samme navn som de hadde i *Environment* når filen ble lagret.
+
+### .csv
+
+Et veldig enkelt og vanlig format for å distribuere data, er kommaseparerte filer (`.csv`). Man kan enkelt lese inn `.csv`-filer med `read.csv()`, eller, som vist under, med funksjonen `read_csv()` fra pakken `readr`.^[Vi bruker `readr` fordi den virker godt sammen med `tidyverse` og er noe raskere enn base-funksjonen `read.csv()`]
+
+```{r csv}
+
+library(readr)
+
+saker <- read_csv("./data/saker.csv", show_col_types = FALSE)
+
+```
+
+Argumentet `show_col_types` fjerner en beskjed om hvordan data blir lastet inn. Dette kan noen ganger være nyttig å se dette, men det blir fort litt *clutter* av det.
+
+### .sav
+
+### .dta
+
+## Rå tekstfiler (.txt)
+
+## Tekstfiler med overhead
+
+En `.txt`-fil er som den er. Det er ingen sjulte datakilder i slike filer. Det er det derimot i andre filformater. En MS Word-fil, for eksempel, er egentlig bare et komprimert arkiv (.zip) med underliggende `html / xml` som bestemmer hvordan filen skal se ut når du åpner den i MS Word:
+
+```{r msw_zip}
+
+unzip("data/ba_thesis.docx", exdir = "data/wordfiles")
+
+list.files("data/wordfiles/")
+
+```
+
+Dette gjør at disse filene er mye vanskeligere å lese inn i R enn rå tekstfiler, og vi får veldig rar output når vi bruker `readLines()`:
+
+```{r read_msw_feil, warning=TRUE}
+
+readLines("./data/ba_thesis.docx", n = 2)
 
 
+```
 
+Derfor vil det kreve andre metoder for å lese inn filer med overhead. Under eksemplifiserer vi med `.docx` og `.pdf`, som er de mest brukte av denne type filer.
+
+### .docx
+
+Heldigvis finnes det løsninger for dette også. Her viser vi hvordan vi gjør det med pakken `textreadr`, fordi den har funksjoner for å lese det meste (.doc, .docx, .pdf, .odt, .pptx, osv):
+
+```{r docx}
+
+library(textreadr)
+
+ba_docx <- read_docx("./data/ba_thesis.docx")
+
+ba_docx[43:46]
+
+```
+
+Det er også lurt å inspisere dataene grundig før man går igang med eventuelle analyser; det kan ofte skje feil i lesingen som man må rette på for å få riktige data.
+
+### .pdf
+
+Det samme gjelder for `.pdf`-filer:
+
+```{r read_pdf}
+
+ba_pdf <- read_pdf("./data/ba_thesis.pdf")
+
+ba_pdf <- ba_pdf$text[4] %>% 
+  strsplit("\\n") %>% 
+  unlist()
+
+ba_pdf[11:14]
+
+```
+
+Her ble outputen av `read_pdf()` delt inn i sider, i tillegg til at teksten ikke ble delt opp i linjer. Så vi har gått inn og tatt ut side 4, delt opp teksten i linjer og trukket ut tilsvarende linjer som vi gjorde i MS Word-filen.
+
+La oss også nevne at endel (spesielt historiske) dokumenter i `.pdf`-format er scannet og bare inneholder bilder av tekst -- ikke tekst man enkelt kan ta ut av dokumentet. Da må man ty til *Optical Character Recognition* (OCR), noe vi dessverre ikke kommer til å gå gjennom i dette kurset.
 
 
 # Anskaffelse av tekst {#anskaff}
@@ -247,7 +386,7 @@ Hovedpoenget med å vise dette er at *sekk med ord*-antagelsen er veldig streng 
 
 # Oppsummering {#oppsummering}
 
-`r if (knitr::is_html_output()) ' # Referanser {-} '`
+`r if (knitr::is_html_output()) ' # Referanser '`
 
 ```{r writeManifest, echo=FALSE, eval=FALSE}
 installed.packages()
