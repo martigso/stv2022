@@ -24,6 +24,7 @@ editor_options:
 
 # set.wd("./undervisningsmateriell/seminarer")
 library(knitr)
+library(formatR)
 library(rmdformats)
 
 ## Global options
@@ -34,7 +35,7 @@ knitr::opts_chunk$set(
 #opts_knit$set(width = 75)
 
 library(stringr)
-library(dplyr)
+library(dplyr) 
 
 # if("tidytext" %in% installed.packages() == FALSE) install.packages("tidytext")
 
@@ -200,7 +201,7 @@ Argumentet `show_col_types` fjerner en beskjed om hvordan data blir lastet inn. 
 
 ## Tekstfiler med overhead
 
-En `.txt`-fil er som den er. Det er ingen sjulte datakilder i slike filer. Det er det derimot i andre filformater. En MS Word-fil, for eksempel, er egentlig bare et komprimert arkiv (.zip) med underliggende `html / xml` som bestemmer hvordan filen skal se ut når du åpner den i MS Word:
+En `.txt`-fil er som den er; det er ingen sjulte datakilder i slike filer. Det er det derimot i andre filformater. En MS Word-fil, for eksempel, er egentlig bare et komprimert arkiv (.zip) med underliggende `html / xml` som bestemmer hvordan filen skal se ut når du åpner den i MS Word. Vi bruker det siste MS Word-dokumentet Martin skrev (bacheloroppgave fra 2013) som eksempel:
 
 ```{r msw_zip}
 
@@ -386,7 +387,7 @@ Hovedpoenget med å vise dette er at *sekk med ord*-antagelsen er veldig streng 
 
 # Oppsummering {#oppsummering}
 
-`r if (knitr::is_html_output()) ' # Referanser '`
+`r if (knitr::is_html_output()) '# Referanser'`
 
 ```{r writeManifest, echo=FALSE, eval=FALSE}
 installed.packages()
@@ -395,4 +396,8 @@ installed.packages()
 # når jeg ikke gjør det.
 rsconnect::writeManifest("./")
 
+# For å trekke ut koden fra hele boka til en R-fil
+knitr::purl("./notatbok.Rmd",
+            output = "./notatbok_kode.R",
+            documentation = 1)
 ```

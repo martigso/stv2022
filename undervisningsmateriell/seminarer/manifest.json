@@ -693,6 +693,37 @@
         "Built": "R 4.0.5; x86_64-pc-linux-gnu; 2021-05-18 11:10:49 UTC; unix"
       }
     },
+    "formatR": {
+      "Source": "CRAN",
+      "Repository": "https://cloud.r-project.org",
+      "GithubRepo": null,
+      "GithubUsername": null,
+      "GithubRef": null,
+      "GithubSha1": null,
+      "description": {
+        "Package": "formatR",
+        "Type": "Package",
+        "Title": "Format R Code Automatically",
+        "Version": "1.12",
+        "Authors@R": "c(\n    person(\"Yihui\", \"Xie\", role = c(\"aut\", \"cre\"), email = \"xie@yihui.name\", comment = c(ORCID = \"0000-0003-0645-5666\")),\n    person(\"Ed\", \"Lee\", role = \"ctb\"),\n    person(\"Eugene\", \"Ha\", role = \"ctb\"),\n    person(\"Kohske\", \"Takahashi\", role = \"ctb\"),\n    person(\"Pavel\", \"Krivitsky\", role = \"ctb\"),\n    person()\n    )",
+        "Description": "Provides a function tidy_source() to format R source code. Spaces\n    and indent will be added to the code automatically, and comments will be\n    preserved under certain conditions, so that R code will be more\n    human-readable and tidy. There is also a Shiny app as a user interface in\n    this package (see tidy_app()).",
+        "Depends": "R (>= 3.2.3)",
+        "Suggests": "rstudioapi, shiny, testit, rmarkdown, knitr",
+        "License": "GPL",
+        "URL": "https://github.com/yihui/formatR",
+        "BugReports": "https://github.com/yihui/formatR/issues",
+        "VignetteBuilder": "knitr",
+        "RoxygenNote": "7.1.2",
+        "Encoding": "UTF-8",
+        "NeedsCompilation": "no",
+        "Packaged": "2022-03-31 19:55:39 UTC; yihui",
+        "Author": "Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>),\n  Ed Lee [ctb],\n  Eugene Ha [ctb],\n  Kohske Takahashi [ctb],\n  Pavel Krivitsky [ctb]",
+        "Maintainer": "Yihui Xie <xie@yihui.name>",
+        "Repository": "CRAN",
+        "Date/Publication": "2022-03-31 20:20:02 UTC",
+        "Built": "R 4.2.0; ; 2022-06-21 22:11:31 UTC; unix"
+      }
+    },
     "fs": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -2390,14 +2421,17 @@
     "data/wordfiles/word/webSettings.xml": {
       "checksum": "f7a0301cbef647028ca9a73f28d6f9a3"
     },
+    "notatbok_kode.R": {
+      "checksum": "e270c9253f790ad39bf64bbb2409b204"
+    },
     "notatbok.html": {
-      "checksum": "e8a19af45be5caaff1b2bda77d9daaa6"
+      "checksum": "d7f9aa380c90ecfcabcc255cdceb0a58"
     },
     "notatbok.log": {
       "checksum": "a80d9b2d472e971c69ad90b384e15e7a"
     },
     "notatbok.Rmd": {
-      "checksum": "b59adaf5f397c92815cef190a8c2beb4"
+      "checksum": "2e42a0b0e87b99afb7f3cd5c57d8f688"
     },
     "notatbok.tex": {
       "checksum": "0ffe57a99252bb924d9102217371105c"

@@ -1706,6 +1706,7 @@ Prism.languages.r={comment:/#.*/,string:{pattern:/(['"])(?:\\.|(?!\1)[^\\\r\n])*
             <li><a href="#topicmod"><span class="toc-section-number">11</span> Temamodellering</a></li>
             <li><a href="#posisjon"><span class="toc-section-number">12</span> Latente posisjoner</a></li>
             <li><a href="#oppsummering"><span class="toc-section-number">13</span> Oppsummering</a></li>
+            <li><a href="#referanser">Referanser</a></li>
             </ul>
           </div>
           <div data-position="sidebar:post-end" class="InjectedComponents"><div class="dark-theme-toggler"><div class="toggle checked">
@@ -1982,7 +1983,7 @@ saker &lt;- read_csv(&quot;./data/saker.csv&quot;, show_col_types = FALSE)</code
 </div>
 <div id="tekstfiler-med-overhead" class="section level2" number="3.3">
 <h2><span class="header-section-number">3.3</span> Tekstfiler med overhead</h2>
-<p>En <code>.txt</code>-fil er som den er. Det er ingen sjulte datakilder i slike filer. Det er det derimot i andre filformater. En MS Word-fil, for eksempel, er egentlig bare et komprimert arkiv (.zip) med underliggende <code>html / xml</code> som bestemmer hvordan filen skal se ut når du åpner den i MS Word:</p>
+<p>En <code>.txt</code>-fil er som den er; det er ingen sjulte datakilder i slike filer. Det er det derimot i andre filformater. En MS Word-fil, for eksempel, er egentlig bare et komprimert arkiv (.zip) med underliggende <code>html / xml</code> som bestemmer hvordan filen skal se ut når du åpner den i MS Word. Vi bruker det siste MS Word-dokumentet Martin skrev (bacheloroppgave fra 2013) som eksempel:</p>
 <pre class="r"><code>unzip(&quot;data/ba_thesis.docx&quot;, exdir = &quot;data/wordfiles&quot;)
 
 list.files(&quot;data/wordfiles/&quot;)</code></pre>
@@ -2174,7 +2175,9 @@ cat(bow[sample(1:length(bow))])</code></pre>
 </div>
 <div id="oppsummering" class="section level1" number="13">
 <h1><span class="header-section-number">13</span> Oppsummering</h1>
-<p># Referanser</p>
+</div>
+<div id="referanser" class="section level1 unnumbered">
+<h1>Referanser</h1>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-Barnes2019" class="csl-entry">
 Barnes, Jeremy, Samia Touileb, Lilja Øvrelid, and Erik Velldal. 2019. <span>“Lexicon Information in Neural Sentiment Analysis: A Multi-Task Learning Approach.”</span> In <em>Proceedings of the 22nd Nordic Conference on Computational Linguistics</em>, Turku, Finland: Link<span>ö</span>ping University Electronic Press, 175–86. <a href="https://aclanthology.org/W19-6119">https://aclanthology.org/W19-6119</a>.
