@@ -296,7 +296,7 @@
 
 <<<<<<< HEAD
 
-@InCollection{liu_introduction_2015,
+@InCollection{Liu2015,
   author    = {Liu, Bing},
   booktitle = {Sentiment Analysis: Mining Opinions, Sentiments, and Emotions},
   publisher = {Cambridge University Press},
@@ -307,7 +307,7 @@
   url       = {https://www.cambridge.org/core/books/sentiment-analysis/3F0F24BE12E66764ACE8F179BCDA42E9},
 }
 
-@InCollection{liu_problem_2015,
+@InCollection{Liu2015a,
   author    = {Liu, Bing},
   booktitle = {Sentiment Analysis: Mining Opinions, Sentiments, and Emotions},
   publisher = {Cambridge University Press},
@@ -400,6 +400,15 @@
   title     = {Sentiment Analysis and Opinion Mining},
   year      = {2012},
   url       = {https://www.cs.uic.edu/~liub/FBS/SentimentAnalysis-and-OpinionMining.pdf},
+}
+
+@Manual{Rinker2021,
+  title   = {{textreadr}: Read Text Documents into R},
+  address = {Buffalo, New York},
+  author  = {Tyler W. Rinker},
+  note    = {version 1.2.0},
+  year    = {2021},
+  url     = {https://github.com/trinker/textreadr},
 }
 
 @Comment{jabref-meta: databaseType:bibtex;}

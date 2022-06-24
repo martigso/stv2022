@@ -902,9 +902,15 @@ class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb9-1"><a href
 </section>
 <section id="visualisere-data" class="slide level2">
 <h2>Visualisere data</h2>
-</section>
-<section id="analysere-data" class="slide level2">
-<h2>Analysere data</h2>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggwordcloud)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>no4_tokens <span class="sc">%&gt;%</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">4</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(., <span class="fu">aes</span>(<span class="at">label =</span> ord, <span class="at">size =</span> n,  <span class="at">color =</span> <span class="fu">colors</span>()[<span class="dv">1</span><span class="sc">:</span><span class="dv">29</span>])) <span class="sc">+</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_wordcloud_area</span>()<span class="sc">+</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size_area</span>(<span class="at">max_size =</span> <span class="dv">50</span>) <span class="sc">+</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  ggdark<span class="sc">::</span><span class="fu">dark_theme_void</span>()</span></code></pre></div>
+<p><img src="uke01_intro_files/figure-revealjs/unnamed-chunk-1-1.png" width="796.8" /></p>
 </section></section>
 <section>
 <section id="typer-analyse" class="title-slide slide level1">

@@ -300,8 +300,19 @@ no4_tokens %>%
 
 ## Visualisere data
 
+```{r, echo=-1, message=FALSE, warning=FALSE, fig.height=3.3, fig.width=8.3}
+set.seed(4569)
+library(ggwordcloud)
+no4_tokens %>% 
+  filter(n > 4) %>% 
+  ggplot(., aes(label = ord, size = n,  color = colors()[1:29])) +
+  geom_text_wordcloud_area()+
+  scale_size_area(max_size = 50) +
+  ggdark::dark_theme_void()
 
-## Analysere data 
+```
+
+
 
 # Typer analyse
 <!--Assigned til Solveig! -->

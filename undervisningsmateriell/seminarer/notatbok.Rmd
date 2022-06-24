@@ -10,7 +10,7 @@ output:
     downcute_theme: "chaos"
     number_sections: true
     code_folding: show
-    toc_depth: 4
+    toc_depth: 3
     use_bookdown: true
 pkgdown:
   as_is: true
@@ -22,7 +22,7 @@ editor_options:
 
 ```{r setup, echo=FALSE, message=FALSE, error=FALSE}
 
-# set.wd("./undervisningsmateriell/seminarer")
+# setwd("./undervisningsmateriell/seminarer")
 library(knitr)
 library(formatR)
 library(rmdformats)
@@ -36,7 +36,7 @@ knitr::opts_chunk$set(
 
 library(stringr)
 library(dplyr) 
-
+library(ggplot2)
 # if("tidytext" %in% installed.packages() == FALSE) install.packages("tidytext")
 
 ```
@@ -123,6 +123,9 @@ Seminarledere:
 - Eli Sofie Baltzersen <elibal@student.sv.uio.no>
 - Eric Gabo Ekeberg Nilsen <e.g.e.nilsen@stv.uio.no>
 
+```{r child = 'oppgavebygging.Rmd'}
+```
+
 ## Pensum
 
 Som med alle andre fag, er det sterkt anbefalt at man ser over pensum før forelesning og seminar. Likevel kan pensum i kurset til tider være noe teknisk og uhåndterbart. Det er ikke forventet å _pugge_ formler eller fult ut forstå de matematiske beregninger bak de forskjellige modelleringsmetodene (selv om det åpenbart kan gjøre stoffet lettere å forstå). Hovedfokuset vårt vil være på å forstå hvilke operasjoner man må gjøre for å gå fra tekst til funn, hvilke antagelser man gjør i prosessen og klare å velge de riktige modellene for spørsmålet man vil ha svar på.
@@ -193,11 +196,71 @@ saker <- read_csv("./data/saker.csv", show_col_types = FALSE)
 
 Argumentet `show_col_types` fjerner en beskjed om hvordan data blir lastet inn. Dette kan noen ganger være nyttig å se dette, men det blir fort litt *clutter* av det.
 
-### .sav
+### .sav (SPSS) og .dta (Stata)
 
-### .dta
+For å lese inn filer som er lagret i SPSS, bruker vi pakken `haven` som har flere fuksjoner for å lese diverse dataformat (SAS, Stata (se under) og SPSS). Pakken følger standard syntaks for innlesing av data:
+
+```{r sav}
+library(haven)
+saker <- read_sav("./data/saker.sav")
+
+```
+
+For Stata (`.dta`) er det helt lik syntaks, bare nå med funksjonen `read_dta()`:
+
+```{r dta}
+
+saker <- read_dta("./data/saker.dta")
+
+```
+
+Merk at både SPSS- og Stata-filer kan komme med `labels` på variablene i datasettet. Dette kan noen ganger fungere som en kodebok.
 
 ## Rå tekstfiler (.txt)
+
+Rå tekstfiler (`.txt`) er et veldig fint format å jobbe med når man jobber med tekst. Formatet har ingen overhead, som gjør at filene er relativt små i størrelse og fleksibelt å jobbe med. En vanlig måte å strukturere `.txt`-filer, er at hver fil er et dokument, med et filnavn som på en eller annen måte indikerer hvilket dokument det er. Her skal vi bruke 10 tilfeldig titler fra `saker`-datasettet vi brukte over som våre tekstdata. Hver fil er navngitt med tilsvarende `id` fra datasettet.
+
+Vi lister opp filene som er i mappen `data/txt` og leser inn hver fil som et listeelement:
+
+```{r txt}
+
+filer <- list.files("./data/txt", pattern = ".txt", full.names = TRUE)
+filer
+
+titler <- lapply(filer, readLines)
+class(titler)
+
+# Første tekst
+titler[[1]]
+
+```
+
+Hvis man vil gå rett over til et datasett, kan vi navngi listeelementene ved å trekke ut `id` fra filnavnene:
+
+```{r txt2}
+
+names(titler) <- str_extract(filer, "[0-9]+")
+names(titler)
+
+```
+
+Deretter kan vi enkelt gjøre om tekstene til en vektor med `unlist()` og putte det inn i en `data.frame()` sammen med en `id` variabel, som vi henter fra navnene i lista:
+
+```{r txt3}
+saker_txt <- data.frame(titler = unlist(titler),
+                        id = names(titler))
+```
+
+For å illustere at dette ble riktig, kan vi merge `saker` med `saker_txt`, og se om variabelen `titler` er den samme som variabelen `title`:
+
+```{r txt4}
+saker_merge <- left_join(saker_txt, saker[, c("id", "title")], by = "id")
+
+saker_merge$titler == saker_merge$title
+
+```
+
+Det kan likevel være lurt å jobbe litt med dataene i listeformat før man går over til datasett, om man jobber med veldig store korpus. Lister krever litt mindre minne og kan ofte være litt mer effektivt å jobbe med gjennom funksjoner som `sapply()`, `lapply()` og `mclapply()`
 
 ## Tekstfiler med overhead
 
@@ -224,7 +287,7 @@ Derfor vil det kreve andre metoder for å lese inn filer med overhead. Under eks
 
 ### .docx
 
-Heldigvis finnes det løsninger for dette også. Her viser vi hvordan vi gjør det med pakken `textreadr`, fordi den har funksjoner for å lese det meste (.doc, .docx, .pdf, .odt, .pptx, osv):
+Heldigvis har andre laget løsninger for oss på dette også. Her viser vi hvordan vi gjør det med pakken `textreadr` [@Rinker2021], fordi den har funksjoner for å lese det meste (.doc, .docx, .pdf, .odt, .pptx, osv):
 
 ```{r docx}
 
@@ -286,11 +349,13 @@ Kanskje bruke Stortinget som eksempel.
 
 # Preprosessering {#prepros}
 
-Preprosessering er ganske viktig.
+Når vi nå har lært både å laste inn eksisterende tekstdata og strukturere våre egne data via skraping, kan vi begynne å tenke på hvordan vi kan sammenligne tekstene i vårt korpus eller datasett. Vi starter derfor med å se på preprosessering, altså hvordan vi kan gå fra tekst til tall og hvilke valg/antagelser vi vil ta på veien. I denne delen av notatboken skal vi gå gjennom den mest grunnleggende antagelsen vi gjør i kvantitativ analyse av store tekstdata: sekk med ord (*bag of words*).
+
+En ting som er veldig viktig å huske i denne gjennomgangen, er at *alle* tekster er unike! Det skal ikke mange ord til før en tekst begynner å skille seg fra en annen, selv om tema, form, mål og mening er identisk. Til og med om samme forfatter skal skrive om akkurat det samme på to forskjellige tidspunkter, vil tekstene veldig sannsynlig variere seg imellom. Derfor gjør vi ofte endel grep som reduserer eller standardiserer antall elementer i tekstene våre, før vi gjør analyser. Dette er det vi her forstår som preprosessering.
+
+Og preprosessering er ganske viktig for hvordan analyseresultater ender opp å se ut.
 
 ## Sekk med ord
-
-*Alle* tekster er unike!
 
 Ta for eksempel spor 6 på No.4-albumet vi allerede har jobbet med -- *Regndans i skinnjakke*. Hvis vi skal følge en vanlig antagelse i kvantitativ tekstanalyse -- "sekk med ord" eller *bag of words* -- skal vi kunne forstå innholdet i en tekst hvis vi deler opp teksten i segmenter, putter det i en pose, rister posen og tømmer det på et bord. Da vil denne sangen for eksempel se slik ut:
 
@@ -358,8 +423,7 @@ Hovedpoenget med å vise dette er at *sekk med ord*-antagelsen er veldig streng 
 
 ## ngrams
 
-## Taledeler (parts of speech)
-
+## Taledeler (parts of speech) {#pos}
 
 # Veildedet læring {#sup}
 
@@ -381,9 +445,110 @@ Hovedpoenget med å vise dette er at *sekk med ord*-antagelsen er veldig streng 
 
 ## NorSentLex
 
+Det har lenge vært ganske lite ressurser for sentimentanalyse på norsk. @Barnes2019 har ganske nylig satt sammen en stor [ordbok](#ordboker) med positive og negative ord i for både fullform og lemmatisert form med [PoS-tags](#pos)^[se: https://github.com/ltgoslo/norsentlex]. Disse ordbøkene bygger på en en oversatt og manuelt korrigert engelsk korpus av kundetilbakemeldinger [@Hu2004] og er pakket i både rå `.txt`-filer og `.json`-filer. Heldigvis har en tulling også konvertert dette til en pakke i R: [`NorSentLex`](https://github.com/martigso/NorSentLex) (for øyblikket ikke på CRAN). For å laste inn/ned ordbøkene, kan du enten installere R-pakken med `devtools::install_github("martigso/NorSentLex")` eller bruke det du lærte i [skrape-delen](#anskaff) av denne notatboken på [de originale filene](https://github.com/ltgoslo/norsentlex). La oss illustrer med R-pakken:
+
+```{r norsentlex, eval=-1}
+devtools::install_github("martigso/NorSentLex")
+
+library(NorSentLex)
+
+# Ordbøker i fullform
+names(nor_fullform_sent)
+
+# Ordbøker for lemma med PoS-tags
+names(nor_lemma_sent)
+
+```
+
+Hvis vi vil se på, for eksempel, noen positive ord i fullform, kan vi gå inn i listen `nor_fullform_sent` og listeelementet som heter `$positive`:
+
+```{r pos_fullform, echo=-1}
+set.seed(58493)
+nor_fullform_sent$positive %>% head()
+nor_fullform_sent$positive %>% tail()
+nor_fullform_sent$positive %>% sample(., 6)
+
+```
+
+Det er ikke nødvendigvis alt som gir mening som positive og negative ord, med mindre man har i bakhodet at dette er basert på kundeanmeldelser. Så vær varsom!
+
+Om vi videre vil bruke den lemmatiserte ordboken, kan vi også trekke dette ut enkelt fra de forskjellige elementene i `nor_lemma_sent`. Si at vi skal bruke bare positive substantiv:
+
+```{r pos_subst, echo=-1}
+set.seed(8943)
+nor_lemma_sent$lemma_noun_positive %>% sample(., 6)
+
+```
+
+Nå når vi vet hvordan vi finner ordboken, gjenstår å lære hvordan vi bruker den. La oss bruke fullformord fra No.4-albumet `data`-mappen (`no4.rda`) som eksempel. Først splitter vi opp teksten i ord (*tokens*):
+
+```{r regndans_sent_setup}
+
+library(tidytext)
+
+load("./data/no4.rda")
+
+no4 <- no4 %>% 
+  group_by(titler) %>% 
+  unnest_tokens(ord, tekst)
+
+```
+
+Så kryss-refererer vi hvert ord med de positive og negative fullformordene i ordboken:
+
+```{r regndans_sent}
+
+
+no4$pos_sent <- ifelse(no4$ord %in% nor_fullform_sent$positive, 1, 0)
+no4$neg_sent <- ifelse(no4$ord %in% nor_fullform_sent$negative, 1, 0)
+
+table(no4$pos_sent, 
+      no4$neg_sent, 
+      dnn = c("positiv", "negativ"))
+
+```
+
+Som vi ser, er det faktisk noen flere negative ord enn positive i albument. Men overvekten av ord er nøytrale (0 på begge). Vi kan også summere opp sentiment over sangene, og se om det er noe forskjell i sentiment mellom dem:
+
+```{r no4_sent_sum}
+
+no4_sent <- no4 %>% 
+  group_by(titler) %>% 
+  summarize(pos_sent = mean(pos_sent),
+            neg_sent = mean(neg_sent)) %>% 
+  mutate(sent = pos_sent - neg_sent)
+
+no4_sent
+```
+
+Ikke alverden forskjell, men noen sanger er med positive enn negative og motsatt. La oss visualisere:
+
+```{r no4_vis}
+
+no4_sent %>% 
+  mutate(neg_sent = neg_sent * -1) %>% 
+  ggplot(., aes(x = str_c(sprintf("%02d", 1:12),
+                          ". ",
+                          str_sub(titler, 1, 7),
+                          "[...]"))) +
+  geom_point(aes(y = neg_sent, color = "Negativ")) +
+  geom_point(aes(y = pos_sent, color = "Positiv")) +
+  geom_point(aes(y = sent, color = "Snitt")) +
+  geom_linerange(aes(ymin = neg_sent, ymax = pos_sent), color = "gray40") +
+  scale_color_manual(values = c("red", "cyan", "gray70")) +
+  labs(x = NULL, y = "Sentiment", color = NULL) +
+  ggdark::dark_theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, vjust = .25, hjust = 0))
+
+```
+
+
+
 # Temamodellering {#topicmod}
 
 # Latente posisjoner {#posisjon}
+
+# Noen tanker om videre læring {#videreilivet}
 
 # Oppsummering {#oppsummering}
 

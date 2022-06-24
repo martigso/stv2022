@@ -1,0 +1,32 @@
+## Oppgaver
+
+### Uke 36 -- Anskaffe tekst
+
+1. Finn en datakilde du tenker kan brukes til å bygge en videre oppgave for kurset
+2. Hent og strukturer data
+3. Gi en kort beskrivelse av hvordan dataene ble fanget og hvordan de er strukturert
+
+### Uke 38 -- Preprosessering av tekstdata i R
+
+1. (Rediger oppaven basert på tilbakemelding fra forrige uke)
+1. Gjør nødvendige preprosesseringsgrep for å redusere/standardisere dataene dine
+2. Visualiser forskjellen mellom tekstene før og etter preprosessering
+3. Diskuter preprosesseringen kritisk
+
+
+### Uke 42 -- Veiledet og ikke-veiledet læring i R
+
+1. (Rediger oppaven basert på tilbakemelding fra forrige uke)
+1. Identifiser en analysestrategi for dine data
+2. Diskuter fordeler og ulemper med din strategi
+
+### Uke 44 -- Modelleringsmetoder i R
+
+1. (Rediger oppaven basert på tilbakemelding fra forrige uke)
+1. Velg hvilke(n) analysemetode(r) du vil bruke for å analysere data
+2. Kjør analysene
+3. Tolk resultatene og implikasjonene av det du har funnet
+
+### Uke 46 -- Siste utkast
+
+1. Rediger oppaven basert på tilbakemeldinger fra de forrige ukene
