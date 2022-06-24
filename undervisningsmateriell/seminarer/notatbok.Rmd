@@ -74,6 +74,19 @@ Under vil vi gå gjennom undervisningsopplegget, som arbeidsboken er lagt opp et
 9.  [Temamodellering](#topicmod)
 10. [Latente posisjoner i tekst](#posisjon)
 
+### Nødvendige pakker
+
+Vi kommer til å bruke noen pakker gjennom kurset, som det kan være lurt å lære seg litt ekstra godt. Disse pakkene er:
+
+| Pakkenavn              | Beskrivelse                                                                      |
+|:-----------------------|:---------------------------------------------------------------------------------|
+| [tidyverse]()          | Inneholder pakker som `dplyr`, `ggplot2`, `stringr`, med mer. For data wrangling |
+| [tidytext]()           | Grunnpakke for preprosessering av data                                           |
+| [stortingscrape]()     | Enkel måte å skrape data fra Stortinget på (flittig brukt som dataeksempel)      | 
+| [stm]()                | For å kjøre strukturelle temamodeller                                            |
+| [NorSentLex]()         | Sentimentordbøker på norsk                                                       |
+| [haven]()              | For å laste inn forskjellige dataformater (SPSS, Stata og SAS)                   |
+| &hellip;               |             
 
 ## Anbefalte forberedelser
 
