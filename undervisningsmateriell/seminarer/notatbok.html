@@ -2036,9 +2036,7 @@ Prism.languages.r={comment:/#.*/,string:{pattern:/(['"])(?:\\.|(?!\1)[^\\\r\n])*
 <h2><span class="header-section-number">3.1</span> To-dimensjonale datasett</h2>
 <p>Det vanligste formatet på eksisterende data innenfor politisk analyse er to-dimensjonale datasett. Et datasett består av rader (vanligvis observasjoner/enheter) og kolonner (vanligvis variabler). Disse datasettene kommer i mange forskjellige format, men de aller fleste (eller alle) kan leses inn i R om man finner de rette funksjonene.</p>
 <p>Under vil vi illustre de forskjellige måtene å laste inn data på med eksempeldata fra pakken <code>stortingscrape</code>, som inneholder meta data på alle saker Stortinget behandlet i 2019-2020-sesjonen:</p>
-<pre class="r"><code># install.packages(&quot;stortingscrape&quot;)
-
-saker &lt;- stortingscrape::cases$root
+<pre class="r"><code>## # saker &lt;- stortingscrape::cases$root
 
 saker %&gt;% 
   select(id, document_group, status, title_short) %&gt;% 

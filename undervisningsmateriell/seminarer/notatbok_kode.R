@@ -1,5 +1,4 @@
 ## ----setup, echo=FALSE, message=FALSE, error=FALSE--------------
-devtools::install_github("martigso/stortingscrape")
 
 # setwd("./undervisningsmateriell/seminarer")
 library(knitr)
@@ -25,10 +24,12 @@ library(ggplot2)
 
 
 
-## ----laste_data_data--------------------------------------------
-# install.packages("stortingscrape")
+## ----saker_hidden, echo=FALSE-----------------------------------
+load("./data/saker.rda")
 
-saker <- stortingscrape::cases$root
+
+## ----laste_data_data, eval=-1-----------------------------------
+# saker <- stortingscrape::cases$root
 
 saker %>% 
   select(id, document_group, status, title_short) %>% 
