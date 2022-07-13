@@ -24,12 +24,10 @@ library(ggplot2)
 
 
 
-## ----saker_hidden, echo=FALSE-----------------------------------
-load("./data/saker.rda")
-
-
 ## ----laste_data_data, eval=-1-----------------------------------
-# saker <- stortingscrape::cases$root
+ 
+library(stortingscrape)
+saker <- cases$root
 
 saker %>% 
   select(id, document_group, status, title_short) %>% 

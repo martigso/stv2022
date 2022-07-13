@@ -160,11 +160,10 @@ Det vanligste formatet på eksisterende data innenfor politisk analyse er to-dim
 
 Under vil vi illustre de forskjellige måtene å laste inn data på med eksempeldata fra pakken `stortingscrape`, som inneholder meta data på alle saker Stortinget behandlet i 2019-2020-sesjonen:
 
-```{r saker_hidden, echo=FALSE}
-load("./data/saker.rda")
-```
-
 ```{r laste_data_data, eval=-1}
+ 
+library(stortingscrape)
+saker <- cases$root
 
 saker %>% 
   select(id, document_group, status, title_short) %>% 

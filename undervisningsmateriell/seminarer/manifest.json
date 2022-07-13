@@ -2447,6 +2447,48 @@
         "Built": "R 4.1.3; x86_64-pc-linux-gnu; 2022-04-01 08:59:05 UTC; unix"
       }
     },
+    "stortingscrape": {
+      "Source": "github",
+      "Repository": null,
+      "GithubRepo": "stortingscrape",
+      "GithubUsername": "martigso",
+      "GithubRef": "HEAD",
+      "GithubSha1": "ae707ba0f89d1b811bf1867bbfbbeed433017a23",
+      "description": {
+        "Package": "stortingscrape",
+        "Type": "Package",
+        "Title": "Access Data from the Norwegian Parliament API",
+        "Version": "0.1.1",
+        "Authors@R": "person(\"Martin\", \"Søyland\", email = \"martin.soyland@stv.uio.no\",\n                  role = c(\"aut\", \"cre\"))",
+        "Description": "Functions for retrieving general and specific data from the Norwegian Parliament,\n  through the Norwegian Parliament API at <https://data.stortinget.no>.",
+        "URL": "https://github.com/martigso/stortingscrape",
+        "BugReports": "https://github.com/martigso/stortingscrape/issues",
+        "Depends": "R (>= 4.2.0)",
+        "Encoding": "UTF-8",
+        "Imports": "rvest, httr, parallel, stringr, dplyr",
+        "Suggests": "imager, rmarkdown, knitr, pscl",
+        "License": "GPL (>= 3)",
+        "VignetteBuilder": "knitr",
+        "RoxygenNote": "7.2.0",
+        "Roxygen": "list(markdown = TRUE)",
+        "LazyData": "true",
+        "RemoteType": "github",
+        "RemoteHost": "api.github.com",
+        "RemoteRepo": "stortingscrape",
+        "RemoteUsername": "martigso",
+        "RemoteRef": "HEAD",
+        "RemoteSha": "ae707ba0f89d1b811bf1867bbfbbeed433017a23",
+        "GithubRepo": "stortingscrape",
+        "GithubUsername": "martigso",
+        "GithubRef": "HEAD",
+        "GithubSHA1": "ae707ba0f89d1b811bf1867bbfbbeed433017a23",
+        "NeedsCompilation": "no",
+        "Packaged": "2022-07-13 09:05:35 UTC; martigso",
+        "Author": "Martin Søyland [aut, cre]",
+        "Maintainer": "Martin Søyland <martin.soyland@stv.uio.no>",
+        "Built": "R 4.2.1; ; 2022-07-13 09:05:35 UTC; unix"
+      }
+    },
     "stringi": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -3233,13 +3275,13 @@
       "checksum": "bc07cad03d2fa81d9ca2fc426ccc9864"
     },
     "notatbok.html": {
-      "checksum": "d13105939d14f0686dbc2ccfbaa40f21"
+      "checksum": "3c08330a5a6b47ea08bcde08b669586c"
     },
     "notatbok.log": {
       "checksum": "a80d9b2d472e971c69ad90b384e15e7a"
     },
     "notatbok.Rmd": {
-      "checksum": "90d76dd4b0010f06bd41602db2ac77f0"
+      "checksum": "f462b5535adc4707e3ed1a0cb15ac57c"
     },
     "oppgavebygging.html": {
       "checksum": "f78d398098f78fb686cd4d3a29470e75"
