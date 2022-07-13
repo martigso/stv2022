@@ -1,4 +1,5 @@
 ## ----setup, echo=FALSE, message=FALSE, error=FALSE--------------
+devtools::install_github("martigso/stortingscrape")
 
 # setwd("./undervisningsmateriell/seminarer")
 library(knitr)
@@ -25,6 +26,7 @@ library(ggplot2)
 
 
 ## ----laste_data_data--------------------------------------------
+# install.packages("stortingscrape")
 
 saker <- stortingscrape::cases$root
 
@@ -164,9 +166,9 @@ load("./data/nor_lemma_sent.rda")
 
 
 ## ----norsentlex_load, eval=FALSE--------------------------------
-## devtools::install_github("martigso/NorSentLex")
+## # devtools::install_github("martigso/NorSentLex")
 ## 
-## library(NorSentLex)
+## # library(NorSentLex)
 
 
 ## ----norsentlex_general-----------------------------------------

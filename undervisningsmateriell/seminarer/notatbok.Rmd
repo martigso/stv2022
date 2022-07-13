@@ -21,6 +21,7 @@ editor_options:
 ---
 
 ```{r setup, echo=FALSE, message=FALSE, error=FALSE}
+devtools::install_github("martigso/stortingscrape")
 
 # setwd("./undervisningsmateriell/seminarer")
 library(knitr)
@@ -161,6 +162,7 @@ Det vanligste formatet på eksisterende data innenfor politisk analyse er to-dim
 Under vil vi illustre de forskjellige måtene å laste inn data på med eksempeldata fra pakken `stortingscrape`, som inneholder meta data på alle saker Stortinget behandlet i 2019-2020-sesjonen:
 
 ```{r laste_data_data}
+# install.packages("stortingscrape")
 
 saker <- stortingscrape::cases$root
 
