@@ -165,7 +165,6 @@ load("./data/saker.rda")
 ```
 
 ```{r laste_data_data, eval=-1}
-# saker <- stortingscrape::cases$root
 
 saker %>% 
   select(id, document_group, status, title_short) %>% 
