@@ -466,9 +466,9 @@ load("./data/nor_lemma_sent.rda")
 ```
 
 ```{r norsentlex_load, eval=FALSE}
-devtools::install_github("martigso/NorSentLex")
+# devtools::install_github("martigso/NorSentLex")
 
-library(NorSentLex)
+# library(NorSentLex)
 ```
 
 ```{r norsentlex_general}

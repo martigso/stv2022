@@ -2294,9 +2294,9 @@ cat(bow[sample(1:length(bow))])</code></pre>
 <div id="norsentlex" class="section level2" number="10.1">
 <h2><span class="header-section-number">10.1</span> NorSentLex</h2>
 <p>Det har lenge vært ganske lite ressurser for sentimentanalyse på norsk. <span class="citation">Barnes et al. (2019)</span> har ganske nylig satt sammen en stor <a href="#ordboker">ordbok</a> med positive og negative ord i for både fullform og lemmatisert form med <a href="#pos">PoS-tags</a><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. Disse ordbøkene bygger på en en oversatt og manuelt korrigert engelsk korpus av kundetilbakemeldinger <span class="citation">(Hu and Liu 2004)</span> og er pakket i både rå <code>.txt</code>-filer og <code>.json</code>-filer. Heldigvis har en tulling også konvertert dette til en pakke i R: <a href="https://github.com/martigso/NorSentLex"><code>NorSentLex</code></a> (for øyblikket ikke på CRAN). For å laste inn/ned ordbøkene, kan du enten installere R-pakken med <code>devtools::install_github(&quot;martigso/NorSentLex&quot;)</code> eller bruke det du lærte i <a href="#anskaff">skrape-delen</a> av denne notatboken på <a href="https://github.com/ltgoslo/norsentlex">de originale filene</a>. La oss illustrer med R-pakken:</p>
-<pre class="r"><code>devtools::install_github(&quot;martigso/NorSentLex&quot;)
+<pre class="r"><code># devtools::install_github(&quot;martigso/NorSentLex&quot;)
 
-library(NorSentLex)</code></pre>
+# library(NorSentLex)</code></pre>
 <pre class="r"><code># Ordbøker i fullform
 names(nor_fullform_sent)</code></pre>
 <pre><code>## [1] &quot;negative&quot; &quot;positive&quot;</code></pre>
