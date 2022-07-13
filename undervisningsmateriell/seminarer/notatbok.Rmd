@@ -460,10 +460,18 @@ Hovedpoenget med å vise dette er at *sekk med ord*-antagelsen er veldig streng 
 
 Det har lenge vært ganske lite ressurser for sentimentanalyse på norsk. @Barnes2019 har ganske nylig satt sammen en stor [ordbok](#ordboker) med positive og negative ord i for både fullform og lemmatisert form med [PoS-tags](#pos)^[se: https://github.com/ltgoslo/norsentlex]. Disse ordbøkene bygger på en en oversatt og manuelt korrigert engelsk korpus av kundetilbakemeldinger [@Hu2004] og er pakket i både rå `.txt`-filer og `.json`-filer. Heldigvis har en tulling også konvertert dette til en pakke i R: [`NorSentLex`](https://github.com/martigso/NorSentLex) (for øyblikket ikke på CRAN). For å laste inn/ned ordbøkene, kan du enten installere R-pakken med `devtools::install_github("martigso/NorSentLex")` eller bruke det du lærte i [skrape-delen](#anskaff) av denne notatboken på [de originale filene](https://github.com/ltgoslo/norsentlex). La oss illustrer med R-pakken:
 
-```{r norsentlex, eval=-1}
+```{r norsentlex_hidden, echo=FALSE}
+load("./data/nor_fullform_sent.rda")
+load("./data/nor_lemma_sent.rda")
+```
+
+```{r norsentlex_load, eval=FALSE}
 devtools::install_github("martigso/NorSentLex")
 
 library(NorSentLex)
+```
+
+```{r norsentlex_general}
 
 # Ordbøker i fullform
 names(nor_fullform_sent)

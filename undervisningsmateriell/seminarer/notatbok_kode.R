@@ -158,10 +158,18 @@ regndans[which(str_detect(regndans, "dragepust"))]
 cat(paste(regndans, collapse = "\n"))
 
 
-## ----norsentlex, eval=-1----------------------------------------
-devtools::install_github("martigso/NorSentLex")
+## ----norsentlex_hidden, echo=FALSE------------------------------
+load("./data/nor_fullform_sent.rda")
+load("./data/nor_lemma_sent.rda")
 
-library(NorSentLex)
+
+## ----norsentlex_load, eval=FALSE--------------------------------
+## devtools::install_github("martigso/NorSentLex")
+## 
+## library(NorSentLex)
+
+
+## ----norsentlex_general-----------------------------------------
 
 # Ordbøker i fullform
 names(nor_fullform_sent)
