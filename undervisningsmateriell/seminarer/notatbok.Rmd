@@ -39,6 +39,7 @@ library(dplyr)
 library(ggplot2)
 # if("tidytext" %in% installed.packages() == FALSE) install.packages("tidytext")
 
+load("./data/saker.rda")
 ```
 
 # Introduksjon {#introduksjon}
@@ -163,7 +164,7 @@ Under vil vi illustre de forskjellige måtene å laste inn data på med eksempel
 ```{r laste_data_data, eval=-1}
  
 library(stortingscrape)
-saker <- cases$root
+#saker <- cases$root
 
 saker %>% 
   select(id, document_group, status, title_short) %>% 
@@ -340,7 +341,215 @@ La oss også nevne at endel (spesielt historiske) dokumenter i `.pdf`-format er 
 
 ## .html-skraping
 
-Dette kan være lite gøy
+Internett er en fantastisk kilde til informasjon, og derfor også en veldig god måte å anskaffe data på. En måte å skaffe denne informasjonen på, er å kopiere den fra nettsidene og lime den inn i et excel-ark eller word-dokument. Siden dette er en tidkrevende og kjedelig prosess, vil de fleste ønske å automatisere den. Det er dette som er *skraping*. Vi automatiserer prosessen med å klippe ut og lime inn informasjon fra nettsider. Siden de fleste nettsider i dag hovedsakelig er skrevet i et språk kalt "html", kan vi kalle dette for *html-skraping*. 
+
+All html-kode ligger åpent tilgjengelig for alle. For å finne den, åpne en nettside, høyreklikk på siden og velg "Inspect". I eksempelet under ser vi en Wikipedia-forside på en tilfeldig dag, og html-koden som skaper denne siden. 
+
+```{r, out.width="100%", echo = FALSE}
+knitr::include_graphics("./figurer/wikipedia.png")
+```
+
+All html-kode er hierarkisk. Egentlig likner den veldig på et familietre. I toppen har vi familiens overhode, `<html>`-noden. Her finner vi generell informasjon som hvilket språk nettsiden er på -- engelsk, norsk, fransk, kinesisk... De neste familiemedlemmene er `<head>` og `<body>`.
+
+ - `<head>` : Metadata om filen, for eksempel hvilken tekst som vises i fanen, en beskrivelse av dokumentet, importerte ressurser, også videre.
+ - `<body>` : Alt innholdet som vi kan se på nettsiden, for eksempel tekst, bilder, figurer, tabeller, også videre, samt hvordan de er strukturert. 
+ 
+Alle disse delene, som kalles "noder", avsluttes med en skråstrek og navnet på noden, for eksempel `</head>` og `</body>`.
+
+```{r, out.width="100%", echo = FALSE}
+knitr::include_graphics("./figurer/wikipedia2.png")
+```
+
+`<head>` og `<body>` er barn av noden `<html>`. Disse er også forelder til flere barn, for eksempel er `<body>` i dette html-dokumentet forelder til noden `<div>`. `<div>` angir et spesielt område i dokumentet. Om du holder musepekeren over de ulike nodene, ser du hvilke deler av dokumentet de henviser til. 
+
+```{r, out.width="50%", fig.align="center", echo = FALSE}
+knitr::include_graphics("./figurer/wikipedia3.png")
+```
+
+Noen eksempler på HTML-noder er:
+
+ - `<div>` : Del av dokumentet 
+ - `<section>` : Seksjon av dokumentet
+ - `<table>` : En tabell
+ - `<p>` : Et avsnitt
+ - `<h2>` : Overskrift i størrelse 2
+ - `<h6>` : Overskrift i størrelse 6
+ - `<a>` : Hyperlenke som refererer til andre nettsider gjennom `href`
+ - `<img>` : Et bilde
+ - `<br>` : Avstand mellom avsnitt
+ 
+
+### Hvordan skrape en nettside
+
+Vi bruker R-pakken `rvest` for å skrape. For å laste inn en pakke bruker vi `library`. Om du ikke har installert den før, må du gjøre dette med `install.packages("rvest")` (husk gåsetegnene når man installerer pakker).
+
+```{r}
+library(rvest)
+```
+
+Når vi skraper en nettside, er det fem steg vi må gjennom:
+
+1. I RStudio, skriv `read_html` og sett som argument addressen eller filstien til nettsiden du vil hente informasjon fra.
+2. "Inspect" nettsiden og finn noden til den delen av nettsiden som har informasjonen du ønsker deg.
+3. Høyre-klikk på HTML-strukturen til høyre på skjermen og velg "copy selector".
+4. Gå tilbake til RStudio. I `html_node` spesifiserer du den relevante noden ved å lime inn det du kopierte i forrige steg. 
+5. Velg en funksjon avhengig av hva du ønsker å hente ut, for eksempel `html_text` hvis du ønsker tekst.
+
+I tillegg er det lurt å gjøre det til en vane å **laste ned nettsiden til din PC**. Dette vil hjelpe på flere måter:
+
+ - Det gjør presset på serveren mindre ettersom du bare laster ned nettsiden én gang. 
+ - Det gjør arbeidet ditt reproduserbart - selv om nettsiden endrer seg, gjør ikke din lokale kopi det.
+ - Det gjør at du kan nå disse filene selv uten at du har internett.
+
+For å laste ned en html-fil kan du bruke `download.file` og sette som argument URL-addressen til nettsiden. Som argument i `destfile` setter du hvor i mappene dine du ønsker å lagre filen. I eksempel under laster jeg ned Wikipedia-artikkelen om appelsiner.
+
+```{r}
+
+download.file("https://en.wikipedia.org/wiki/Orange_(fruit)", # Last ned en html-fil ...
+                destfile = "./data/links/Oranges.html") # ... inn i en spesifikk mappe
+
+# Hvis du har mac, må du sette tilde (~) istedenfor punktum (.)
+# Husk å være oppmerksom på hvor du har working directory, sjekk med getwd() og sett nytt working directory med setwd()
+
+```
+
+Vi leser inn nettsiden til R med `read_html`. Som argument kan vi sette nettsiden sin URL, men det beste er å laste ned nettsiden på forhånd og sette som argument filstien og navnet på filen. 
+
+```{r, warning=FALSE, error=FALSE, message=FALSE}
+
+library(rvest)
+
+read_html("https://en.wikipedia.org/wiki/Orange_(fruit)") # Les inn direkte fra nettside
+
+read_html("./data/links/Oranges.html") # Les inn fra din nedlastede fil
+
+```
+
+#### Tekst
+
+La oss si vi ønsker oss tekst fra nettsiden. Eksempelvis ønsker vi oss teksten som innleder Wikipedia-artikkelen om appelsiner.
+
+```{r, out.width="100%", echo = FALSE}
+knitr::include_graphics("./figurer/oranges1.png")
+```
+
+For å skrape denne informasjonen, sett musepekeren over avsnittet og høyreklikk, velg "Inspect" og se hvilken del av html-koden som lyser opp når du har musepekeren over avsnittet. Vi ser at det er en `<p>`-node som inneholder denne teksen. For å finne den fulle html-noden:
+
+1. Høyreklikk på noden.
+2. Velg "Copy".
+3. Velg "Copy selector".
+
+```{r, out.width="100%", echo = FALSE}
+knitr::include_graphics("./figurer/oranges2.png")
+```
+
+Lim inn dette under `html_node`. Videre, siden vi ønsker oss tekst, velg `html_text`. For å ta ut whitespace kan vi sette `trim = TRUE`.
+
+```{r}
+
+read_html("./data/links/Oranges.html") %>%
+  html_node("#mw-content-text > div.mw-parser-output > p:nth-child(9)") %>%
+  html_text(trim = TRUE)
+
+```
+
+#### Tabeller
+
+Tabeller er også typisk nokså enkle å hente fra nettsider. De befinner seg gjerne i html-noder kalt `<table>` og `<tbody>`. 
+
+```{r, out.width="100%", echo = FALSE}
+knitr::include_graphics("./figurer/oranges3.png")
+```
+
+Å hente en tabell byr på samme prosedye som over -- sett inn addressen/filstien til nettsiden og finn html-noden som viser til den relevante delen av nettsiden som du ønsker å skrape. Istedenfor å velge `html_text` velger du da `html_table`. 
+
+```{r}
+
+read_html("./data/links/Oranges.html") %>%
+  html_node("#mw-content-text > div.mw-parser-output > table.infobox.nowrap") %>%
+  html_table()
+
+```
+
+Vi kan i tillegg rydde litt opp i koden for å få en penere tabell.
+
+```{r}
+
+read_html("./data/links/Oranges.html") %>%
+  html_node("#mw-content-text > div.mw-parser-output > table.infobox.nowrap") %>%
+  html_table() %>%
+  na_if("") %>% # Erstatter "" med NA (missing)
+  na.omit() # Fjerner alle NA
+
+```
+
+#### Lenker
+
+Internettet er proppfullt av lenker. Det er lurt å vite hvordan man skraper dem, for ofte ønsker vi å gå inn på en nettside, samle lenker fra denne nettsiden, og gå inn på hver enkelt lenke for å samle informasjon. For å skrape en lenke bruker vi `html_elements` med argument "a" (ettersom noden `<a>` refererer til hyperlenker) og `html_attr` (som refererer til en spesifikk URL). Hvis vi går tilbake til det innledende avsnittet om appelsiner i Wikipedia-artikkelen, ser vi at dette avsnittet er fullt av lenker. For å samle disse kan vi bruke koden under:
+
+```{r eval = FALSE}
+
+read_html("./data/links/Oranges.html") %>%
+  html_node("#mw-content-text > div.mw-parser-output > p:nth-child(9)") %>%
+  html_elements("a") %>%
+  html_attr("href")
+
+```
+
+For å få fullstendige lenker, må hente ut de lenkene vi tenker å bruke og lime på første halvdel av URL-en. Dette kan vi gjøre med `str_extract` og `str_c`.
+
+```{r}
+
+links <- read_html("./data/links/Oranges.html") %>%
+  html_node("#mw-content-text > div.mw-parser-output > p:nth-child(9)") %>%
+  html_elements("a") %>%
+  html_attr("href") %>%
+  str_extract("/wiki.*") %>% # Samle bare de URL-ene som starter med "/wiki", fulgt av hva som helst (.*)
+  na.omit() %>% # Alle andre strenger blir NA, vi fjerner disse
+  str_c("https://en.wikipedia.org/", .) # str_c limer sammen to strenger, vi limer på første halvdel av URL-en.
+
+```
+
+Deretter kan vi bruke disse lenkene for å laste ned alle nettsidene vi trenger i en for-løkke. 
+
+```{r}
+
+linkstopic <- str_remove(links, "https://en.wikipedia.org//wiki/")
+
+for(i in 1:length(links)) { # For alle lenkene...
+  
+  download.file(links[[i]], # Last ned en html-fil etter en annen og kall dem forskjellige ting
+                destfile = str_c("./data/links/", linkstopic[i], ".html"))
+}
+
+```
+
+Deretter kan vi lage en for-løkke for å skrape alle nettsidene i folderen. 
+
+```{r}
+
+info <- list() # Lag et liste-objekt hvor du kan putte output fra løkken
+
+for (i in 1:length(links)) { # For hver enhet (i) som finnes i links, fra plass 1 til sisteplass i objektet (gitt med length(links))...
+  
+  page <- read_html(links[[i]]) # ... les html-filen for hver i
+  
+  page <- page %>% # Bruk denne siden
+    html_elements("p") %>% # Og få tak i avsnittene
+    html_text() # Deretter, hent ut teksten fra disse avsnittene
+  
+  info[[i]] <- page # Plasser teksten inn på sin respektive plass i info-objektet
+  
+}
+
+# Info-objektet inneholder nå blant annet:
+
+info[[1]][3]
+info[[2]][3]
+info[[3]][2]
+
+```
+
 
 ## .xml-skraping
 
@@ -567,6 +776,11 @@ no4_sent %>%
 
 
 # Temamodellering {#topicmod}
+
+```{r}
+
+```
+
 
 # Latente posisjoner {#posisjon}
 
