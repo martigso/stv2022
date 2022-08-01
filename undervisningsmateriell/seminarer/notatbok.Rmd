@@ -46,7 +46,13 @@ load("./data/saker.rda")
 
 Velkommen til STV2022 -- Store teksdata!
 
-Dette er en arbeidsbok som går gjennom de forskjellige delene i kurset, med tilhørende R-kode. Meningen med arbeidsboken, er at den kan brukes som forslag til implementering av metoder i semesteroppgaven. Merk likevel at dette ikke er en fasit!
+Dette er en arbeidsbok som går gjennom de forskjellige delene i kurset, med tilhørende R-kode. Meningen med arbeidsboken, er at den kan brukes som forslag til implementering av metoder i semesteroppgaven. Merk likevel at dette ikke er en fasit! 
+
+Om du skulle finne feil i dokumentet, legg gjerne inn en [issue på github](https://github.com/martigso/stv2022/issues/) så får vi fikset det i en fei.
+
+![](https://img.shields.io/github/commit-activity/w/martigso/stv2022?style=for-the-badge)
+![](https://img.shields.io/github/issues/martigso/stv2022?style=for-the-badge)
+![](https://img.shields.io/github/issues-closed/martigso/stv2022?style=for-the-badge)
 
 ## Kort om kurset
 
@@ -87,6 +93,8 @@ Vi kommer til å bruke noen pakker gjennom kurset, som det kan være lurt å læ
 | [stm]()                | For å kjøre strukturelle temamodeller                                            |
 | [NorSentLex]()         | Sentimentordbøker på norsk                                                       |
 | [haven]()              | For å laste inn forskjellige dataformater (SPSS, Stata og SAS)                   |
+| [rvest]()              | Strukturerer `.html/.xml`                                                        |
+| [rvest]()              | Strukturerer `.html/.xml`                                                        |
 | &hellip;               |             
 
 ## Anbefalte forberedelser
@@ -95,8 +103,8 @@ Siden kurset krever noe forkunnskap om R og generell metodisk kompetanse, anbefa
 
 - [Arbeidsbøker for R ved UiO](https://shinyibv02.uio.no/connect/#/apps/55/access)
 - [R materiale for STV1020](https://github.com/liserodland/STV1020)
-
-
+- [Bli med på discord!](https://discord.com/invite/CAP9TbdWFa) ![Discord](https://img.shields.io/discord/849615506548981770?style=for-the-badge)
+- [Eller facebook](https://www.facebook.com/groups/427792970608618)
 
 # Undervisning
 
@@ -485,7 +493,7 @@ read_html("./data/links/Oranges.html") %>%
 
 #### Lenker
 
-Internettet er proppfullt av lenker. Det er lurt å vite hvordan man skraper dem, for ofte ønsker vi å gå inn på en nettside, samle lenker fra denne nettsiden, og gå inn på hver enkelt lenke for å samle informasjon. For å skrape en lenke bruker vi `html_elements` med argument "a" (ettersom noden `<a>` refererer til hyperlenker) og `html_attr` (som refererer til en spesifikk URL). Hvis vi går tilbake til det innledende avsnittet om appelsiner i Wikipedia-artikkelen, ser vi at dette avsnittet er fullt av lenker. For å samle disse kan vi bruke koden under:
+Internett er proppfullt av lenker. Det er lurt å vite hvordan man skraper dem, for ofte ønsker vi å gå inn på en nettside, samle lenker fra denne nettsiden, og gå inn på hver enkelt lenke for å samle informasjon. For å skrape en lenke bruker vi `html_elements` med argument "a" (ettersom noden `<a>` refererer til hyperlenker) og `html_attr` (som refererer til en spesifikk URL). Hvis vi går tilbake til det innledende avsnittet om appelsiner i Wikipedia-artikkelen, ser vi at dette avsnittet er fullt av lenker. For å samle disse kan vi bruke koden under:
 
 ```{r eval = FALSE}
 
@@ -551,24 +559,75 @@ info[[3]][2]
 ```
 
 
-## .xml-skraping
+## Andre formater og APIer {#api}
 
-Dette er enklere enn html
+Selv om nettsider i `.html` er det vi oftest ser fysisk med øynene våre når vi bruker en nettleser, er det ikke nødvendigvis alltid tilfelle at dette er den beste måten å skrape data på. Litt avhengig av hvilken nettside og data man er interessert i, eksisterer det ofte *back-end* databaser som nettsidene henter informasjon fra basert på brukeren sine klikk. Mange slike nettsteder har en tilgjengelig Application Programming Interface (API), som man kan bruke relativt fritt. Og noen nettsider er i seg selv en API. Ta for eksempel [Star Wars API](https://swapi.dev/), som er en database med data på karakterer, verdener, filmer, mm, i Star Wars universet.
 
-## .json-skraping
+Forsiden til SWAPI viser hvordan man for eksempel kan hente ut data om en person:
 
-Dette liker jeg ikke. Veldig rar datastrukturering
+```{r swapi_intro, echo=1:6, eval=8}
 
-## Curl
+library(curl)
 
-Ja, må vi egentlig snakke om curl
+person1_url <- "https://swapi.dev/api/people/1/"
 
-## APIer
+readLines(person1_url)
 
-Kanskje bruke Stortinget som eksempel.
+readLines("./data/swapi/person1.json")
+
+```
+
+
+### .json
+
+Her ser dataformatet veldig annerledes ut enn en `.html` fordi `.html` er en dårlig måte å lagre data på. De aller fleste APIer bruker heller formater som `.xml` og `.json`. I SWAPI sitt tilfelle, får vi ut data i `.json`-format. Dette formatet egner seg ikke kjempegodt å lese med `readLines()`. Men, som alltid, har noen laget en pakke som parser data i `.json` for oss:
+
+```{r swapi_luke}
+
+library(jsonlite)
+
+person1 <- read_json("./data/swapi/person1.json")
+
+names(person1)
+class(person1)
+
+person1$name
+person1$starships
+
+```
+
+Elementer som `starships`, `homeworld` og`films` linker videre til andre deler av APIet, som man kan trekke ut videre data fra om det er ønskelig
+
+Under finner du et litt lenger eksempel på en potensiell workflow for SWAPI, som det går an å eksperimentere med:
+
+```{r swapi_long_ex, file="r/swapi_ex.R", eval=FALSE, class.source="fold-hide"}
+
+```
+
+Et lite tips, om man jobber med vedlig uoversiktelige `.json`-filer, er å bruke `listviewer`-pakken. Den gir et veldig oversiktelig visuelt tre av dataene.
 
 
 
+### .xml
+
+Det andre dataformatet som er mest vanlig i APIer er `.xml`. Siden vi skal bruke [Stortinget](https://data.stortinget.no) som eksempel i en hel forelesning, bruker vi et annet eksempel her: 
+
+
+### API-liste
+
+
+- [Stortinget](https://data.stortinget.no)
+- [Helsedirektoratet](https://www.helsedirektoratet.no/om-oss/apne-data-api)
+- [Nasjonalbiblioteket](https://api.nb.no/)
+- [Wikipedia](https://www.mediawiki.org/wiki/API:Main_page)
+- [Kartverket](https://www.kartverket.no/api-og-data)
+- [Felles datakatalog](https://data.norge.no/)
+- [yr.no](https://developer.yr.no/)
+- [Entur](https://developer.entur.org/)
+- [SSB](https://www.ssb.no/api)
+- [Brønnøysundregistrene](https://www.brreg.no/produkter-og-tjenester/apne-data/)
+- [Kystverket](https://data.kystverket.no/)
+- [Statens vegvesen](https://dataut.vegvesen.no/)
 
 # Preprosessering {#prepros}
 
