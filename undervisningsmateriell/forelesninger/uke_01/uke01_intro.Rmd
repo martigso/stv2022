@@ -364,21 +364,302 @@ no4_tokens %>%
 
 
 # Typer analyse
-<!--Assigned til Solveig! -->
+
+Hvem er kjent med:
+
+```{r, eval = FALSE, echo = TRUE}
+lm(y ~ x1 + x2, data = df)
+```
+
+
+ - Vi ønsker å bruke tekst for å si noe om mønstre og sammenhenger.
+ - Det er spesielt tre steg i forskningsprosessen:
+ 
+    - Oppdagelse (discovery)
+    - Måling (measurement)
+    - Slutning (inference)
+
+. . .
+
+<!-- ![](data-analytics-insights.PNG){width=40%} -->
+
 
 ## Deskriptiv
 
+Deskriptiv analyse handler om å beskrive dataene.
+
+For eksempel:
+
+- Hvilket ord dukker oftest opp på platen?
+
+. . .
+
+```{r telling}
+no4_tokens %>%
+  ungroup() %>%
+  count(ord) %>%
+  arrange(desc(n))
+```
+
+## Deskriptiv
+
+Eller...
+
+ - Hvilke ord ble brukt mest over ulike tidsperioder?
+ - Hvordan fordeler ordbruken seg mellom ulike aktører?
+ - Hvilke ord deles mellom de ulike tekstene?
+
+## Deskriptiv
+
+```{r nettverk, message=FALSE}
+library(igraph)
+library(ggraph)
+
+edgelist <- no4_tokens %>% 
+  select(spor, ord)
+
+graph <- graph_from_data_frame(edgelist, directed = FALSE, vertices = NULL)
+
+names <- attributes(degree(graph)) %>% as_tibble()
+degree <- degree(graph) %>% as_tibble() %>%
+  mutate(from = names$names)
+
+gdat_twomode <- graph %>% 
+  igraph::as_data_frame() %>%
+  left_join(degree)
+
+gdat_twomode %>% 
+  tidygraph::as_tbl_graph() %>% 
+  tidygraph::activate(nodes) %>% 
+  mutate(degree = degree$value) %>%
+  ggraph(layout = "fr") +
+  geom_edge_link(color = "gray") +
+  geom_node_point(aes(color = degree, 
+                      size = degree)) + 
+  geom_node_text(aes(label = name), color = "black") +
+  theme_graph() + 
+  theme(legend.position = "none",
+        panel.background = element_blank())
+```
+
 ## Veiledet vs. ikke veiledet læring
+
+Læring: Maskinen bruker data til å forstå mønstre og sammenhenger selv.
+
+ - Står i kontrast til regelbaserte metoder (ingen læring, kun følge en oppskrift)
+ 
+<br>
+
+ - Tekst regnes gjerne som "stordata", fordi hvert ord blir en variabel.
+ - Stordata er godt tilpasset læringsalgoritmer.
+ - Vi deler "læring" inn i to:
+
+    - Veiledet læring (det finnes en fasit alt)
+    - Ikke-veiledet læring (det finnes ingen fasit)
+
+
+## Veiledet vs. ikke veiledet læring
+
+**Veildet læring**
+
+<div class='left' style='float:left;width:50%'>
+
+ - Vi vet allerede `Y` (avhengig variabel).
+ 
+ - Maskinen bruker data for å lære sammenhenger som den kan applisere på ny data.
+ - Brukes spesielt for måling og slutning.
+
+</div>
+
+. . .
+
+
+<div class='right' style='float:right;width:50%'>
+
+Kan vi bruke informasjon om disse objektene...
+
+```{r veiledet1}
+tibble(frukt = c("banan", "banan", "pære", "banan", "pære"),
+       fasong = c("lang", "lang", "rund", "lang", "lang"),
+       farge = c("gul", "gul", "grønn", "gul", "grønn"))
+```
+
+Til å finne ut om disse objektene er banan eller pære?
+
+```{r veiledet2}
+tibble(frukt = c("", ""),
+       fasong = c("rund", "lang"),
+       farge = c("gul", "grønn"))
+```
+
+
+</div>
+
+## Veiledet vs. ikke veiledet læring
+
+**Ikke-veiledet læring**
+
+<div class='left' style='float:left;width:50%'>
+
+ - Vi vet ikke `Y` (avhengig variabel).
+ 
+ - Maskinen bruker data for å lære om mønstre i data.
+ - Brukes spesielt for oppdagelse og måling.
+
+</div>
+
+. . .
+
+
+<div class='right' style='float:right;width:50%'>
+
+Vi kan bruke informasjon om disse objektene...
+
+```{r ikke-veiledet1}
+tibble(fasong = c("lang", "lang", "rund", "lang", "lang"),
+       farge = c("gul", "gul", "grønn", "gul", "grønn"),
+       størrelse = c("middels", "middels", "liten", "middels", "stor"))
+```
+
+Til å si noe om hvordan objektene hører sammen?
+
+```{r ikke-veiledet2}
+tibble(fasong = c("lang", "lang", "rund", "lang", "lang"),
+       farge = c("gul", "gul", "grønn", "gul", "grønn"),
+       størrelse = c("middels", "middels", "liten", "middels", "stor"),
+       type = c(1, 1, 2, 1, 2))
+```
+
+
+</div>
+
 
 ## Ordbøker, tekstlikhet og sentiment
 
+**Ordbøker:** Lag deg selv en ordbok over relevante ord, og sjekk hvor mange ganger disse ordene dukker opp i ulike tekster.
+
+ - Ordbøker er regelbaserte 
+ 
+ . . .
+ 
+```{r ordbok, echo = TRUE, message=FALSE}
+trist <- tibble(ord = c("gråte", "savne", "våt", "tåre", "tårer", "stakkar", "stygt", "feil", "aldri", "natten", "glemme", "tapte"),
+                trist = c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1))
+
+no4_tokens %>%
+  ungroup() %>%
+  count(ord) %>%
+  left_join(trist) %>%
+  ggplot(., aes(label = ord, 
+                size = n,  
+                color = trist)) +
+  geom_text_wordcloud_area()+
+  scale_size_area(max_size = 10) +
+  ggdark::dark_theme_void()
+
+```
+
+## Ordbøker, tekstlikhet og sentiment
+ 
+```{r ordbok-ordsky, echo = FALSE, message=FALSE}
+triste_ord <- tibble(ord = c("gråte", "savne", "våt", "tåre", "tårer", "stakkar", "stygt", "feil", "aldri", "natten", "glemme", "tapte"),
+                trist = c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1))
+
+no4_tokens %>%
+  ungroup() %>%
+  count(ord) %>%
+  left_join(triste_ord) %>%
+  ggplot(., aes(label = ord, 
+                size = n,  
+                color = trist)) +
+  geom_text_wordcloud_area()+
+  scale_size_area(max_size = 20) +
+  ggdark::dark_theme_void()
+
+```
+
+## Ordbøker, tekstlikhet og sentiment
+
+**Tekstlikhet:** Ta to tekster og sammenlikn hvor like de er.
+
+ - Tekstlikhet kan regnes som ikke-veiledet læring.
+
+. . .
+
+```{r likhet1, echo = TRUE}
+no4 %>% 
+  filter(spor %in% c(2, 4)) %>% 
+  mutate(likhet = c(0.09630868, 0.09630868)) %>%
+  select(likhet, titler, tekst)
+```
+
+```{r likhet2, eval = FALSE}
+
+tfidf_no4 <- no4_tokens %>%
+  count(spor, ord, sort  = TRUE) %>%
+  bind_tf_idf(ord, spor, n) %>%
+  cast_sparse(spor, ord, tf)
+
+similarities <- text2vec::sim2(tfidf_no4, method = "cosine", norm = "l2")
+
+as.data.frame(as.matrix(similarities)) 
+
+```
+
+
+## Ordbøker, tekstlikhet og sentiment
+
+**Sentiment:** Finn ut hvor positiv, negativ eller nøytral en tekst er.
+
+ - Sentimentanalyse kan både gjøres gjennom ordbøker og gjennom veiledet læring.
+ 
+<br>    
+
+. . .
+
+![](sentiment_wordcloud_political.png){width=60%}
+
+
 ## Klassifisering av tekst
+
+**Klassifisering:** Hva slags type tekst er dette?
+
+ - En kategorisk variabel som klassifiserer teksten.
+ - Kan både være veiledet og ikke-veiledet
+
+. . .
+
+```{r klassifisering, echo = TRUE}
+no4 %>%
+  filter(spor == 1:4) %>%
+  mutate(type = c("glad", "trist", "trist", "glad")) %>%
+  select(spor, titler, type, tekst)
+```
+
+## Klassifisering av tekst
+
+Eksempel fra temamodellering i pensum (Lucas 2015):
+
+![](lucas_topics.PNG){width=60%}
+
 
 ## Estimere latent posisjon fra tekst
 
+**Latent posisjon:** Hvor på en akse befinner denne teksten seg?
+
+ - Latent: Ikke direkte observerbar.
+ - Kan både være veiledet og ikke-veiledet.
+
+ - For eksempel: Er et partiprogram på den politiske høyresiden eller venstresiden?
+ 
+. . .
+
+![](spektrum.PNG){width=60%}
+
+
 # Oppsummering
 
-![https://www.youtube.com/c/Barny64](figureitout.gif)
+<!-- ![https://www.youtube.com/c/Barny64](figureitout.gif) -->
 
 # Referanser
 
