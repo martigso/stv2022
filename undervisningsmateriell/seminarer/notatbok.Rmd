@@ -94,7 +94,6 @@ Vi kommer til å bruke noen pakker gjennom kurset, som det kan være lurt å læ
 | [NorSentLex]()         | Sentimentordbøker på norsk                                                       |
 | [haven]()              | For å laste inn forskjellige dataformater (SPSS, Stata og SAS)                   |
 | [rvest]()              | Strukturerer `.html/.xml`                                                        |
-| [rvest]()              | Strukturerer `.html/.xml`                                                        |
 | &hellip;               |             
 
 ## Anbefalte forberedelser
@@ -103,7 +102,12 @@ Siden kurset krever noe forkunnskap om R og generell metodisk kompetanse, anbefa
 
 - [Arbeidsbøker for R ved UiO](https://shinyibv02.uio.no/connect/#/apps/55/access)
 - [R materiale for STV1020](https://github.com/liserodland/STV1020)
-- [Bli med på discord!](https://discord.com/invite/CAP9TbdWFa) ![Discord](https://img.shields.io/discord/849615506548981770?style=for-the-badge)
+
+
+## Nyttige linker
+
+- [Coffee and coding](https://www.sv.uio.no/isv/english/research/courses/coffee-and-coding/)
+- [Bli med på discord for R!](https://discord.com/invite/CAP9TbdWFa) ![Discord](https://img.shields.io/discord/849615506548981770)
 - [Eller facebook](https://www.facebook.com/groups/427792970608618)
 
 # Undervisning
@@ -132,6 +136,13 @@ De ti forelesningene har følgende timeplan (høsten 2022):
 
 ## Seminarer
 
+I seminarene vil vi jobbe med en kombinasjon av kodeløsning for temaer fra forelesning og de forskjellige delene av semesteroppaven. Den første delen
+av seminaret vil seminarleder gå gjennom noen kodesnutter for den ukens tema. Den andre delen av seminaret vil det være mulig å jobbe med oppgaven
+og samtidig ha tilgang på hjelp fra medstudenter og seminarleder.
+
+Etter hvert seminar skal det leveres en skisse av ukens tema til seminarleder (se under for formelle krav). Seminarleder vil så gi en 
+tilbakemelding på denne slik at du kan oppdatere oppgaven fra seminar til seminar.
+
 | Uke | Aktivitet                                          | 
 |:----|:---------------------------------------------------|
 | 36  | Seminar 1: Anskaffe tekst og lage dtm i R          |
@@ -145,8 +156,64 @@ Seminarledere:
 - Eli Sofie Baltzersen <elibal@student.sv.uio.no>
 - Eric Gabo Ekeberg Nilsen <e.g.e.nilsen@stv.uio.no>
 
-```{r child = 'oppgavebygging.Rmd'}
-```
+## Oppgaver
+
+Evalueringsformen for STV2022 er en semesteroppgave som man jobber med kontinuerlig over hele semesteret. 
+Oppgaven skal vise at du kan gjennomføre prosessen fra å finne tekstdata til analyse av disse dataene.
+Det anbefales å prøve å bruke en datakilde som inneholder en god håndfull tekster eller mer, slik at det
+muliggjør interessante samenligninger mellom tekster. 
+
+Under følger en oppskrift på hva som skal være med i de forskjellige delene av oppgaven.
+
+### Uke 36 -- Anskaffe tekst
+
+1. Finn en datakilde du tenker kan brukes til å bygge en videre oppgave for kurset
+2. Hent og strukturer data
+3. Gi en kort beskrivelse av hvordan dataene ble fanget og hvordan de er strukturert
+
+### Uke 38 -- Preprosessering av tekstdata i R
+
+1. (Rediger oppaven basert på tilbakemelding fra forrige uke)
+1. Gjør nødvendige preprosesseringsgrep for å redusere/standardisere dataene dine
+2. Visualiser forskjellen mellom tekstene før og etter preprosessering
+3. Diskuter preprosesseringen kritisk
+
+
+### Uke 42 -- Veiledet og ikke-veiledet læring i R
+
+1. (Rediger oppaven basert på tilbakemelding fra forrige uke)
+1. Identifiser en analysestrategi for dine data
+2. Diskuter fordeler og ulemper med din strategi
+
+### Uke 44 -- Modelleringsmetoder i R
+
+1. (Rediger oppaven basert på tilbakemelding fra forrige uke)
+1. Velg hvilke(n) analysemetode(r) du vil bruke for å analysere data
+2. Kjør analysene
+3. Tolk resultatene og implikasjonene av det du har funnet
+
+### Uke 46 -- Siste utkast
+
+1. Rediger oppaven basert på tilbakemeldinger fra de forrige ukene
+
+
+### Formelle krav
+
+- Skisser til seminar
+    1. Følg oppskriften for seminargangen
+        - For eksempel, skal du, etter seminar i uke 36, levere 
+          en skisse som inneholder delene som beskrives i oppskriften for uke 36
+    2. Oppgaven leveres senest kl. 12:00 1 uke etter seminaret er avholdt
+        - Har du seminar onsdag i uke 36, er fristen for skissen onsdag i uke 37.
+    3. Seminarleder gir tilbakemelding på skissen din og du reviderer oppgaven deretter
+    4. Til neste seminar går du tilbake til punkt 1 og jobber deg gjennom lista igjen
+- Den endelige semesteroppgaven...
+    1. følger oppskriften over
+    1. skal være mellom 2500 og 3000 ord (eksludert referanser)
+    2. leveres i `.pdf`- format på Inspera
+    3. har et kjørbart `.R`-script som reproduserer resultatene i oppgaven vedlagt
+    4. [[Mer?]]
+
 
 ## Pensum
 
