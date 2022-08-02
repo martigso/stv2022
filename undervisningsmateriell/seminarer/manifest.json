@@ -3322,17 +3322,23 @@
     "figurer/wikipedia3.png": {
       "checksum": "bd09fdef701e32cf218ae9a76ef13cc6"
     },
+    "notatbok_files/figure-html/no4_vis-1.png": {
+      "checksum": "6e23161acd31f7221c0916e39a4914c1"
+    },
     "notatbok_kode.R": {
-      "checksum": "4228c2e5f80a7ad16a4a4774a44601fb"
+      "checksum": "26138fa1843322736efd29e805d8a331"
     },
     "notatbok.html": {
-      "checksum": "a2f1fea98e9347667978094830d0d3fb"
+      "checksum": "42d826c15970a280ef10131841eda592"
+    },
+    "notatbok.knit.md": {
+      "checksum": "2a0f80ecee0970b6f6822a496cf87724"
     },
     "notatbok.log": {
       "checksum": "a80d9b2d472e971c69ad90b384e15e7a"
     },
     "notatbok.Rmd": {
-      "checksum": "4540666df1421b726f9fab3d8deb1e35"
+      "checksum": "e4f4b058f47a5fe1bfdeb4ce0bdc5688"
     },
     "oppgavebygging.html": {
       "checksum": "f78d398098f78fb686cd4d3a29470e75"

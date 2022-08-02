@@ -106,6 +106,7 @@ Siden kurset krever noe forkunnskap om R og generell metodisk kompetanse, anbefa
 
 ## Nyttige linker
 
+- [Emneside UiO](https://www.uio.no/studier/emner/sv/statsvitenskap/STV2022/index.html)
 - [Coffee and coding](https://www.sv.uio.no/isv/english/research/courses/coffee-and-coding/)
 - [Bli med på discord for R!](https://discord.com/invite/CAP9TbdWFa) ![Discord](https://img.shields.io/discord/849615506548981770)
 - [Eller facebook](https://www.facebook.com/groups/427792970608618)
@@ -917,7 +918,7 @@ no4_sent %>%
 `r if (knitr::is_html_output()) '# Referanser'`
 
 ```{r writeManifest, echo=FALSE, eval=FALSE}
-installed.packages()
+
 # Oppdaterer manifest -- jeg tror vi må kjøre denne manuelt hver
 # gang før vi pusher til github. uio-serveren er hvertfall ikke fornøyd
 # når jeg ikke gjør det.
