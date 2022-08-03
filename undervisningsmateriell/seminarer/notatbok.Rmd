@@ -678,24 +678,146 @@ Et lite tips, om man jobber med vedlig uoversiktelige `.json`-filer, er å bruke
 
 ### .xml
 
-Det andre dataformatet som er mest vanlig i APIer er `.xml`. Siden vi skal bruke [Stortinget](https://data.stortinget.no) som eksempel i en hel forelesning, bruker vi et annet eksempel her: 
+Det andre dataformatet som er mest vanlig i APIer er `.xml`. Siden vi skal bruke [Stortinget](https://data.stortinget.no) som eksempel i en hel forelesning, bruker vi et annet eksempel her: kollektivstopp i Oslo via [API til Entur](https://developer.entur.org/stops-and-timetable-data). `.xml` er ganske likt `.html`, bare lettere å jobbe med (stort sett).
+
+Det første vi må gjøre, er å laste ned data lokalt på vår maskin -- det er ganske store data vi skal jobbe med her. Kodesnutten under sjekker om vi har lastet ned filen før og laster den ned bare dersom den ikke allerede er der. Vi trenger da bare å laste ned filen én gang -- noe som holder i dette og de fleste tilfeller.
+
+
+```{r entur_dl, eval=FALSE}
+
+if(file.exists("./data/ruter.xml") == FALSE){
+  download.file(url = "https://api.entur.io/realtime/v1/rest/et?datasetId=RUT",
+                destfile = "./data/ruter.xml")
+}
+
+```
+
+Vi skal bruke deler av `.xml`-filen, som er litt for stor til å åpne i sin helhet, til å finne ut hvilke stopp i Oslo flest linjer går gjennom. Disse delene ser ut som dette:
+
+```{bash entur_preview, class.source="fold-hide", eval=FALSE}
+
+xmllint --encode utf8 --format data/ruter.xml | sed -n 1185,1247p
+
+```
+
+```
+<RecordedCalls>
+  <RecordedCall>
+    <StopPointRef>NSR:Quay:8107</StopPointRef>
+    <Order>1</Order>
+    <StopPointName>Lillestrøm bussterminal</StopPointName>
+    <AimedDepartureTime>2022-08-03T13:50:00+02:00</AimedDepartureTime>
+    <ActualDepartureTime>2022-08-03T13:50:00+02:00</ActualDepartureTime>
+  </RecordedCall>
+  <RecordedCall>
+    <StopPointRef>NSR:Quay:9371</StopPointRef>
+    <Order>2</Order>
+    <StopPointName>Eikeliveien</StopPointName>
+    <AimedArrivalTime>2022-08-03T13:52:00+02:00</AimedArrivalTime>
+    <ActualArrivalTime>2022-08-03T13:52:00+02:00</ActualArrivalTime>
+    <AimedDepartureTime>2022-08-03T13:52:00+02:00</AimedDepartureTime>
+    <ActualDepartureTime>2022-08-03T13:52:00+02:00</ActualDepartureTime>
+  </RecordedCall>
+  . . .
+</RecordedCalls>
+```
+
+Det ligner litt på `.html` i skrivemåte, men er veldig mye mer strukturert.
+
+Det neste vi må gjøre er å lese den lokale `.xml` filen. Det gjør vi med samme funksjon som vi bruke på front-end `.html`-sider: `rvest::read_html()`:
+
+```{r entur_les, eval=FALSE}
+
+library(rvest)
+
+ruter <- read_html("./data/ruter.xml")
+
+```
+
+
+```{r entur_jukselitt, echo=FALSE, eval=TRUE}
+load("./data/entur_alle_stop.rda")
+```
+
+Nå står vi fritt til å trekke ut de dataene vi ønsker fra filen. I vårt tilfelle skal vi ha ut alle stopp på alle kollektivruter i Oslo. Disse finnes innenfor `<recordedcall> . . . </recordedcall>`. Koden under kan nok virke litt avansert med første øyekast, men et tips for å se hva som skjer inni funksjonen kan være å lage objektet `x` som det første listeelementet i `stopp`^[`x <- stopp[[1]]`], for så å kjøre hver linje inni funksjonen bare på dette elementet
+
+```{r entur_strukt, eval=FALSE, echo=TRUE}
+# Deler opp .xml-dokumentet i hver del som er innenfor 
+# <recordedcall> . . . </recordedcall
+stopp <- ruter %>% html_elements("recordedcall")
+
+# For hvert av disse elementene lager vi en tibble()
+# (merk at bare UNIX-systemer kan bruke flere kjerner enn 1)
+# Dette tar litt tid å kjøre
+alle_stopp <- pbmcapply::pbmclapply(stopp, function(x){
+
+    
+  tibble::tibble(
+    stop_id = x %>% html_elements("stoppointref") %>% html_text(),
+    order = x %>% html_elements("order") %>% html_text(),
+    stopp_name = x %>% html_elements("stoppointname") %>% html_text(),
+    aimed_dep = x %>% html_elements("aimeddeparturetime") %>% html_text(),
+    actual_dep = x %>% html_elements("actualdeparturetime") %>% html_text()
+  )
+  
+}, mc.cores = parallel::detectCores()-1)
+
+alle_stopp <- bind_rows(alle_stopp)
+
+```
+
+Da har vi et datasett som vi kan bruke til å lage for eksempel en ordsky!
+
+```{r entur_wordcloud}
+
+# Viser data
+head(alle_stopp)
+
+# Lager nytt datasett der ... 
+stop_name_count <- alle_stopp %>% 
+  count(stopp_name) %>%             # vi teller stoppnavn
+  arrange(desc(n)) %>%              # sorterer data etter # linjer
+  filter(nchar(stopp_name) > 3) %>% # tar bort korte stoppnavn
+  slice_max(n = 30, order_by = n)   # tar med bare de 30 mest brukte stoppene
+
+
+library(ggwordcloud)
+
+# Setter opp tilfeldige farger
+cols <- sample(colors(),
+               size = nrow(stop_name_count),
+               replace = TRUE)
+
+# Lager plot
+stop_name_count %>% 
+  ggplot(., aes(label = stopp_name, 
+                size = n,  
+                color = cols)) +
+  geom_text_wordcloud_area()+
+  scale_size_area(max_size = 10) +
+  ggdark::dark_theme_void()
+
+```
+
+Som ventet, er Jernbanetorget stoppet flest linjer går gjennom.
 
 
 ### API-liste
 
+Her er en liste over noen APIer med (stort sett) norske data:
 
-- [Stortinget](https://data.stortinget.no)
-- [Helsedirektoratet](https://www.helsedirektoratet.no/om-oss/apne-data-api)
-- [Nasjonalbiblioteket](https://api.nb.no/)
-- [Wikipedia](https://www.mediawiki.org/wiki/API:Main_page)
-- [Kartverket](https://www.kartverket.no/api-og-data)
-- [Felles datakatalog](https://data.norge.no/)
-- [yr.no](https://developer.yr.no/)
-- [Entur](https://developer.entur.org/)
-- [SSB](https://www.ssb.no/api)
 - [Brønnøysundregistrene](https://www.brreg.no/produkter-og-tjenester/apne-data/)
+- [Entur](https://developer.entur.org/)
+- [Felles datakatalog](https://data.norge.no/)
+- [Helsedirektoratet](https://www.helsedirektoratet.no/om-oss/apne-data-api)
+- [Kartverket](https://www.kartverket.no/api-og-data)
 - [Kystverket](https://data.kystverket.no/)
+- [Nasjonalbiblioteket](https://api.nb.no/)
+- [SSB](https://www.ssb.no/api)
 - [Statens vegvesen](https://dataut.vegvesen.no/)
+- [Stortinget](https://data.stortinget.no)
+- [Wikipedia](https://www.mediawiki.org/wiki/API:Main_page)
+- [yr.no](https://developer.yr.no/)
 
 # Preprosessering {#prepros}
 
@@ -744,18 +866,22 @@ Hovedpoenget med å vise dette er at *sekk med ord*-antagelsen er veldig streng 
 ## Fjerne trekk?
 
 
-<!-- ```{r} -->
+
+<!-- ```{r no4_toptokens} -->
 <!-- library(tidytext) -->
 
 <!-- load("./data/no4.rda") -->
 
 <!-- no4_tokens <- no4 %>% -->
-<!--   group_by(spor, titler) %>%  -->
+<!--   group_by(spor, titler) %>% -->
 <!--   unnest_tokens(output = token, -->
-<!--                 input = tekst) %>%  -->
+<!--                 input = tekst) %>% -->
 <!--   count(token) -->
 
-<!-- no4_tokens %>% slice_max(n, n = 1, with_ties = FALSE) -->
+<!-- no4_tokens %>%  -->
+<!--   slice_max(order_by = n,  -->
+<!--             n = 1,  -->
+<!--             with_ties = FALSE) -->
 
 <!-- ``` -->
 

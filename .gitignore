@@ -37,3 +37,6 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+# Noen datafiler
+undervisningsmateriell/seminarer/data/ruter.xml
