@@ -1,4 +1,4 @@
-## ----setup, echo=FALSE, message=FALSE, error=FALSE-------------------------
+## ----setup, echo=FALSE, message=FALSE, error=FALSE--------------------------------------------
 
 # setwd("./undervisningsmateriell/seminarer")
 library(knitr)
@@ -20,7 +20,7 @@ library(ggplot2)
 load("./data/saker.rda")
 
 
-## ----laste_data_data, eval=-1----------------------------------------------
+## ----laste_data_data, eval=-1-----------------------------------------------------------------
  
 library(stortingscrape)
 #saker <- cases$root
@@ -32,19 +32,19 @@ saker %>%
 
 
 
-## ----rda_save, eval=FALSE--------------------------------------------------
+## ----rda_save, eval=FALSE---------------------------------------------------------------------
 ## 
 ## save(saker, file = "./data/saker.rda")
 ## 
 
 
-## ----rda_load--------------------------------------------------------------
+## ----rda_load---------------------------------------------------------------------------------
 
 load("./data/saker.rda")
 
 
 
-## ----csv-------------------------------------------------------------------
+## ----csv--------------------------------------------------------------------------------------
 
 library(readr)
 
@@ -52,19 +52,19 @@ saker <- read_csv("./data/saker.csv", show_col_types = FALSE)
 
 
 
-## ----sav-------------------------------------------------------------------
+## ----sav--------------------------------------------------------------------------------------
 library(haven)
 saker <- read_sav("./data/saker.sav")
 
 
 
-## ----dta-------------------------------------------------------------------
+## ----dta--------------------------------------------------------------------------------------
 
 saker <- read_dta("./data/saker.dta")
 
 
 
-## ----txt-------------------------------------------------------------------
+## ----txt--------------------------------------------------------------------------------------
 
 filer <- list.files("./data/txt", pattern = ".txt", full.names = TRUE)
 filer
@@ -77,26 +77,26 @@ titler[[1]]
 
 
 
-## ----txt2------------------------------------------------------------------
+## ----txt2-------------------------------------------------------------------------------------
 
 names(titler) <- str_extract(filer, "[0-9]+")
 names(titler)
 
 
 
-## ----txt3------------------------------------------------------------------
+## ----txt3-------------------------------------------------------------------------------------
 saker_txt <- data.frame(titler = unlist(titler),
                         id = names(titler))
 
 
-## ----txt4------------------------------------------------------------------
+## ----txt4-------------------------------------------------------------------------------------
 saker_merge <- left_join(saker_txt, saker[, c("id", "title")], by = "id")
 
 saker_merge$titler == saker_merge$title
 
 
 
-## ----msw_zip---------------------------------------------------------------
+## ----msw_zip----------------------------------------------------------------------------------
 
 unzip("data/ba_thesis.docx", exdir = "data/wordfiles")
 
@@ -104,14 +104,14 @@ list.files("data/wordfiles/")
 
 
 
-## ----read_msw_feil, warning=TRUE-------------------------------------------
+## ----read_msw_feil, warning=TRUE--------------------------------------------------------------
 
 readLines("./data/ba_thesis.docx", n = 2)
 
 
 
 
-## ----docx------------------------------------------------------------------
+## ----docx-------------------------------------------------------------------------------------
 
 library(textreadr)
 
@@ -121,7 +121,7 @@ ba_docx[43:46]
 
 
 
-## ----read_pdf--------------------------------------------------------------
+## ----read_pdf---------------------------------------------------------------------------------
 
 ba_pdf <- read_pdf("./data/ba_thesis.pdf")
 
@@ -133,23 +133,23 @@ ba_pdf[11:14]
 
 
 
-## ---- out.width="100%", echo = FALSE---------------------------------------
+## ---- out.width="100%", echo = FALSE----------------------------------------------------------
 knitr::include_graphics("./figurer/wikipedia.png")
 
 
-## ---- out.width="100%", echo = FALSE---------------------------------------
+## ---- out.width="100%", echo = FALSE----------------------------------------------------------
 knitr::include_graphics("./figurer/wikipedia2.png")
 
 
-## ---- out.width="50%", fig.align="center", echo = FALSE--------------------
+## ---- out.width="50%", fig.align="center", echo = FALSE---------------------------------------
 knitr::include_graphics("./figurer/wikipedia3.png")
 
 
-## --------------------------------------------------------------------------
+## ---------------------------------------------------------------------------------------------
 library(rvest)
 
 
-## --------------------------------------------------------------------------
+## ---------------------------------------------------------------------------------------------
 
 download.file("https://en.wikipedia.org/wiki/Orange_(fruit)", # Last ned en html-fil ...
                 destfile = "./data/links/Oranges.html") # ... inn i en spesifikk mappe
@@ -159,7 +159,7 @@ download.file("https://en.wikipedia.org/wiki/Orange_(fruit)", # Last ned en html
 
 
 
-## ---- warning=FALSE, error=FALSE, message=FALSE----------------------------
+## ---- warning=FALSE, error=FALSE, message=FALSE-----------------------------------------------
 
 library(rvest)
 
@@ -169,15 +169,15 @@ read_html("./data/links/Oranges.html") # Les inn fra din nedlastede fil
 
 
 
-## ---- out.width="100%", echo = FALSE---------------------------------------
+## ---- out.width="100%", echo = FALSE----------------------------------------------------------
 knitr::include_graphics("./figurer/oranges1.png")
 
 
-## ---- out.width="100%", echo = FALSE---------------------------------------
+## ---- out.width="100%", echo = FALSE----------------------------------------------------------
 knitr::include_graphics("./figurer/oranges2.png")
 
 
-## --------------------------------------------------------------------------
+## ---------------------------------------------------------------------------------------------
 
 read_html("./data/links/Oranges.html") %>%
   html_node("#mw-content-text > div.mw-parser-output > p:nth-child(9)") %>%
@@ -185,11 +185,11 @@ read_html("./data/links/Oranges.html") %>%
 
 
 
-## ---- out.width="100%", echo = FALSE---------------------------------------
+## ---- out.width="100%", echo = FALSE----------------------------------------------------------
 knitr::include_graphics("./figurer/oranges3.png")
 
 
-## --------------------------------------------------------------------------
+## ---------------------------------------------------------------------------------------------
 
 read_html("./data/links/Oranges.html") %>%
   html_node("#mw-content-text > div.mw-parser-output > table.infobox.nowrap") %>%
@@ -197,7 +197,7 @@ read_html("./data/links/Oranges.html") %>%
 
 
 
-## --------------------------------------------------------------------------
+## ---------------------------------------------------------------------------------------------
 
 read_html("./data/links/Oranges.html") %>%
   html_node("#mw-content-text > div.mw-parser-output > table.infobox.nowrap") %>%
@@ -207,7 +207,7 @@ read_html("./data/links/Oranges.html") %>%
 
 
 
-## ----eval = FALSE----------------------------------------------------------
+## ----eval = FALSE-----------------------------------------------------------------------------
 ## 
 ## read_html("./data/links/Oranges.html") %>%
 ##   html_node("#mw-content-text > div.mw-parser-output > p:nth-child(9)") %>%
@@ -216,7 +216,7 @@ read_html("./data/links/Oranges.html") %>%
 ## 
 
 
-## --------------------------------------------------------------------------
+## ---------------------------------------------------------------------------------------------
 
 links <- read_html("./data/links/Oranges.html") %>%
   html_node("#mw-content-text > div.mw-parser-output > p:nth-child(9)") %>%
@@ -228,7 +228,7 @@ links <- read_html("./data/links/Oranges.html") %>%
 
 
 
-## --------------------------------------------------------------------------
+## ---------------------------------------------------------------------------------------------
 
 linkstopic <- str_remove(links, "https://en.wikipedia.org//wiki/")
 
@@ -240,7 +240,7 @@ for(i in 1:length(links)) { # For alle lenkene...
 
 
 
-## --------------------------------------------------------------------------
+## ---------------------------------------------------------------------------------------------
 
 info <- list() # Lag et liste-objekt hvor du kan putte output fra løkken
 
@@ -264,7 +264,7 @@ info[[3]][2]
 
 
 
-## ----swapi_intro, echo=1:6, eval=8-----------------------------------------
+## ----swapi_intro, echo=1:6, eval=8------------------------------------------------------------
 
 library(curl)
 
@@ -276,7 +276,7 @@ readLines("./data/swapi/person1.json")
 
 
 
-## ----swapi_luke------------------------------------------------------------
+## ----swapi_luke-------------------------------------------------------------------------------
 
 library(jsonlite)
 
@@ -290,11 +290,95 @@ person1$starships
 
 
 
-## ----swapi_long_ex, file="r/swapi_ex.R", eval=FALSE, class.source="fold-hide"----
+## ----swapi_long_ex, file="r/swapi_ex.R", eval=FALSE, class.source="fold-hide"-----------------
 ## 
 
 
-## ----bow, tidy=TRUE, results='markup'--------------------------------------
+## ----entur_dl, eval=FALSE---------------------------------------------------------------------
+## 
+## if(file.exists("./data/ruter.xml") == FALSE){
+##   download.file(url = "https://api.entur.io/realtime/v1/rest/et?datasetId=RUT",
+##                 destfile = "./data/ruter.xml")
+## }
+## 
+
+
+## 
+
+## xmllint --encode utf8 --format data/ruter.xml | sed -n 1185,1247p
+
+## 
+
+
+## ----entur_les, eval=FALSE--------------------------------------------------------------------
+## 
+## library(rvest)
+## 
+## ruter <- read_html("./data/ruter.xml")
+## 
+
+
+## ----entur_jukselitt, echo=FALSE, eval=TRUE---------------------------------------------------
+load("./data/entur_alle_stop.rda")
+
+
+## ----entur_strukt, eval=FALSE, echo=TRUE------------------------------------------------------
+## # Deler opp .xml-dokumentet i hver del som er innenfor
+## # <recordedcall> . . . </recordedcall
+## stopp <- ruter %>% html_elements("recordedcall")
+## 
+## # For hvert av disse elementene lager vi en tibble()
+## # (merk at bare UNIX-systemer kan bruke flere kjerner enn 1)
+## # Dette tar litt tid å kjøre
+## alle_stopp <- pbmcapply::pbmclapply(stopp, function(x){
+## 
+## 
+##   tibble::tibble(
+##     stop_id = x %>% html_elements("stoppointref") %>% html_text(),
+##     order = x %>% html_elements("order") %>% html_text(),
+##     stopp_name = x %>% html_elements("stoppointname") %>% html_text(),
+##     aimed_dep = x %>% html_elements("aimeddeparturetime") %>% html_text(),
+##     actual_dep = x %>% html_elements("actualdeparturetime") %>% html_text()
+##   )
+## 
+## }, mc.cores = parallel::detectCores()-1)
+## 
+## alle_stopp <- bind_rows(alle_stopp)
+## 
+
+
+## ----entur_wordcloud--------------------------------------------------------------------------
+
+# Viser data
+head(alle_stopp)
+
+# Lager nytt datasett der ... 
+stop_name_count <- alle_stopp %>% 
+  count(stopp_name) %>%             # vi teller stoppnavn
+  arrange(desc(n)) %>%              # sorterer data etter # linjer
+  filter(nchar(stopp_name) > 3) %>% # tar bort korte stoppnavn
+  slice_max(n = 30, order_by = n)   # tar med bare de 30 mest brukte stoppene
+
+
+library(ggwordcloud)
+
+# Setter opp tilfeldige farger
+cols <- sample(colors(),
+               size = nrow(stop_name_count),
+               replace = TRUE)
+
+# Lager plot
+stop_name_count %>% 
+  ggplot(., aes(label = stopp_name, 
+                size = n,  
+                color = cols)) +
+  geom_text_wordcloud_area()+
+  scale_size_area(max_size = 10) +
+  ggdark::dark_theme_void()
+
+
+
+## ----bow, tidy=TRUE, results='markup'---------------------------------------------------------
 
 regndans <- readLines("./data/regndans.txt")
 
@@ -306,28 +390,28 @@ cat(bow[sample(1:length(bow))])
 
 
 
-## ----dragepust-------------------------------------------------------------
+## ----dragepust--------------------------------------------------------------------------------
 
 regndans[which(str_detect(regndans, "dragepust"))]
 
 
 
-## ----regndans_full, echo=FALSE---------------------------------------------
+## ----regndans_full, echo=FALSE----------------------------------------------------------------
 cat(paste(regndans, collapse = "\n"))
 
 
-## ----norsentlex_hidden, echo=FALSE-----------------------------------------
+## ----norsentlex_hidden, echo=FALSE------------------------------------------------------------
 load("./data/nor_fullform_sent.rda")
 load("./data/nor_lemma_sent.rda")
 
 
-## ----norsentlex_load, eval=FALSE-------------------------------------------
+## ----norsentlex_load, eval=FALSE--------------------------------------------------------------
 ## # devtools::install_github("martigso/NorSentLex")
 ## 
 ## # library(NorSentLex)
 
 
-## ----norsentlex_general----------------------------------------------------
+## ----norsentlex_general-----------------------------------------------------------------------
 
 # Ordbøker i fullform
 names(nor_fullform_sent)
@@ -337,7 +421,7 @@ names(nor_lemma_sent)
 
 
 
-## ----pos_fullform, echo=-1-------------------------------------------------
+## ----pos_fullform, echo=-1--------------------------------------------------------------------
 set.seed(58493)
 nor_fullform_sent$positive %>% head()
 nor_fullform_sent$positive %>% tail()
@@ -345,13 +429,13 @@ nor_fullform_sent$positive %>% sample(., 6)
 
 
 
-## ----pos_subst, echo=-1----------------------------------------------------
+## ----pos_subst, echo=-1-----------------------------------------------------------------------
 set.seed(8943)
 nor_lemma_sent$lemma_noun_positive %>% sample(., 6)
 
 
 
-## ----regndans_sent_setup---------------------------------------------------
+## ----regndans_sent_setup----------------------------------------------------------------------
 
 library(tidytext)
 
@@ -363,7 +447,7 @@ no4 <- no4 %>%
 
 
 
-## ----regndans_sent---------------------------------------------------------
+## ----regndans_sent----------------------------------------------------------------------------
 
 
 no4$pos_sent <- ifelse(no4$ord %in% nor_fullform_sent$positive, 1, 0)
@@ -375,7 +459,7 @@ table(no4$pos_sent,
 
 
 
-## ----no4_sent_sum----------------------------------------------------------
+## ----no4_sent_sum-----------------------------------------------------------------------------
 
 no4_sent <- no4 %>% 
   group_by(titler) %>% 
@@ -386,7 +470,7 @@ no4_sent <- no4 %>%
 no4_sent
 
 
-## ----no4_vis---------------------------------------------------------------
+## ----no4_vis----------------------------------------------------------------------------------
 
 no4_sent %>% 
   mutate(neg_sent = neg_sent * -1) %>% 
@@ -405,12 +489,12 @@ no4_sent %>%
 
 
 
-## --------------------------------------------------------------------------
+## ---------------------------------------------------------------------------------------------
 
 
 
-## ----writeManifest, echo=FALSE, eval=FALSE---------------------------------
-## installed.packages()
+## ----writeManifest, echo=FALSE, eval=FALSE----------------------------------------------------
+## 
 ## # Oppdaterer manifest -- jeg tror vi må kjøre denne manuelt hver
 ## # gang før vi pusher til github. uio-serveren er hvertfall ikke fornøyd
 ## # når jeg ikke gjør det.
