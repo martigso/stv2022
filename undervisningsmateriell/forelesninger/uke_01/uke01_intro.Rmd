@@ -416,6 +416,7 @@ library(igraph)
 library(ggraph)
 
 edgelist <- no4_tokens %>% 
+  filter(n > 1) %>% 
   select(spor, ord)
 
 graph <- graph_from_data_frame(edgelist, directed = FALSE, vertices = NULL)
@@ -436,8 +437,8 @@ gdat_twomode %>%
   geom_edge_link(color = "gray") +
   geom_node_point(aes(color = degree, 
                       size = degree)) + 
-  geom_node_text(aes(label = name), color = "black") +
-  theme_graph() + 
+  geom_node_text(aes(label = name), color = "gray50") +
+  theme_graph(background = "black") + 
   theme(legend.position = "none",
         panel.background = element_blank())
 ```
@@ -542,7 +543,7 @@ tibble(fasong = c("lang", "lang", "rund", "lang", "lang"),
  
  . . .
  
-```{r ordbok, echo = TRUE, message=FALSE}
+```{r ordbok, echo = TRUE, message=FALSE, eval=FALSE}
 trist <- tibble(ord = c("gråte", "savne", "våt", "tåre", "tårer", "stakkar", "stygt", "feil", "aldri", "natten", "glemme", "tapte"),
                 trist = c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1))
 
@@ -556,12 +557,16 @@ no4_tokens %>%
   geom_text_wordcloud_area()+
   scale_size_area(max_size = 10) +
   ggdark::dark_theme_void()
+ggsave("./triste_ord.png", width = 10, height = 10)
 
 ```
 
-## Ordbøker, tekstlikhet og sentiment
+## {data-background=triste_ord.png data-background-size="5200px"}
  
-```{r ordbok-ordsky, echo = FALSE, message=FALSE}
+
+<!-- ![](./triste_ord.png){width=98%} -->
+ 
+```{r ordbok-ordsky, echo = FALSE, message=FALSE, eval=FALSE}
 triste_ord <- tibble(ord = c("gråte", "savne", "våt", "tåre", "tårer", "stakkar", "stygt", "feil", "aldri", "natten", "glemme", "tapte"),
                 trist = c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1))
 
@@ -569,6 +574,7 @@ no4_tokens %>%
   ungroup() %>%
   count(ord) %>%
   left_join(triste_ord) %>%
+  filter(n > 1) %>% 
   ggplot(., aes(label = ord, 
                 size = n,  
                 color = trist)) +
@@ -617,7 +623,8 @@ as.data.frame(as.matrix(similarities))
 
 . . .
 
-![](sentiment_wordcloud_political.png){width=60%}
+<!-- `convert sentiment_wordcloud_political.png -negate -sharpen 0x4 -shave 0x0+10+10 sent_wc_pol.png` -->
+![](sent_wc_pol.png){width=60%}
 
 
 ## Klassifisering av tekst
@@ -654,7 +661,8 @@ Eksempel fra temamodellering i pensum (Lucas 2015):
  
 . . .
 
-![](spektrum.PNG){width=60%}
+<!-- `convert spektrum.PNG -negate -shave 0x10+0+0 spektrum2.png` -->
+![](spektrum2.png){width=60%}
 
 
 # Oppsummering
