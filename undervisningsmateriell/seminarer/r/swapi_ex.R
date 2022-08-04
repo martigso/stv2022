@@ -49,7 +49,8 @@ for(i in 1:swapi_people$count){
 
 # Binder sammen alle personer til ett datasett 
 # (`x[1:8]` trekker ut de åtte første elementene i hvert listeelement)
-swapi_people_df <- purrr::map_df(swapi_people_individuals, function(x) data.frame(x[1:8]))
+swapi_people_df <- purrr::map_df(swapi_people_individuals, 
+                                 function(x) data.frame(x[1:8]))
 
 # Tabell over øyefarge og kjønn
-table(swapi_people_df$eye_color, swapi_people_df$gender)`
+table(swapi_people_df$eye_color, swapi_people_df$gender)

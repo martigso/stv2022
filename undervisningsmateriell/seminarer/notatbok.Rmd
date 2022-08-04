@@ -168,9 +168,11 @@ Under følger en oppskrift på hva som skal være med i de forskjellige delene a
 
 ### Uke 36 -- Anskaffe tekst
 
-1. Finn en datakilde du tenker kan brukes til å bygge en videre oppgave for kurset
+1. Skissér en hypotese basert på eksisterende teorier
+1. Finn en datakilde du tenker kan brukes til å svare på hypotesen din
 2. Hent og strukturer data
 3. Gi en kort beskrivelse av hvordan dataene ble fanget og hvordan de er strukturert
+
 
 ### Uke 38 -- Preprosessering av tekstdata i R
 
@@ -183,6 +185,7 @@ Under følger en oppskrift på hva som skal være med i de forskjellige delene a
 ### Uke 42 -- Veiledet og ikke-veiledet læring i R
 
 1. (Rediger oppaven basert på tilbakemelding fra forrige uke)
+1. 
 1. Identifiser en analysestrategi for dine data
 2. Diskuter fordeler og ulemper med din strategi
 
@@ -209,7 +212,14 @@ Under følger en oppskrift på hva som skal være med i de forskjellige delene a
     3. Seminarleder gir tilbakemelding på skissen din og du reviderer oppgaven deretter
     4. Til neste seminar går du tilbake til punkt 1 og jobber deg gjennom lista igjen
 - Den endelige semesteroppgaven...
-    1. følger oppskriften over
+    1. følger oppskriften over og inneholder...
+        - introduksjon
+        - teoribasert hypotese
+        - beskrivelse av data og datafangst
+        - kritisk diskusjon om preprosesseringen
+        - diskusjon rundt valgt analysestrategi
+        - resultat, tolkning og implikasjoner av analysen
+        - konklusjon/oppsummering
     1. skal være mellom 2500 og 3000 ord (eksludert referanser)
     2. leveres i `.pdf`- format på Inspera
     3. har et kjørbart `.R`-script som reproduserer resultatene i oppgaven vedlagt
@@ -799,7 +809,7 @@ stop_name_count %>%
 
 ```
 
-Som ventet, er Jernbanetorget stoppet flest linjer går gjennom.
+Som ventet, er Jernbanetorget-stoppet flest linjer går gjennom.
 
 
 ### API-liste
@@ -827,7 +837,7 @@ En ting som er veldig viktig å huske i denne gjennomgangen, er at *alle* tekste
 
 Og preprosessering er ganske viktig for hvordan analyseresultater ender opp å se ut.
 
-## Sekk med ord
+## Sekk med ord {#sekkmedord}
 
 Ta for eksempel spor 6 på No.4-albumet vi allerede har jobbet med -- *Regndans i skinnjakke*. Hvis vi skal følge en vanlig antagelse i kvantitativ tekstanalyse -- "sekk med ord" eller *bag of words* -- skal vi kunne forstå innholdet i en tekst hvis vi deler opp teksten i segmenter, putter det i en pose, rister posen og tømmer det på et bord. Da vil denne sangen for eksempel se slik ut:
 
@@ -865,31 +875,133 @@ Hovedpoenget med å vise dette er at *sekk med ord*-antagelsen er veldig streng 
 
 ## Fjerne trekk?
 
+Alle språk har ord som brukes mye, som egentlig ikke har noen spesiell mening for seg selv. Ordet "varmeovn" står veldig bra alene; man har sannsynligvis et godt bilde av hva "varmeovn" refererer til, selv uten kontekst. Slike ord kalles *innholdsord* og skiller seg fra *funksjonsord*.
+
+*Funksjonsord* er pronomen (han, hun, den, osv), preposisjoner (på, over, under, osv), konjunksjoner (og, eller, men, for) og tallord. *Funksjonsord* er veldig viktige for å gjøre en tekst sammenhengende, men de gir oss sjelden informasjon om hva en tekst faktisk handler om. Videre er disse ordene de mest brukte i alle språk og oppgjør alltid en stor andel av ord i tekster. Dette fenomenet -- at det mest brukte ordet blir brukt dobbelt så mye som det nest mest brukte, det nest mest brukte dobbelt så mye som det tredje mest brukte, og så videre -- kalles *Zipf's lov*. Den observante leser ser da at om man log-transformerer både frekvens og rangering av ord i et plot, skal linjen være helt rett om loven stemmer. For å illustrere, trenger vi endel data. La oss bruke `janeaustenr`-pakken som ofte brukes som eksempel i `tidytext`:
+
+```{r zipf, echo=TRUE, eval=TRUE, warning=FALSE}
+
+library(janeaustenr)
+library(dplyr)
+library(tidytext)
+library(ggplot2)
+
+original_books <- austen_books() %>%
+  group_by(book) %>%
+  mutate(line = row_number()) %>%
+  ungroup()
 
 
-<!-- ```{r no4_toptokens} -->
-<!-- library(tidytext) -->
+tidy_books <- original_books %>%
+  unnest_tokens(word, text) %>% 
+  count(word) %>% 
+  arrange(desc(n))
 
-<!-- load("./data/no4.rda") -->
+tidy_books %>% head(300) %>% 
+  ggplot(., aes(x = 1:300, y = n)) +
+  geom_point() +
+  geom_line(aes(group = 1)) +
+  scale_y_continuous(trans = "log") +
+  scale_x_continuous(trans = "log") +
+  geom_smooth(method = "lm", se = FALSE) +
+  ggrepel::geom_label_repel(aes(label = word)) +
+  ggdark::dark_theme_classic() +
+  labs(x = "Rangering (log)", y = "Frekvens (log)", title = "Zipf's lov illustrasjon")
 
-<!-- no4_tokens <- no4 %>% -->
-<!--   group_by(spor, titler) %>% -->
-<!--   unnest_tokens(output = token, -->
-<!--                 input = tekst) %>% -->
-<!--   count(token) -->
-
-<!-- no4_tokens %>%  -->
-<!--   slice_max(order_by = n,  -->
-<!--             n = 1,  -->
-<!--             with_ties = FALSE) -->
-
-<!-- ``` -->
+```
 
 
+Som med alle slike *lover*, passer den ikke helt perfekt i dette tilfellet. Hvis den hadde gjort det, ville alle ordene ligget langs den gule linjen. Den illusterer likevel poenget ganske greit. Ordet *the* brukes over 26 000 ganger i korpuset, mens ord som *kitchen* (kjøkken) brukes 17 ganger^[`tidy_books %>% filter(grepl("kitchen", word))`]. Av denne grunnen, og fordi det reduserer beregningstiden (*computational time*), er det vanlig å reduser data ved å ta bort trekk som er vanlige over alle tekstene eller trekk som ikke gir oss noe konkret informasjon over det vi er interessert i.
 
-### Punktsetting
 
-### Stoppord
+
+### Stoppord {#stoppord}
+
+Det vi kaller **stoppord** er noe man ofte fjerner før vi kjører analyser. Det er flere måter å fjerne stoppord på, men den vanligste er å bruke stoppord-lister. For norsk har pakken [`snowball`](https://snowballstem.org/projects.html) den mest brukte stoppordlista. Vi har tilgang til denne gjennom `quanteda`-pakken:
+
+
+<details><summary>**Klikk her for å vise norske stoppord**</summary>
+
+```{r quanteda_stopwords_nor, fold.output=FALSE}
+
+quanteda::stopwords("no")
+
+```
+
+</details>
+
+De fleste vil umiddelbart se at det er noen problemer med denne stoppordboken: den har både nynorsk- og bokmålord, den har mange ord som brukes ekstremt sjelden, og mangler noen viktige funksjonsord (som "hvilket"). Skulle vi likevel sammenligne de mest brukte ordene i No.4-tekstene, ser vi at det er mer mening i dataene når vi har fjernet 
+
+```{r no4_stoppordliste}
+library(tidytext)
+
+load("./data/no4.rda")
+
+no4_tokens <- no4 %>%
+  group_by(spor, titler) %>%
+  unnest_tokens(output = token,
+                input = tekst) %>%
+  count(token)
+
+# Med stoppord
+no4_tokens %>%
+  slice_max(order_by = n,
+            n = 2,
+            with_ties = FALSE)
+
+# Uten stoppord
+no4_tokens %>%
+  filter(token %in% quanteda::stopwords("no") == FALSE) %>% 
+  slice_max(order_by = n,
+            n = 2,
+            with_ties = FALSE)
+
+
+```
+
+En alternativ måte å beregne stoppord på, er å bruke [*TF-IDF*](#tfidf), eller rettere sagt *IDF*-delen av *TF-IDF* til å regne ut hvile ord som er minst unike over alle tekstene i korpuset.
+
+```{r no4_idf_stop}
+
+idf_stop <- no4_tokens %>%
+  bind_tf_idf(token, titler, n) %>% 
+  ungroup() %>% 
+  select(token, idf) %>% 
+  unique() %>% 
+  arrange(idf)
+
+idf_stop
+
+```
+
+Fordelen med å gjøre det på denne måten, er at stoppordlisten tilpasser seg korpuset man jobber med. Om man, for eksempel, har hange stortingstaler, vil ord som *president*, *representant*, *storting*, osv være ganske meningsløse fordi de brukes så ofte, og vil ha lav *IDF*.
+
+Det er likevel også noen utfordringer med denne metoden å identifisere stoppord. Det viktiste er hvor man skal sette grensen for hva som er et stoppord og ikke. Her er det ingen fasit, men krever god inspeksjon av data og litt eksperimentering. I akkurat No.4-albumet er det spesielt vanskelig å sette en grense fordi det ikke er et stort korpus; ord som åpenbart er stoppord får ikke mulighet til å bli brukt nok til å få lav *IDF*. 
+
+La oss likevel se på toppord etter å ha fjernet de ordene som har laver *IDF* enn 1.
+
+```{r no4_idf_stop_gone}
+
+idf_stop <- idf_stop %>% 
+  filter(idf < 1)
+
+no4_tokens %>%
+  filter(token %in% idf_stop$token == FALSE) %>% 
+  slice_max(order_by = n,
+            n = 2,
+            with_ties = FALSE)
+
+
+```
+
+Resultatet blir ikke så veldig forskjellig fra å bruke stoppordlisten, som er et bra tegn.
+
+
+### Punktsetting og tall
+
+Andre ting som er vanlige å fjerne fra et korpus før man transformerer til tall, er punktsetting og tall. Punktsetting er vanlig å fjerne, fordi det ikke gir oss noe særlig informasjon i en standard [*sekk med ord*-modell](#sekkmedord) 
+
+<!-- Paragrafer i lovtekster -->
 
 ## Rotform av ord
 

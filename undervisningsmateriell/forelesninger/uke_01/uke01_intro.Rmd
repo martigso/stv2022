@@ -40,7 +40,45 @@ library(tidyverse)
 
 ```
 
-<!-- # {data-background=tv_debatt.png} -->
+
+# {data-background=tv_debatt_blur.png}
+
+</br></br></br>
+
+<p style='font-size:90pt; color:#00f398; font-weight:bold'>
+Hva, hvorfor og hvordan?
+</p>
+
+## Hva!
+
+- Finne, struktuerer og analysere store (politiske) tekstdata
+
+. . .
+
+<p float="left">
+  <img src="./docs.jpg" width=30% />
+  <img src="./sorted_docs.png" width=30% /> 
+  <img src="./w2v_neg.png" width=30% />
+</p>
+
+## Hvorfor!
+
+- Avdekke mønster (likhet/ulikhet/tema)
+
+. . .
+
+![Oil](./arb_led.png){width=50%}
+<!-- convert bigram_pos_com_stm_topic28.pdf -gravity South -chop 0x70 arb_led.png -->
+
+## Hvordan!
+
+- R
+
+. . .
+
+```{r swapi_ex, file="../../seminarer/r/swapi_ex.R", eval=FALSE, echo=TRUE}
+
+```
 
 <!-- # {data-background=st_debatt.jpg} -->
 
@@ -155,7 +193,7 @@ system("convert -crop 1000x1300+425+0 text_models2.png iterative.png")
 ![G&S](deductive.png){width=35%}
 
 
-</div>
+</div> 
 
 . . .
 
@@ -232,8 +270,9 @@ text <- lapply(1:length(track_urls), function(x){
   tmp <- read_html(track_urls[x])
   
   # Trekke ut tekst og renske den
+  #lyrics-root > div.Lyrics__Container-sc-1ynbvzw-6.YYrds
   tmp2 <- tmp %>% 
-    html_elements("div.Lyrics__Container-sc-1ynbvzw-6.jYfhrf") %>% 
+    html_elements(xpath = '//*[@id="lyrics-root"]/div[1]') %>% 
     html_text2() %>% 
     str_split("\\n") %>% 
     unlist() %>% 
@@ -315,8 +354,6 @@ no4_tokens %>%
 <div class='left' style='float:left;width:50%'>
 
 ```{r unnest2, echo=TRUE}
-# Grunnpakke for tekstprosessering
-library(tidytext) 
 
 no4_tokens <- no4 %>% 
   group_by(spor) %>% 
