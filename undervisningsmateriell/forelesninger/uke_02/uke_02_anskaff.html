@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>uke_02_anskaff.knit</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="uke_02_anskaff_files/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    background-color: #232629;
+    color: #7a7c7d;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d;  padding-left: 4px; }
+div.sourceCode
+  { color: #cfcfc2; background-color: #232629; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span { color: #cfcfc2; } /* Normal */
+code span.al { color: #95da4c; background-color: #4d1f24; font-weight: bold; } /* Alert */
+code span.an { color: #3f8058; } /* Annotation */
+code span.at { color: #2980b9; } /* Attribute */
+code span.bn { color: #f67400; } /* BaseN */
+code span.bu { color: #7f8c8d; } /* BuiltIn */
+code span.cf { color: #fdbc4b; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #3daee9; } /* Char */
+code span.cn { color: #27aeae; font-weight: bold; } /* Constant */
+code span.co { color: #7a7c7d; } /* Comment */
+code span.cv { color: #7f8c8d; } /* CommentVar */
+code span.do { color: #a43340; } /* Documentation */
+code span.dt { color: #2980b9; } /* DataType */
+code span.dv { color: #f67400; } /* DecVal */
+code span.er { color: #da4453; text-decoration: underline; } /* Error */
+code span.ex { color: #0099ff; font-weight: bold; } /* Extension */
+code span.fl { color: #f67400; } /* Float */
+code span.fu { color: #8e44ad; } /* Function */
+code span.im { color: #27ae60; } /* Import */
+code span.in { color: #c45b00; } /* Information */
+code span.kw { color: #cfcfc2; font-weight: bold; } /* Keyword */
+code span.op { color: #cfcfc2; } /* Operator */
+code span.ot { color: #27ae60; } /* Other */
+code span.pp { color: #27ae60; } /* Preprocessor */
+code span.re { color: #2980b9; background-color: #153042; } /* RegionMarker */
+code span.sc { color: #3daee9; } /* SpecialChar */
+code span.ss { color: #da4453; } /* SpecialString */
+code span.st { color: #f44f4f; } /* String */
+code span.va { color: #27aeae; } /* Variable */
+code span.vs { color: #da4453; } /* VerbatimString */
+code span.wa { color: #da4453; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="uke_02_anskaff_files/reveal.js-3.3.0.1/css/theme/simple.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+    <link rel="stylesheet" href="style.css"/>
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+    <script src="uke_02_anskaff_files/header-attrs-2.14/header-attrs.js"></script>
+    <link href="uke_02_anskaff_files/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="uke_02_anskaff_files/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+
+<section class="slide level2">
+
+<font size=12>STV2022 – Store tekstdata</font></br></br>
+<p style="font-size:10;color:#D13F11">
+[02] Anskaffelse og innlasting av tekst
+</p>
+<p></br> <img data-src="uio_logo.png" style="width:50.0%" /></p>
+<p>Martin Søyland <font size=6>&lt;<a
+href="mailto:martin.soyland@stv.uio.no"
+class="email">martin.soyland@stv.uio.no</a>&gt;</font></br></p>
+</section>
+<section id="disposisjon" class="title-slide slide level1">
+<h1>Disposisjon</h1>
+<ol type="1">
+<li class="fragment">Strukturerte datasett</li>
+<li class="fragment">Semistrukturerte data (APIer)</li>
+<li class="fragment">Ustrukturerte data</li>
+<li class="fragment">Skraping (med eksempler)</li>
+<li class="fragment">Kravling (med eksempler)</li>
+<li class="fragment">Fallgruver</li>
+<li class="fragment">Oppgave</li>
+<li class="fragment">Oppsummering</li>
+</ol>
+</section>
+
+<section>
+<section id="strukturerte-datasett" class="title-slide slide level1">
+<h1>Strukturerte datasett</h1>
+<div class="left" style="float:left;width:45%">
+<p><img data-src="evs_crop.png" style="width:40.0%"
+alt="European Values Study" /> </br> <img data-src="vdem_crop.png"
+style="width:40.0%" alt="Varieties of Democracy" /> </br> <img
+data-src="ss_crop.png" style="width:40.0%" alt="Stortingscrape" />
+</br></p>
+</div>
+<div class="right" style="float:right;width:45%">
+<p><img data-src="fte.png" style="width:40.0%"
+alt="Fivethithyeight" /> </br> <img data-src="parlgov.png"
+style="width:40.0%" alt="Parlgov" /> </br> <img
+data-src="qog_transp.png" style="width:40.0%"
+alt="Quality of Government" /> </br></p>
+</div>
+</section>
+<section id="strukturerte-datasett-1" class="slide level2">
+<h2>Strukturerte datasett</h2>
+<ul>
+<li class="fragment">Datasett som er klar <em>out of the box</em></li>
+<li class="fragment">oftest 2-dimensjonale:
+<code>data[rader, kolonner]</code></li>
+<li class="fragment">… men mange trenger fortsatt preprosessering</li>
+</ul>
+<div class="fragment">
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(stortingscrape<span class="sc">::</span>cases<span class="sc">$</span>root) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, status, type, title_short) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 5 × 4
+##   id    status         type          title_short                                
+##   &lt;chr&gt; &lt;chr&gt;          &lt;chr&gt;         &lt;chr&gt;                                      
+## 1 80332 til_behandling alminneligsak Grunnlovsforslag om ny § 107 (rett til bol…
+## 2 79518 behandlet      alminneligsak Redegjørelse av utenriksministeren om vikt…
+## 3 79329 behandlet      budsjett      Innstilling fra finanskomiteen om Endringe…
+## 4 79932 behandlet      alminneligsak Representantforslag om å sørge for at alle…
+## 5 77424 behandlet      budsjett      Endringar i statsbudsjettet 2019 under Olj…</code></pre>
+</div>
+</section>
+<section id="section" class="slide level2"
+data-background="./file_formats.png">
+<h2 data-background="./file_formats.png"></h2>
+</section>
+<section id="vanlige-dataformat" class="slide level2">
+<h2>Vanlige dataformat</h2>
+<table>
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 33%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Format</th>
+<th style="text-align: left;">Står for</th>
+<th style="text-align: left;">R-funksjon</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">.csv</td>
+<td style="text-align: left;">Comma Separated Values</td>
+<td style="text-align: left;"><code>read.csv</code> //
+<code>readr::read_csv()</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">.txt</td>
+<td style="text-align: left;">Text</td>
+<td style="text-align: left;"><code>readLines()</code> //
+<code>textreadr::read_document()</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">.xlsx</td>
+<td style="text-align: left;">Excel</td>
+<td style="text-align: left;"><code>readxl::read_xlsx()</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">.html</td>
+<td style="text-align: left;">HyperText Markup Language</td>
+<td style="text-align: left;"><code>rvest::read:html()</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">.xml</td>
+<td style="text-align: left;">Extensible Markup Language</td>
+<td style="text-align: left;"><code>rvest::read:html()</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">.json</td>
+<td style="text-align: left;">JavaScript Object Notation</td>
+<td style="text-align: left;"><code>jsonlite::read_json()</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">.dta</td>
+<td style="text-align: left;">Stata</td>
+<td style="text-align: left;"><code>haven::read_dta()</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">.sav</td>
+<td style="text-align: left;">SPSS</td>
+<td style="text-align: left;"><code>haven::read_sav()</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">…</td>
+<td style="text-align: left;">Og tusen andre formater…</td>
+<td style="text-align: left;">…med egne R-pakker og funksjoner</td>
+</tr>
+</tbody>
+</table>
+</section></section>
+<section>
+<section id="semistrukturerte-data-apier"
+class="title-slide slide level1">
+<h1>Semistrukturerte data (APIer)</h1>
+<p>Application Programming Interface:</p>
+<div class="fragment">
+<p><img data-src="api_negate.png" style="width:50.0%" alt="API" /></p>
+</div>
+<div class="fragment">
+Mer i forelesning
+<p style="color:#5B28D4">
+[05] Bruke API (Stortinget) (uke 38)
+</p>
+</div>
+</section>
+<section class="slide level2">
+
+<p><a
+href="https://psi.norge.no/los/ord/parkering-og-hvileplasser">Tilfeldig
+side fra Statens vegvesen</a></p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode txt"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  &lt;rdf:RDF xmlns:rdf=&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot; xmlns:skos=&quot;http://www.w3.org/2004/02/skos/core#&quot;&gt;</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  &lt;rdf:Description rdf:about=&quot;https://psi.norge.no/los/ord/parkering-og-hvileplasser&quot;&gt;</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  &lt;rdf:type rdf:resource=&quot;http://www.w3.org/2004/02/skos/core#Concept&quot;/&gt;</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    &lt;skos:inScheme rdf:resource=&quot;https://psi.norge.no/los/ontologi/ord&quot;/&gt;</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    &lt;skos:prefLabel xml:lang=&quot;nn&quot;&gt;Parkering&lt;/skos:prefLabel&gt;</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    &lt;skos:prefLabel xml:lang=&quot;nb&quot;&gt;Parkering og hvileplasser&lt;/skos:prefLabel&gt;</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    &lt;skos:prefLabel xml:lang=&quot;en&quot;&gt;Parking and rest area&lt;/skos:prefLabel&gt;</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Avgiftsparkering&lt;/skos:hiddenLabel&gt;</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Avgiftsparkering&lt;/skos:hiddenLabel&gt;</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Innfartsparkering&lt;/skos:hiddenLabel&gt;</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Innfartsparkering&lt;/skos:hiddenLabel&gt;</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Parkeringsavgift&lt;/skos:hiddenLabel&gt;</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Parkeringsavgift&lt;/skos:hiddenLabel&gt;</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Parkeringsbot&lt;/skos:hiddenLabel&gt;</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Parkeringsbot&lt;/skos:hiddenLabel&gt;</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Parkeringsgebyr&lt;/skos:hiddenLabel&gt;</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Parkeringsgebyr&lt;/skos:hiddenLabel&gt;</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Parkeringskort&lt;/skos:hiddenLabel&gt;</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Parkeringskort&lt;/skos:hiddenLabel&gt;</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Parkeringsløyve&lt;/skos:hiddenLabel&gt;</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Parkeringsløyve&lt;/skos:hiddenLabel&gt;</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Parkeringsløyve&lt;/skos:hiddenLabel&gt;</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Parkeringsplass&lt;/skos:hiddenLabel&gt;</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Parkeringsplass&lt;/skos:hiddenLabel&gt;</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Parkeringstillatelse&lt;/skos:hiddenLabel&gt;</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Rasteplassar&lt;/skos:hiddenLabel&gt;</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Rasteplasser&lt;/skos:hiddenLabel&gt;</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Utfartsparkering&lt;/skos:hiddenLabel&gt;</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Utfartsparkering&lt;/skos:hiddenLabel&gt;</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    &lt;skos:note xml:lang=&quot;nn&quot;&gt;Det skal vere eitt felles regelverk for all parkeringsverksemd. Regelverket skal syte for lik skilting og like reaksjonar ved brot på føresegnene. Det er også ei obligatorisk godkjenningsordning som gjeld både for kommunar, private parkeringsselskap og andre.&lt;/skos:note&gt;</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    &lt;skos:note xml:lang=&quot;nb&quot;&gt;Parkeringstillatelser, parkeringsgebyr, regelverk for gateparkering, parkering for forflytningshemmede, klage på parkeringsbot, betaling av parkeringsbot.&lt;/skos:note&gt;</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>    &lt;skos:broader rdf:resource=&quot;https://psi.norge.no/los/tema/mobilitetstilbud&quot;/&gt;</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    &lt;skos:broader rdf:resource=&quot;https://psi.norge.no/los/tema/veg-og-vegregulering&quot;/&gt;</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    &lt;skos:broader rdf:resource=&quot;https://psi.norge.no/los/tema/yrkestransport&quot;/&gt;</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>  &lt;/rdf:Description&gt;</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>&lt;/rdf:RDF&gt;</span></code></pre></div>
+</section></section>
+<section>
+<section id="ustrukturerte-data" class="title-slide slide level1">
+<h1>Ustrukturerte data</h1>
+<p></br> </br> <img data-src="meme-data-data-everywhere.png"
+style="width:55.0%" /></p>
+</section>
+<section id="skraping-vs.-kravling" class="slide level2">
+<h2>Skraping vs. kravling</h2>
+<!-- - Skraping (*web scraping*) er spesifikk -->
+<!--     - vi vet hva vi vil ha, og henter bare det -->
+<!-- - Kravling (*web crawling*) er generell -->
+<!--     - vi vet vi vil ha alt, men ikke nødvendigvis hva alt er -->
+<div class="fragment">
+<div class="left" style="float:left;width:50%">
+<p><img data-src="scrape.png" style="width:80.0%" /></p>
+</div>
+</div>
+<div class="fragment">
+<div class="right" style="float:right;width:50%">
+<p><img data-src="crawl.png" style="width:70.0%" /></p>
+</div>
+</div>
+</section></section>
+<section>
+<section id="skraping" class="title-slide slide level1">
+<h1>Skraping</h1>
+<ul>
+<li class="fragment">Eksempelhypotese:</li>
+</ul>
+<div class="fragment">
+<blockquote>
+<p>Skandinaviske land blir nevnt oftere enn andre land i NOUer fra
+Utenriksdepartementet</p>
+</blockquote>
+<ol type="1">
+<li class="fragment">Utvalg/univers: aller NOUer fra UD</li>
+<li class="fragment">Datakilde: <a
+href="https://www.regjeringen.no/no/dokument/nou-ar/id1767/?ownerid=833">regjeringen.no</a></li>
+<li class="fragment"><del>Fremgangsmåte 1: Laste ned alle 7 dokumentene
+manuelt</del></li>
+<li class="fragment"><font color="#ffa200">Fremgangsmåte 2: Lage en
+scraper som laster ned og strukturerer dokumentene</font></li>
+</ol>
+</div>
+</section>
+<section id="steg-1-finne-data" class="slide level2">
+<h2>Steg 1: Finne data</h2>
+<ul>
+<li
+class="fragment"><a href="https://www.regjeringen.no/" target="_blank">Point
+and click på regjeringen.no</a></li>
+<li class="fragment"><em>Inspect</em></li>
+<li class="fragment">Finn <em>selector</em></li>
+<li class="fragment">Skriv kode og test med én link</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># rot-url for regjeringen.no</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>base_url <span class="ot">&lt;-</span> <span class="st">&quot;https://www.regjeringen.no/&quot;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Laster ned siden med alle NOUer fra UD (atm 7 stk)</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="do">## str_c(base_url, &quot;no/dokument/nou-ar/id1767/?ownerid=833&quot;) %&gt;% </span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="do">##   download.file(., destfile = &quot;./scrape/base.html&quot;)</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Trekker ut linkene til hver NOU</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>nou_links <span class="ot">&lt;-</span> <span class="fu">read_html</span>(<span class="st">&quot;./scrape/base.html&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_elements</span>(<span class="st">&quot;h2 &gt; a[data-hitid]&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_attr</span>(<span class="st">&quot;href&quot;</span>)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>nou_links</span></code></pre></div>
+<pre><code>## [1] &quot;/no/dokumenter/nou-2016-8/id2503028/&quot;
+## [2] &quot;/no/dokumenter/nou-2012-2/id669368/&quot; 
+## [3] &quot;/no/dokumenter/nou-2009-19/id571718/&quot;
+## [4] &quot;/no/dokumenter/nou-2008-14/id525832/&quot;
+## [5] &quot;/no/dokumenter/nou-2003-32/id149022/&quot;
+## [6] &quot;/no/dokumenter/nou-1995-5/id139818/&quot; 
+## [7] &quot;/no/dokumenter/nou-1994-9/id139452/&quot;</code></pre>
+</section>
+<section id="steg-2-laste-ned-forside-for-alle-nouer"
+class="slide level2">
+<h2>Steg 2: Laste ned forside for alle NOUer</h2>
+<ul>
+<li
+class="fragment"><a href="https://www.regjeringen.no/no/dokumenter/nou-2016-8/id2503028/" target="_blank">Bruk
+én lenke som testobjekt først</a></li>
+<li class="fragment">Når det virker: Lag en løkke som laster ned alle
+NOUene sin forside</li>
+<li class="fragment">Hvis det krasjer på 1 eller flere sider, inspiser
+og fiks koden</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Laster ned forsiden til hver NOU</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> nou_links){</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Trekker ut dokument-id</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  tmp_id <span class="ot">&lt;-</span> <span class="fu">str_extract</span>(i, <span class="st">&quot;id[0-9]+&quot;</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Laster ned forsiden til NOU i</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_c</span>(base_url, i) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">download.file</span>(., <span class="at">destfile =</span> <span class="fu">str_c</span>( <span class="st">&quot;./scrape/nou_forside/&quot;</span>, </span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                                       tmp_id, </span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>                                       <span class="st">&quot;.html&quot;</span>))</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Legger til litt tilfeldig søvn</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Sys.sleep</span>(<span class="dv">2</span> <span class="sc">+</span> <span class="fu">abs</span>(<span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="dv">0</span>)))</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Printer en beskjed til console om at i nå er ferdig</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="fu">str_c</span>(</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Ferdig med: &quot;</span>,</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    tmp_id,</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</section>
+<section class="slide level2">
+
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(<span class="st">&quot;./scrape/nou_forside/&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;id139452.html&quot;  &quot;id139818.html&quot;  &quot;id149022.html&quot;  &quot;id2503028.html&quot;
+## [5] &quot;id525832.html&quot;  &quot;id571718.html&quot;  &quot;id669368.html&quot;</code></pre>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>nou_forsider <span class="ot">&lt;-</span> <span class="fu">lapply</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list.files</span>(<span class="st">&quot;./scrape/nou_forside/&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  read_html</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>nou_forsider[[<span class="dv">1</span>]]</span></code></pre></div>
+<pre><code>## {html_document}
+## &lt;html class=&quot;no-js&quot; lang=&quot;no&quot;&gt;
+## [1] &lt;head&gt;\n&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8 ...
+## [2] &lt;body class=&quot;page-horing &quot;&gt;\r\n\r\n&lt;!-- There is a copy of this in /Error ...</code></pre>
+</section>
+<section id="steg-3-laste-ned-.pdf-for-alle-nouene"
+class="slide level2">
+<h2>Steg 3: Laste ned <code>.pdf</code> for alle NOUene</h2>
+<ul>
+<li class="fragment">Se på forsiden til én NOU og identifiser
+nedlastingsknappen</li>
+<li class="fragment"><em>Inspect</em> -&gt; <em>Copy selector</em> -&gt;
+Rediger og test</li>
+<li class="fragment">Skriv kode for å trekke ut lenkene</li>
+<li class="fragment">Last ned <code>.pdf</code>-filene</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>nou_pdf_links <span class="ot">&lt;-</span> <span class="fu">lapply</span>(nou_forsider, <span class="cf">function</span>(x){</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  tmp_content_link <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span> </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_elements</span>(<span class="st">&quot;a[title]&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_attr</span>(<span class="st">&quot;href&quot;</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  tmp_content_link[<span class="fu">which</span>(<span class="fu">str_detect</span>(tmp_content_link, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">.pdf$&quot;</span>))]</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>}) <span class="sc">%&gt;%</span> <span class="fu">unlist</span>()</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>nou_pdf_links</span></code></pre></div>
+<pre><code>## [1] &quot;/contentassets/bee23e85425c4fca84346e100bf745c7/no/pdfa/nou199419940009000dddpdfa.pdf&quot;
+## [2] &quot;/contentassets/3a80ddef404745e5be000a9f58a762a1/no/pdfa/nou199519950005000dddpdfa.pdf&quot;
+## [3] &quot;/contentassets/28ed358f13704ed2bb3c2a7f13a02be9/no/pdfs/nou200320030032000dddpdfs.pdf&quot;
+## [4] &quot;/contentassets/09faceca099c4b8bac85ca8495e12d2d/no/pdfs/nou201620160008000dddpdfs.pdf&quot;
+## [5] &quot;/contentassets/9b801d1fe4804a9a9e30d8d621a3b021/no/pdfs/nou200820080014000dddpdfs.pdf&quot;
+## [6] &quot;/contentassets/0a903cdd09fc423ab21f43c3504f466a/no/pdfs/nou200920090019000dddpdfs.pdf&quot;
+## [7] &quot;/contentassets/5d3982d042a2472eb1b20639cd8b2341/no/pdfs/nou201220120002000dddpdfs.pdf&quot;</code></pre>
+</section>
+<section class="slide level2">
+
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Laster ned pdf til hver NOU</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> nou_pdf_links){</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Trekker ut dokument-id</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  tmp_id <span class="ot">&lt;-</span> <span class="fu">str_extract</span>(i, <span class="st">&quot;nou(.*?)</span><span class="sc">\\</span><span class="st">.pdf$&quot;</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Laster ned forsiden til NOU i</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_c</span>(base_url, i) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">download.file</span>(., <span class="at">destfile =</span> <span class="fu">str_c</span>(<span class="st">&quot;./scrape/nou_pdf/&quot;</span>, </span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>                                      tmp_id))</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Legger til litt tilfeldig søvn</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Sys.sleep</span>(<span class="dv">2</span> <span class="sc">+</span> <span class="fu">abs</span>(<span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="dv">0</span>)))</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Printer en beskjed til console om at i nå er ferdig</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="fu">str_c</span>(</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Ferdig med: &quot;</span>,</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    tmp_id,</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(<span class="st">&quot;./scrape/nou_pdf/&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;nou199419940009000dddpdfa.pdf&quot; &quot;nou199519950005000dddpdfa.pdf&quot;
+## [3] &quot;nou200320030032000dddpdfs.pdf&quot; &quot;nou200820080014000dddpdfs.pdf&quot;
+## [5] &quot;nou200920090019000dddpdfs.pdf&quot; &quot;nou201220120002000dddpdfs.pdf&quot;
+## [7] &quot;nou201620160008000dddpdfs.pdf&quot;</code></pre>
+</section>
+<section id="steg-4-laste-inn-.pdf-filene" class="slide level2">
+<h2>Steg 4: Laste inn <code>.pdf</code>-filene</h2>
+<ul>
+<li class="fragment">Her bruker vi
+<code>textreadr::read_pdf()</code></li>
+</ul>
+<div class="fragment">
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(textreadr)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>nou_pdfer <span class="ot">&lt;-</span>  <span class="fu">list.files</span>(<span class="st">&quot;./scrape/nou_pdf/&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>nou_tekst <span class="ot">&lt;-</span> <span class="fu">lapply</span>(nou_pdfer, <span class="cf">function</span>(x){</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_pdf</span>(x) <span class="sc">%&gt;%</span> <span class="fu">tibble</span>()</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>nou_tekst[[<span class="dv">1</span>]] <span class="sc">%&gt;%</span> </span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(., <span class="dv">4</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 4 × 3
+##   page_id element_id text                                                       
+##     &lt;int&gt;      &lt;int&gt; &lt;chr&gt;                                                      
+## 1       1          1 &quot;NORGES OFFENTLIGE UTREDNINGER\n                    NOU 19…
+## 2       2          1 &quot;Til Utenriksdepartementet\nHurtigbåtutvalget som ble oppn…
+## 3       3          1 &quot;NOU 1994:9\nKapittel 1         Om sikkerhet og forhold so…
+## 4       4          1 &quot;NOU 1994:9\nKapittel 1       Om sikkerhet og forhold som …</code></pre>
+</div>
+</section>
+<section id="steg-5-konvertere-til-.txt" class="slide level2">
+<h2>Steg 5: Konvertere til <code>.txt</code></h2>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(nou_tekst), <span class="cf">function</span>(x){</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  tmp_tekst <span class="ot">&lt;-</span> nou_tekst[[x]] <span class="sc">%&gt;%</span> </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">tekst =</span> <span class="fu">str_c</span>(text, <span class="at">collapse =</span> <span class="st">&quot; &quot;</span>))</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  txt_file_out <span class="ot">&lt;-</span> nou_pdfer[x] <span class="sc">%&gt;%</span> </span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_extract</span>(<span class="st">&quot;nou[0-9]+(.*?)</span><span class="sc">\\</span><span class="st">.pdf&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_remove</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">.pdf&quot;</span>)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">writeLines</span>(tmp_tekst<span class="sc">$</span>tekst,</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>             <span class="fu">str_c</span>(<span class="st">&quot;./scrape/nou_txt/&quot;</span>, </span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>                   txt_file_out,</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;.txt&quot;</span>))</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+</section>
+<section id="steg-6-neste-forelesning" class="slide level2">
+<h2>Steg 6: Neste forelesning …</h2>
+<p>… men husk hypotesen:</p>
+<blockquote>
+<p>Skandinaviske land blir nevnt oftere enn andre land i NOUer fra
+Utenriksdepartementet</p>
+</blockquote>
+</section>
+<section class="slide level2">
+
+<p><img src="uke_02_anskaff_files/figure-revealjs/nou_analyse-1.png" width="768" /></p>
+</section>
+<section class="slide level2">
+
+<p>OBS!</p>
+<table style="text-align:center">
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em>Dependent variable:</em>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="1" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+n
+</td>
+</tr>
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Skand. land (nei)
+</td>
+<td>
+-168.631<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(52.106)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Konstantledd
+</td>
+<td>
+203.200<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(51.343)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+172
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.052
+</td>
+</tr>
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td style="text-align:right">
+<sup><em></sup>p&lt;0.1; <sup><strong></sup>p&lt;0.05;
+<sup></strong></em></sup>p&lt;0.01
+</td>
+</tr>
+</table>
+</section></section>
+<section>
+<section id="kravling" class="title-slide slide level1">
+<h1>Kravling</h1>
+<div class="left" style="float:left;width:50%">
+<p><img data-src="edderkopp.gif" style="width:70.0%"
+alt="Edderkopp" /></p>
+</div>
+<div class="fragment">
+<div class="right" style="float:right;width:50%">
+<ul>
+<li class="fragment">La oss kravle litt rundt på <a
+href="http://virksommeord.no">Virksomme ord</a></li>
+<li class="fragment">Dette vil ta lang tid! Husk å teste først</li>
+<li class="fragment">Se på “Taler – kronologisk”</li>
+<li class="fragment">Gå inn på en tale og legg merke til linken
+<code>/tale/xxxx/</code></li>
+<li class="fragment">Setter kravleren til å bare lagre disse</li>
+</ul>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<p>Ca. 4 timer kjøretid</p>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Laster inn pakke for kravling</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Rcrawler)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">Rcrawler</span>(<span class="st">&quot;http://virksommeord.no/&quot;</span>, <span class="co"># Nettsiden vi skal kravle</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">DIR =</span> <span class="st">&quot;./crawl&quot;</span>,           <span class="co"># mappen vi lagrer filene i</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">no_cores =</span> <span class="dv">4</span>,              <span class="co"># kjerner for å prosessere data</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">dataUrlfilter =</span> <span class="st">&quot;/tale/&quot;</span>,  <span class="co"># subset filter for kravling</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">RequestsDelay =</span> <span class="dv">2</span> <span class="sc">+</span> <span class="fu">abs</span>(<span class="fu">rnorm</span>(<span class="dv">1</span>)))</span></code></pre></div>
+</section>
+<section class="slide level2">
+
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>virkord_filer <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;./crawl/virksommeord.no-101413&quot;</span>, </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(virkord_filer)</span></code></pre></div>
+<pre><code>## [1] &quot;./crawl/virksommeord.no-101413/1 .html&quot;   
+## [2] &quot;./crawl/virksommeord.no-101413/10 .html&quot;  
+## [3] &quot;./crawl/virksommeord.no-101413/100 .html&quot; 
+## [4] &quot;./crawl/virksommeord.no-101413/1000 .html&quot;
+## [5] &quot;./crawl/virksommeord.no-101413/1001 .html&quot;
+## [6] &quot;./crawl/virksommeord.no-101413/1002 .html&quot;</code></pre>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(virkord_filer)</span></code></pre></div>
+<pre><code>## [1] 5100</code></pre>
+</section>
+<section class="slide level2">
+
+<h3 id="kravlingens-etterarbeid">Kravlingens etterarbeid</h3>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>virkord_html <span class="ot">&lt;-</span> <span class="fu">lapply</span>(virkord_filer, rvest<span class="sc">::</span>read_html)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>virkord_data <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(virkord_html), <span class="cf">function</span>(x){</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(x)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  tmp_tekst <span class="ot">&lt;-</span> virkord_html[[x]] <span class="sc">%&gt;%</span> </span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_elements</span>(<span class="st">&quot;div[class=&#39;document&#39;] &gt; p&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text</span>()</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">identical</span>(<span class="fu">character</span>(), tmp_tekst)){</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    tmp_tekst <span class="ot">&lt;-</span> virkord_html[[x]] <span class="sc">%&gt;%</span> </span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">html_elements</span>(<span class="st">&quot;tr[valign=&#39;top&#39;]&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>      <span class="fu">html_text</span>()</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">identical</span>(<span class="fu">character</span>(), tmp_tekst)){</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>    tmp_tekst <span class="ot">&lt;-</span> virkord_html[[x]] <span class="sc">%&gt;%</span> </span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>      <span class="fu">html_elements</span>(<span class="st">&quot;div[class=&#39;document&#39;] &gt; h3&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>      <span class="fu">html_text</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_split</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st">n&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>      <span class="fu">unlist</span>()</span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>  tmp_forfatter <span class="ot">&lt;-</span> virkord_html[[x]] <span class="sc">%&gt;%</span> </span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_elements</span>(<span class="st">&quot;div[class=&#39;tale-header&#39;] &gt; ul[class=&#39;byline&#39;] &gt; li &gt; a&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_replace_all</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st">s+&quot;</span>, <span class="st">&quot; &quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>    .[<span class="dv">1</span>]</span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>  tmp_forfatter_link <span class="ot">&lt;-</span> virkord_html[[x]] <span class="sc">%&gt;%</span> </span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_elements</span>(<span class="st">&quot;div[class=&#39;tale-header&#39;] &gt; ul[class=&#39;byline&#39;] &gt; li &gt; a&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_attr</span>(<span class="st">&quot;href&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a>    .[<span class="fu">which</span>(<span class="fu">str_detect</span>(., <span class="st">&quot;person&quot;</span>))]</span>
+<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a>  tmp_tittel <span class="ot">&lt;-</span> virkord_html[[x]] <span class="sc">%&gt;%</span> </span>
+<span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_elements</span>(<span class="st">&quot;div[class=&#39;tale-header&#39;] &gt; h1&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_replace_all</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st">s+&quot;</span>, <span class="st">&quot; &quot;</span>)</span>
+<span id="cb23-41"><a href="#cb23-41" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-42"><a href="#cb23-42" aria-hidden="true" tabindex="-1"></a>  tmp_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb23-43"><a href="#cb23-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">tittel =</span> tmp_tittel,</span>
+<span id="cb23-44"><a href="#cb23-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">forfatter =</span> tmp_forfatter,</span>
+<span id="cb23-45"><a href="#cb23-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">forfatter_link =</span> tmp_forfatter_link,</span>
+<span id="cb23-46"><a href="#cb23-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">avsnitt =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(tmp_tekst),</span>
+<span id="cb23-47"><a href="#cb23-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">tekst =</span> tmp_tekst</span>
+<span id="cb23-48"><a href="#cb23-48" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb23-49"><a href="#cb23-49" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-50"><a href="#cb23-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(tmp_data)</span>
+<span id="cb23-51"><a href="#cb23-51" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb23-52"><a href="#cb23-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-53"><a href="#cb23-53" aria-hidden="true" tabindex="-1"></a>virkord <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(virkord_data)</span>
+<span id="cb23-54"><a href="#cb23-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-55"><a href="#cb23-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-56"><a href="#cb23-56" aria-hidden="true" tabindex="-1"></a><span class="co"># save(virkord, file = &quot;./crawl/virksommeord.rda&quot;)</span></span></code></pre></div>
+</section>
+<section class="slide level2">
+
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>virkord <span class="sc">%&gt;%</span> <span class="fu">sample_n</span>(<span class="dv">6</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 5
+##   tittel                                  forfatter forfatter_link avsnitt tekst
+##   &lt;chr&gt;                                   &lt;chr&gt;     &lt;chr&gt;            &lt;int&gt; &lt;chr&gt;
+## 1 Angrepene mot Oslo og Utøya 22. juli -… Anniken … /person/2721/       62 Et v…
+## 2 Snart kommer vår dag                    Erna Sol… /person/604/        85 Nyut…
+## 3 1. mai-tale                             Hans Ola… /person/2201/       36 Kamp…
+## 4 Et redskap for frihet og fred           Kjell Ma… /person/168/        32 Den …
+## 5 Vi står foran et historisk retningsvalg Espen Ba… /person/3461/      195 Våre…
+## 6 Digitalisering og omstilling av Norge   Jan Tore… /person/4561/       70 Takk…</code></pre>
+</section></section>
+<section>
+<section id="fallgruver" class="title-slide slide level1">
+<h1>Fallgruver</h1>
+<p></br></br></p>
+<p><img data-src="fallguys.gif" style="width:80.0%"
+alt="Fallguys" /></p>
+</section>
+<section id="front-end-vs.-back-end" class="slide level2">
+<h2>Front-end vs. back-end</h2>
+<ul>
+<li class="fragment"><a
+href="https://www.regjeringen.no/no/om-regjeringa/tidligere-regjeringer-og-historie/sok-i-regjeringer-siden-1814/id2578015/">Regjeringensarkiv</a>
+<ul>
+<li class="fragment">regjeringen.no har ikke åpen API</li>
+<li class="fragment">men har en back-end API som henter data for oss som
+gjør siden lesbar</li>
+</ul></li>
+<li class="fragment">Se på <em>Network</em> i <em>Inspect</em>
+<ul>
+<li class="fragment">data henter <a
+href="https://www.regjeringen.no/api/RegjeringDataApi/GetRegjeringer?language=no&amp;term=&amp;period=&amp;page=1">.json-fil</a>
+back-end</li>
+<li class="fragment">merk: <code>"Page":1</code>,
+<code>"Hits":20</code>, <code>"TotalHits":71</code>, osv</li>
+</ul></li>
+</ul>
+</section>
+<section id="overlaste-serveren-timeout" class="slide level2"
+data-background="./504_negate.png">
+<h2 data-background="./504_negate.png">Overlaste serveren (timeout)</h2>
+</section>
+<section id="ikke-lagre" class="slide level2">
+<h2>Ikke lagre</h2>
+<ul>
+<li class="fragment">Alltid lagre lokalt!
+<ul>
+<li class="fragment">slipper å hente samme side flere ganger</li>
+<li class="fragment">stabilitet – nettsider endrer seg</li>
+</ul></li>
+</ul>
+</section>
+<section id="robots.txt" class="slide level2">
+<h2>robots.txt</h2>
+<ul>
+<li class="fragment"><code>robots.txt</code> eksisterer på de fleste
+nettsider
+<ul>
+<li class="fragment">beskriver hva som er lov og ikke lov å skrape</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<pre><code>##  [1] &quot;User-agent: *&quot;                                              
+##  [2] &quot;Disallow: /tegneserier/salesposter&quot;                         
+##  [3] &quot;Disallow: /poll&quot;                                            
+##  [4] &quot;&quot;                                                           
+##  [5] &quot;user-agent: Googlebot-News&quot;                                 
+##  [6] &quot;disallow: /annonsorinnhold/&quot;                                
+##  [7] &quot;disallow: /kommersielt-innhold/&quot;                            
+##  [8] &quot;disallow: /innstikk/&quot;                                       
+##  [9] &quot;disallow: /?embed=true&quot;                                     
+## [10] &quot;disallow: /arkiv/&quot;                                          
+## [11] &quot;disallow: /front/&quot;                                          
+## [12] &quot;disallow: /ads/prewarm/&quot;                                    
+## [13] &quot;disallow: /adblock-survey/&quot;                                 
+## [14] &quot;&quot;                                                           
+## [15] &quot;Sitemap: https://www.vg.no/sitemap/files/articles-48hrs.xml&quot;
+## [16] &quot;Sitemap: https://www.vg.no/sitemap/sitemap.xml&quot;</code></pre>
+</div>
+</section></section>
+    </div>
+  </div>
+
+  <script src="uke_02_anskaff_files/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="uke_02_anskaff_files/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+        // Display a presentation progress bar
+        progress: true,
+        // Display the page number of the current slide
+        slideNumber: true,
+        // Push each slide change to the browser history
+        history: true,
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+        // Enable the slide overview mode
+        overview: true,
+        // Vertical centering of slides
+        center: false,
+        // Enables touch navigation on devices with touch input
+        touch: true,
+        // Turns fragments on and off globally
+        fragments: true,
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+        // Transition style
+        transition: 'convex', // none/fade/slide/convex/concave/zoom
+        // Transition speed
+        transitionSpeed: 'default', // default/fast/slow
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+
+
+        chalkboard: {
+        },
+
+        keyboard: {
+          67: function() { RevealChalkboard.toggleNotesCanvas() },    // toggle notes canvas when 'c' is pressed
+          66: function() { RevealChalkboard.toggleChalkboard() }, // toggle chalkboard when 'b' is pressed
+          46: function() { RevealChalkboard.clear() },    // clear chalkboard when 'DEL' is pressed
+           8: function() { RevealChalkboard.reset() },    // reset chalkboard data on current slide when 'BACKSPACE' is pressed
+          68: function() { RevealChalkboard.download() }, // downlad recorded chalkboard drawing when 'd' is pressed
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'uke_02_anskaff_files/reveal.js-3.3.0.1/plugin/notes/notes.js', async: true },
+          { src: 'uke_02_anskaff_files/reveal.js-3.3.0.1/plugin/chalkboard/chalkboard.js', async: true },
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+  </body>
+</html>
