@@ -21,9 +21,8 @@ editor_options:
 ---
 
 
-
 <font size=12>STV2022 -- Store tekstdata</font></br>
-<font size=10>Introduksjon</font></br>
+<p style='font-size:10;color:#24D4A7'>[01] Introduksjon</p></br>
 ![](uio_logo.png){width=50%} 
   
 Solveig Bjørkholt\ \ \ \ |\ \ \ \ Martin Søyland 
@@ -682,9 +681,9 @@ no4 %>%
 
 ## Klassifisering av tekst
 
-Eksempel fra temamodellering i pensum (Lucas 2015):
+Eksempel fra temamodellering i pensum [@Lucas2015]:
 
-![](lucas_topics.PNG){width=60%}
+![](lucas_topics.PNG){width=50%}
 
 
 ## Estimere latent posisjon fra tekst
