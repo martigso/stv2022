@@ -3424,35 +3424,47 @@
     "data/entur_alle_stop.rda": {
       "checksum": "2541ab7bbf1dba424f831ee650adff99"
     },
+    "data/lemmatisering/tekst1_tag.txt": {
+      "checksum": "689f47fe5f50e7326a07017f760b6d45"
+    },
+    "data/lemmatisering/tekst1.txt": {
+      "checksum": "77ad5c2522dfddaa12e2392724b1e9e9"
+    },
+    "data/lemmatisering/tekst2_tag.txt": {
+      "checksum": "4022cd5a661f20724e4d01e9158727f1"
+    },
+    "data/lemmatisering/tekst2.txt": {
+      "checksum": "fbde24266385fbd94827be20a9f609b9"
+    },
     "data/links/Apomixis.html": {
-      "checksum": "e280ffa67f3f6cbc893316c1ba31952c"
+      "checksum": "131a84574da44f3ab4046ae82025ba2a"
     },
     "data/links/Bitter_orange.html": {
-      "checksum": "13aa807c24fe8386f5875dfa7fcab288"
+      "checksum": "a08e2ff5cab8763df709832bc45e8eed"
     },
     "data/links/Citrus_%C3%97_sinensis.html": {
-      "checksum": "14603d05f5f8197a827ae2fadf013d26"
+      "checksum": "1916deea364f1d91889cec7b20cbd431"
     },
     "data/links/Citrus.html": {
-      "checksum": "fef676ec6a17db5be84a3d37103a638e"
+      "checksum": "82eaaa44d46bfef13916a15f36f5a039"
     },
     "data/links/Family_(biology).html": {
-      "checksum": "c23bca0611acc128cd6c4983c37981aa"
+      "checksum": "824f4d586f424f7a574c4d8484f3ca6b"
     },
     "data/links/Fruit.html": {
-      "checksum": "7c7e366415b3bfc9445c7bea7d4971b8"
+      "checksum": "03e6633be5720957b90ef671412e9bf3"
     },
     "data/links/List_of_plants_known_as_orange.html": {
-      "checksum": "450e141f1bcb48bf4b85f2591672a625"
+      "checksum": "5dd5352388da1216efb5105716a203ec"
     },
     "data/links/Nucellar_embryony.html": {
-      "checksum": "b51b3cf5bc41c8545dacbf34127bcbfc"
+      "checksum": "36fe8ad3bb4936e5724e7dbff178c0e2"
     },
     "data/links/Oranges.html": {
-      "checksum": "21b71933027b4fc251c2ac27e60c76e2"
+      "checksum": "9991edaf120f81972a4e28a93efab69e"
     },
     "data/links/Rutaceae.html": {
-      "checksum": "d3b86651ba39235acb82e84439d17733"
+      "checksum": "697aaf2fc8c13f44c1820c9727e5c6da"
     },
     "data/no4.rda": {
       "checksum": "f826a71f895a2b9b61ec6ddc09dfa1cb"
@@ -3602,16 +3614,16 @@
       "checksum": "bd09fdef701e32cf218ae9a76ef13cc6"
     },
     "notatbok_kode.R": {
-      "checksum": "df54e5d5a7472b1e7cda1ec740748ad6"
+      "checksum": "976fe9e8a23dcbbf970bfd6ffec15f09"
     },
     "notatbok.html": {
-      "checksum": "361e57acbe770f74c893d48601d15901"
+      "checksum": "c1fad8d2061dcdce51f713fcadde1c7a"
     },
     "notatbok.log": {
       "checksum": "a80d9b2d472e971c69ad90b384e15e7a"
     },
     "notatbok.Rmd": {
-      "checksum": "d6288348d11cd2ee814af7266ea34c45"
+      "checksum": "795c604e25fce00bdcd561adacbbac0b"
     },
     "oppgavebygging.html": {
       "checksum": "f78d398098f78fb686cd4d3a29470e75"

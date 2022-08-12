@@ -4,7 +4,7 @@ date: "`r Sys.Date()`"
 author: Solveig Bjørkholt og Martin Søyland
 output:
   rmdformats::downcute:
-    highlight: 
+    highlight: tango
     self_contained: true
     default_style: "dark"
     downcute_theme: "chaos"
@@ -30,13 +30,17 @@ library(rmdformats)
 ## Global options
 # options(max.print = "75")
 knitr::opts_chunk$set(
-  message = FALSE, warning = FALSE, highlight = TRUE
+  message = FALSE, 
+  warning = FALSE, 
+  highlight = TRUE
 )
 #opts_knit$set(width = 75)
 
 library(stringr)
 library(dplyr) 
 library(ggplot2)
+
+
 # if("tidytext" %in% installed.packages() == FALSE) install.packages("tidytext")
 
 load("./data/saker.rda")
@@ -46,7 +50,7 @@ load("./data/saker.rda")
 
 Velkommen til STV2022 -- Store teksdata!
 
-Dette er en arbeidsbok som går gjennom de forskjellige delene i kurset, med tilhørende R-kode. Meningen med arbeidsboken, er at den kan brukes som forslag til implementering av metoder i semesteroppgaven. Merk likevel at dette ikke er en fasit! 
+Dette er en arbeidsbok som går gjennom de forskjellige delene i kurset [STV2022 -- Store teksdata](https://www.uio.no/studier/emner/sv/statsvitenskap/STV2022/index.html), med tilhørende R-kode. Meningen med arbeidsboken, er at den kan brukes som forslag til implementering av metoder i semesteroppgaven. Merk likevel at dette ikke er en fasit! 
 
 Om du skulle finne feil i dokumentet, legg gjerne inn en [issue på github](https://github.com/martigso/stv2022/issues/) så får vi fikset det i en fei.
 
@@ -115,7 +119,7 @@ Siden kurset krever noe forkunnskap om R og generell metodisk kompetanse, anbefa
 
 Undervisningen i STV2022 består av 10 forelesninger og 5 seminarer. Vi vil bruke forelesningene til å oppsummere hovedkonseptene i hver ukes tema, både metodisk og anvendt. Seminarene vil ha hovedfokus på teknisk gjennomføring av tekstanalyse i R. Hvert seminar vil være delt i to med én del der seminarleder går gjennom ekstempler på kodeimplementering og én del der studentene kan jobbe med semesteroppgaven. Det er også verdt å merke seg at mange av implementeringene i kurset krever en del prøving og feiling.
 
-Merk at det etter hvert seminar skal leveres inn et utkast av oppgaven for temaet man har gått gjennom i seminaret. Disse delene må bestås for å få vurdert semesteroppgave.
+Etter hvert seminar skal du levere et utkast av oppgaven for temaet man har gått gjennom i seminaret. Disse delene må bestås for å få vurdert semesteroppgave.
 
 ## Forelesninger
 
@@ -245,7 +249,7 @@ Tekstdata kan komme i uendelig mange forskjellige formater, og det er umulig å 
 
 Det vanligste formatet på eksisterende data innenfor politisk analyse er to-dimensjonale datasett. Et datasett består av rader (vanligvis observasjoner/enheter) og kolonner (vanligvis variabler). Disse datasettene kommer i mange forskjellige format, men de aller fleste (eller alle) kan leses inn i R om man finner de rette funksjonene.
 
-Under vil vi illustre de forskjellige måtene å laste inn data på med eksempeldata fra pakken `stortingscrape`, som inneholder meta data på alle saker Stortinget behandlet i 2019-2020-sesjonen:
+Under vil vi illustre de forskjellige måtene å laste inn data på med eksempeldata fra pakken `stortingscrape`, som inneholder metadata på alle saker Stortinget behandlet i 2019-2020-sesjonen:
 
 ```{r laste_data_data, eval=-1}
  
@@ -422,6 +426,9 @@ Her ble outputen av `read_pdf()` delt inn i sider, i tillegg til at teksten ikke
 
 La oss også nevne at endel (spesielt historiske) dokumenter i `.pdf`-format er scannet og bare inneholder bilder av tekst -- ikke tekst man enkelt kan ta ut av dokumentet. Da må man ty til *Optical Character Recognition* (OCR), noe vi dessverre ikke kommer til å gå gjennom i dette kurset.
 
+<!-- 
+# Anskaffelse av tekst #
+-->
 
 # Anskaffelse av tekst {#anskaff}
 
@@ -489,7 +496,7 @@ I tillegg er det lurt å gjøre det til en vane å **laste ned nettsiden til din
 
 For å laste ned en html-fil kan du bruke `download.file` og sette som argument URL-addressen til nettsiden. Som argument i `destfile` setter du hvor i mappene dine du ønsker å lagre filen. I eksempel under laster jeg ned Wikipedia-artikkelen om appelsiner.
 
-```{r}
+```{r, eval=FALSE}
 
 download.file("https://en.wikipedia.org/wiki/Orange_(fruit)", # Last ned en html-fil ...
                 destfile = "./data/links/Oranges.html") # ... inn i en spesifikk mappe
@@ -501,7 +508,7 @@ download.file("https://en.wikipedia.org/wiki/Orange_(fruit)", # Last ned en html
 
 Vi leser inn nettsiden til R med `read_html`. Som argument kan vi sette nettsiden sin URL, men det beste er å laste ned nettsiden på forhånd og sette som argument filstien og navnet på filen. 
 
-```{r, warning=FALSE, error=FALSE, message=FALSE}
+```{r, warning=FALSE, error=FALSE, message=FALSE, eval=-4}
 
 library(rvest)
 
@@ -598,7 +605,7 @@ links <- read_html("./data/links/Oranges.html") %>%
 
 Deretter kan vi bruke disse lenkene for å laste ned alle nettsidene vi trenger i en for-løkke. 
 
-```{r}
+```{r, eval=FALSE}
 
 linkstopic <- str_remove(links, "https://en.wikipedia.org//wiki/")
 
@@ -610,15 +617,17 @@ for(i in 1:length(links)) { # For alle lenkene...
 
 ```
 
-Deretter kan vi lage en for-løkke for å skrape alle nettsidene i folderen. 
+Deretter kan vi lage en for-løkke for å laste inn testen fra alle nettsidene i folderen. 
 
 ```{r}
 
+fruit_files <- list.files("./data/links", full.names = TRUE) # Liste med filene vi har lastet ned
+
 info <- list() # Lag et liste-objekt hvor du kan putte output fra løkken
 
-for (i in 1:length(links)) { # For hver enhet (i) som finnes i links, fra plass 1 til sisteplass i objektet (gitt med length(links))...
+for (i in 1:length(fruit_files)) { # For hver enhet (i) som finnes i links, fra plass 1 til sisteplass i objektet (gitt med length(links))...
   
-  page <- read_html(links[[i]]) # ... les html-filen for hver i
+  page <- read_html(fruit_files[i]) # ... les html-filen for hver i
   
   page <- page %>% # Bruk denne siden
     html_elements("p") %>% # Og få tak i avsnittene
@@ -643,9 +652,7 @@ Selv om nettsider i `.html` er det vi oftest ser fysisk med øynene våre når v
 
 Forsiden til SWAPI viser hvordan man for eksempel kan hente ut data om en person:
 
-```{r swapi_intro, echo=1:6, eval=8}
-
-library(curl)
+```{r swapi_intro, echo=1:5, eval=6}
 
 person1_url <- "https://swapi.dev/api/people/1/"
 
@@ -654,7 +661,6 @@ readLines(person1_url)
 readLines("./data/swapi/person1.json")
 
 ```
-
 
 ### .json
 
@@ -705,7 +711,7 @@ if(file.exists("./data/ruter.xml") == FALSE){
 Vi skal bruke deler av `.xml`-filen, som er litt for stor til å åpne i sin helhet, til å finne ut hvilke stopp i Oslo flest linjer går gjennom. Disse delene ser ut som dette:
 
 ```{bash entur_preview, class.source="fold-hide", eval=FALSE}
-
+# Dette er en Unix-command som gjør -xml filer litt finere når vi printer dem i console
 xmllint --encode utf8 --format data/ruter.xml | sed -n 1185,1247p
 
 ```
@@ -829,6 +835,26 @@ Her er en liste over noen APIer med (stort sett) norske data:
 - [Wikipedia](https://www.mediawiki.org/wiki/API:Main_page)
 - [yr.no](https://developer.yr.no/)
 
+Det er også verdt å merke seg at veldig mange nettsider som ikke har en åpen API, gjerne har en backend API der data hentes for å vise nettsiden til brukere av frontend. Dette kan man finne, men det er ikke alltid du har lov å bruke det (vi snakker mer om dette i forelesning <font style='color:#D13F11'>[02] Anskaffelse og innlasting av tekst</font>)
+
+## Litt om kravling
+
+Det er ikke veldig sannsynlig at kravling blir mye brukt i i studentoppgaver i dette kurset, men det er likevel viktig å vite om. Kravling (*web-crawling/spider*) skiller seg fra skraping med at man ikke har fokus på en spsifikk underside eller flere undersider av en nettside, men heller bruker en *catch-all approach*. Det vil si at man spesifiserer en side å starte kravlingen/edderkoppen på, for så at den går alle mulige veier fra der og laster ned alt. Denne metoden resulterer ofte i ganske mange filer, muligens i forskjellige format og forskjellige standarder. Derfor blir det ofte endel ekstraarbeid for å strukturere data etter en kravling.
+
+I R kan vi bruke pakken `Rcrawler`. Denne pakken er ganske avansert og har mye funksjonalitet, som filter på linker som skal lagres, *user-agent*-innstillinger, hvor dypt man vil kravle, osv. Under viser kode for å laste ned alle tekster fra [Virksomme ord](http://virksommeord.no). Men se også forelesning <font style='color:#D13F11'>[02] Anskaffelse og innlasting av tekst</font>
+
+```{r kravling, eval=FALSE}
+# Laster inn pakke for kravling
+library(Rcrawler)
+
+Rcrawler("http://virksommeord.no/", # Nettsiden vi skal kravle
+         DIR = "./crawl",           # mappen vi lagrer filene i
+         no_cores = 4,              # kjerner for å prosessere data
+         dataUrlfilter = "/tale/",  # subset filter for kravling
+         RequestsDelay = 2 + abs(rnorm(1)))
+```
+
+
 # Preprosessering {#prepros}
 
 Når vi nå har lært både å laste inn eksisterende tekstdata og strukturere våre egne data via skraping, kan vi begynne å tenke på hvordan vi kan sammenligne tekstene i vårt korpus eller datasett. Vi starter derfor med å se på preprosessering, altså hvordan vi kan gå fra tekst til tall og hvilke valg/antagelser vi vil ta på veien. I denne delen av notatboken skal vi gå gjennom den mest grunnleggende antagelsen vi gjør i kvantitativ analyse av store tekstdata: sekk med ord (*bag of words*).
@@ -853,7 +879,7 @@ cat(bow[sample(1:length(bow))])
 
 ```
 
-De fleste (som ikke kan sangen fra før) vil ha vanskelig å forstå hva den egentlig handler om bare ved å se på dette. Vi kan identifisere meningsbærende ord som "Oslofjorden", "Grille", "trampoline", "dragepust", med mer. Likevel er det vanskelig å skjønne hva låtskriveren egentlig vil formidle med denne teksten. Det er dette som gjør "sekk med ord"-antagelsen veldig streng. Språk er veldig komplekst og ordene i en tekst kan endre mening drastisk bare ved å se på en liten del av konteksten de dukker opp i. Om vi bare ser på linjen som inneholder orded "dragepust", innser vi fort at konteksten rundt ordet gir oss et veldig tydelig bilde av hva låtskriveren mener med akkurat den linjen:
+De fleste (som ikke kan sangen fra før) vil ha vanskelig å forstå hva den egentlig handler om bare ved å se på dette. Vi kan identifisere meningsbærende ord som "Oslofjorden", "Grille", "trampoline", "dragepust", med mer. Likevel er det vanskelig å skjønne hva låtskriveren egentlig vil formidle med denne teksten. Det er dette som gjør "sekk med ord"-antagelsen veldig sterk. Språk er veldig komplekst og ordene i en tekst kan endre mening drastisk bare ved å se på en liten del av konteksten de dukker opp i. Om vi bare ser på linjen som inneholder orded "dragepust", innser vi fort at konteksten rundt ordet gir oss et veldig tydelig bilde av hva låtskriveren mener med akkurat den linjen:
 
 ```{r dragepust}
 
@@ -869,7 +895,7 @@ cat(paste(regndans, collapse = "\n"))
 
 Nå teksten gir mening! Tolkninger kan selvfølgelig variere fra individ til individ og den "riktige" tolkningen, er det bare forfatteren som vet hva er. Personlig tolker jeg denne teksten som et utløp for frustrasjon under corona-pandemien, og prospektene ved livet når samfunnet gjenåpnes, fordi jeg hørte den for første gang under nedstengningen.
 
-Hovedpoenget med å vise dette er at *sekk med ord*-antagelsen er veldig streng og ofte veldig urealistisk. Tekster (og språk generelt) er ekstremt komplekst. Det kan variere mellom geografiske områder (nasjoner, dialekter, osv), aldersgrupper, arenaer (talestol, dialog, monolog, osv), og individuell stil. Oppi alt dette skal vi prøve å finne mønster som sier noe om likhet/ulikhet mellom tekster. Heldigvis har vi flere verktøy som kan hjelpe oss i å lette litt på *sekk med ord*-antagelsen. Men antagelsen vil likevel alltid være der, i en eller annen form. La oss se litt på hvilke teknikker vi kan bruke for å gjøre modellering av tekst noe mer omgripelig¸ men aller først skal vi se litt på hvilke trekk som muligens ikke gir oss så mye informasjon om det vi er ute etter, eller støy, som vi ofte vil fjerne.
+Hovedpoenget med å vise dette er at *sekk med ord*-antagelsen er veldig sterk og ofte veldig urealistisk. Tekster (og språk generelt) er ekstremt komplekst. Det kan variere mellom geografiske områder (nasjoner, dialekter, osv), aldersgrupper, arenaer (talestol, dialog, monolog, osv), og individuell stil. Oppi alt dette skal vi prøve å finne mønster som sier noe om likhet/ulikhet mellom tekster. Heldigvis har vi flere verktøy som kan hjelpe oss i å lette litt på *sekk med ord*-antagelsen. Men antagelsen vil likevel alltid være der, i en eller annen form. La oss se litt på hvilke teknikker vi kan bruke for å gjøre modellering av tekst noe mer omgripelig¸ men aller først skal vi se litt på hvilke trekk som muligens ikke gir oss så mye informasjon om det vi er ute etter, eller støy, som vi ofte vil fjerne.
 
 <!-- mange gifte par vs. gifte et par -->
 
@@ -910,8 +936,7 @@ tidy_books %>% head(300) %>%
 
 ```
 
-
-Som med alle slike *lover*, passer den ikke helt perfekt i dette tilfellet. Hvis den hadde gjort det, ville alle ordene ligget langs den gule linjen. Den illusterer likevel poenget ganske greit. Ordet *the* brukes over 26 000 ganger i korpuset, mens ord som *kitchen* (kjøkken) brukes 17 ganger^[`tidy_books %>% filter(grepl("kitchen", word))`]. Av denne grunnen, og fordi det reduserer beregningstiden (*computational time*), er det vanlig å reduser data ved å ta bort trekk som er vanlige over alle tekstene eller trekk som ikke gir oss noe konkret informasjon over det vi er interessert i.
+For at loven skal "stemme", må alle ordene ligge langs den gule linja. Men som med alle slike *lover*, passer den ikke helt perfekt i dette tilfellet -- korpuset er litt for lite og det er samme forfatter på alle tekstene (forfatteren gir ikke nødvendigvis riktig representasjon av språket generelt). Den illusterer likevel poenget ganske greit. Ordet *the* brukes over 26 000 ganger i korpuset, mens ord som *kitchen* (kjøkken) brukes 17 ganger^[`tidy_books %>% filter(str_detect(word, "kitchen"))`]. Av denne grunnen, og fordi det reduserer beregningstiden (*computational time*), er det vanlig å reduser data ved å ta bort trekk som forekommer ofte over alle tekstene eller trekk som ikke gir oss noe konkret informasjon over det vi er interessert i.
 
 
 
@@ -994,20 +1019,127 @@ no4_tokens %>%
 
 ```
 
-Resultatet blir ikke så veldig forskjellig fra å bruke stoppordlisten, som er et bra tegn.
+Resultatet blir ikke så veldig forskjellig fra å bruke stoppordlisten, som kanskje er et bra tegn.
 
 
 ### Punktsetting og tall
 
-Andre ting som er vanlige å fjerne fra et korpus før man transformerer til tall, er punktsetting og tall. Punktsetting er vanlig å fjerne, fordi det ikke gir oss noe særlig informasjon i en standard [*sekk med ord*-modell](#sekkmedord) 
+Andre ting som er vanlige å fjerne fra et korpus før man transformerer til tall, er punktsetting og tall. Punktsetting er vanlig å fjerne, fordi det ikke gir oss noe særlig informasjon i en standard [*sekk med ord*-modell](#sekkmedord). Likevel kan punktsetting være relevant informasjon om man vil dele opp tekster i for eksempel setninger. Det kan også være relevant å ta vare på ting som paragraftegnet (`§`) om man jobber med lovtekster. Tenk nøye gjennom hvilke trekk du fjerner, før du fjerner dem.
 
-<!-- Paragrafer i lovtekster -->
+
+I `unnest_tokens()`-funksjonen fra `tidytext` fjernes punktsetting automatisk (men ikke alt):
+
+```{r fjerne_puktsetting}
+
+no4_tokens <- no4 %>%
+  group_by(spor, titler) %>%
+  unnest_tokens(output = token,
+                input = tekst) 
+
+table(str_detect(no4_tokens$token, "[[:punct:]]"))
+
+no4_tokens$token %>% 
+  .[which(str_detect(., "[[:punct:]]"))]
+
+```
+
+Hvis du vil ta vare på punksetting kan du spesifisere dette i `unnest_tokens()`:
+
+```{r ikke_fjerne_puktsetting}
+
+no4_tokens <- no4 %>%
+  group_by(spor, titler) %>%
+  unnest_tokens(output = token,
+                input = tekst,
+                strip_punct = FALSE) 
+
+table(str_detect(no4_tokens$token, "[[:punct:]]"))
+
+```
+
+Videre kan vi spesifisere at tall skal fjernes (default er at de ikke fjernes):
+
+```{r fjerne_tall}
+no4_tokens <- no4 %>%
+  group_by(spor, titler) %>%
+  unnest_tokens(output = token,
+                input = tekst,
+                strip_numeric = TRUE) 
+
+table(str_detect(no4_tokens$token, "[0-9]"))
+
+```
+
 
 ## Rotform av ord
 
+En videre antagelse man ofte gjør i kvanitativ analyse av tekst, er at samme ord med forskjellig bøyning betyr det samme. For eksempel at "hus" og "huset" egentlig er samme ord. Selv om bøyninger gir ekstra betydning til ord -- "huset" er bestemt entall av hus, altså at man snakker om et spesifikt hus -- er ofte dette en rimelig antagelse å gjøre. Å **standardisere** ord på denne måten vil også kunne redusere tid man bruker på modelleringer, fordi datamatrisen reduseres i størrelse.
+
+Det er hovedsaklig to måter å finne rotformen av et ord på: stemming og lemmatisering.
+
 ### Stemming
 
+Stemming finner rotformen av et ord ved å kutte det ned til sitt minste komponent som gir mening uten at det blir et annet ord (i de fleste tilfeller).
+
+```{r stemming}
+
+stem1 <- tokenizers::tokenize_words("det satt to katter på et bord") %>% 
+  unlist() %>% 
+  quanteda::char_wordstem(., language = "no")
+
+stem2 <- tokenizers::tokenize_words("det satt en katt på et bordet") %>% 
+  unlist() %>% 
+  quanteda::char_wordstem(., language = "no")
+
+cbind(stem1, stem2, samme = stem1 == stem2)
+
+```
+
+Som vi ser, fungerer dette ganske godt! Problemene med stemming oppstår når vi bøying av ord er uregelmessig (for eksempel svake verb):
+
+```{r uregel_stemming}
+
+stem1 <- tokenizers::tokenize_words("jeg har én god fot og én dårlig hånd") %>% 
+  unlist() %>% 
+  quanteda::char_wordstem(., language = "no")
+
+stem2 <- tokenizers::tokenize_words("jeg har to gode føtter og to dårlige hender") %>% 
+  unlist() %>% 
+  quanteda::char_wordstem(., language = "no")
+
+cbind(stem1, stem2, samme = stem1 == stem2)
+
+```
+
+Her fungerer stemmingen godt på de regelmessige adjektivene ("god/gode" og "dårlig/dårlige"), mens den ikke fungerer på de uregelmessige substantivene ("fot/føtter" og "hånd/hender"). Noen vil kanksje påpeke at det "hånd/hender" og "fot/føtter" virkelig ikke er det samme, og det er en vurdering man må gjøre. Det vil uansett (nesten) alltid være tilfelle at samme tekst med og uten stemming (og lemmatisering -- se under) er mer lik seg selv enn en helt annen tekst. 
+
 ### Lemmatisering
+
+Lemmatisering skiller seg fra stemming ved at man bruker konteksten bruker en trent modell som tolker den grammatiske formen til et ord og finner rotformen til dette ordet med en ordbok. Dette gjør at man letter på problemet der ord er like, men betyr forskjellige ting i forskjellige kontekster. For eksempel vil ordet "merke" kunne bety både et fysisk merke som substantiv (arr for eksempel) og det å merke noe ("merke at noe skjer") som verb. Lemmatisering skjer gjerne ved at man bruker en tagger som analyserer teksten man gir og spytter ut litt forskjellige egenskaper ved hvert ord i teksten.
+
+For norsk er det litt begrensede ressurser, men Universitetet i Oslo og Universitetet i Bergen har sammarbeidet om å lage en tagger, som virker godt. Denne heter [Oslo-Bergen-tagger](http://www.tekstlab.uio.no/obt-ny/) (OBT). Den kan være litt teknisk å sette opp, men for å eksemplifisere hvordan den virker, har jeg kjørt `stem2`-teksten over gjennom taggeren og leser resultatet inn i R ved hjelp av `read_obt()`-funksjonen i pakken `stortingscrape`:
+
+```{r merke_subverb}
+
+tekst2 <- stortingscrape::read_obt("./data/lemmatisering/tekst2_tag.txt")
+
+tekst2
+
+```
+
+Her har vi fått et datasett hvor hver rad er et ord (inkl. punktsetting) og kolonnene er forskjellige egenskaper ved dette ordet. Disse variablene viser følgende:
+
+| Variabel | Beskrivelse                                                  |
+|:---------|:-------------------------------------------------------------|
+| sentence | Indikator for setningsnummer i teksten                       | 
+| index    | Indeks for ord i setningen                                   |
+| token    | Den originale versjonen av ordet i teksten                   |
+| lwr      | Den originale versjonen av ordet i teksten med små bokstaver |
+| lemma    | Lemmatisert (rotform) ord                                    |
+| pos      | Part-of-speech ([taledeler](#pos))                           |
+| morph    | Morfologi (oppbyggingen av ordet via dets minste deler)      |
+
+Vi diskuterer taledeler litt mer under, og morfologi vil vi ikke bruke noe særlig tid på her, selv om det kan være veldig interessant. Det vi skal legge merke til er at kolonnen `lemma` viser at ordene "hender" og "føtter" har blitt bøyd riktig til "hånd" og "fot".
 
 ## ngrams
 
