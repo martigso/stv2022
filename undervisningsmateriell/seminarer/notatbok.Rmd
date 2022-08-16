@@ -1143,9 +1143,47 @@ Vi diskuterer taledeler litt mer under, og morfologi vil vi ikke bruke noe særl
 
 ## ngrams
 
+Når vi lager en "sekk med ord", splitter vi ofte teksten inn i ett og ett ord. Ordene kaller vi gjerne *tokens* (derav funksjonen `unnest_tokens()`). Men det er ikke alltid mest hensiktsmessig å preprosessere slik at teksten splittes opp i ett og ett ord -- kanskje ønsker vi å bevare litt av rekkefølgen på ordene, eller kanskje er vi interessert i ord som hører sammen, for eksempel fornavn og etternavn. Da kan vi lage tokens som består av for eksempel to og to ord, tre og tre ord, eller til og med hele setninger. 
+
+```{r tokenizing_fig, out.width="100%", echo = FALSE}
+knitr::include_graphics("./figurer/tokenizing.jpeg")
+```
+
+Splitter vi sånn at vi får mer enn ett og ett ord som en enhet, kaller vi det gjerne **n-grams**. Ønsker vi å referere til et spesifikt antall ord i en token, kan vi bruke denne terminologien:
+
+ - Ett og ett ord: Unigram
+ - To og to ord: Bigrams
+ - Tre og tre ord: Trigrams
+
+
+For å splitte tekst inn i unigram setter vi `token = "words"` i `unnest_tokens`-funksjonen. Dette er også default for funksjonen, så dersom vi ikke spesifiserer noen ting, så er det unigrams vi får.
+
+```{r unigram}
+no4 %>%
+  group_by(spor, titler) %>%
+  unnest_tokens(output = token,
+                input = tekst,
+                token = "words")
+```
+
+For å hente ut bigrams, sett `token = "ngrams"` og `n = 2`. Kan du tenke deg hva vi ville fått dersom vi hadde satt `n = 3`?
+
+```{r bigram}
+no4 %>%
+  group_by(spor, titler) %>%
+  unnest_tokens(output = token,
+                input = tekst,
+                token = "ngrams",
+                n = 2) 
+```
+
+
+
 ## Taledeler (parts of speech) {#pos}
 
 # Veildedet læring {#sup}
+
+
 
 # Ikke-veiledet læring {#unsup}
 
