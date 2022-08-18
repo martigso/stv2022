@@ -1177,6 +1177,86 @@ no4 %>%
                 n = 2) 
 ```
 
+## Word embeddings
+
+Når vi skal jobbe med tekst, må vi finne en måte å gjøre om teksten til tall. Datamaskinen jobber best med tall. Prosessen med å gjøre om ord til tall kalles "vektorisering". Det finnes flere måter å vektorisere på, deriblant:
+  
+  - Sekk av ord (bag of words): Gir oss frekvensen av ord per dokument.
+- TF-IDF: Gir oss frekvens av ord per dokument, vektet etter hvor hyppig ordet forekommer i dokumentmassen.
+- Word embeddings: Gir oss en vektor i et lav-dimensjonalt rom for hvert ord.
+
+Mange som jobber med NLP (natural language processing) henfaller til word embeddings fordi det har en del fordeler i forhold til å bruke frekvens:
+
+- Det gir et estimat på likhet
+- Det muliggjør automatisk generalisering
+- Det kan (til dels) måle et ords mening
+
+I tillegg får vi data som er mer tettpakket -- kolonnene har ikke så mange nuller, noe som gir færre dimensjoner, noe som reduserer sjansen for overtilpasning. 
+
+Det finnes flere pakker for word embeddings i `R`, for eksempel `word2vec`, `GloVe` og `fastText`.  
+
+Her følger et eksempel med hvordan man kan bruke `fastText` for å lage word embeddings:
+  
+  **Steg 1:** Som vanlig må vi huske å preprosessere teksten før vi setter i gang med analysene våre. 
+
+```{r}
+
+stoppord <- stopwords::stopwords("Norwegian") # Finner stoppord fra den norske bokmålslista til "stopwords" pakken
+
+stoppord_boundary <- str_c("\\b", stoppord, "\\b", # Lager en vektor med "word boundary" for å ta ut ord fra en streng
+                           collapse = "|") # Setter | mellom hver ord for å skille dem fra hverandre med "eller"-operator
+
+no4_prepped <- no4 %>%
+  mutate(tekst = str_to_lower(tekst), # Setter all tekst til liten bokstav
+         tekst = str_replace_all(tekst, "[0-9]+", ""), # Fjerner tall fra teksten
+         tekst = str_squish(tekst), # Fjerner whitespace
+         tekst = str_replace_all(tekst, "\\b\\w{1,1}\\b", ""), # Fjerner enkeltbokstaver
+         tekst = str_replace_all(tekst, stoppord_boundary, ""), # Fjerner stoppord
+         tekst = str_replace_all(tekst, "[:punct:]", "")) # Fjerner all punktsetting
+
+```
+
+
+**Steg 2:** Fasttext er en algoritme utviklet av Facebook. De har laget den slik at den skal fungere for alle utviklere der ute, enten de jobber i terminalen, i Python, i Java, i R, eller i noe annet. Derfor krever de en input som er litt utenom det vanlige -- et vanlig tekstdokument, altså en *.txt* fil. Dette kan vi lage i R med koden under.
+
+```{r}
+no4_tekster <- tempfile() # Oppretter en midlertidig fil på PCen
+writeLines(text = no4_prepped %>% pull(tekst), con = no4_tekster) # I denne filen skriver vi inn teksten fra datasettet. 
+```
+
+**Steg 3:** Nå kan vi kjøre modellen for å lage word embeddings. Noen av valgene vi må ta er:
+  
+  - Hvor stort skal kontekstvinduet være? Altså hvor mange ord foran og bak hovedordet skal algoritmen bruke for å forstå konteksten.
+- Hvor mange dimensjoner skal det være? Her får vi automatisk 100 dimensjoner. For å endre dette måtte vi kjørt modellen via terminalen.
+- Hvilken modell skal vi bruke? Fasttext tilbyr både `cbow` og `skipgram`.
+
+```{r}
+
+library(fastTextR)
+
+ft_cbow <- ft_train(no4_tekster, 
+                    type = "cbow", # Velger cbow modell
+                    control = ft_control(window_size = 5L)) # Setter kontekstvinduet til 5
+
+ft_skipgram <- ft_train(no4_tekster, 
+                        type = "skipgram", # Velger skipgram modell
+                        control = ft_control(window_size = 5L))
+
+```
+
+Vi kan finne ord-vektorene med `ft_word_vectors`. Legg merke til at de går til 100. Vi har altså 100 dimensjoner. Hadde vi brukt "sekk av ord", hadde vi hatt like mange dimensjoner som vi har ord, altså nesten 1000. Vi har, med andre ord, redusert antall dimensjoner ganske kraftig.
+
+```{r}
+ft_word_vectors(ft_cbow, c("fordi", "himmel"))
+```
+
+For å finne ut hvilke ord som likner mest, kontekstmessig, på et annet ord, kan vi bruke funksjonen `ft_nearest_neighbors`.
+
+```{r}
+ft_nearest_neighbors(ft_cbow, "himmel", k = 5L)
+```
+
+Som du ser, virker det ikke som modellen i særlig god grad klarer å fange opp hvilke ord som likner på "himmel". Ved mindre vi har ekstremt store mengder med data å trene våre word embeddings på, er det ofte best å bruke ferdigtrent data. Du kan finne facebook sine ferdigtrente word embeddings i diverse språk her: https://fasttext.cc/docs/en/crawl-vectors.html
 
 
 ## Taledeler (parts of speech) {#pos}
