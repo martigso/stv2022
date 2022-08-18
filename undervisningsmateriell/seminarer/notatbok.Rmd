@@ -20,7 +20,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r setup, echo=FALSE, message=FALSE, error=FALSE}
+```{r setup, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
 
 # setwd("./undervisningsmateriell/seminarer")
 library(knitr)
