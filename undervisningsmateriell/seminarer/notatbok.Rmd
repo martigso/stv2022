@@ -158,7 +158,7 @@ tilbakemelding på denne slik at du kan oppdatere oppgaven fra seminar til semin
 
 Seminarledere:
 
-- Eli Sofie Baltzersen <elibal@student.sv.uio.no>
+- Eli Sofie Baltzersen <e.s.baltzersern@stv.uio.no>
 - Eric Gabo Ekeberg Nilsen <e.g.e.nilsen@stv.uio.no>
 
 ## Oppgaver
@@ -189,7 +189,6 @@ Under følger en oppskrift på hva som skal være med i de forskjellige delene a
 ### Uke 42 -- Veiledet og ikke-veiledet læring i R
 
 1. (Rediger oppaven basert på tilbakemelding fra forrige uke)
-1. 
 1. Identifiser en analysestrategi for dine data
 2. Diskuter fordeler og ulemper med din strategi
 
@@ -224,7 +223,7 @@ Under følger en oppskrift på hva som skal være med i de forskjellige delene a
         - diskusjon rundt valgt analysestrategi
         - resultat, tolkning og implikasjoner av analysen
         - konklusjon/oppsummering
-    1. skal være mellom 2500 og 3000 ord (eksludert referanser)
+    1. skal være mellom 3000 og 4000 ord (eksludert referanser)
     2. leveres i `.pdf`- format på Inspera
     3. har et kjørbart `.R`-script som reproduserer resultatene i oppgaven vedlagt
     4. [[Mer?]]
@@ -438,7 +437,7 @@ Internett er en fantastisk kilde til informasjon, og derfor også en veldig god 
 
 All html-kode ligger åpent tilgjengelig for alle. For å finne den, åpne en nettside, høyreklikk på siden og velg "Inspect". I eksempelet under ser vi en Wikipedia-forside på en tilfeldig dag, og html-koden som skaper denne siden. 
 
-```{r, out.width="100%", echo = FALSE}
+```{r wiki_bilde, out.width="100%", echo = FALSE}
 knitr::include_graphics("./figurer/wikipedia.png")
 ```
 
@@ -449,13 +448,13 @@ All html-kode er hierarkisk. Egentlig likner den veldig på et familietre. I top
  
 Alle disse delene, som kalles "noder", avsluttes med en skråstrek og navnet på noden, for eksempel `</head>` og `</body>`.
 
-```{r, out.width="100%", echo = FALSE}
+```{r wiki_bilde2, out.width="100%", echo = FALSE}
 knitr::include_graphics("./figurer/wikipedia2.png")
 ```
 
 `<head>` og `<body>` er barn av noden `<html>`. Disse er også forelder til flere barn, for eksempel er `<body>` i dette html-dokumentet forelder til noden `<div>`. `<div>` angir et spesielt område i dokumentet. Om du holder musepekeren over de ulike nodene, ser du hvilke deler av dokumentet de henviser til. 
 
-```{r, out.width="50%", fig.align="center", echo = FALSE}
+```{r wiki_bilde3, out.width="50%", fig.align="center", echo = FALSE}
 knitr::include_graphics("./figurer/wikipedia3.png")
 ```
 
@@ -476,7 +475,7 @@ Noen eksempler på HTML-noder er:
 
 Vi bruker R-pakken `rvest` for å skrape. For å laste inn en pakke bruker vi `library`. Om du ikke har installert den før, må du gjøre dette med `install.packages("rvest")` (husk gåsetegnene når man installerer pakker).
 
-```{r}
+```{r laste_rvest}
 library(rvest)
 ```
 
@@ -496,7 +495,7 @@ I tillegg er det lurt å gjøre det til en vane å **laste ned nettsiden til din
 
 For å laste ned en html-fil kan du bruke `download.file` og sette som argument URL-addressen til nettsiden. Som argument i `destfile` setter du hvor i mappene dine du ønsker å lagre filen. I eksempel under laster jeg ned Wikipedia-artikkelen om appelsiner.
 
-```{r, eval=FALSE}
+```{r laste_ned_appelsin, eval=FALSE}
 
 download.file("https://en.wikipedia.org/wiki/Orange_(fruit)", # Last ned en html-fil ...
                 destfile = "./data/links/Oranges.html") # ... inn i en spesifikk mappe
@@ -508,7 +507,7 @@ download.file("https://en.wikipedia.org/wiki/Orange_(fruit)", # Last ned en html
 
 Vi leser inn nettsiden til R med `read_html`. Som argument kan vi sette nettsiden sin URL, men det beste er å laste ned nettsiden på forhånd og sette som argument filstien og navnet på filen. 
 
-```{r, warning=FALSE, error=FALSE, message=FALSE, eval=-4}
+```{r lese_appelsin, warning=FALSE, error=FALSE, message=FALSE, eval=-4}
 
 library(rvest)
 
@@ -522,7 +521,7 @@ read_html("./data/links/Oranges.html") # Les inn fra din nedlastede fil
 
 La oss si vi ønsker oss tekst fra nettsiden. Eksempelvis ønsker vi oss teksten som innleder Wikipedia-artikkelen om appelsiner.
 
-```{r, out.width="100%", echo = FALSE}
+```{r appelsin_bilde, out.width="100%", echo = FALSE}
 knitr::include_graphics("./figurer/oranges1.png")
 ```
 
@@ -532,13 +531,13 @@ For å skrape denne informasjonen, sett musepekeren over avsnittet og høyreklik
 2. Velg "Copy".
 3. Velg "Copy selector".
 
-```{r, out.width="100%", echo = FALSE}
+```{r appelsin_bilde2, out.width="100%", echo = FALSE}
 knitr::include_graphics("./figurer/oranges2.png")
 ```
 
 Lim inn dette under `html_node`. Videre, siden vi ønsker oss tekst, velg `html_text`. For å ta ut whitespace kan vi sette `trim = TRUE`.
 
-```{r}
+```{r strukturere_appelsin}
 
 read_html("./data/links/Oranges.html") %>%
   html_node("#mw-content-text > div.mw-parser-output > p:nth-child(9)") %>%
@@ -550,13 +549,13 @@ read_html("./data/links/Oranges.html") %>%
 
 Tabeller er også typisk nokså enkle å hente fra nettsider. De befinner seg gjerne i html-noder kalt `<table>` og `<tbody>`. 
 
-```{r, out.width="100%", echo = FALSE}
+```{r appelsin_bilde3, out.width="100%", echo = FALSE}
 knitr::include_graphics("./figurer/oranges3.png")
 ```
 
 Å hente en tabell byr på samme prosedye som over -- sett inn addressen/filstien til nettsiden og finn html-noden som viser til den relevante delen av nettsiden som du ønsker å skrape. Istedenfor å velge `html_text` velger du da `html_table`. 
 
-```{r}
+```{r appelsintabell}
 
 read_html("./data/links/Oranges.html") %>%
   html_node("#mw-content-text > div.mw-parser-output > table.infobox.nowrap") %>%
@@ -566,7 +565,7 @@ read_html("./data/links/Oranges.html") %>%
 
 Vi kan i tillegg rydde litt opp i koden for å få en penere tabell.
 
-```{r}
+```{r appelsintabell2}
 
 read_html("./data/links/Oranges.html") %>%
   html_node("#mw-content-text > div.mw-parser-output > table.infobox.nowrap") %>%
@@ -580,7 +579,7 @@ read_html("./data/links/Oranges.html") %>%
 
 Internett er proppfullt av lenker. Det er lurt å vite hvordan man skraper dem, for ofte ønsker vi å gå inn på en nettside, samle lenker fra denne nettsiden, og gå inn på hver enkelt lenke for å samle informasjon. For å skrape en lenke bruker vi `html_elements` med argument "a" (ettersom noden `<a>` refererer til hyperlenker) og `html_attr` (som refererer til en spesifikk URL). Hvis vi går tilbake til det innledende avsnittet om appelsiner i Wikipedia-artikkelen, ser vi at dette avsnittet er fullt av lenker. For å samle disse kan vi bruke koden under:
 
-```{r eval = FALSE}
+```{r trekke_ut_lenker, eval = FALSE}
 
 read_html("./data/links/Oranges.html") %>%
   html_node("#mw-content-text > div.mw-parser-output > p:nth-child(9)") %>%
@@ -591,7 +590,7 @@ read_html("./data/links/Oranges.html") %>%
 
 For å få fullstendige lenker, må hente ut de lenkene vi tenker å bruke og lime på første halvdel av URL-en. Dette kan vi gjøre med `str_extract` og `str_c`.
 
-```{r}
+```{r trekke_ut_lenker2}
 
 links <- read_html("./data/links/Oranges.html") %>%
   html_node("#mw-content-text > div.mw-parser-output > p:nth-child(9)") %>%
@@ -605,7 +604,7 @@ links <- read_html("./data/links/Oranges.html") %>%
 
 Deretter kan vi bruke disse lenkene for å laste ned alle nettsidene vi trenger i en for-løkke. 
 
-```{r, eval=FALSE}
+```{r laste_ned_flere_sider, eval=FALSE}
 
 linkstopic <- str_remove(links, "https://en.wikipedia.org//wiki/")
 
@@ -619,7 +618,7 @@ for(i in 1:length(links)) { # For alle lenkene...
 
 Deretter kan vi lage en for-løkke for å laste inn testen fra alle nettsidene i folderen. 
 
-```{r}
+```{r laste_inn_flere_filer}
 
 fruit_files <- list.files("./data/links", full.names = TRUE) # Liste med filene vi har lastet ned
 
@@ -1199,7 +1198,7 @@ Her følger et eksempel med hvordan man kan bruke `fastText` for å lage word em
   
   **Steg 1:** Som vanlig må vi huske å preprosessere teksten før vi setter i gang med analysene våre. 
 
-```{r}
+```{r we_strukturere}
 
 stoppord <- stopwords::stopwords("Norwegian") # Finner stoppord fra den norske bokmålslista til "stopwords" pakken
 
@@ -1219,7 +1218,7 @@ no4_prepped <- no4 %>%
 
 **Steg 2:** Fasttext er en algoritme utviklet av Facebook. De har laget den slik at den skal fungere for alle utviklere der ute, enten de jobber i terminalen, i Python, i Java, i R, eller i noe annet. Derfor krever de en input som er litt utenom det vanlige -- et vanlig tekstdokument, altså en *.txt* fil. Dette kan vi lage i R med koden under.
 
-```{r}
+```{r we_tmpfile}
 no4_tekster <- tempfile() # Oppretter en midlertidig fil på PCen
 writeLines(text = no4_prepped %>% pull(tekst), con = no4_tekster) # I denne filen skriver vi inn teksten fra datasettet. 
 ```
@@ -1230,7 +1229,7 @@ writeLines(text = no4_prepped %>% pull(tekst), con = no4_tekster) # I denne file
 - Hvor mange dimensjoner skal det være? Her får vi automatisk 100 dimensjoner. For å endre dette måtte vi kjørt modellen via terminalen.
 - Hvilken modell skal vi bruke? Fasttext tilbyr både `cbow` og `skipgram`.
 
-```{r}
+```{r fasttextr_train_test}
 
 library(fastTextR)
 
@@ -1246,13 +1245,13 @@ ft_skipgram <- ft_train(no4_tekster,
 
 Vi kan finne ord-vektorene med `ft_word_vectors`. Legg merke til at de går til 100. Vi har altså 100 dimensjoner. Hadde vi brukt "sekk av ord", hadde vi hatt like mange dimensjoner som vi har ord, altså nesten 1000. Vi har, med andre ord, redusert antall dimensjoner ganske kraftig.
 
-```{r}
+```{r we_features}
 ft_word_vectors(ft_cbow, c("fordi", "himmel"))
 ```
 
 For å finne ut hvilke ord som likner mest, kontekstmessig, på et annet ord, kan vi bruke funksjonen `ft_nearest_neighbors`.
 
-```{r}
+```{r we_nearest_neighbors}
 ft_nearest_neighbors(ft_cbow, "himmel", k = 5L)
 ```
 
