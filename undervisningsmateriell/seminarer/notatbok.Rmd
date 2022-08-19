@@ -1116,7 +1116,42 @@ Her fungerer stemmingen godt på de regelmessige adjektivene ("god/gode" og "då
 
 Lemmatisering skiller seg fra stemming ved at man bruker konteksten bruker en trent modell som tolker den grammatiske formen til et ord og finner rotformen til dette ordet med en ordbok. Dette gjør at man letter på problemet der ord er like, men betyr forskjellige ting i forskjellige kontekster. For eksempel vil ordet "merke" kunne bety både et fysisk merke som substantiv (arr for eksempel) og det å merke noe ("merke at noe skjer") som verb. Lemmatisering skjer gjerne ved at man bruker en tagger som analyserer teksten man gir og spytter ut litt forskjellige egenskaper ved hvert ord i teksten.
 
-For norsk er det litt begrensede ressurser, men Universitetet i Oslo og Universitetet i Bergen har sammarbeidet om å lage en tagger, som virker godt. Denne heter [Oslo-Bergen-tagger](http://www.tekstlab.uio.no/obt-ny/) (OBT). Den kan være litt teknisk å sette opp, men for å eksemplifisere hvordan den virker, har jeg kjørt `stem2`-teksten over gjennom taggeren og leser resultatet inn i R ved hjelp av `read_obt()`-funksjonen i pakken `stortingscrape`:
+For norsk er det litt begrensede ressurser på lett tilgjengelige lemmatiserere. Den enkleste å bruke kommer fra pakken `spacyr` (samme forfattere som `quanteda`). Her må man både ha en fungerende versjon av [`Python`](https://www.python.org/) og [`spaCy`](https://spacy.io/) før man installerer `spacyr` i `R`. I tillegg må man installere språkpakker for de språkene man skal bruke. For norsk, bruker vi her [`nb_core_news_lg`](https://spacy.io/models/nb#nb_core_news_lg).
+
+
+```{r spacyr_ex, eval = FALSE, echo = TRUE, warning=FALSE}
+
+library(spacyr)
+spacy_initialize("nb_core_news_lg")
+
+spacy_eksempel <- spacy_parse(c("jeg har én god fot og én dårlig hånd",
+                                "jeg har to gode føtter og to dårlige hender"))
+
+
+spacy_eksempel
+```
+
+```{r spacy_juksechunk, echo=FALSE}
+
+load("./data/spacy_eksempel.rda")
+
+spacy_eksempel
+
+```
+
+Her ser vi at lemma på "hånd"/"hender" har blitt "hånd" og "fot"/"føtter" har blitt "fot". Akkurat som vi vil. Likevel er ikke lemmatisereren til `spacyr` helt perfekt og man får en advarsel om dette når man kjører taggeren. Variablene vi får av taggeren er:
+
+| Variabel    | Beskrivelse                                                     |
+|:------------|:----------------------------------------------------------------|
+| doc_id      | Id for teksten                                                  | 
+| sentence_id | Indikator for setningsnummer i teksten                          | 
+| token_id    | Indeks for ord i setningen                                      |
+| token       | Den originale versjonen av ordet i teksten                      |
+| lemma       | Lemmatisert (rotform) ord                                       |
+| pos         | Part-of-speech ([taledeler](#pos))                              |
+| entity      | Navngitt enhet (*named entity*) som Oslo, Solveig, Slottet, etc |
+
+Siden `spaCy` ikke er alltid fungerer på lemmatisering, vil vi også nevne at Universitetet i Oslo og Universitetet i Bergen har sammarbeidet om å lage en tagger, som virker veldig godt. Og vi anbefaler denne om man skal bruke tagger i en evt. masteroppgave eller lignende. Taggeren heter [Oslo-Bergen-tagger](http://www.tekstlab.uio.no/obt-ny/) (OBT). Den er ikke veldig enkel å sette opp (det enkleste er å sette det opp som via en [docker container](https://hub.docker.com/r/textlab/obt)), men for å eksemplifisere hvordan den virker, har jeg kjørt `stem2`-teksten over gjennom taggeren og leser resultatet inn i R ved hjelp av `read_obt()`-funksjonen i pakken `stortingscrape`:
 
 ```{r merke_subverb}
 
@@ -1139,6 +1174,10 @@ Her har vi fått et datasett hvor hver rad er et ord (inkl. punktsetting) og kol
 | morph    | Morfologi (oppbyggingen av ordet via dets minste deler)      |
 
 Vi diskuterer taledeler litt mer under, og morfologi vil vi ikke bruke noe særlig tid på her, selv om det kan være veldig interessant. Det vi skal legge merke til er at kolonnen `lemma` viser at ordene "hender" og "føtter" har blitt bøyd riktig til "hånd" og "fot".
+
+## Taledeler (parts of speech) {#pos}
+
+<!-- Assigned til Martin -->
 
 ## ngrams
 
@@ -1258,7 +1297,6 @@ ft_nearest_neighbors(ft_cbow, "himmel", k = 5L)
 Som du ser, virker det ikke som modellen i særlig god grad klarer å fange opp hvilke ord som likner på "himmel". Ved mindre vi har ekstremt store mengder med data å trene våre word embeddings på, er det ofte best å bruke ferdigtrent data. Du kan finne facebook sine ferdigtrente word embeddings i diverse språk her: https://fasttext.cc/docs/en/crawl-vectors.html
 
 
-## Taledeler (parts of speech) {#pos}
 
 # Veildedet læring {#sup}
 
