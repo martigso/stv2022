@@ -1,0 +1,60 @@
+---
+title: " "
+date: '`r format(Sys.time(), "%d-%m-%Y")`'
+output:
+  revealjs::revealjs_presentation:
+    css: style.css
+    highlight: breezedark
+    incremental: yes
+    code_folding: show
+    transition: convex
+    self_contained: false
+    reveal_plugins: ["chalkboard", "notes"]
+    reveal_options:
+      slideNumber: true
+css: style.css
+bibliography: ../../../referanser/stv2022.bib
+csl: american-political-science-association.csl
+editor_options: 
+  chunk_output_type: console
+
+---
+
+
+
+<font size=12>STV2022 -- Store tekstdata</font></br></br>
+<p style='font-size:10;color:#D13F11'>[03] Forbehandling av tekst 1</p></br>
+![](uio_logo.png){width=50%} 
+
+Martin Søyland 
+<font size=6>\<martin.soyland@stv.uio.no\></font></br>
+
+```{r setup, include=FALSE,warning=FALSE,message=FALSE}
+# setwd("./undervisningsmateriell/forelesninger/uke_02/")
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(class.source = "code-bg")
+refs <- bibtex::read.bib("../../../referanser/stv2022.bib")
+
+library(tidyverse)
+
+```
+
+
+# Disposisjon
+
+1. Hva er forbehandling av tekst, sånn egentlig?
+2. Sekk med ord (*Bag of words*)
+    - Antagelser
+    - Problem
+    - Hvordan!
+3. Reduksjon av trekk
+    - Små bokstaver
+    - Fjerne punktsetting og tall
+    - Fjerne stoppord
+    - Rotform av ord (stemming vs. lemmatisering)
+4. Trekke ut trekk fra trekksten(e)
+    - TF-IDF
+    - Setningsmerking
+    - Taledeler (*parts-of-speech*)
+    - Navngitte enheter (*named entity*)
+5. Oppsummering
