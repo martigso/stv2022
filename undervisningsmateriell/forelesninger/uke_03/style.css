@@ -82,3 +82,7 @@ pre {
 h2.author {
   text-decoration: none;
 }
+
+pre.code {
+  max-width: 1600px !important;
+}

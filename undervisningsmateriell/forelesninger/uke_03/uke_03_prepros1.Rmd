@@ -30,13 +30,30 @@ Martin Søyland
 <font size=6>\<martin.soyland@stv.uio.no\></font></br>
 
 ```{r setup, include=FALSE,warning=FALSE,message=FALSE}
-# setwd("./undervisningsmateriell/forelesninger/uke_02/")
+# setwd("./undervisningsmateriell/forelesninger/uke_03/")
 knitr::opts_chunk$set(echo = FALSE)
 knitr::opts_chunk$set(class.source = "code-bg")
 refs <- bibtex::read.bib("../../../referanser/stv2022.bib")
 
-library(tidyverse)
+library(tidyverse);library(tidytext)
 
+klossmajor <- readLines("./data/skjoente_ikke_du_var_borte.txt")
+toenes <- readLines("./data/saan_av_salve.txt")
+
+str_break <- function(x, width = 7L) {
+  x <- unlist(quanteda::tokenize_fastestword(x))
+  n <- length(x)
+  if (n <= width) return(x)
+  n1 <- seq(1L, n, by = width)
+  n2 <- seq(width, n, by = width)
+  if (n %% width != 0) n2 = c(n2, n)
+  
+  lines <- character()
+  for(i in 1:length(n1)){
+    lines[i] <- paste(x[n1[i]:n2[i]], collapse = " ")
+  }
+ return(lines) 
+}
 ```
 
 
@@ -58,3 +75,51 @@ library(tidyverse)
     - Taledeler (*parts-of-speech*)
     - Navngitte enheter (*named entity*)
 5. Oppsummering
+
+
+# {data-background=words.png}
+
+</br></br></br></br>
+
+<p style='font-size:120px;color:#73DF93;font-weight:bold'>Sekk med ord</p>
+
+## Antagelse
+
+</br>
+<p style='font-size:25px;color:#598456;font-weight:bold'>Hva handler sangen om?</p>
+
+```{r bow_ex, echo=FALSE}
+
+set.seed(8954558)
+
+bow_ex <- klossmajor %>% 
+  str_c(collapse = " ") %>% 
+  tibble(text = .) %>% 
+  unnest_tokens(token, text) %>% 
+  pull(token) %>% 
+  sample(., size = length(.)) %>% 
+  str_c(collapse = " ")
+
+bow_ex %>% 
+  str_break(., width = 10) %>% 
+  str_c(., "\n") %>% 
+  cat()
+
+```
+
+## Antagelse {data-background=words.png}
+
+- Vi antar at en tekst gir samme mening etter å ha ...
+    1. ... klippet ut ordene fra teksten
+    2. ... lagt ordene i en pose
+    3. ... ristet posen
+    4. ... kastet ordene ut igjen
+
+
+## Antagelse 
+
+```{r bow_faktisk, echo=FALSE}
+klossmajor
+
+```
+

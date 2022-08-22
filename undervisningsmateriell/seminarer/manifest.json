@@ -3640,23 +3640,11 @@
     "figurer/wikipedia3.png": {
       "checksum": "bd09fdef701e32cf218ae9a76ef13cc6"
     },
-    "notatbok_files/figure-html/entur_wordcloud-1.png": {
-      "checksum": "fc9c256731d6b401270fe11df464ba4e"
-    },
-    "notatbok_files/figure-html/no4_vis-1.png": {
-      "checksum": "6e23161acd31f7221c0916e39a4914c1"
-    },
-    "notatbok_files/figure-html/zipf-1.png": {
-      "checksum": "39ae887c0b204251dfff16518b4f0eda"
-    },
     "notatbok_kode.R": {
-      "checksum": "65ee0ef2a6d6b4fd796c42e1f2cb82b6"
+      "checksum": "0486e17d39697bb6ad45904467276d08"
     },
     "notatbok.html": {
-      "checksum": "27543af84925f79c625ade64e0425cdd"
-    },
-    "notatbok.knit.md": {
-      "checksum": "4d590fb4a989643abe57a99f6c366205"
+      "checksum": "a9d22fe389558cac8613c8543df838d5"
     },
     "notatbok.log": {
       "checksum": "a80d9b2d472e971c69ad90b384e15e7a"
