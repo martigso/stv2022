@@ -701,9 +701,9 @@ Eksempel fra temamodellering i pensum [@Lucas2015]:
 ![](spektrum2.png){width=60%}
 
 
-# Oppsummering
+# {data-background=figureitout.gif}
 
-<!-- ![https://www.youtube.com/c/Barny64](figureitout.gif) -->
+<!-- ![https://www.youtube.com/c/Barny64]() -->
 
 # Referanser
 

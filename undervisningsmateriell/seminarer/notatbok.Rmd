@@ -80,7 +80,7 @@ Under vil vi gå gjennom undervisningsopplegget, som arbeidsboken er lagt opp et
 4.  [Veiledet læring (supervised)](#sup)
 5.  [Ikke-veiledet læring (unsupervised)](#unsup)
 6.  [Ordbøker](#ordboker)
-7.  [Tekstsatistikk](#tekststats)
+7.  [Tekststatistikk](#tekststats)
 8.  [Sentiment](#sentiment)
 9.  [Temamodellering](#topicmod)
 10. [Latente posisjoner i tekst](#posisjon)
@@ -216,17 +216,16 @@ Under følger en oppskrift på hva som skal være med i de forskjellige delene a
     4. Til neste seminar går du tilbake til punkt 1 og jobber deg gjennom lista igjen
 - Den endelige semesteroppgaven...
     1. følger oppskriften over og inneholder...
-        - introduksjon
-        - teoribasert hypotese
-        - beskrivelse av data og datafangst
-        - kritisk diskusjon om preprosesseringen
-        - diskusjon rundt valgt analysestrategi
-        - resultat, tolkning og implikasjoner av analysen
-        - konklusjon/oppsummering
-    1. skal være mellom 3000 og 4000 ord (eksludert referanser)
-    2. leveres i `.pdf`- format på Inspera
-    3. har et kjørbart `.R`-script som reproduserer resultatene i oppgaven vedlagt
-    4. [[Mer?]]
+        - ... introduksjon
+        - ... teoribasert hypotese
+        - ... beskrivelse av data og datafangst
+        - ... kritisk diskusjon om preprosesseringen
+        - ... diskusjon rundt valgt analysestrategi
+        - ... resultat, tolkning og implikasjoner av analysen
+        - ... konklusjon/oppsummering
+    1. ... skal være mellom 3000 og 4000 ord (eksludert referanser)
+    2. ... leveres i `.pdf`-format på Inspera
+    3. ... har et kjørbart `.R`-script som reproduserer resultatene i oppgaven vedlagt
 
 
 ## Pensum
