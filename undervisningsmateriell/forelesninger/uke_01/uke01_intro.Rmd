@@ -447,7 +447,7 @@ Eller...
 
 ## Deskriptiv
 
-```{r nettverk, message=FALSE}
+```{r nettverk, message=FALSE, warning = FALSE}
 library(igraph)
 library(ggraph)
 
@@ -703,7 +703,13 @@ Eksempel fra temamodellering i pensum [@Lucas2015]:
 
 # Oppsummering
 
-<!-- ![https://www.youtube.com/c/Barny64](figureitout.gif) -->
+Tekst innebærer å jobbe i fem hovedbolker:
+
+1. Forme og strukturere teksten (`stringr`)
+2. Preprosessere teksten (`tidytext`)
+3. Vektorisere teksten (`tidytext`)
+4. Visualisere teksten (`ggplot`)
+5. Analysere teksten
 
 # Referanser
 

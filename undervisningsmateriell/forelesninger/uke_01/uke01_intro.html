@@ -719,9 +719,9 @@ Grunnbok!
 </ul></li>
 <li class="fragment"><p style="color:#D1B41B">
 Silge J, Robinson D (2017). <em>Text mining with R: A tidy
-approach</em>., O’Reilly Media, Inc. <a
+approach</em>., O’Reilly Media, Inc. &lt;URL: <a
 href="https://www.tidytextmining.com/"
-class="uri">https://www.tidytextmining.com/</a>.
+class="uri">https://www.tidytextmining.com/</a>&gt;.
 </p>
 <ul>
 <li class="fragment"><p style="color:#ffffff">
@@ -731,8 +731,8 @@ Tidy tekstformat
 <li class="fragment"><p style="color:#D1B41B">
 Benoit K, Watanabe K, Nulty P, Obeng A, Wang H, Lauderdale B, Lowe W,
 (2017). <em>quanteda: Quantitative Analysis of Textual Data</em>. R
-package, version 0.9.9-65, <a href="http://quanteda.io"
-class="uri">http://quanteda.io</a>.
+package, version 0.9.9-65, &lt;URL: <a href="http://quanteda.io"
+class="uri">http://quanteda.io</a>&gt;.
 </p>
 <ul>
 <li class="fragment"><p style="color:#ffffff">
@@ -893,7 +893,7 @@ class="sourceCode r wider-chunk"><code class="sourceCode r"><span id="cb2-1"><a 
 <section class="slide level2">
 
 <p></br></br></p>
-<pre><code>## # A tibble: 12 × 3
+<pre><code>## # A tibble: 12 x 3
 ##    spor  titler                        tekst                          
 ##    &lt;chr&gt; &lt;chr&gt;                         &lt;chr&gt;                          
 ##  1 1     Parentes                      &quot;Forstyrrer jeg, eller har du &quot;
@@ -923,16 +923,16 @@ class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb4-1"><a href
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(ord)</span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>no4_tokens <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">6</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 6 × 3
+<pre><code>## # A tibble: 6 x 3
 ## # Groups:   spor [1]
 ##    spor ord       n
 ##   &lt;int&gt; &lt;chr&gt; &lt;int&gt;
-## 1     1 å         1
-## 2     1 at        5
-## 3     1 bare      4
-## 4     1 bra       1
-## 5     1 der       1
-## 6     1 det       4</code></pre>
+## 1     1 at        5
+## 2     1 bare      4
+## 3     1 bra       1
+## 4     1 der       1
+## 5     1 det       4
+## 6     1 dette     4</code></pre>
 </div>
 <div class="fragment">
 <div class="right" style="float:right;width:50%">
@@ -942,7 +942,7 @@ class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb6-1"><a href
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(<span class="at">n =</span> <span class="dv">1</span>, </span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">order_by =</span> n, </span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">with_ties =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 12 × 3
+<pre><code>## # A tibble: 12 x 3
 ## # Groups:   spor [12]
 ##     spor ord         n
 ##    &lt;int&gt; &lt;chr&gt;   &lt;int&gt;
@@ -973,7 +973,7 @@ class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb8-1"><a href
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(ord <span class="sc">%in%</span> quanteda<span class="sc">::</span><span class="fu">stopwords</span>(<span class="st">&quot;no&quot;</span>) <span class="sc">==</span> <span class="cn">FALSE</span>)</span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>no4_tokens <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">6</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 6 × 3
+<pre><code>## # A tibble: 6 x 3
 ## # Groups:   spor [1]
 ##    spor ord            n
 ##   &lt;int&gt; &lt;chr&gt;      &lt;int&gt;
@@ -992,7 +992,7 @@ class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb10-1"><a hre
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(<span class="at">n =</span> <span class="dv">1</span>, </span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">order_by =</span> n, </span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">with_ties =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 12 × 3
+<pre><code>## # A tibble: 12 x 3
 ## # Groups:   spor [12]
 ##     spor ord         n
 ##    &lt;int&gt; &lt;chr&gt;   &lt;int&gt;
@@ -1052,7 +1052,7 @@ forskningsprosessen:</p>
 <li class="fragment">Hvilket ord dukker oftest opp på platen?</li>
 </ul>
 <div class="fragment">
-<pre><code>## # A tibble: 405 × 2
+<pre><code>## # A tibble: 405 x 2
 ##    ord       n
 ##    &lt;chr&gt; &lt;int&gt;
 ##  1 alt      10
@@ -1065,7 +1065,7 @@ forskningsprosessen:</p>
 ##  8 sted      5
 ##  9 tid       5
 ## 10 vet       5
-## # … with 395 more rows</code></pre>
+## # ... with 395 more rows</code></pre>
 </div>
 </section>
 <section id="deskriptiv-1" class="slide level2">
@@ -1119,7 +1119,7 @@ den kan applisere på ny data.</p></li>
 <div class="fragment">
 <div class="right" style="float:right;width:50%">
 <p>Kan vi bruke informasjon om disse objektene…</p>
-<pre><code>## # A tibble: 5 × 3
+<pre><code>## # A tibble: 5 x 3
 ##   frukt fasong farge
 ##   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;
 ## 1 banan lang   gul  
@@ -1128,7 +1128,7 @@ den kan applisere på ny data.</p></li>
 ## 4 banan lang   gul  
 ## 5 pære  lang   grønn</code></pre>
 <p>Til å finne ut om disse objektene er banan eller pære?</p>
-<pre><code>## # A tibble: 2 × 3
+<pre><code>## # A tibble: 2 x 3
 ##   frukt fasong farge
 ##   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;
 ## 1 &quot;&quot;    rund   gul  
@@ -1152,7 +1152,7 @@ måling.</p></li>
 <div class="fragment">
 <div class="right" style="float:right;width:50%">
 <p>Vi kan bruke informasjon om disse objektene…</p>
-<pre><code>## # A tibble: 5 × 3
+<pre><code>## # A tibble: 5 x 3
 ##   fasong farge størrelse
 ##   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;    
 ## 1 lang   gul   middels  
@@ -1161,7 +1161,7 @@ måling.</p></li>
 ## 4 lang   gul   middels  
 ## 5 lang   grønn stor</code></pre>
 <p>Til å si noe om hvordan objektene hører sammen?</p>
-<pre><code>## # A tibble: 5 × 4
+<pre><code>## # A tibble: 5 x 4
 ##   fasong farge størrelse  type
 ##   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;     &lt;dbl&gt;
 ## 1 lang   gul   middels       1
@@ -1216,11 +1216,11 @@ class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb20-1"><a hre
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(spor <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>)) <span class="sc">%&gt;%</span> </span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">likhet =</span> <span class="fu">c</span>(<span class="fl">0.09630868</span>, <span class="fl">0.09630868</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(likhet, titler, tekst)</span></code></pre></div>
-<pre><code>## # A tibble: 2 × 3
+<pre><code>## # A tibble: 2 x 3
 ##   likhet titler           tekst                                                 
 ##    &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;                                                 
-## 1 0.0963 En av de levende Sånne dager som den her Når alt er stygt og dårlig væ…
-## 2 0.0963 Hold deg fast    Jeg gir meg, bare ta meg Du får meg, du har meg For j…</code></pre>
+## 1 0.0963 En av de levende Sånne dager som den her Når alt er stygt og dårlig væ~
+## 2 0.0963 Hold deg fast    Jeg gir meg, bare ta meg Du får meg, du har meg For j~</code></pre>
 </div>
 </section>
 <section id="ordbøker-tekstlikhet-og-sentiment-2" class="slide level2">
@@ -1251,13 +1251,13 @@ class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb22-1"><a hre
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(spor <span class="sc">==</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="fu">c</span>(<span class="st">&quot;glad&quot;</span>, <span class="st">&quot;trist&quot;</span>, <span class="st">&quot;trist&quot;</span>, <span class="st">&quot;glad&quot;</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(spor, titler, type, tekst)</span></code></pre></div>
-<pre><code>## # A tibble: 4 × 4
+<pre><code>## # A tibble: 4 x 4
 ##    spor titler           type  tekst                                            
 ##   &lt;int&gt; &lt;chr&gt;            &lt;chr&gt; &lt;chr&gt;                                            
-## 1     1 Parentes         glad  Forstyrrer jeg, eller har du tid til å høre på m…
-## 2     2 En av de levende trist Sånne dager som den her Når alt er stygt og dårl…
-## 3     3 Hvilket vi       trist Har du tid til meg nå? Plutselig alt tid til meg…
-## 4     4 Hold deg fast    glad  Jeg gir meg, bare ta meg Du får meg, du har meg …</code></pre>
+## 1     1 Parentes         glad  Forstyrrer jeg, eller har du tid til å høre på m~
+## 2     2 En av de levende trist Sånne dager som den her Når alt er stygt og dårl~
+## 3     3 Hvilket vi       trist Har du tid til meg nå? Plutselig alt tid til meg~
+## 4     4 Hold deg fast    glad  Jeg gir meg, bare ta meg Du får meg, du har meg ~</code></pre>
 </div>
 </section>
 <section id="klassifisering-av-tekst-1" class="slide level2">
@@ -1284,7 +1284,18 @@ politiske høyresiden eller venstresiden?</p></li>
 </section></section>
 <section id="oppsummering" class="title-slide slide level1">
 <h1>Oppsummering</h1>
-<!-- ![https://www.youtube.com/c/Barny64](figureitout.gif) -->
+<p>Tekst innebærer å jobbe i fem hovedbolker:</p>
+<ol type="1">
+<li class="fragment">Forme og strukturere teksten
+(<code>stringr</code>)</li>
+<li class="fragment">Preprosessere teksten (<code>tidytext</code>)</li>
+<li class="fragment">Vektorisere teksten (<code>tidytext</code>)</li>
+<li class="fragment">Analysere teksten</li>
+</ol>
+<ul>
+<li class="fragment">Veiledet vs ikke-veiledet læring vs regelbaserte
+metoder</li>
+</ul>
 </section>
 
 <section id="referanser" class="title-slide slide level1">
