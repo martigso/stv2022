@@ -1178,6 +1178,34 @@ Vi diskuterer taledeler litt mer under, og morfologi vil vi ikke bruke noe særl
 
 <!-- Assigned til Martin -->
 
+I både `spaCy` og `OBT` spytter taggeren ut noe som kalles *parts of speech* (PoS) eller taledeler. Dette er, kort sagt, den grammatiske formen til et ord. Innenfor feltet språkteknoligi er slik informasjon om språk veldig viktig. I samfunnsvitenskap ser vi ofte at å inkludere PoS som språktrekk ofte har marginal påvirkning på resultatene av modellen (se for eksempel [Lapponi et.al (2019)](https://link.springer.com/article/10.1007/s10579-018-9411-5).
+
+Hovedtanken bak PoS, er at vi vil skille mellom ord som skrives likt, men har forskjellig grammatisk funksjon.
+
+```{r pos_eks, warning=FALSE, eval=FALSE}
+
+grei1 <- "den snegler seg fremover"
+grei2 <- "det er mange snegler her"
+
+grei <- spacy_parse(c(grei1, grei2)) %>% 
+  tibble() %>% 
+  select(doc_id, token, pos) %>% 
+  filter(str_detect(token, "snegl")) %>% 
+  mutate(token_pos = str_c(token, ":", pos))
+
+grei
+```
+
+```{r spacy_juksechunk2, echo=FALSE}
+
+load("./data/spacy_eksempel2.rda")
+
+grei
+
+```
+
+I dette tilfellet ville vi fått samme ord (snegler) om vi vektoriserte på kolonnen `token`, mens vi ville fått forskjellige ord om vi vektoriserte på kolonnen `token_pos`.
+
 ## ngrams
 
 Når vi lager en "sekk med ord", splitter vi ofte teksten inn i ett og ett ord. Ordene kaller vi gjerne *tokens* (derav funksjonen `unnest_tokens()`). Men det er ikke alltid mest hensiktsmessig å preprosessere slik at teksten splittes opp i ett og ett ord -- kanskje ønsker vi å bevare litt av rekkefølgen på ordene, eller kanskje er vi interessert i ord som hører sammen, for eksempel fornavn og etternavn. Da kan vi lage tokens som består av for eksempel to og to ord, tre og tre ord, eller til og med hele setninger. 
@@ -1427,10 +1455,6 @@ no4_sent %>%
 
 
 # Temamodellering {#topicmod}
-
-```{r}
-
-```
 
 
 # Latente posisjoner {#posisjon}
