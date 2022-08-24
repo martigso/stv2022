@@ -46,9 +46,11 @@ library(tidyverse)
 1. Strukturerte datasett
 2. Semistrukturerte data (APIer)
 3. Ustrukturerte data
-3. Skraping (med eksempler)
-4. Kravling (med eksempler)
-5. Fallgruver
+    - Skraping (med eksempler)
+    - Kravling (med eksempler)
+    - Fallgruver
+4. Kaosdata (Høyland & Søyland)
+    - En historie om OCR
 5. Oppgave
 6. Oppsummering
 
@@ -415,7 +417,8 @@ skandinavia <- c("danmark",
                  "finland",
                  "island")
 
-nou_data$skandinavia <- ifelse(nou_data$token %in% skandinavia, "ja", "nei")
+nou_data$skandinavia <- ifelse(nou_data$token %in% skandinavia, "ja", "nei") %>% 
+  factor(., levels = c("nei", "ja"))
 
 nou_data %>% 
   ggplot(., aes(label = token, 
@@ -423,7 +426,7 @@ nou_data %>%
                 color = skandinavia)) +
   geom_text_wordcloud_area()+
   scale_size_area(max_size = 40) +
-  scale_color_manual(values = c("red", "darkcyan")) +
+  scale_color_manual(values = c("darkcyan", "red")) +
   ggdark::dark_theme_void()
 
 
@@ -438,7 +441,7 @@ OBS!
   stargazer::stargazer(., 
                        type = "html",
                        keep.stat = c("n", "adj.rsq"),
-                       covariate.labels = c("Skand. land (nei)",
+                       covariate.labels = c("Skand. land",
                                             "Konstantledd"))
 ```
 
@@ -605,4 +608,198 @@ download.file("https://vg.no/robots.txt", destfile = "./scrape/vg_robots.txt")
 readLines("./scrape/vg_robots.txt")
 
 ```
+
+# Kaosdata: En historie om OCR
+
+Høyland & Søyland (2019):
+
+- **Hypotese:** 
+    - Mer partisentererte valgsystemer gir mer "partisnakk"
+- **Data:**
+    - Stortingstaler fra 1910-1931
+- **Fremgangsmåte:** 
+    - Kvantitativ emneanalyse på tvers av den norske valgreformen i 1919
+- **Funn:** 
+    - Ja, valgreform endrer atferd
+- **Implikasjon:** 
+    - Valgsystemet endrer representanters vekting av å følge partilinjen mot å 
+    representere sitt valgdistrikt
+
+## Samle data
+
+- Skannede dokumenter fra 1910-1931
+- Tigjengelig hos Nasjonalbiblioteket
+    - Last ned med "søk og klikk"
+
+. . .
+
+![Image Title](./not_noisy.png){width=70%}
+
+---
+
+## Preprosessering -- ImageMagick
+
+```{bash imagemagick, eval = FALSE, echo = TRUE}
+convert -density 300x300 -shave 10x100;
+  not_noisy.png not_noisy_clean1.png
+
+convert not_noisy_clean1.png -normalize ;
+  not_noisy_clean2.png
+
+convert not_noisy_clean2.png ;
+  -connected-components 4 -threshold 0 -negate;
+  not_noisy_clean3.png
+
+convert not_noisy_clean2.png;
+  -define connected-components:area-threshold=15;
+  -connected-components 4 -threshold 0 -negate; 
+  not_noisy_clean4.png
+
+convert not_noisy_clean3.png not_noisy_clean4.png;
+  -compose minus -composite;
+  not_noisy_clean5.png
+
+convert not_noisy_clean2.png;
+  \( -clone 0 -negate -fill white -colorize 100% \) ;
+  not_noisy_clean5.png -compose Blend -composite;
+  not_noisy_clean6.png
+
+convert not_noisy_clean6.png; 
+  -fill black -opaque "#FF00FF" -morphology Erode Disk:0.5; 
+  not_noisy_cleaned.png
+```
+
+. . .
+
+![Original](./not_noisy.png){width=40%}
+![Clean](./not_noisy_cleaned.png){width=40%}
+
+---
+
+## Preprosessering -- Bilde til tekst
+
+![Clean](./not_noisy_cleaned.png){width=70%}
+
+```{bash tesseract, eval = FALSE, echo = TRUE}
+# https://github.com/tesseract-ocr/tesseract
+tesseract not_noisy_cleaned.png tekst
+head -n 10 tekst.txt
+```
+
+. . .
+
+```{r show_ocr_text, echo = FALSE, eval = TRUE, warning = FALSE}
+readLines("./tekst.txt", n = 7)
+```
+
+
+
+---
+
+## Preprosessering -- Når ting går galt
+
+- Valg tatt i skanneprosessen kan ha konsekvenser 
+- _Grayscale_ vs. sort/hvit
+- Linjebrytning av ord med bindestrek
+
+. . .
+
+![Noisy](./noisy.png){width=30%}
+![Noisy cleaned](./noisy_cleaned.png){width=30%}
+
+. . .
+
+```{r show_noisy_ocr_text, echo = FALSE, eval = TRUE, warning = FALSE}
+readLines("./tekst_noisy.txt", n = 5)
+```
+
+---
+
+## Preprosessering -- Tekst til tall (BoW)
+
+
+```{r bow_ex, echo=FALSE, eval=TRUE, warning=FALSE, message=FALSE}
+
+samp_tekst <- read_csv("st_debates_meta.csv", show_col_types = FALSE)
+
+set.seed(4093)
+
+samp_tekst[sample(1:nrow(samp_tekst), 6), c("speech_id", "name_fixed", "speech")]
+```
+
+. . .
+
+```{r bow_ex2, echo=FALSE, eval=TRUE, warning=FALSE, message=FALSE}
+samp_tekst <- samp_tekst[sample(1:nrow(samp_tekst), 100), ]
+
+samp_tekst <- samp_tekst %>%
+  unnest_tokens(output = "token", input = "speech") %>%
+  filter(grepl("[0-9]", token) == FALSE) %>% 
+  group_by(speech_id) %>% count(token) %>% 
+  cast_dfm(., document = speech_id, term = token, value = n)
+
+as.matrix(samp_tekst[1:6, c("det", "har", "jord", "lærere", "behandling", "park")])
+
+```
+
+
+---
+
+## Preprosessering -- Hva skal med?
+
+- Stoppord
+- Bøyning 
+    - full form vs. stemming vs. lemma
+    - kjærlighet vs. kjær vs. kjærlighet
+- Rekkefølge på ord 
+    - unigram, bigram, trigram, osv
+- Nynorsk vs. bokmål?
+- Kontekstuelle (ikke-språklige) variabler
+
+## Modellering -- Emneanalyse
+
+- Emneanalyse (topic modelling)
+    - Emner defineres av ords sameksistens
+    - Satt antall emner -- abstraksjonsnivå
+    - Induktiv tolkning -- mye lesing
+- Structural Topic Model (STM)
+    - Estimere effekt av variabler på emnestruktur
+    - Her med reform og stortingssesjon
+
+
+## Modellering -- Resultat
+
+![Topic Examples](./topics_examples.png){width=90%}
+
+---
+
+![Effect](./reform_effect.png){width=90%}
+
+
+# Oppsummering
+
+- Strukturerte data :: kaosdata
+  - *Out of the box*
+  - APIer
+  - Skraping
+  - Kravling
+  - OCR
+- Fallgruver
+  - Undersøk om back-end finnes
+  - Ikke overlast serveren
+  - Lagre nedlastede sidene
+  - Se på `robots.txt`
+
+
+# Oppgave [1]
+
+1. Skissér en hypotese basert på eksisterende teorier
+    - Husk iterativ prosess -- ikke overtenk!
+2. Finn en datakilde du tenker kan brukes til å svare på hypotesen din
+    - Pass på å ikke ta vann over hodet!
+3. Hent og strukturer data
+    - Om det er mye data, start med å strukturere deler av data
+4. Gi en kort beskrivelse av hvordan dataene ble fanget og hvordan de er strukturert
+    - Ta gjerne med litt om problemer som evt oppstod
+
 

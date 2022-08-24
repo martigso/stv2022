@@ -536,10 +536,16 @@ class="email">martin.soyland@stv.uio.no</a>&gt;</font></br></p>
 <ol type="1">
 <li class="fragment">Strukturerte datasett</li>
 <li class="fragment">Semistrukturerte data (APIer)</li>
-<li class="fragment">Ustrukturerte data</li>
+<li class="fragment">Ustrukturerte data
+<ul>
 <li class="fragment">Skraping (med eksempler)</li>
 <li class="fragment">Kravling (med eksempler)</li>
 <li class="fragment">Fallgruver</li>
+</ul></li>
+<li class="fragment">Kaosdata (Høyland &amp; Søyland)
+<ul>
+<li class="fragment">En historie om OCR</li>
+</ul></li>
 <li class="fragment">Oppgave</li>
 <li class="fragment">Oppsummering</li>
 </ol>
@@ -1015,10 +1021,10 @@ n
 </tr>
 <tr>
 <td style="text-align:left">
-Skand. land (nei)
+Skand. land
 </td>
 <td>
--168.631<sup>***</sup>
+168.631<sup>***</sup>
 </td>
 </tr>
 <tr>
@@ -1039,14 +1045,14 @@ Skand. land (nei)
 Konstantledd
 </td>
 <td>
-203.200<sup>***</sup>
+34.569<sup>***</sup>
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 </td>
 <td>
-(51.343)
+(8.884)
 </td>
 </tr>
 <tr>
@@ -1286,6 +1292,237 @@ nettsider
 ## [16] &quot;Sitemap: https://www.vg.no/sitemap/sitemap.xml&quot;</code></pre>
 </div>
 </section></section>
+<section>
+<section id="kaosdata-en-historie-om-ocr"
+class="title-slide slide level1">
+<h1>Kaosdata: En historie om OCR</h1>
+<p>Høyland &amp; Søyland (2019):</p>
+<ul>
+<li class="fragment"><strong>Hypotese:</strong>
+<ul>
+<li class="fragment">Mer partisentererte valgsystemer gir mer
+“partisnakk”</li>
+</ul></li>
+<li class="fragment"><strong>Data:</strong>
+<ul>
+<li class="fragment">Stortingstaler fra 1910-1931</li>
+</ul></li>
+<li class="fragment"><strong>Fremgangsmåte:</strong>
+<ul>
+<li class="fragment">Kvantitativ emneanalyse på tvers av den norske
+valgreformen i 1919</li>
+</ul></li>
+<li class="fragment"><strong>Funn:</strong>
+<ul>
+<li class="fragment">Ja, valgreform endrer atferd</li>
+</ul></li>
+<li class="fragment"><strong>Implikasjon:</strong>
+<ul>
+<li class="fragment">Valgsystemet endrer representanters vekting av å
+følge partilinjen mot å representere sitt valgdistrikt</li>
+</ul></li>
+</ul>
+</section>
+<section id="samle-data" class="slide level2">
+<h2>Samle data</h2>
+<ul>
+<li class="fragment">Skannede dokumenter fra 1910-1931</li>
+<li class="fragment">Tigjengelig hos Nasjonalbiblioteket
+<ul>
+<li class="fragment">Last ned med “søk og klikk”</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<p><img data-src="not_noisy.png" style="width:70.0%"
+alt="Image Title" /></p>
+</div>
+</section>
+<section id="preprosessering-imagemagick" class="slide level2">
+<h2>Preprosessering – ImageMagick</h2>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode bash code-bg"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">convert</span> <span class="at">-density</span> 300x300 <span class="at">-shave</span> 10x100<span class="kw">;</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">not_noisy.png</span> not_noisy_clean1.png</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="ex">convert</span> not_noisy_clean1.png <span class="at">-normalize</span> <span class="kw">;</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">not_noisy_clean2.png</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="ex">convert</span> not_noisy_clean2.png <span class="kw">;</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">-connected-components</span> 4 <span class="at">-threshold</span> 0 <span class="at">-negate</span><span class="kw">;</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  <span class="ex">not_noisy_clean3.png</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="ex">convert</span> not_noisy_clean2.png<span class="kw">;</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  <span class="ex">-define</span> connected-components:area-threshold=15<span class="kw">;</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>  <span class="ex">-connected-components</span> 4 <span class="at">-threshold</span> 0 <span class="at">-negate</span><span class="kw">;</span> </span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>  <span class="ex">not_noisy_clean4.png</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="ex">convert</span> not_noisy_clean3.png not_noisy_clean4.png<span class="kw">;</span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>  <span class="ex">-compose</span> minus <span class="at">-composite</span><span class="kw">;</span></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>  <span class="ex">not_noisy_clean5.png</span></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a><span class="ex">convert</span> not_noisy_clean2.png<span class="kw">;</span></span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>  <span class="ex">\(</span> <span class="at">-clone</span> 0 <span class="at">-negate</span> <span class="at">-fill</span> white <span class="at">-colorize</span> 100% <span class="dt">\)</span> <span class="kw">;</span></span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>  <span class="ex">not_noisy_clean5.png</span> <span class="at">-compose</span> Blend <span class="at">-composite</span><span class="kw">;</span></span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>  <span class="ex">not_noisy_clean6.png</span></span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a><span class="ex">convert</span> not_noisy_clean6.png<span class="kw">;</span> </span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>  <span class="ex">-fill</span> black <span class="at">-opaque</span> <span class="st">&quot;#FF00FF&quot;</span> <span class="at">-morphology</span> Erode Disk:0.5<span class="kw">;</span> </span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a>  <span class="ex">not_noisy_cleaned.png</span></span></code></pre></div>
+<div class="fragment">
+<p><img data-src="not_noisy.png" style="width:40.0%" alt="Original" />
+<img data-src="not_noisy_cleaned.png" style="width:40.0%"
+alt="Clean" /></p>
+</div>
+</section>
+<section id="preprosessering-bilde-til-tekst" class="slide level2">
+<h2>Preprosessering – Bilde til tekst</h2>
+<p><img data-src="not_noisy_cleaned.png" style="width:70.0%"
+alt="Clean" /></p>
+<div class="sourceCode" id="cb28"><pre
+class="sourceCode bash code-bg"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># https://github.com/tesseract-ocr/tesseract</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="ex">tesseract</span> not_noisy_cleaned.png tekst</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-n</span> 10 tekst.txt</span></code></pre></div>
+<div class="fragment">
+<pre><code>## [1] &quot;er misbruk. Men man har reglerne; det er&quot;   
+## [2] &quot;nødvendig for en apoteker at levere efter&quot;  
+## [3] &quot;recept. Selvfølgelig, hvis han er viss paa,&quot;
+## [4] &quot;at det er et misbruk, er. det hans pligt at&quot;
+## [5] &quot;negte. Men man stiller disse samvittighets-&quot;
+## [6] &quot;fulde apotekere i en uholdbar, vanskelig&quot;   
+## [7] &quot;stilling ved de nuværende regler.&quot;</code></pre>
+</div>
+</section>
+<section id="preprosessering-når-ting-går-galt" class="slide level2">
+<h2>Preprosessering – Når ting går galt</h2>
+<ul>
+<li class="fragment">Valg tatt i skanneprosessen kan ha
+konsekvenser</li>
+<li class="fragment"><em>Grayscale</em> vs. sort/hvit</li>
+<li class="fragment">Linjebrytning av ord med bindestrek</li>
+</ul>
+<div class="fragment">
+<p><img data-src="noisy.png" style="width:30.0%" alt="Noisy" /> <img
+data-src="noisy_cleaned.png" style="width:30.0%"
+alt="Noisy cleaned" /></p>
+</div>
+<div class="fragment">
+<pre><code>## [1] &quot;-Pwresldonbene: v Medi mmsyh då aperdkkktes&quot;       
+## [2] &quot;løs inamis psangterrmeil pesosiskeh beer ajberaide&quot;
+## [3] &quot;9 gjør 2: 3berdosn m jpas, st hen haddetenkt&quot;      
+## [4] &quot;aa saDNg OD ,Gftennisk&quot;                            
+## [5] &quot;sol næste vike: hadde. præsidenten&quot;</code></pre>
+</div>
+</section>
+<section id="preprosessering-tekst-til-tall-bow" class="slide level2">
+<h2>Preprosessering – Tekst til tall (BoW)</h2>
+<pre><code>## # A tibble: 6 × 3
+##   speech_id    name_fixed                 speech                                
+##   &lt;chr&gt;        &lt;chr&gt;                      &lt;chr&gt;                                 
+## 1 speech210284 Robert Sæther              &quot;Når den bevilgning som blir gitt und…
+## 2 speech096962 Ole Andor Hoel             &quot;Jeg forlangte ordet for at gjøre opm…
+## 3 speech107950 Martinus Nikolai Sivertsen &quot;Komiteens ordfører oplyste, at Krist…
+## 4 speech113775 Anfin Øen                  &quot;Del næste talarane hev upptil 2 minu…
+## 5 speech004338 Peter Valeur               &quot;Jeg har den opfatning, at der er gjo…
+## 6 speech009899 Alfred Eriksen             &quot;Jeg fremholdt igaar, at dersom vort …</code></pre>
+<div class="fragment">
+<pre><code>##               features
+## docs           det har jord lærere behandling park
+##   speech006356   1   0    0      0          0    0
+##   speech010491   3   2    9      0          0    0
+##   speech012336  21  19    0      5          0    0
+##   speech015337   2   0    0      0          1    0
+##   speech020126  10   5    0      0          0    5
+##   speech023230   8   5    0      0          1    0</code></pre>
+</div>
+</section>
+<section id="preprosessering-hva-skal-med" class="slide level2">
+<h2>Preprosessering – Hva skal med?</h2>
+<ul>
+<li class="fragment">Stoppord</li>
+<li class="fragment">Bøyning
+<ul>
+<li class="fragment">full form vs. stemming vs. lemma</li>
+<li class="fragment">kjærlighet vs. kjær vs. kjærlighet</li>
+</ul></li>
+<li class="fragment">Rekkefølge på ord
+<ul>
+<li class="fragment">unigram, bigram, trigram, osv</li>
+</ul></li>
+<li class="fragment">Nynorsk vs. bokmål?</li>
+<li class="fragment">Kontekstuelle (ikke-språklige) variabler</li>
+</ul>
+</section>
+<section id="modellering-emneanalyse" class="slide level2">
+<h2>Modellering – Emneanalyse</h2>
+<ul>
+<li class="fragment">Emneanalyse (topic modelling)
+<ul>
+<li class="fragment">Emner defineres av ords sameksistens</li>
+<li class="fragment">Satt antall emner – abstraksjonsnivå</li>
+<li class="fragment">Induktiv tolkning – mye lesing</li>
+</ul></li>
+<li class="fragment">Structural Topic Model (STM)
+<ul>
+<li class="fragment">Estimere effekt av variabler på emnestruktur</li>
+<li class="fragment">Her med reform og stortingssesjon</li>
+</ul></li>
+</ul>
+</section>
+<section id="modellering-resultat" class="slide level2">
+<h2>Modellering – Resultat</h2>
+<p><img data-src="topics_examples.png" style="width:90.0%"
+alt="Topic Examples" /></p>
+</section>
+<section class="slide level2">
+
+<p><img data-src="reform_effect.png" style="width:90.0%"
+alt="Effect" /></p>
+</section></section>
+<section id="oppsummering" class="title-slide slide level1">
+<h1>Oppsummering</h1>
+<ul>
+<li class="fragment">Strukturerte data :: kaosdata
+<ul>
+<li class="fragment"><em>Out of the box</em></li>
+<li class="fragment">APIer</li>
+<li class="fragment">Skraping</li>
+<li class="fragment">Kravling</li>
+<li class="fragment">OCR</li>
+</ul></li>
+<li class="fragment">Fallgruver
+<ul>
+<li class="fragment">Undersøk om back-end finnes</li>
+<li class="fragment">Ikke overlast serveren</li>
+<li class="fragment">Lagre nedlastede sidene</li>
+<li class="fragment">Se på <code>robots.txt</code></li>
+</ul></li>
+</ul>
+</section>
+
+<section id="oppgave-1" class="title-slide slide level1">
+<h1>Oppgave [1]</h1>
+<ol type="1">
+<li class="fragment">Skissér en hypotese basert på eksisterende teorier
+<ul>
+<li class="fragment">Husk iterativ prosess – ikke overtenk!</li>
+</ul></li>
+<li class="fragment">Finn en datakilde du tenker kan brukes til å svare
+på hypotesen din
+<ul>
+<li class="fragment">Pass på å ikke ta vann over hodet!</li>
+</ul></li>
+<li class="fragment">Hent og strukturer data
+<ul>
+<li class="fragment">Om det er mye data, start med å strukturere deler
+av data</li>
+</ul></li>
+<li class="fragment">Gi en kort beskrivelse av hvordan dataene ble
+fanget og hvordan de er strukturert
+<ul>
+<li class="fragment">Ta gjerne med litt om problemer som evt
+oppstod</li>
+</ul></li>
+</ol>
+</section>
     </div>
   </div>
 
