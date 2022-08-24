@@ -24,6 +24,27 @@ library(ggplot2)
 load("./data/saker.rda")
 
 
+## ----siste_commit, echo=FALSE------------------------------------------------------------------------------------------
+
+gh_com <- "https://github.com/martigso/stv2022/commits/master.atom" %>% 
+  rvest::read_html(.)
+
+
+gh_com_title_latest <- gh_com %>% 
+  rvest::html_elements("title") %>% 
+  rvest::html_text() %>% 
+  .[2] %>% 
+  str_trim()
+
+gh_com_date_latest <- gh_com %>% 
+  rvest::html_elements("updated") %>% 
+  rvest::html_text() %>% 
+  .[2] %>% 
+  as.Date()
+
+cat(paste0(gh_com_title_latest, " (", gh_com_date_latest, ")"))
+
+
 ## ----laste_data_data, eval=-1------------------------------------------------------------------------------------------
  
 library(stortingscrape)

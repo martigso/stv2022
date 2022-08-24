@@ -58,6 +58,30 @@ Om du skulle finne feil i dokumentet, legg gjerne inn en [issue på github](http
 ![](https://img.shields.io/github/issues/martigso/stv2022?style=for-the-badge)
 ![](https://img.shields.io/github/issues-closed/martigso/stv2022?style=for-the-badge)
 
+Siste endring:
+```{r siste_commit, echo=FALSE}
+
+gh_com <- "https://github.com/martigso/stv2022/commits/master.atom" %>% 
+  rvest::read_html(.)
+
+
+gh_com_title_latest <- gh_com %>% 
+  rvest::html_elements("title") %>% 
+  rvest::html_text() %>% 
+  .[2] %>% 
+  str_trim()
+
+gh_com_date_latest <- gh_com %>% 
+  rvest::html_elements("updated") %>% 
+  rvest::html_text() %>% 
+  .[2] %>% 
+  as.Date()
+
+cat(paste0(gh_com_title_latest, " (", gh_com_date_latest, ")"))
+```
+
+
+
 ## Kort om kurset
 
 I kurset skal vi bli kjent med analyseprosessen av store tekstdata: Hvordan samler man effektivt og redelig store mengder politiske tekster? Hva må til for å gjøre slike tekster klare for analyse? Og hvordan kan vi analysere tekstene?
