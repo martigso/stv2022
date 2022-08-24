@@ -1,0 +1,89 @@
+---
+title: '[[Tittel]]'
+author: '[[Navn // Kand.nr]]'
+date: "2022-08-24"
+output: pdf_document
+urlcolor: blue
+bibliography: ../../referanser/stv2022.bib
+csl: ../seminarer/american-political-science-association.csl
+---
+
+```{r setup, include=FALSE}
+
+# setwd("./undervisningsmateriell/rmd_mal")
+# Setter opp at koden ikke skal vises, om man ikke spesifiserer det
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# R markdown
+
+Dette er et `R-markdown`-dokument (`.Rmd`). Her kan vi enkelt implementere kode og resultater rundt teksten vi skriver. Dette gjøres via *chunks*:
+
+```{r eks_chunk, echo=TRUE}
+
+klossmajor <- readLines("skjoente_ikke_du_var_borte.txt")
+
+klossmajor[1]
+
+```
+
+Her har jeg satt `echo=TRUE` i chunk headeren. Det gjør at koden blir repetert i selve dokumentet. Det er sjelden vi ønsker det når vi skal skrive en artikkel/oppgave. Derfor kan det være lurt å sette `knitr::opts_chunk$set(echo = FALSE)` i en oppsett-chunk i starten av dokumentet.
+
+# Lage plots
+
+Det er enkelt å visualisere resultat fra data i Rmarkdown:
+
+```{r ploteks, out.width="0.75\\textwidth"}
+library(ggplot2)
+
+ggplot(NULL, aes(fill = sample(letters[1:3], 200, replace = TRUE), 
+                 x = rnorm(200))) +
+  geom_density(alpha = .35) +
+  theme_bw() +
+  labs(x = "Tilfeldig normalfordelte tall",
+       y = "Tetthet (density)",
+       fill = "Bokstaver")
+
+```
+
+# Laste kode fra `.R`-filer
+
+Man kan også lage separate `R`-skript som man kan hente inn i `.Rmd`-fila. Dette kan gjøre at dokumentet blir noe mer oversiktelig:
+
+```txt
+
+'''{r hente_r_skript, file = "./tokenize_klossmajor.R"}
+
+'''
+
+```
+
+# Hurtigtaster
+
+For å kompilere en `.Rmd`-fil kan man enten trykke på "Knit"-knappen i `RStudio` eller bruke hurtigtasten `ctrl/cmd + shift + k`. Øvrike hurtigtaster kan man finne i [__rmarkdown-cookbook__](https://bookdown.org/yihui/rmarkdown-cookbook/rstudio-shortcuts.html).
+
+
+# Referanser og referanselister
+
+Om du vil ha med autogenererte referanselister basert på kildene du siterer, kan man gjøre dette via `.bib`-systemet. Spesifiser da helt i toppen av `.Rmd`-filen:
+
+```yml
+bibliography: filbane/til/referanser.bib
+csl: filbane/til/american-political-science-association.csl
+```
+
+`.bib`-filen inneholder et referansebibliotek. Du kan gjerne starte med [biblioteket vi bruker i STV2022](https://raw.githubusercontent.com/martigso/stv2022/master/referanser/stv2022.bib). Men det kan også være lurt å bruke et program som er egnet til å legge inn og systimatisere referansene dine. Selv bruker jeg [JabRef](https://www.jabref.org/), men andre alternativer er feks [Zotero](https://www.zotero.org/), [Paperpile](https://paperpile.com/), [Mendeley](https://www.mendeley.com/) og [EndNote](https://endnote.com/).
+
+`american-political-science-association.csl` spesifiserer hvilken stil vi ønsker å referere i. I dette tilfellet [APSA](https://github.com/citation-style-language/styles/blob/master/american-political-science-association.csl) sin.
+
+
+Du kan føre en referanse med følgende koder:
+
+1. `@Grimmer2022` $\rightarrow$ @Grimmer2022
+2. `[@Grimmer2022]` $\rightarrow$ [@Grimmer2022]
+3. `[@Grimmer2022, p.22]` $\rightarrow$ [@Grimmer2022, p.22]
+3. `[@Grimmer2022, @Silge2017]` $\rightarrow$ [@Grimmer2022, @Silge2017]
+
+\bigskip
+
+**Referanser (autogenerert liste)**
