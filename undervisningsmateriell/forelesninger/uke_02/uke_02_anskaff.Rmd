@@ -9,7 +9,7 @@ output:
     code_folding: show
     transition: convex
     self_contained: false
-    reveal_plugins: ["chalkboard", "notes"]
+    reveal_plugins: ["chalkboard", "notes", "menu", "zoom"]
     reveal_options:
       slideNumber: true
 css: style.css
@@ -37,7 +37,7 @@ refs <- bibtex::read.bib("../../../referanser/stv2022.bib")
 
 library(rvest)
 library(tidyverse)
-
+library(tweetrmd)
 ```
 
 
@@ -79,9 +79,9 @@ library(tidyverse)
 
 ```{r struct_ex, echo=-1}
 set.seed(984984)
-tibble(stortingscrape::cases$root) %>% 
-  select(id, status, type, title_short) %>% 
-  slice_sample(n = 5)
+tibble(stortingscrape::cases$root) %>%      # Henter ut data fra stortingscrape
+  select(id, status, type, title_short) %>% # Trekker ut relevante variabler
+  slice_sample(n = 5)                       # Viser 5 tilfeldige enheter
 
 ```
 
@@ -90,17 +90,17 @@ tibble(stortingscrape::cases$root) %>%
 ## Vanlige dataformat
 
 
-| Format | Står for                   | R-funksjon                                    |
-|:-------|:---------------------------|:----------------------------------------------|
-| .csv   | Comma Separated Values     | `read.csv` // `readr::read_csv()`             |
-| .txt   | Text                       | `readLines()` // `textreadr::read_document()` |
-| .xlsx  | Excel                      | `readxl::read_xlsx()`                         |
-| .html  | HyperText Markup Language  | `rvest::read:html()`                          |
-| .xml   | Extensible Markup Language | `rvest::read:html()`                          |
-| .json  | JavaScript Object Notation | `jsonlite::read_json()`                       |
-| .dta   | Stata                      | `haven::read_dta()`                           |
-| .sav   | SPSS                       | `haven::read_sav()`                           |
-| ...    | Og tusen andre formater... | ...med egne R-pakker og funksjoner            |
+| Format                                                                       | Står for                   | R-funksjon                                    |
+|:------|:---------------------------|:----------------------------------------------|
+| [.csv](https://fileinfo.com/extension/csv)                                   | Comma Separated Values     | `read.csv` // `readr::read_csv()`             |
+| [.txt](https://fileinfo.com/extension/txt)                                   | Text                       | `readLines()` // `textreadr::read_document()` |
+| [.xlsx](https://fileinfo.com/extension/xlsx)                                 | Excel                      | `readxl::read_xlsx()`                         |
+| [.html](https://fileinfo.com/extension/html)                                 | HyperText Markup Language  | `rvest::read:html()`                          |
+| [.xml](https://fileinfo.com/extension/xml)                                   | Extensible Markup Language | `rvest::read:html()`                          |
+| [.json](https://fileinfo.com/extension/json)                                 | JavaScript Object Notation | `jsonlite::read_json()`                       |
+| [.dta](https://www.loc.gov/preservation/digital/formats/fdd/fdd000471.shtml) | Stata                      | `haven::read_dta()`                           |
+| [.sav](https://fileinfo.com/extension/sav#spss_data_file)                    | SPSS                       | `haven::read_sav()`                           |
+| ...                                                                          | Og tusen andre formater... | ...med egne R-pakker og funksjoner            |
 
 
 # Semistrukturerte data (APIer)
@@ -119,45 +119,12 @@ Mer i forelesning <p style='color:#5B28D4'>[05] Bruke API (Stortinget) (uke 38)<
 
 [Tilfeldig side fra Statens vegvesen](https://psi.norge.no/los/ord/parkering-og-hvileplasser)
 
-```txt
-<?xml version="1.0" encoding="UTF-8"?>
-  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:skos="http://www.w3.org/2004/02/skos/core#">
-  <rdf:Description rdf:about="https://psi.norge.no/los/ord/parkering-og-hvileplasser">
-  <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-    <skos:inScheme rdf:resource="https://psi.norge.no/los/ontologi/ord"/>
-    <skos:prefLabel xml:lang="nn">Parkering</skos:prefLabel>
-    <skos:prefLabel xml:lang="nb">Parkering og hvileplasser</skos:prefLabel>
-    <skos:prefLabel xml:lang="en">Parking and rest area</skos:prefLabel>
-    <skos:hiddenLabel xml:lang="nb">Avgiftsparkering</skos:hiddenLabel>
-    <skos:hiddenLabel xml:lang="nn">Avgiftsparkering</skos:hiddenLabel>
-    <skos:hiddenLabel xml:lang="nb">Innfartsparkering</skos:hiddenLabel>
-    <skos:hiddenLabel xml:lang="nn">Innfartsparkering</skos:hiddenLabel>
-    <skos:hiddenLabel xml:lang="nb">Parkeringsavgift</skos:hiddenLabel>
-    <skos:hiddenLabel xml:lang="nn">Parkeringsavgift</skos:hiddenLabel>
-    <skos:hiddenLabel xml:lang="nb">Parkeringsbot</skos:hiddenLabel>
-    <skos:hiddenLabel xml:lang="nn">Parkeringsbot</skos:hiddenLabel>
-    <skos:hiddenLabel xml:lang="nb">Parkeringsgebyr</skos:hiddenLabel>
-    <skos:hiddenLabel xml:lang="nn">Parkeringsgebyr</skos:hiddenLabel>
-    <skos:hiddenLabel xml:lang="nb">Parkeringskort</skos:hiddenLabel>
-    <skos:hiddenLabel xml:lang="nn">Parkeringskort</skos:hiddenLabel>
-    <skos:hiddenLabel xml:lang="nn">Parkeringsløyve</skos:hiddenLabel>
-    <skos:hiddenLabel xml:lang="nb">Parkeringsløyve</skos:hiddenLabel>
-    <skos:hiddenLabel xml:lang="nn">Parkeringsløyve</skos:hiddenLabel>
-    <skos:hiddenLabel xml:lang="nb">Parkeringsplass</skos:hiddenLabel>
-    <skos:hiddenLabel xml:lang="nn">Parkeringsplass</skos:hiddenLabel>
-    <skos:hiddenLabel xml:lang="nb">Parkeringstillatelse</skos:hiddenLabel>
-    <skos:hiddenLabel xml:lang="nn">Rasteplassar</skos:hiddenLabel>
-    <skos:hiddenLabel xml:lang="nb">Rasteplasser</skos:hiddenLabel>
-    <skos:hiddenLabel xml:lang="nb">Utfartsparkering</skos:hiddenLabel>
-    <skos:hiddenLabel xml:lang="nn">Utfartsparkering</skos:hiddenLabel>
-    <skos:note xml:lang="nn">Det skal vere eitt felles regelverk for all parkeringsverksemd. Regelverket skal syte for lik skilting og like reaksjonar ved brot på føresegnene. Det er også ei obligatorisk godkjenningsordning som gjeld både for kommunar, private parkeringsselskap og andre.</skos:note>
-    <skos:note xml:lang="nb">Parkeringstillatelser, parkeringsgebyr, regelverk for gateparkering, parkering for forflytningshemmede, klage på parkeringsbot, betaling av parkeringsbot.</skos:note>
-    <skos:broader rdf:resource="https://psi.norge.no/los/tema/mobilitetstilbud"/>
-    <skos:broader rdf:resource="https://psi.norge.no/los/tema/veg-og-vegregulering"/>
-    <skos:broader rdf:resource="https://psi.norge.no/los/tema/yrkestransport"/>
-  </rdf:Description>
-</rdf:RDF>
+</br></br>
+
+```{bash xml_eks, echo=FALSE}
+xmllint --encode utf8 --format xml_eks.xml
 ```
+
 
 
 # Ustrukturerte data
@@ -186,6 +153,20 @@ Mer i forelesning <p style='color:#5B28D4'>[05] Bruke API (Stortinget) (uke 38)<
 
 
 # Skraping
+
+
+```{r tweet_regjeringen, out.width=".75\textwidth"}
+tweet_screenshot(
+  tweet_url("Regjeringen", "1526207283872641025"),
+  theme = "dark",
+  align = "center",
+  hide_media = TRUE
+)
+```
+
+
+
+## Skraping
 
 - Eksempelhypotese:
 
@@ -266,13 +247,17 @@ for(i in nou_links){
 ---
 
 ```{r sjekke_at_filer_er_der, echo=TRUE, eval=TRUE}
+
+# Lister opp forsidene vi har lagret
 list.files("./scrape/nou_forside/")
 
+# Les inn hver forsidefil med read_html()
 nou_forsider <- lapply(
   list.files("./scrape/nou_forside/", full.names = TRUE), 
   read_html
 )
 
+# Viser første listeelement
 nou_forsider[[1]]
 
 ```
@@ -287,18 +272,23 @@ nou_forsider[[1]]
 ---
 
 ```{r nou_pdf_links, echo=TRUE, eval=TRUE}
-nou_pdf_links <- lapply(nou_forsider, function(x){
-  
-  tmp_content_link <- x %>% 
-    html_elements("a[title]") %>% 
-    html_attr("href")
-  
-  tmp_content_link[which(str_detect(tmp_content_link, "\\.pdf$"))]
-  
-}) %>% unlist()
 
+# Prosesserer hvert listeelement
+nou_pdf_links <- sapply(nou_forsider, function(x){
+  
+  tmp_content_link <- x %>%       # Trekk ut listeelement x
+    html_elements("a[title]") %>% # Trekk ut html nodene "a" som har egenskapen "title"
+    html_attr("href")             # Trekk ut teksten til egenskapen "href"
+  
+  # Trekk ut bare de linkene som inneholder ".pdf" på slutten av strengen
+  tmp_content_link %>% 
+    magrittr::extract(str_detect(., "\\.pdf$"))
+  
+  
+})
+
+# Vis linkene
 nou_pdf_links
-
 ```
 
 ---
@@ -326,6 +316,7 @@ for(i in nou_pdf_links){
   
 }
 
+# Lister opp filene
 list.files("./scrape/nou_pdf/")
 ```
 
@@ -342,14 +333,18 @@ list.files("./scrape/nou_pdf/")
 ```{r nou_lese_pdf, eval=TRUE, echo=TRUE, message=FALSE, warning=FALSE}
 library(textreadr)
 
+# Lager objekt for filbane til alle pdfene
 nou_pdfer <-  list.files("./scrape/nou_pdf/", full.names = TRUE)
 
+# Gå gjennom hver fil og...
 nou_tekst <- lapply(nou_pdfer, function(x){
   
+  # ... les pdfen og gjør det om til en tibble
   read_pdf(x) %>% tibble()
   
 })
 
+# Viser de første 4 radene på listeelement 1
 nou_tekst[[1]] %>% 
   head(., 4)
 ```
@@ -358,19 +353,23 @@ nou_tekst[[1]] %>%
 
 ```{r nou_txt, eval=FALSE, echo=TRUE}
 
+# Fra 1 til 7 (antall NOUer) ...
 lapply(1:length(nou_tekst), function(x){
   
-  tmp_tekst <- nou_tekst[[x]] %>% 
-    summarize(tekst = str_c(text, collapse = " "))
+  tmp_tekst <- nou_tekst[[x]] %>%            # ...trekk ut listeelement x (1:7)
+    summarize(tekst = str_c(text,            # ...og slå sammen teksten til én tekstbolk
+                            collapse = " "))
   
-  txt_file_out <- nou_pdfer[x] %>% 
-    str_extract("nou[0-9]+(.*?)\\.pdf") %>% 
-    str_remove("\\.pdf")
   
-  writeLines(tmp_tekst$tekst,
-             str_c("./scrape/nou_txt/", 
-                   txt_file_out,
-                   ".txt"))
+  txt_file_out <- nou_pdfer[x] %>%           # Trekk ut filbane for x
+    str_extract("nou[0-9]+(.*?)\\.pdf") %>%  # Trekk ut bare filnavn for filbanen til x
+    str_remove("\\.pdf")                     # Fjern ".pdf" fra filbanen til x
+  
+  
+  writeLines(tmp_tekst$tekst,            # Skriv teksten til en .txt fil
+             str_c("./scrape/nou_txt/",  # som skal lagres i mappen ./scrape/nou_txt/
+                   txt_file_out,         # med navnet vi laget over
+                   ".txt"))              # og .txt suffix
   
 })
 ```
@@ -388,46 +387,53 @@ library(tidytext)
 
 # Hentet fra: https://no.wikipedia.org/wiki/Liste_over_land_etter_areal
 countries <- rvest::read_html("./scrape/countries.html") %>% 
-  html_elements("table") %>% 
-  html_table() %>%
-  bind_rows() %>% 
-  pull(Land) %>% 
-  tolower()
+  html_elements("table") %>% # Trekker ut bare tabell
+  html_table() %>%           # Gjør om til en tibble-liste
+  bind_rows() %>%            # og gjør om fra liste til bare tibble
+  pull(Land) %>%             # Trekker ut variabelen "Land", bare
+  tolower()                  # Gjør om til små bokstaver
 
-
+# Lager en vektor med filbane til alle .txt-filene
 txt_filer <- list.files("./scrape/nou_txt/", full.names = TRUE)
 
+# Leser inn alle .txt-filene
 nouer <- lapply(txt_filer, function(x){
-  readLines(x) %>% 
-    str_c(collapse = " ")
+  readLines(x) %>%         # Leser fil x
+    str_c(collapse = " ")  # Kollapser alle linjer til én bolk med tekst
 })
 
+# Lager endelig datasett...
 nou_data <- tibble(id = str_extract(txt_filer, "nou[0-9]+(.*?)pdf[as]"),
-                   tekst = unlist(nouer)) %>% 
-  unnest_tokens(token, tekst) %>% 
-  filter(token %in% countries) %>% 
-  filter(token %in% c("norge", "man") == FALSE) %>% 
-  filter(str_detect(token, "^eu$") == FALSE) %>% 
-  count(token)
+                   tekst = unlist(nouer)) %>%       # ...der id er nou-id
+  unnest_tokens(token, tekst) %>%                   # ...teksten splittes opp i enkeltord
+  filter(token %in% countries) %>%                  # ...tar med bare ord som er i landlista
+  filter(token %in% c("norge", "man") == FALSE) %>% # ...fjerner norge og "man"
+  filter(str_detect(token, "^eu$") == FALSE) %>%    # ...fjerner EU
+  count(token)                                      # ...og teller antall ganger land er nevnt
 
-library(ggwordcloud)
+
+# Lager en vektor for skandinaviske land
 skandinavia <- c("danmark",
                  "sverige",
                  "færøyene",
                  "finland",
                  "island")
 
+# Lager ny variabel som tar verdien "ja" hvis et land er skandinavisk
+# og "nei" hvis ikke
 nou_data$skandinavia <- ifelse(nou_data$token %in% skandinavia, "ja", "nei") %>% 
   factor(., levels = c("nei", "ja"))
 
+library(ggwordcloud)
+
 nou_data %>% 
-  ggplot(., aes(label = token, 
-                size = n,
-                color = skandinavia)) +
-  geom_text_wordcloud_area()+
-  scale_size_area(max_size = 40) +
-  scale_color_manual(values = c("darkcyan", "red")) +
-  ggdark::dark_theme_void()
+  ggplot(., aes(label = token,                         # Lager plot med token som label
+                size = n,                              # n som størrelse
+                color = skandinavia)) +                # og ja/nei på skand. som farge
+  geom_text_wordcloud_area()+                          # Lager ordsky geom
+  scale_size_area(max_size = 40) +                     # Justerer størrelse på ordskyen
+  scale_color_manual(values = c("darkcyan", "red")) +  # Setter farge for ja/nei på skand.land
+  ggdark::dark_theme_void()                            # Skifter til mørkt tema
 
 
 ```
@@ -437,11 +443,11 @@ nou_data %>%
 OBS!
 
 ```{r skand_reg, echo=FALSE, results='asis'}
-(lm(n ~ skandinavia, data = nou_data)) %>% 
-  stargazer::stargazer(., 
-                       type = "html",
-                       keep.stat = c("n", "adj.rsq"),
-                       covariate.labels = c("Skand. land",
+(lm(n ~ skandinavia, data = nou_data)) %>%                   # Lager en regresjon med n som AV og skand. som UV
+  stargazer::stargazer(.,                                    # Lager tabell av regresjonen
+                       type = "html",                        # som skal komme ut i .html
+                       keep.stat = c("n", "adj.rsq"),        # Tar vare på ant. enheter og rsq av statistikker
+                       covariate.labels = c("Skand. land",   # Skifter navn på koeffisientene i regresjonen
                                             "Konstantledd"))
 ```
 
@@ -488,10 +494,14 @@ Rcrawler("http://virksommeord.no/", # Nettsiden vi skal kravle
 ---
 
 ```{r juksechunk2, eval=TRUE, echo=TRUE}
+# Lager en vektor med alle filnavn
 virkord_filer <- list.files("./crawl/virksommeord.no-101413", 
                             full.names = TRUE)
 
+# Viser de første filene i vektoren...
 head(virkord_filer)
+
+# Og lengden på vektoren
 length(virkord_filer)
 
 ```
@@ -502,47 +512,50 @@ length(virkord_filer)
 
 ```{r, eval=FALSE, echo = TRUE}
 
+# Leser inn alle filene fra kravlingen
 virkord_html <- lapply(virkord_filer, rvest::read_html)
 
-
+# Går gjennom alle filene med preprosessering
 virkord_data <- lapply(1:length(virkord_html), function(x){
   
-  message(x)
+  tmp_tekst <- virkord_html[[x]] %>%               
+    html_elements("div[class='document'] > p") %>% # Trekker ut elementene <div class="document"> etterfulgt av <p>
+    html_text()                                    # Konverterer til tekst
   
-  tmp_tekst <- virkord_html[[x]] %>% 
-    html_elements("div[class='document'] > p") %>% 
-    html_text()
-  
-  if(identical(character(), tmp_tekst)){
-    tmp_tekst <- virkord_html[[x]] %>% 
-      html_elements("tr[valign='top']") %>% 
-      html_text()
+  if(identical(character(), tmp_tekst)){           # Hvis teksten er tom...
+    tmp_tekst <- virkord_html[[x]] %>%             #
+      html_elements("tr[valign='top']") %>%        # ...trekker jeg ut <tr valign="top>
+      html_text()                                  # og gjør om til tekst
   }
   
-  if(identical(character(), tmp_tekst)){
-    tmp_tekst <- virkord_html[[x]] %>% 
-      html_elements("div[class='document'] > h3") %>% 
-      html_text() %>% 
-      str_split(., "\\n") %>% 
-      unlist()
+  if(identical(character(), tmp_tekst)){              # Hvis teksten fortsatt er tom...
+    tmp_tekst <- virkord_html[[x]] %>%                #
+      html_elements("div[class='document'] > h3") %>% # ...trekker jeg ut elementene <div class="document"> etterfulgt av <h3>
+      html_text() %>%                                 # ...gjør om til tekst
+      str_split(., "\\n") %>%                         # ...splitter opp i linjer
+      unlist()                                        # ... og konverterer fra liste til vektor
   }
   
+  # Trekker ut forfatternavn
   tmp_forfatter <- virkord_html[[x]] %>% 
     html_elements("div[class='tale-header'] > ul[class='byline'] > li > a") %>% 
     html_text() %>% 
     str_replace_all(., "\\s+", " ") %>% 
     .[1]
   
+  # Trekker ut link til forfatterside
   tmp_forfatter_link <- virkord_html[[x]] %>% 
     html_elements("div[class='tale-header'] > ul[class='byline'] > li > a") %>% 
     html_attr("href") %>% 
     .[which(str_detect(., "person"))]
   
+  # Trekker ut tittel
   tmp_tittel <- virkord_html[[x]] %>% 
     html_elements("div[class='tale-header'] > h1") %>% 
     html_text() %>% 
     str_replace_all(., "\\s+", " ")
   
+  # Setter alt sammen til en tibble
   tmp_data <- tibble(
     tittel = tmp_tittel,
     forfatter = tmp_forfatter,
@@ -554,6 +567,8 @@ virkord_data <- lapply(1:length(virkord_html), function(x){
   return(tmp_data)
 })
 
+# Binder så sammen alle tibbles i listen "virkord_data"
+# Til å være én tibble
 virkord <- bind_rows(virkord_data)
 
 
@@ -567,6 +582,7 @@ load("./crawl/virksommeord.rda")
 ---
 
 ```{r vise_virkdata, echo=TRUE, eval=TRUE}
+# Viser de 6 øverste radene i datasettet
 virkord %>% sample_n(6)
 ```
 
@@ -803,3 +819,7 @@ as.matrix(samp_tekst[1:6, c("det", "har", "jord", "lærere", "behandling", "park
     - Ta gjerne med litt om problemer som evt oppstod
 
 
+
+```{r writeScript, echo=FALSE, eval=FALSE}
+knitr::purl("./uke_02_anskaff.Rmd", "./uke_02_anskaff.R", documentation = 1)
+```

@@ -122,6 +122,9 @@ code span.wa { color: #da4453; } /* Warning */
       border-color: gray;
     }
 
+    .reveal .slide-menu-button {
+      left: 105px !important;
+    }
 
   </style>
 
@@ -511,7 +514,7 @@ style.innerHTML = style_script;
 document.getElementsByTagName('head')[0].appendChild(style);
 </script>
 
-    <script src="uke_02_anskaff_files/header-attrs-2.14/header-attrs.js"></script>
+    <script src="uke_02_anskaff_files/header-attrs-2.16/header-attrs.js"></script>
     <link href="uke_02_anskaff_files/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
     <link href="uke_02_anskaff_files/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 </head>
@@ -579,9 +582,9 @@ alt="Quality of Government" /> </br></p>
 </ul>
 <div class="fragment">
 <div class="sourceCode" id="cb1"><pre
-class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(stortingscrape<span class="sc">::</span>cases<span class="sc">$</span>root) <span class="sc">%&gt;%</span> </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, status, type, title_short) <span class="sc">%&gt;%</span> </span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(stortingscrape<span class="sc">::</span>cases<span class="sc">$</span>root) <span class="sc">%&gt;%</span>      <span class="co"># Henter ut data fra stortingscrape</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, status, type, title_short) <span class="sc">%&gt;%</span> <span class="co"># Trekker ut relevante variabler</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">5</span>)                       <span class="co"># Viser 5 tilfeldige enheter</span></span></code></pre></div>
 <pre><code>## # A tibble: 5 × 4
 ##   id    status         type          title_short                                
 ##   &lt;chr&gt; &lt;chr&gt;          &lt;chr&gt;         &lt;chr&gt;                                      
@@ -600,9 +603,9 @@ data-background="./file_formats.png">
 <h2>Vanlige dataformat</h2>
 <table>
 <colgroup>
-<col style="width: 9%" />
-<col style="width: 33%" />
-<col style="width: 56%" />
+<col style="width: 8%" />
+<col style="width: 34%" />
+<col style="width: 57%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -613,44 +616,52 @@ data-background="./file_formats.png">
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">.csv</td>
+<td style="text-align: left;"><a
+href="https://fileinfo.com/extension/csv">.csv</a></td>
 <td style="text-align: left;">Comma Separated Values</td>
 <td style="text-align: left;"><code>read.csv</code> //
 <code>readr::read_csv()</code></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">.txt</td>
+<td style="text-align: left;"><a
+href="https://fileinfo.com/extension/txt">.txt</a></td>
 <td style="text-align: left;">Text</td>
 <td style="text-align: left;"><code>readLines()</code> //
 <code>textreadr::read_document()</code></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">.xlsx</td>
+<td style="text-align: left;"><a
+href="https://fileinfo.com/extension/xlsx">.xlsx</a></td>
 <td style="text-align: left;">Excel</td>
 <td style="text-align: left;"><code>readxl::read_xlsx()</code></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">.html</td>
+<td style="text-align: left;"><a
+href="https://fileinfo.com/extension/html">.html</a></td>
 <td style="text-align: left;">HyperText Markup Language</td>
 <td style="text-align: left;"><code>rvest::read:html()</code></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">.xml</td>
+<td style="text-align: left;"><a
+href="https://fileinfo.com/extension/xml">.xml</a></td>
 <td style="text-align: left;">Extensible Markup Language</td>
 <td style="text-align: left;"><code>rvest::read:html()</code></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">.json</td>
+<td style="text-align: left;"><a
+href="https://fileinfo.com/extension/json">.json</a></td>
 <td style="text-align: left;">JavaScript Object Notation</td>
 <td style="text-align: left;"><code>jsonlite::read_json()</code></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">.dta</td>
+<td style="text-align: left;"><a
+href="https://www.loc.gov/preservation/digital/formats/fdd/fdd000471.shtml">.dta</a></td>
 <td style="text-align: left;">Stata</td>
 <td style="text-align: left;"><code>haven::read_dta()</code></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">.sav</td>
+<td style="text-align: left;"><a
+href="https://fileinfo.com/extension/sav#spss_data_file">.sav</a></td>
 <td style="text-align: left;">SPSS</td>
 <td style="text-align: left;"><code>haven::read_sav()</code></td>
 </tr>
@@ -682,44 +693,44 @@ Mer i forelesning
 <p><a
 href="https://psi.norge.no/los/ord/parkering-og-hvileplasser">Tilfeldig
 side fra Statens vegvesen</a></p>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode txt"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  &lt;rdf:RDF xmlns:rdf=&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot; xmlns:skos=&quot;http://www.w3.org/2004/02/skos/core#&quot;&gt;</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  &lt;rdf:Description rdf:about=&quot;https://psi.norge.no/los/ord/parkering-og-hvileplasser&quot;&gt;</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  &lt;rdf:type rdf:resource=&quot;http://www.w3.org/2004/02/skos/core#Concept&quot;/&gt;</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    &lt;skos:inScheme rdf:resource=&quot;https://psi.norge.no/los/ontologi/ord&quot;/&gt;</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    &lt;skos:prefLabel xml:lang=&quot;nn&quot;&gt;Parkering&lt;/skos:prefLabel&gt;</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    &lt;skos:prefLabel xml:lang=&quot;nb&quot;&gt;Parkering og hvileplasser&lt;/skos:prefLabel&gt;</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    &lt;skos:prefLabel xml:lang=&quot;en&quot;&gt;Parking and rest area&lt;/skos:prefLabel&gt;</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Avgiftsparkering&lt;/skos:hiddenLabel&gt;</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Avgiftsparkering&lt;/skos:hiddenLabel&gt;</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Innfartsparkering&lt;/skos:hiddenLabel&gt;</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Innfartsparkering&lt;/skos:hiddenLabel&gt;</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Parkeringsavgift&lt;/skos:hiddenLabel&gt;</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Parkeringsavgift&lt;/skos:hiddenLabel&gt;</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Parkeringsbot&lt;/skos:hiddenLabel&gt;</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Parkeringsbot&lt;/skos:hiddenLabel&gt;</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Parkeringsgebyr&lt;/skos:hiddenLabel&gt;</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Parkeringsgebyr&lt;/skos:hiddenLabel&gt;</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Parkeringskort&lt;/skos:hiddenLabel&gt;</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Parkeringskort&lt;/skos:hiddenLabel&gt;</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Parkeringsløyve&lt;/skos:hiddenLabel&gt;</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Parkeringsløyve&lt;/skos:hiddenLabel&gt;</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Parkeringsløyve&lt;/skos:hiddenLabel&gt;</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Parkeringsplass&lt;/skos:hiddenLabel&gt;</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Parkeringsplass&lt;/skos:hiddenLabel&gt;</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Parkeringstillatelse&lt;/skos:hiddenLabel&gt;</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Rasteplassar&lt;/skos:hiddenLabel&gt;</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Rasteplasser&lt;/skos:hiddenLabel&gt;</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Utfartsparkering&lt;/skos:hiddenLabel&gt;</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Utfartsparkering&lt;/skos:hiddenLabel&gt;</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    &lt;skos:note xml:lang=&quot;nn&quot;&gt;Det skal vere eitt felles regelverk for all parkeringsverksemd. Regelverket skal syte for lik skilting og like reaksjonar ved brot på føresegnene. Det er også ei obligatorisk godkjenningsordning som gjeld både for kommunar, private parkeringsselskap og andre.&lt;/skos:note&gt;</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    &lt;skos:note xml:lang=&quot;nb&quot;&gt;Parkeringstillatelser, parkeringsgebyr, regelverk for gateparkering, parkering for forflytningshemmede, klage på parkeringsbot, betaling av parkeringsbot.&lt;/skos:note&gt;</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>    &lt;skos:broader rdf:resource=&quot;https://psi.norge.no/los/tema/mobilitetstilbud&quot;/&gt;</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    &lt;skos:broader rdf:resource=&quot;https://psi.norge.no/los/tema/veg-og-vegregulering&quot;/&gt;</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    &lt;skos:broader rdf:resource=&quot;https://psi.norge.no/los/tema/yrkestransport&quot;/&gt;</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>  &lt;/rdf:Description&gt;</span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>&lt;/rdf:RDF&gt;</span></code></pre></div>
+<p></br></br></p>
+<pre><code>## &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf8&quot;?&gt;
+## &lt;rdf:RDF xmlns:rdf=&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot; xmlns:skos=&quot;http://www.w3.org/2004/02/skos/core#&quot;&gt;
+##   &lt;rdf:Description rdf:about=&quot;https://psi.norge.no/los/ord/parkering-og-hvileplasser&quot;&gt;
+##     &lt;rdf:type rdf:resource=&quot;http://www.w3.org/2004/02/skos/core#Concept&quot;/&gt;
+##     &lt;skos:inScheme rdf:resource=&quot;https://psi.norge.no/los/ontologi/ord&quot;/&gt;
+##     &lt;skos:prefLabel xml:lang=&quot;nn&quot;&gt;Parkering&lt;/skos:prefLabel&gt;
+##     &lt;skos:prefLabel xml:lang=&quot;nb&quot;&gt;Parkering og hvileplasser&lt;/skos:prefLabel&gt;
+##     &lt;skos:prefLabel xml:lang=&quot;en&quot;&gt;Parking and rest area&lt;/skos:prefLabel&gt;
+##     &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Avgiftsparkering&lt;/skos:hiddenLabel&gt;
+##     &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Avgiftsparkering&lt;/skos:hiddenLabel&gt;
+##     &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Innfartsparkering&lt;/skos:hiddenLabel&gt;
+##     &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Innfartsparkering&lt;/skos:hiddenLabel&gt;
+##     &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Parkeringsavgift&lt;/skos:hiddenLabel&gt;
+##     &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Parkeringsavgift&lt;/skos:hiddenLabel&gt;
+##     &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Parkeringsbot&lt;/skos:hiddenLabel&gt;
+##     &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Parkeringsbot&lt;/skos:hiddenLabel&gt;
+##     &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Parkeringsgebyr&lt;/skos:hiddenLabel&gt;
+##     &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Parkeringsgebyr&lt;/skos:hiddenLabel&gt;
+##     &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Parkeringskort&lt;/skos:hiddenLabel&gt;
+##     &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Parkeringskort&lt;/skos:hiddenLabel&gt;
+##     &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Parkeringsløyve&lt;/skos:hiddenLabel&gt;
+##     &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Parkeringsløyve&lt;/skos:hiddenLabel&gt;
+##     &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Parkeringsløyve&lt;/skos:hiddenLabel&gt;
+##     &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Parkeringsplass&lt;/skos:hiddenLabel&gt;
+##     &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Parkeringsplass&lt;/skos:hiddenLabel&gt;
+##     &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Parkeringstillatelse&lt;/skos:hiddenLabel&gt;
+##     &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Rasteplassar&lt;/skos:hiddenLabel&gt;
+##     &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Rasteplasser&lt;/skos:hiddenLabel&gt;
+##     &lt;skos:hiddenLabel xml:lang=&quot;nb&quot;&gt;Utfartsparkering&lt;/skos:hiddenLabel&gt;
+##     &lt;skos:hiddenLabel xml:lang=&quot;nn&quot;&gt;Utfartsparkering&lt;/skos:hiddenLabel&gt;
+##     &lt;skos:note xml:lang=&quot;nn&quot;&gt;Det skal vere eitt felles regelverk for all parkeringsverksemd. Regelverket skal syte for lik skilting og like reaksjonar ved brot på føresegnene. Det er også ei obligatorisk godkjenningsordning som gjeld både for kommunar, private parkeringsselskap og andre.&lt;/skos:note&gt;
+##     &lt;skos:note xml:lang=&quot;nb&quot;&gt;Parkeringstillatelser, parkeringsgebyr, regelverk for gateparkering, parkering for forflytningshemmede, klage på parkeringsbot, betaling av parkeringsbot.&lt;/skos:note&gt;
+##     &lt;skos:broader rdf:resource=&quot;https://psi.norge.no/los/tema/mobilitetstilbud&quot;/&gt;
+##     &lt;skos:broader rdf:resource=&quot;https://psi.norge.no/los/tema/veg-og-vegregulering&quot;/&gt;
+##     &lt;skos:broader rdf:resource=&quot;https://psi.norge.no/los/tema/yrkestransport&quot;/&gt;
+##   &lt;/rdf:Description&gt;
+## &lt;/rdf:RDF&gt;</code></pre>
 </section></section>
 <section>
 <section id="ustrukturerte-data" class="title-slide slide level1">
@@ -747,6 +758,10 @@ style="width:55.0%" /></p>
 <section>
 <section id="skraping" class="title-slide slide level1">
 <h1>Skraping</h1>
+<p><img src="uke_02_anskaff_files/figure-revealjs/tweet_regjeringen-1.png" width=".75  extwidth" /></p>
+</section>
+<section id="skraping-1" class="slide level2">
+<h2>Skraping</h2>
 <ul>
 <li class="fragment">Eksempelhypotese:</li>
 </ul>
@@ -847,16 +862,19 @@ class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb6-1"><a href
 <section class="slide level2">
 
 <div class="sourceCode" id="cb7"><pre
-class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(<span class="st">&quot;./scrape/nou_forside/&quot;</span>)</span></code></pre></div>
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lister opp forsidene vi har lagret</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(<span class="st">&quot;./scrape/nou_forside/&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;id139452.html&quot;  &quot;id139818.html&quot;  &quot;id149022.html&quot;  &quot;id2503028.html&quot;
 ## [5] &quot;id525832.html&quot;  &quot;id571718.html&quot;  &quot;id669368.html&quot;</code></pre>
 <div class="sourceCode" id="cb9"><pre
-class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>nou_forsider <span class="ot">&lt;-</span> <span class="fu">lapply</span>(</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list.files</span>(<span class="st">&quot;./scrape/nou_forside/&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>), </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  read_html</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>nou_forsider[[<span class="dv">1</span>]]</span></code></pre></div>
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Les inn hver forsidefil med read_html()</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>nou_forsider <span class="ot">&lt;-</span> <span class="fu">lapply</span>(</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list.files</span>(<span class="st">&quot;./scrape/nou_forside/&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  read_html</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Viser første listeelement</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>nou_forsider[[<span class="dv">1</span>]]</span></code></pre></div>
 <pre><code>## {html_document}
 ## &lt;html class=&quot;no-js&quot; lang=&quot;no&quot;&gt;
 ## [1] &lt;head&gt;\n&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8 ...
@@ -877,17 +895,22 @@ Rediger og test</li>
 <section class="slide level2">
 
 <div class="sourceCode" id="cb11"><pre
-class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>nou_pdf_links <span class="ot">&lt;-</span> <span class="fu">lapply</span>(nou_forsider, <span class="cf">function</span>(x){</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  tmp_content_link <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span> </span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_elements</span>(<span class="st">&quot;a[title]&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_attr</span>(<span class="st">&quot;href&quot;</span>)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  tmp_content_link[<span class="fu">which</span>(<span class="fu">str_detect</span>(tmp_content_link, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">.pdf$&quot;</span>))]</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>}) <span class="sc">%&gt;%</span> <span class="fu">unlist</span>()</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>nou_pdf_links</span></code></pre></div>
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prosesserer hvert listeelement</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>nou_pdf_links <span class="ot">&lt;-</span> <span class="fu">sapply</span>(nou_forsider, <span class="cf">function</span>(x){</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  tmp_content_link <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span>       <span class="co"># Trekk ut listeelement x</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_elements</span>(<span class="st">&quot;a[title]&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># Trekk ut html nodene &quot;a&quot; som har egenskapen &quot;title&quot;</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_attr</span>(<span class="st">&quot;href&quot;</span>)             <span class="co"># Trekk ut teksten til egenskapen &quot;href&quot;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Trekk ut bare de linkene som inneholder &quot;.pdf&quot; på slutten av strengen</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  tmp_content_link <span class="sc">%&gt;%</span> </span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    magrittr<span class="sc">::</span><span class="fu">extract</span>(<span class="fu">str_detect</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st">.pdf$&quot;</span>))</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Vis linkene</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>nou_pdf_links</span></code></pre></div>
 <pre><code>## [1] &quot;/contentassets/bee23e85425c4fca84346e100bf745c7/no/pdfa/nou199419940009000dddpdfa.pdf&quot;
 ## [2] &quot;/contentassets/3a80ddef404745e5be000a9f58a762a1/no/pdfa/nou199519950005000dddpdfa.pdf&quot;
 ## [3] &quot;/contentassets/28ed358f13704ed2bb3c2a7f13a02be9/no/pdfs/nou200320030032000dddpdfs.pdf&quot;
@@ -921,7 +944,8 @@ class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb13-1"><a hre
 <span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(<span class="st">&quot;./scrape/nou_pdf/&quot;</span>)</span></code></pre></div>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Lister opp filene</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(<span class="st">&quot;./scrape/nou_pdf/&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;nou199419940009000dddpdfa.pdf&quot; &quot;nou199519950005000dddpdfa.pdf&quot;
 ## [3] &quot;nou200320030032000dddpdfs.pdf&quot; &quot;nou200820080014000dddpdfs.pdf&quot;
 ## [5] &quot;nou200920090019000dddpdfs.pdf&quot; &quot;nou201220120002000dddpdfs.pdf&quot;
@@ -937,16 +961,20 @@ class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb13-1"><a hre
 <div class="sourceCode" id="cb15"><pre
 class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(textreadr)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>nou_pdfer <span class="ot">&lt;-</span>  <span class="fu">list.files</span>(<span class="st">&quot;./scrape/nou_pdf/&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>nou_tekst <span class="ot">&lt;-</span> <span class="fu">lapply</span>(nou_pdfer, <span class="cf">function</span>(x){</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_pdf</span>(x) <span class="sc">%&gt;%</span> <span class="fu">tibble</span>()</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Lager objekt for filbane til alle pdfene</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>nou_pdfer <span class="ot">&lt;-</span>  <span class="fu">list.files</span>(<span class="st">&quot;./scrape/nou_pdf/&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Gå gjennom hver fil og...</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>nou_tekst <span class="ot">&lt;-</span> <span class="fu">lapply</span>(nou_pdfer, <span class="cf">function</span>(x){</span>
 <span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>nou_tekst[[<span class="dv">1</span>]] <span class="sc">%&gt;%</span> </span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(., <span class="dv">4</span>)</span></code></pre></div>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ... les pdfen og gjør det om til en tibble</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_pdf</span>(x) <span class="sc">%&gt;%</span> <span class="fu">tibble</span>()</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Viser de første 4 radene på listeelement 1</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>nou_tekst[[<span class="dv">1</span>]] <span class="sc">%&gt;%</span> </span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(., <span class="dv">4</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 4 × 3
 ##   page_id element_id text                                                       
 ##     &lt;int&gt;      &lt;int&gt; &lt;chr&gt;                                                      
@@ -959,21 +987,25 @@ class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb15-1"><a hre
 <section id="steg-5-konvertere-til-.txt" class="slide level2">
 <h2>Steg 5: Konvertere til <code>.txt</code></h2>
 <div class="sourceCode" id="cb17"><pre
-class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(nou_tekst), <span class="cf">function</span>(x){</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  tmp_tekst <span class="ot">&lt;-</span> nou_tekst[[x]] <span class="sc">%&gt;%</span> </span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">tekst =</span> <span class="fu">str_c</span>(text, <span class="at">collapse =</span> <span class="st">&quot; &quot;</span>))</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  txt_file_out <span class="ot">&lt;-</span> nou_pdfer[x] <span class="sc">%&gt;%</span> </span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_extract</span>(<span class="st">&quot;nou[0-9]+(.*?)</span><span class="sc">\\</span><span class="st">.pdf&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_remove</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">.pdf&quot;</span>)</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">writeLines</span>(tmp_tekst<span class="sc">$</span>tekst,</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>             <span class="fu">str_c</span>(<span class="st">&quot;./scrape/nou_txt/&quot;</span>, </span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>                   txt_file_out,</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;.txt&quot;</span>))</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fra 1 til 7 (antall NOUer) ...</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(nou_tekst), <span class="cf">function</span>(x){</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  tmp_tekst <span class="ot">&lt;-</span> nou_tekst[[x]] <span class="sc">%&gt;%</span>            <span class="co"># ...trekk ut listeelement x (1:7)</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">tekst =</span> <span class="fu">str_c</span>(text,            <span class="co"># ...og slå sammen teksten til én tekstbolk</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>                            <span class="at">collapse =</span> <span class="st">&quot; &quot;</span>))</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  txt_file_out <span class="ot">&lt;-</span> nou_pdfer[x] <span class="sc">%&gt;%</span>           <span class="co"># Trekk ut filbane for x</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_extract</span>(<span class="st">&quot;nou[0-9]+(.*?)</span><span class="sc">\\</span><span class="st">.pdf&quot;</span>) <span class="sc">%&gt;%</span>  <span class="co"># Trekk ut bare filnavn for filbanen til x</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_remove</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">.pdf&quot;</span>)                     <span class="co"># Fjern &quot;.pdf&quot; fra filbanen til x</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">writeLines</span>(tmp_tekst<span class="sc">$</span>tekst,            <span class="co"># Skriv teksten til en .txt fil</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>             <span class="fu">str_c</span>(<span class="st">&quot;./scrape/nou_txt/&quot;</span>,  <span class="co"># som skal lagres i mappen ./scrape/nou_txt/</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>                   txt_file_out,         <span class="co"># med navnet vi laget over</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;.txt&quot;</span>))              <span class="co"># og .txt suffix</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
 </section>
 <section id="steg-6-neste-forelesning" class="slide level2">
 <h2>Steg 6: Neste forelesning …</h2>
@@ -1134,10 +1166,12 @@ class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb18-1"><a hre
 <section class="slide level2">
 
 <div class="sourceCode" id="cb19"><pre
-class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>virkord_filer <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;./crawl/virksommeord.no-101413&quot;</span>, </span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(virkord_filer)</span></code></pre></div>
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lager en vektor med alle filnavn</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>virkord_filer <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;./crawl/virksommeord.no-101413&quot;</span>, </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Viser de første filene i vektoren...</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(virkord_filer)</span></code></pre></div>
 <pre><code>## [1] &quot;./crawl/virksommeord.no-101413/1 .html&quot;   
 ## [2] &quot;./crawl/virksommeord.no-101413/10 .html&quot;  
 ## [3] &quot;./crawl/virksommeord.no-101413/100 .html&quot; 
@@ -1145,83 +1179,91 @@ class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb19-1"><a hre
 ## [5] &quot;./crawl/virksommeord.no-101413/1001 .html&quot;
 ## [6] &quot;./crawl/virksommeord.no-101413/1002 .html&quot;</code></pre>
 <div class="sourceCode" id="cb21"><pre
-class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(virkord_filer)</span></code></pre></div>
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Og lengden på vektoren</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(virkord_filer)</span></code></pre></div>
 <pre><code>## [1] 5100</code></pre>
 </section>
 <section class="slide level2">
 
 <h3 id="kravlingens-etterarbeid">Kravlingens etterarbeid</h3>
 <div class="sourceCode" id="cb23"><pre
-class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>virkord_html <span class="ot">&lt;-</span> <span class="fu">lapply</span>(virkord_filer, rvest<span class="sc">::</span>read_html)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Leser inn alle filene fra kravlingen</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>virkord_html <span class="ot">&lt;-</span> <span class="fu">lapply</span>(virkord_filer, rvest<span class="sc">::</span>read_html)</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>virkord_data <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(virkord_html), <span class="cf">function</span>(x){</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(x)</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  tmp_tekst <span class="ot">&lt;-</span> virkord_html[[x]] <span class="sc">%&gt;%</span> </span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_elements</span>(<span class="st">&quot;div[class=&#39;document&#39;] &gt; p&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text</span>()</span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">identical</span>(<span class="fu">character</span>(), tmp_tekst)){</span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    tmp_tekst <span class="ot">&lt;-</span> virkord_html[[x]] <span class="sc">%&gt;%</span> </span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">html_elements</span>(<span class="st">&quot;tr[valign=&#39;top&#39;]&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>      <span class="fu">html_text</span>()</span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">identical</span>(<span class="fu">character</span>(), tmp_tekst)){</span>
-<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>    tmp_tekst <span class="ot">&lt;-</span> virkord_html[[x]] <span class="sc">%&gt;%</span> </span>
-<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>      <span class="fu">html_elements</span>(<span class="st">&quot;div[class=&#39;document&#39;] &gt; h3&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>      <span class="fu">html_text</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_split</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st">n&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>      <span class="fu">unlist</span>()</span>
-<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Går gjennom alle filene med preprosessering</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>virkord_data <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(virkord_html), <span class="cf">function</span>(x){</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  tmp_tekst <span class="ot">&lt;-</span> virkord_html[[x]] <span class="sc">%&gt;%</span>               </span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_elements</span>(<span class="st">&quot;div[class=&#39;document&#39;] &gt; p&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># Trekker ut elementene &lt;div class=&quot;document&quot;&gt; etterfulgt av &lt;p&gt;</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text</span>()                                    <span class="co"># Konverterer til tekst</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">identical</span>(<span class="fu">character</span>(), tmp_tekst)){           <span class="co"># Hvis teksten er tom...</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    tmp_tekst <span class="ot">&lt;-</span> virkord_html[[x]] <span class="sc">%&gt;%</span>             <span class="co">#</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">html_elements</span>(<span class="st">&quot;tr[valign=&#39;top&#39;]&quot;</span>) <span class="sc">%&gt;%</span>        <span class="co"># ...trekker jeg ut &lt;tr valign=&quot;top&gt;</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">html_text</span>()                                  <span class="co"># og gjør om til tekst</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">identical</span>(<span class="fu">character</span>(), tmp_tekst)){              <span class="co"># Hvis teksten fortsatt er tom...</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>    tmp_tekst <span class="ot">&lt;-</span> virkord_html[[x]] <span class="sc">%&gt;%</span>                <span class="co">#</span></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>      <span class="fu">html_elements</span>(<span class="st">&quot;div[class=&#39;document&#39;] &gt; h3&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># ...trekker jeg ut elementene &lt;div class=&quot;document&quot;&gt; etterfulgt av &lt;h3&gt;</span></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>      <span class="fu">html_text</span>() <span class="sc">%&gt;%</span>                                 <span class="co"># ...gjør om til tekst</span></span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_split</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st">n&quot;</span>) <span class="sc">%&gt;%</span>                         <span class="co"># ...splitter opp i linjer</span></span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>      <span class="fu">unlist</span>()                                        <span class="co"># ... og konverterer fra liste til vektor</span></span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Trekker ut forfatternavn</span></span>
 <span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>  tmp_forfatter <span class="ot">&lt;-</span> virkord_html[[x]] <span class="sc">%&gt;%</span> </span>
 <span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_elements</span>(<span class="st">&quot;div[class=&#39;tale-header&#39;] &gt; ul[class=&#39;byline&#39;] &gt; li &gt; a&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_replace_all</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st">s+&quot;</span>, <span class="st">&quot; &quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>    .[<span class="dv">1</span>]</span>
 <span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>  tmp_forfatter_link <span class="ot">&lt;-</span> virkord_html[[x]] <span class="sc">%&gt;%</span> </span>
-<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_elements</span>(<span class="st">&quot;div[class=&#39;tale-header&#39;] &gt; ul[class=&#39;byline&#39;] &gt; li &gt; a&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_attr</span>(<span class="st">&quot;href&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a>    .[<span class="fu">which</span>(<span class="fu">str_detect</span>(., <span class="st">&quot;person&quot;</span>))]</span>
-<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a>  tmp_tittel <span class="ot">&lt;-</span> virkord_html[[x]] <span class="sc">%&gt;%</span> </span>
-<span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_elements</span>(<span class="st">&quot;div[class=&#39;tale-header&#39;] &gt; h1&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_replace_all</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st">s+&quot;</span>, <span class="st">&quot; &quot;</span>)</span>
-<span id="cb23-41"><a href="#cb23-41" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb23-42"><a href="#cb23-42" aria-hidden="true" tabindex="-1"></a>  tmp_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb23-43"><a href="#cb23-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">tittel =</span> tmp_tittel,</span>
-<span id="cb23-44"><a href="#cb23-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">forfatter =</span> tmp_forfatter,</span>
-<span id="cb23-45"><a href="#cb23-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">forfatter_link =</span> tmp_forfatter_link,</span>
-<span id="cb23-46"><a href="#cb23-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">avsnitt =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(tmp_tekst),</span>
-<span id="cb23-47"><a href="#cb23-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">tekst =</span> tmp_tekst</span>
-<span id="cb23-48"><a href="#cb23-48" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb23-49"><a href="#cb23-49" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb23-50"><a href="#cb23-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(tmp_data)</span>
-<span id="cb23-51"><a href="#cb23-51" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb23-52"><a href="#cb23-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-53"><a href="#cb23-53" aria-hidden="true" tabindex="-1"></a>virkord <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(virkord_data)</span>
-<span id="cb23-54"><a href="#cb23-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Trekker ut link til forfatterside</span></span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>  tmp_forfatter_link <span class="ot">&lt;-</span> virkord_html[[x]] <span class="sc">%&gt;%</span> </span>
+<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_elements</span>(<span class="st">&quot;div[class=&#39;tale-header&#39;] &gt; ul[class=&#39;byline&#39;] &gt; li &gt; a&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_attr</span>(<span class="st">&quot;href&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a>    .[<span class="fu">which</span>(<span class="fu">str_detect</span>(., <span class="st">&quot;person&quot;</span>))]</span>
+<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Trekker ut tittel</span></span>
+<span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a>  tmp_tittel <span class="ot">&lt;-</span> virkord_html[[x]] <span class="sc">%&gt;%</span> </span>
+<span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_elements</span>(<span class="st">&quot;div[class=&#39;tale-header&#39;] &gt; h1&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-41"><a href="#cb23-41" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb23-42"><a href="#cb23-42" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_replace_all</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st">s+&quot;</span>, <span class="st">&quot; &quot;</span>)</span>
+<span id="cb23-43"><a href="#cb23-43" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-44"><a href="#cb23-44" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Setter alt sammen til en tibble</span></span>
+<span id="cb23-45"><a href="#cb23-45" aria-hidden="true" tabindex="-1"></a>  tmp_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb23-46"><a href="#cb23-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">tittel =</span> tmp_tittel,</span>
+<span id="cb23-47"><a href="#cb23-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">forfatter =</span> tmp_forfatter,</span>
+<span id="cb23-48"><a href="#cb23-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">forfatter_link =</span> tmp_forfatter_link,</span>
+<span id="cb23-49"><a href="#cb23-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">avsnitt =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(tmp_tekst),</span>
+<span id="cb23-50"><a href="#cb23-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">tekst =</span> tmp_tekst</span>
+<span id="cb23-51"><a href="#cb23-51" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb23-52"><a href="#cb23-52" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-53"><a href="#cb23-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(tmp_data)</span>
+<span id="cb23-54"><a href="#cb23-54" aria-hidden="true" tabindex="-1"></a>})</span>
 <span id="cb23-55"><a href="#cb23-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-56"><a href="#cb23-56" aria-hidden="true" tabindex="-1"></a><span class="co"># save(virkord, file = &quot;./crawl/virksommeord.rda&quot;)</span></span></code></pre></div>
+<span id="cb23-56"><a href="#cb23-56" aria-hidden="true" tabindex="-1"></a><span class="co"># Binder så sammen alle tibbles i listen &quot;virkord_data&quot;</span></span>
+<span id="cb23-57"><a href="#cb23-57" aria-hidden="true" tabindex="-1"></a><span class="co"># Til å være én tibble</span></span>
+<span id="cb23-58"><a href="#cb23-58" aria-hidden="true" tabindex="-1"></a>virkord <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(virkord_data)</span>
+<span id="cb23-59"><a href="#cb23-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-60"><a href="#cb23-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-61"><a href="#cb23-61" aria-hidden="true" tabindex="-1"></a><span class="co"># save(virkord, file = &quot;./crawl/virksommeord.rda&quot;)</span></span></code></pre></div>
 </section>
 <section class="slide level2">
 
 <div class="sourceCode" id="cb24"><pre
-class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>virkord <span class="sc">%&gt;%</span> <span class="fu">sample_n</span>(<span class="dv">6</span>)</span></code></pre></div>
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Viser de 6 øverste radene i datasettet</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>virkord <span class="sc">%&gt;%</span> <span class="fu">sample_n</span>(<span class="dv">6</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 5
-##   tittel                                  forfatter forfatter_link avsnitt tekst
-##   &lt;chr&gt;                                   &lt;chr&gt;     &lt;chr&gt;            &lt;int&gt; &lt;chr&gt;
-## 1 Angrepene mot Oslo og Utøya 22. juli -… Anniken … /person/2721/       62 Et v…
-## 2 Snart kommer vår dag                    Erna Sol… /person/604/        85 Nyut…
-## 3 1. mai-tale                             Hans Ola… /person/2201/       36 Kamp…
-## 4 Et redskap for frihet og fred           Kjell Ma… /person/168/        32 Den …
-## 5 Vi står foran et historisk retningsvalg Espen Ba… /person/3461/      195 Våre…
-## 6 Digitalisering og omstilling av Norge   Jan Tore… /person/4561/       70 Takk…</code></pre>
+##   tittel                                           forfa…¹ forfa…² avsnitt tekst
+##   &lt;chr&gt;                                            &lt;chr&gt;   &lt;chr&gt;     &lt;int&gt; &lt;chr&gt;
+## 1 &quot;200 år som sentralbank i en liten, åpen økonom… Øystei… /perso…      72 &quot;Fry…
+## 2 &quot;Vårt innsatsforsvar - i en relevant Allianse&quot;   Anne-G… /perso…     178 &quot;Vi …
+## 3 &quot;Økonomiske perspektiver&quot;                        Øystei… /perso…      66 &quot;Jeg…
+## 4 &quot;«Å skape brorskap» &quot;                            Grete … /perso…       8 &quot;Alt…
+## 5 &quot;Folkefrihed og Folkeforening&quot;                   Marcus… /perso…      22 &quot;Man…
+## 6 &quot;Vilje til endringer og nye løsninger&quot;           Harald… /perso…      83 &quot;Reg…
+## # … with abbreviated variable names ¹​forfatter, ²​forfatter_link</code></pre>
 </section></section>
 <section>
 <section id="fallgruver" class="title-slide slide level1">
@@ -1570,6 +1612,20 @@ oppstod</li>
         // Number of slides away from the current that are visible
         viewDistance: 3,
 
+        menu: {
+   
+    
+    
+    
+    
+    
+    
+ 
+          custom: false,
+          themes: false,
+          transitions: false
+        },
+
 
 
         chalkboard: {
@@ -1586,7 +1642,9 @@ oppstod</li>
         // Optional reveal.js plugins
         dependencies: [
           { src: 'uke_02_anskaff_files/reveal.js-3.3.0.1/plugin/notes/notes.js', async: true },
+          { src: 'uke_02_anskaff_files/reveal.js-3.3.0.1/plugin/zoom-js/zoom.js', async: true },
           { src: 'uke_02_anskaff_files/reveal.js-3.3.0.1/plugin/chalkboard/chalkboard.js', async: true },
+          { src: 'uke_02_anskaff_files/reveal.js-3.3.0.1/plugin/menu/menu.js', async: true },
         ]
       });
     </script>

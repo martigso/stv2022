@@ -82,3 +82,7 @@ pre {
 h2.author {
   text-decoration: none;
 }
+
+.reveal .slide {
+  font-family: 'Expressway', sans-serif;
+}
