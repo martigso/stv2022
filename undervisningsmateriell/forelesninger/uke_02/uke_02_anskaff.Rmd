@@ -32,7 +32,7 @@ Martin Søyland
 # rsconnect::writeManifest("./")
 knitr::opts_chunk$set(echo = FALSE)
 knitr::opts_chunk$set(class.source = "code-bg")
-refs <- bibtex::read.bib("../../../referanser/stv2022.bib")
+# refs <- bibtex::read.bib("../../../referanser/stv2022.bib")
 
 library(rvest)
 library(tidyverse)
