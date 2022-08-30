@@ -36,7 +36,7 @@ knitr::opts_chunk$set(class.source = "code-bg")
 
 library(rvest)
 library(tidyverse)
-library(tweetrmd)
+# library(tweetrmd)
 ```
 
 
@@ -154,14 +154,16 @@ xmllint --encode utf8 --format xml_eks.xml
 # Skraping
 
 
-```{r tweet_regjeringen, out.width=".75\textwidth"}
-tweet_screenshot(
-  tweet_url("Regjeringen", "1526207283872641025"),
-  theme = "dark",
-  align = "center",
-  hide_media = TRUE
-)
-```
+![reg](./regj_tweek.png)
+<!-- ```{r tweet_regjeringen, out.width=".75\textwidth"} -->
+<!-- tweet_screenshot( -->
+<!--   tweet_url("Regjeringen", "1526207283872641025"), -->
+<!--   theme = "dark", -->
+<!--   align = "center", -->
+<!--   hide_media = TRUE, -->
+<!--   file = "./regj_tweet.png" -->
+<!-- ) -->
+<!-- ``` -->
 
 
 
