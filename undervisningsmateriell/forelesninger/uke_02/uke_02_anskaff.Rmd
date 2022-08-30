@@ -20,8 +20,6 @@ editor_options:
 
 ---
 
-
-
 <font size=12>STV2022 -- Store tekstdata</font></br></br>
 <p style='font-size:10;color:#D13F11'>[02] Anskaffelse og innlasting av tekst</p></br>
 ![](uio_logo.png){width=50%} 
@@ -31,6 +29,7 @@ Martin Søyland
 
 ```{r setup, include=FALSE,warning=FALSE,message=FALSE}
 # setwd("./undervisningsmateriell/forelesninger/uke_02/")
+# rsconnect::writeManifest("./")
 knitr::opts_chunk$set(echo = FALSE)
 knitr::opts_chunk$set(class.source = "code-bg")
 refs <- bibtex::read.bib("../../../referanser/stv2022.bib")
@@ -51,8 +50,8 @@ library(tweetrmd)
     - Fallgruver
 4. Kaosdata (Høyland & Søyland)
     - En historie om OCR
-5. Oppgave
 6. Oppsummering
+5. Oppgave
 
 
 # Strukturerte datasett
@@ -194,7 +193,7 @@ library(rvest)
 library(stringr)
 
 # rot-url for regjeringen.no
-base_url <- "https://www.regjeringen.no/"
+base_url <- "https://www.regjeringen.no"
 
 # Laster ned siden med alle NOUer fra UD (atm 7 stk)
 str_c(base_url, "no/dokument/nou-ar/id1767/?ownerid=833") %>% 
@@ -202,10 +201,10 @@ str_c(base_url, "no/dokument/nou-ar/id1767/?ownerid=833") %>%
 
 # Trekker ut linkene til hver NOU
 nou_links <- read_html("./scrape/base.html") %>% 
-  html_elements("h2 > a[data-hitid]") %>% 
+  html_elements("li > h2 > a[data-hitid]") %>% 
   html_attr("href")
 
-nou_links
+paste0(base_url, nou_links)
 ```
 
 ## Steg 2: Laste ned forside for alle NOUer
@@ -605,11 +604,12 @@ virkord %>% sample_n(6)
 ## Overlaste serveren (timeout){data-background="./504_negate.png"}
 
 
-## Ikke lagre
+## Lagring {data-background="./win_disk.png" data-background-size=25% data-background-position="left"}
 
 - Alltid lagre lokalt!
     - slipper å hente samme side flere ganger
-    - stabilitet -- nettsider endrer seg
+    - reproduserbarhet -> nettsider endrer seg
+    - `download.file()` er din venn
 
 ## robots.txt
 
@@ -720,8 +720,8 @@ readLines("./tekst.txt", n = 7)
 
 . . .
 
-![Noisy](./noisy.png){width=30%}
-![Noisy cleaned](./noisy_cleaned.png){width=30%}
+![Noisy](./noisy.png){width=20%}
+![Noisy cleaned](./noisy_cleaned.png){width=20%}
 
 . . .
 
@@ -818,6 +818,19 @@ as.matrix(samp_tekst[1:6, c("det", "har", "jord", "lærere", "behandling", "park
 4. Gi en kort beskrivelse av hvordan dataene ble fanget og hvordan de er strukturert
     - Ta gjerne med litt om problemer som evt oppstod
 
+# Neste forelesning(er)
+
+</br></br></br>
+
+<p style='color:#D13F11;font-weight:bold'>Forbehandling av tekst 1 (uke 36)</p>
+
+. . .
+
+<p style='color:#D13F11;font-weight:bold'>Forbehandling av tekst 2 (uke 37)</p>
+
+. . .
+
+<p style='color:#5B28D4;font-weight:bold'>Bruke API (Stortinget) (uke 38)</p>
 
 
 ```{r writeScript, echo=FALSE, eval=FALSE}

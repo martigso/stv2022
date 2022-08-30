@@ -549,8 +549,8 @@ class="email">martin.soyland@stv.uio.no</a>&gt;</font></br></p>
 <ul>
 <li class="fragment">En historie om OCR</li>
 </ul></li>
-<li class="fragment">Oppgave</li>
 <li class="fragment">Oppsummering</li>
+<li class="fragment">Oppgave</li>
 </ol>
 </section>
 
@@ -799,7 +799,7 @@ class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb4-1"><a href
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># rot-url for regjeringen.no</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>base_url <span class="ot">&lt;-</span> <span class="st">&quot;https://www.regjeringen.no/&quot;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>base_url <span class="ot">&lt;-</span> <span class="st">&quot;https://www.regjeringen.no&quot;</span></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Laster ned siden med alle NOUer fra UD (atm 7 stk)</span></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="do">## str_c(base_url, &quot;no/dokument/nou-ar/id1767/?ownerid=833&quot;) %&gt;% </span></span>
@@ -807,17 +807,17 @@ class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb4-1"><a href
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Trekker ut linkene til hver NOU</span></span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>nou_links <span class="ot">&lt;-</span> <span class="fu">read_html</span>(<span class="st">&quot;./scrape/base.html&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_elements</span>(<span class="st">&quot;h2 &gt; a[data-hitid]&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_elements</span>(<span class="st">&quot;li &gt; h2 &gt; a[data-hitid]&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_attr</span>(<span class="st">&quot;href&quot;</span>)</span>
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>nou_links</span></code></pre></div>
-<pre><code>## [1] &quot;/no/dokumenter/nou-2016-8/id2503028/&quot;
-## [2] &quot;/no/dokumenter/nou-2012-2/id669368/&quot; 
-## [3] &quot;/no/dokumenter/nou-2009-19/id571718/&quot;
-## [4] &quot;/no/dokumenter/nou-2008-14/id525832/&quot;
-## [5] &quot;/no/dokumenter/nou-2003-32/id149022/&quot;
-## [6] &quot;/no/dokumenter/nou-1995-5/id139818/&quot; 
-## [7] &quot;/no/dokumenter/nou-1994-9/id139452/&quot;</code></pre>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="fu">paste0</span>(base_url, nou_links)</span></code></pre></div>
+<pre><code>## [1] &quot;https://www.regjeringen.no/no/dokumenter/nou-2016-8/id2503028/&quot;
+## [2] &quot;https://www.regjeringen.no/no/dokumenter/nou-2012-2/id669368/&quot; 
+## [3] &quot;https://www.regjeringen.no/no/dokumenter/nou-2009-19/id571718/&quot;
+## [4] &quot;https://www.regjeringen.no/no/dokumenter/nou-2008-14/id525832/&quot;
+## [5] &quot;https://www.regjeringen.no/no/dokumenter/nou-2003-32/id149022/&quot;
+## [6] &quot;https://www.regjeringen.no/no/dokumenter/nou-1995-5/id139818/&quot; 
+## [7] &quot;https://www.regjeringen.no/no/dokumenter/nou-1994-9/id139452/&quot;</code></pre>
 </section>
 <section id="steg-2-laste-ned-forside-for-alle-nouer"
 class="slide level2">
@@ -1296,13 +1296,17 @@ back-end</li>
 data-background="./504_negate.png">
 <h2 data-background="./504_negate.png">Overlaste serveren (timeout)</h2>
 </section>
-<section id="ikke-lagre" class="slide level2">
-<h2>Ikke lagre</h2>
+<section id="lagring" class="slide level2"
+data-background="./win_disk.png" data-background-size="25%"
+data-background-position="left">
+<h2 data-background="./win_disk.png" data-background-size="25%"
+data-background-position="left">Lagring</h2>
 <ul>
 <li class="fragment">Alltid lagre lokalt!
 <ul>
 <li class="fragment">slipper å hente samme side flere ganger</li>
-<li class="fragment">stabilitet – nettsider endrer seg</li>
+<li class="fragment">reproduserbarhet -&gt; nettsider endrer seg</li>
+<li class="fragment"><code>download.file()</code> er din venn</li>
 </ul></li>
 </ul>
 </section>
@@ -1442,8 +1446,8 @@ konsekvenser</li>
 <li class="fragment">Linjebrytning av ord med bindestrek</li>
 </ul>
 <div class="fragment">
-<p><img data-src="noisy.png" style="width:30.0%" alt="Noisy" /> <img
-data-src="noisy_cleaned.png" style="width:30.0%"
+<p><img data-src="noisy.png" style="width:20.0%" alt="Noisy" /> <img
+data-src="noisy_cleaned.png" style="width:20.0%"
 alt="Noisy cleaned" /></p>
 </div>
 <div class="fragment">
@@ -1564,6 +1568,24 @@ fanget og hvordan de er strukturert
 oppstod</li>
 </ul></li>
 </ol>
+</section>
+
+<section id="neste-forelesninger" class="title-slide slide level1">
+<h1>Neste forelesning(er)</h1>
+<p></br></br></br></p>
+<p style="color:#D13F11;font-weight:bold">
+Forbehandling av tekst 1 (uke 36)
+</p>
+<div class="fragment">
+<p style="color:#D13F11;font-weight:bold">
+Forbehandling av tekst 2 (uke 37)
+</p>
+</div>
+<div class="fragment">
+<p style="color:#5B28D4;font-weight:bold">
+Bruke API (Stortinget) (uke 38)
+</p>
+</div>
 </section>
     </div>
   </div>
