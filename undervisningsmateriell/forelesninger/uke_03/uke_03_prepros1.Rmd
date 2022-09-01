@@ -9,7 +9,7 @@ output:
     code_folding: show
     transition: convex
     self_contained: false
-    reveal_plugins: ["chalkboard", "notes"]
+    reveal_plugins: ["chalkboard", "notes", "zoom", "menu"]
     reveal_options:
       slideNumber: true
 css: style.css
@@ -37,8 +37,8 @@ refs <- bibtex::read.bib("../../../referanser/stv2022.bib")
 
 library(tidyverse);library(tidytext)
 
-klossmajor <- readLines("./data/skjoente_ikke_du_var_borte.txt")
-toenes <- readLines("./data/saan_av_salve.txt")
+klossmajor <- readLines("./data/klossmajor/Skjønte ikke du var borte.txt")
+# toenes <- readLines("./data/saan_av_salve.txt")
 
 str_break <- function(x, width = 7L) {
   x <- unlist(quanteda::tokenize_fastestword(x))
@@ -59,22 +59,98 @@ str_break <- function(x, width = 7L) {
 
 # Disposisjon
 
+1. Litt om `regex`
 1. Hva er forbehandling av tekst, sånn egentlig?
 2. Sekk med ord (*Bag of words*)
-    - Antagelser
-    - Problem
-    - Hvordan!
-3. Reduksjon av trekk
-    - Små bokstaver
-    - Fjerne punktsetting og tall
-    - Fjerne stoppord
+    - Antagelser, problem, hvordan!
+3. Reduksjon av kompleksitet
+    - Små bokstaver,  punktsetting, tall, stoppord
     - Rotform av ord (stemming vs. lemmatisering)
 4. Trekke ut trekk fra trekksten(e)
-    - TF-IDF
-    - Setningsmerking
+    - TF-IDF, setningsmerking
     - Taledeler (*parts-of-speech*)
     - Navngitte enheter (*named entity*)
 5. Oppsummering
+
+
+# Regex
+
+- *Regular expressions*
+    - Trekke ut / fjerne / bytte tekstmønster med noe
+    
+. . .
+
+```{r regexeks1, eval=TRUE, echo=-1}
+eks_streng <- "Jeg heter Martin, er født i 1988 og mailen min er martin.soyland@stv.uio.no"
+eks_streng %>% cat()
+```
+
+---
+
+```{r regexeks2, eval=TRUE, echo=TRUE}
+str_extract_all(eks_streng, "[A-ZØÆØÅ][a-zæøå]+")
+str_extract_all(eks_streng, "[0-9]+")
+```
+
+---
+
+```{r regexeks3, eval=TRUE, echo=TRUE}
+str_extract(eks_streng, "[0-9]{2}")
+str_extract_all(eks_streng, "[0-9]{2}")
+str_detect(eks_streng, "\\@")
+```
+
+---
+
+```{r regexeks4, eval=TRUE, echo=TRUE}
+str_extract(eks_streng, "mailen min er (.*?)$") 
+
+str_extract(eks_streng, "mailen min er (.*?)$") %>% 
+  str_remove(., "mailen min er")
+
+str_extract(eks_streng, "mailen min er (.*?)$") %>% 
+  str_remove(., "mailen min er") %>% 
+  str_trim()
+
+```
+
+---
+
+Det kan fort bli veldig avansert
+
+. . .
+
+```{r regexeks5, eval=TRUE, echo=TRUE}
+to_mailadresser <- c("martin.soyland@stv.uio.no",
+                     "solveig_har_en_mail@høhø.com")
+
+str_extract(to_mailadresser, 
+           "([a-z]+\\.*)+\\@")
+
+str_extract(to_mailadresser, 
+           "([a-z]+[[:punct:]]*)+\\@")
+```
+
+---
+
+```{r regexeks6, eval=TRUE, echo=TRUE}
+str_extract(to_mailadresser, 
+           "^([a-z]+[[:punct:]]*)+\\@([a-z]+[[:punct:]]*)+$")
+```
+
+. . .
+
+```{r regexeks7, eval=TRUE, echo=TRUE}
+str_extract(to_mailadresser, 
+           "^([a-z]+[[:punct:]]*)+\\@([a-zæøå]+[[:punct:]]*)+$")
+```
+
+## Et eksemel å se på etterpå
+
+```{r isv_liste, echo=TRUE, eval=FALSE, file="./r/regex_eksempler.R"}
+
+
+```
 
 
 # {data-background=words.png}
@@ -107,7 +183,9 @@ bow_ex %>%
 
 ```
 
-## Antagelse {data-background=words.png}
+## Antagelse {data-background=torn_negate.png data-background-size="2500px"}
+
+</br></br></br>
 
 - Vi antar at en tekst gir samme mening etter å ha ...
     1. ... klippet ut ordene fra teksten
@@ -116,10 +194,121 @@ bow_ex %>%
     4. ... kastet ordene ut igjen
 
 
-## Antagelse 
+## Rekkefølge er viktig! 
 
 ```{r bow_faktisk, echo=FALSE}
-klossmajor
+klossmajor %>% str_replace(., "faen", "f*en")
+
+```
+
+
+## Valg {data-background=assumpt_reality.jpg data-background-size=30% data-background-position="right"}
+
+1. Hva er enheten i analysen?
+    - Individuelle tekster
+    - Alle tekster av en forfatter (slått sammen)
+    - Setninger, avsnitt, osv
+2. Dele opp teksten (*tokenize*)
+    - Bokstaver (?)
+    - Enkeltord
+    - Ngrams
+    - Setninger
+3. Reduksjon av kompleksitet (kommer etterpå)
+4. Lage *Document-Feature Matrix* (`tidytext::{dfm/tdm/dtm}`)
+
+
+# Enhet i analysen
+
+Alle tekstene til Klossmajor -- Ordner seg for snille jenter
+
+. . .
+
+```{r laste_inn_klossmajor, eval=TRUE, echo=TRUE}
+
+klossmajor_filer <- list.files("./data/klossmajor", 
+                               full.names = TRUE)
+
+klossmajor <- lapply(klossmajor_filer, function(x){
+  
+  tmp <- readLines(x) %>% 
+    tibble(tekst = .)
+  
+  tmp$tittel <- x %>% 
+    str_remove_all("./data/klossmajor/|.txt")  
+  
+  tmp$linje <- 1:nrow(tmp)
+  
+  tmp <- tmp %>% dplyr::select(tittel, linje, tekst)
+  
+  return(tmp)
+})
+
+klossmajor <- klossmajor %>% bind_rows()
+
+
+
+```
+
+## Linjer / Setninger
+
+```{r tekst_i_linjer, echo=-1, eval=TRUE}
+set.seed(677)
+
+klossmajor %>% head(3)
+klossmajor %>% sample_n(3)
+```
+
+- Problemer?
+
+## Spor
+
+```{r klossmajor_ord, echo=TRUE}
+
+klossmajor <- klossmajor %>%     # tibble med alle sanger
+  filter(tekst != "") %>%        # fjerner tomme linjer
+  group_by(tittel) %>%           # grupperer på tittel
+  unnest_tokens(token, tekst,    # splitter opp teksten til tokens
+                to_lower = TRUE, # lowercase på alt
+                strip_punct = TRUE) %>%   # fjerne punktsetting
+  count(token) %>%            # teller tokens innefor gruppen (sangene)
+  cast_dfm(.,                 # gjør om til en Document Feature Matrix ...
+           document = tittel, # ...der "tittel" er dokumentene
+           term = token,      # ..."token" er kolonnen med ord
+           value = n)   # ... og "n" teller antal ganger ordet er brukt
+
+klossmajor %>% print()
+```
+
+
+
+# Reduksjon av kompleksitet
+
+
+## Store bokstaver?
+
+- *Lowercase* av alle ord -> gjøre alle bokstaver små
+- Er det alltid riktig?
+
+. . .
+
+```{r lowercaseeks, echo=TRUE}
+tolower("Fjell kan være høye, sier Kari Fjell")
+```
+
+
+
+
+
+# Trekke ut trekk fra tekstene
+
+# 
+
+
+# Scrapescript for Klossmajor {data-background="klossmajor.png"}
+
+. . .
+
+```{r all_kode, file="r/scrape_klossmajor.R", echo=TRUE, eval=FALSE}
 
 ```
 
