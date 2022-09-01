@@ -8,8 +8,8 @@ output:
     incremental: yes
     code_folding: show
     transition: convex
-    self_contained: true
-    #reveal_plugins: ["chalkboard", "notes", "menu", "zoom"]
+    self_contained: false
+    reveal_plugins: ["chalkboard", "notes", "menu", "zoom"]
     reveal_options:
       slideNumber: true
 css: style.css
@@ -20,6 +20,8 @@ editor_options:
 
 ---
 
+
+
 <font size=12>STV2022 -- Store tekstdata</font></br></br>
 <p style='font-size:10;color:#D13F11'>[02] Anskaffelse og innlasting av tekst</p></br>
 ![](uio_logo.png){width=50%} 
@@ -28,15 +30,14 @@ Martin Søyland
 <font size=6>\<martin.soyland@stv.uio.no\></font></br>
 
 ```{r setup, include=FALSE,warning=FALSE,message=FALSE}
-# setwd("./undervisningsmateriell/forelesninger/uke_02/")
-# rsconnect::writeManifest("./")
+# setwd("./undervisningsmateriell/forelesninger/uke_02/")z
 knitr::opts_chunk$set(echo = FALSE)
 knitr::opts_chunk$set(class.source = "code-bg")
-# refs <- bibtex::read.bib("../../../referanser/stv2022.bib")
+refs <- bibtex::read.bib("../../../referanser/stv2022.bib")
 
 library(rvest)
 library(tidyverse)
-# library(tweetrmd)
+library(tweetrmd)
 ```
 
 
@@ -154,16 +155,14 @@ xmllint --encode utf8 --format xml_eks.xml
 # Skraping
 
 
-![reg](./regj_tweek.png)
-<!-- ```{r tweet_regjeringen, out.width=".75\textwidth"} -->
-<!-- tweet_screenshot( -->
-<!--   tweet_url("Regjeringen", "1526207283872641025"), -->
-<!--   theme = "dark", -->
-<!--   align = "center", -->
-<!--   hide_media = TRUE, -->
-<!--   file = "./regj_tweet.png" -->
-<!-- ) -->
-<!-- ``` -->
+```{r tweet_regjeringen, out.width=".75\textwidth"}
+tweet_screenshot(
+  tweet_url("Regjeringen", "1526207283872641025"),
+  theme = "dark",
+  align = "center",
+  hide_media = TRUE
+)
+```
 
 
 

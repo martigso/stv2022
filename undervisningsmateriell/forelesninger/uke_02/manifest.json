@@ -19311,6 +19311,9 @@
     "reform_effect.png": {
       "checksum": "f8ce3b6180610b2c2a2f368655d47389"
     },
+    "regj_tweet.png": {
+      "checksum": "34f930d23c28800749687049228b0d88"
+    },
     "scrape_vs_crawl_negate.png": {
       "checksum": "4e260847cfea364aaa95cc30d9efcd07"
     },
@@ -19426,13 +19429,13 @@
       "checksum": "decc2508b2212a10f9f26760577686d1"
     },
     "uke_02_anskaff.html": {
-      "checksum": "7ca4e3a05ebc9960bb0075df9042679a"
+      "checksum": "919fee6cea78a6f2c767a14aa29f0dbb"
     },
     "uke_02_anskaff.R": {
       "checksum": "cb8c3a77c665ca64d0f974bb65f496b7"
     },
     "uke_02_anskaff.Rmd": {
-      "checksum": "a460008869a35c3bf748f3e329fdd40e"
+      "checksum": "ef48b1cee3b1838292dfc249d05cb834"
     },
     "vdem_crop.png": {
       "checksum": "dcd5ff6c1fb747fac7508cd274957ed2"
