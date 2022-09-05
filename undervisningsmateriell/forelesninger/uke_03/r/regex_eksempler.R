@@ -9,7 +9,10 @@ library(stringr)
 library(ggplot2)
 
 # Link til alle ISV-ansatte
-isv_url <- str_c("https://www.sv.uio.no/isv/personer/?page=", 1:6, "&u-page=", 1:6)
+isv_url <- str_c("https://www.sv.uio.no/isv/personer/?page=", 
+                 1:6, 
+                 "&u-page=", 
+                 1:6)
 
 # Laster ned alle sidene
 for(i in 1:length(isv_url)){
@@ -18,7 +21,8 @@ for(i in 1:length(isv_url)){
   if(file.exists(str_c("./data/isv_folk/", i, ".html"))) next
   
   # Hvis siden ikke er lagret, laster vi ned og lagrer
-  download.file(isv_url[i], destfile = str_c("./data/isv_folk/", i, ".html"))
+  download.file(isv_url[i], 
+                destfile = str_c("./data/isv_folk/", i, ".html"))
   
   # Sover litt
   Sys.sleep(2)
@@ -26,7 +30,8 @@ for(i in 1:length(isv_url)){
 
 
 # Leser inn alle filene og strukturer dem til datasett i en liste
-folk_df <- lapply(list.files("./data/isv_folk", full.names = TRUE), function(x){
+isv_folk_filer <- list.files("./data/isv_folk", full.names = TRUE)
+folk_df <- lapply(isv_folk_filer, function(x){
   
   tmp_folk <- read_html(x)
   

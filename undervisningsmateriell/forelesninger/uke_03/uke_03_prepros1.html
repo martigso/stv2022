@@ -537,263 +537,372 @@ class="email">martin.soyland@stv.uio.no</a>&gt;</font></br></p>
 <section id="disposisjon" class="title-slide slide level1">
 <h1>Disposisjon</h1>
 <ol type="1">
-<li class="fragment">Litt om <code>regex</code></li>
-<li class="fragment">Hva er forbehandling av tekst, sånn egentlig?</li>
-<li class="fragment">Sekk med ord (<em>Bag of words</em>)
-<ul>
-<li class="fragment">Antagelser, problem, hvordan!</li>
-</ul></li>
-<li class="fragment">Reduksjon av kompleksitet
-<ul>
-<li class="fragment">Små bokstaver, punktsetting, tall, stoppord</li>
-<li class="fragment">Rotform av ord (stemming vs. lemmatisering)</li>
-</ul></li>
-<li class="fragment">Trekke ut trekk fra trekksten(e)
-<ul>
-<li class="fragment">TF-IDF, setningsmerking</li>
-<li class="fragment">Taledeler (<em>parts-of-speech</em>)</li>
-<li class="fragment">Navngitte enheter (<em>named entity</em>)</li>
-</ul></li>
+<li class="fragment">Litt om
+<font style='color:#FFAF00;font-weight:bold'><code>regex</code></font></li>
+<li class="fragment">Hva er
+<font style='color:#4B0DFB;font-weight:bold'>forbehandling av
+tekst</font>, sånn egentlig?</li>
+<li class="fragment"><p style='color:#73DF93;font-weight:bold'>
+Sekk med ord</font> (<em>Bag of words</em>)</li>
+<li class="fragment">Valg av
+<font style='color:#FF0700;font-weight:bold'>analyseenhet</font></li>
+<li
+class="fragment"><font style='color:#009970;font-weight:bold'>Tokenisering</font>
+(<em>tokenizing</em>)</li>
+<li class="fragment">Reduksjon av
+<font style='color:#E39F0B;font-weight:bold'>kompleksitet</font></li>
+<li class="fragment">Konstruere
+<font style='color:#6CFA00;font-weight:bold'>dokumenttrekkmatrise</font>
+(DFM)</li>
+<li class="fragment">Litt mer 😨 avansert 😨 preprosessering</li>
 <li class="fragment">Oppsummering</li>
 </ol>
 </section>
 
 <section>
-<section id="regex" class="title-slide slide level1">
-<h1>Regex</h1>
+<section id="section" class="title-slide slide level1"
+data-background="regex.png" data-background-position="top"
+data-background-size="50%">
+<h1 data-background="regex.png" data-background-position="top"
+data-background-size="50%"></h1>
+<p></br></br></br></br></br></p>
 <ul>
-<li class="fragment"><em>Regular expressions</em>
+<li class="fragment">Basert på mønster i teksten brukes
+<font style='color:#FFAF00;font-weight:bold'><em>Regular
+expressions</em></font> til å…
 <ul>
-<li class="fragment">Trekke ut / fjerne / bytte tekstmønster med
-noe</li>
+<li
+class="fragment">…<font style='color:#FF100D;font-weight:bold'>trekke ut
+segmenter med tekst</font>
+<ul>
+<li
+class="fragment"><font style='color:#8FB399;font-weight:bold'><code>str_extract()</code>
+// <code>str_extract_all()</code></font></li>
+</ul></li>
+<li
+class="fragment">…<font style='color:#3D01FF;font-weight:bold'>fjerne
+segmenter med tekst</font>
+<ul>
+<li
+class="fragment"><font style='color:#8FB399;font-weight:bold'><code>str_remove()</code>
+// <code>str_remove_all()</code></font></li>
+</ul></li>
+<li
+class="fragment">…<font style='color:#0DFFED;font-weight:bold'>erstatte
+segmenter med tekst</font>
+<ul>
+<li
+class="fragment"><font style='color:#8FB399;font-weight:bold'><code>str_replace()</code>
+// <code>str_replace_all()</code></font></li>
+</ul></li>
+<li
+class="fragment">…<font style='color:#98FF0D;font-weight:bold'>logisk se
+om segmenter med tekst eksisterer</font>
+<ul>
+<li
+class="fragment"><font style='color:#8FB399;font-weight:bold'><code>str_detect()</code></font></li>
+</ul></li>
 </ul></li>
 </ul>
-<div class="fragment">
+</section>
+<section class="slide level2">
+
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>eks_streng <span class="sc">%&gt;%</span> <span class="fu">cat</span>()</span></code></pre></div>
-<pre><code>## Jeg heter Martin, er født i 1988 og mailen min er martin.soyland@stv.uio.no</code></pre>
+<pre><code>## Solveig er ca. 20 år og har bedre forelesninger enn Martin</code></pre>
+<div class="fragment">
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract_all</span>(eks_streng, <span class="st">&quot;[A-ZØÆØÅ][a-zæøå]+&quot;</span>)</span></code></pre></div>
+<pre><code>## [[1]]
+## [1] &quot;Solveig&quot; &quot;Martin&quot;</code></pre>
+</div>
+<div class="fragment">
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract_all</span>(eks_streng, <span class="st">&quot;[0-9]+&quot;</span>)</span></code></pre></div>
+<pre><code>## [[1]]
+## [1] &quot;20&quot;</code></pre>
 </div>
 </section>
 <section class="slide level2">
 
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract_all</span>(eks_streng, <span class="st">&quot;[A-ZØÆØÅ][a-zæøå]+&quot;</span>)</span></code></pre></div>
-<pre><code>## [[1]]
-## [1] &quot;Jeg&quot;    &quot;Martin&quot;</code></pre>
-<div class="sourceCode" id="cb5"><pre
-class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract_all</span>(eks_streng, <span class="st">&quot;[0-9]+&quot;</span>)</span></code></pre></div>
-<pre><code>## [[1]]
-## [1] &quot;1988&quot;</code></pre>
-</section>
-<section class="slide level2">
-
 <div class="sourceCode" id="cb7"><pre
-class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract</span>(eks_streng, <span class="st">&quot;[0-9]{2}&quot;</span>)</span></code></pre></div>
-<pre><code>## [1] &quot;19&quot;</code></pre>
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract</span>(eks_streng, <span class="st">&quot;[0-9]{1}&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;2&quot;</code></pre>
 <div class="sourceCode" id="cb9"><pre
-class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract_all</span>(eks_streng, <span class="st">&quot;[0-9]{2}&quot;</span>)</span></code></pre></div>
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract_all</span>(eks_streng, <span class="st">&quot;[0-9]{1}&quot;</span>)</span></code></pre></div>
 <pre><code>## [[1]]
-## [1] &quot;19&quot; &quot;88&quot;</code></pre>
+## [1] &quot;2&quot; &quot;0&quot;</code></pre>
 <div class="sourceCode" id="cb11"><pre
 class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_detect</span>(eks_streng, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">@&quot;</span>)</span></code></pre></div>
-<pre><code>## [1] TRUE</code></pre>
+<pre><code>## [1] FALSE</code></pre>
 </section>
 <section class="slide level2">
 
 <div class="sourceCode" id="cb13"><pre
-class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract</span>(eks_streng, <span class="st">&quot;mailen min er (.*?)$&quot;</span>) </span></code></pre></div>
-<pre><code>## [1] &quot;mailen min er martin.soyland@stv.uio.no&quot;</code></pre>
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract_all</span>(eks_streng, <span class="st">&quot;[aeiouyæøå]&quot;</span>)</span></code></pre></div>
+<pre><code>## [[1]]
+##  [1] &quot;o&quot; &quot;e&quot; &quot;i&quot; &quot;e&quot; &quot;a&quot; &quot;å&quot; &quot;o&quot; &quot;a&quot; &quot;e&quot; &quot;e&quot; &quot;o&quot; &quot;e&quot; &quot;e&quot; &quot;i&quot; &quot;e&quot; &quot;e&quot; &quot;a&quot; &quot;i&quot;</code></pre>
 <div class="sourceCode" id="cb15"><pre
-class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract</span>(eks_streng, <span class="st">&quot;mailen min er (.*?)$&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_remove</span>(., <span class="st">&quot;mailen min er&quot;</span>)</span></code></pre></div>
-<pre><code>## [1] &quot; martin.soyland@stv.uio.no&quot;</code></pre>
-<div class="sourceCode" id="cb17"><pre
-class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract</span>(eks_streng, <span class="st">&quot;mailen min er (.*?)$&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_remove</span>(., <span class="st">&quot;mailen min er&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_trim</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;martin.soyland@stv.uio.no&quot;</code></pre>
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_replace_all</span>(eks_streng, <span class="fu">c</span>(<span class="st">&quot;Martin&quot;</span> <span class="ot">=</span> <span class="st">&quot;Bjørn&quot;</span>, </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;Solveig&quot;</span> <span class="ot">=</span> <span class="st">&quot;Martin&quot;</span>,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;20&quot;</span> <span class="ot">=</span> <span class="st">&quot;60&quot;</span>))</span></code></pre></div>
+<pre><code>## [1] &quot;Martin er ca. 60 år og har bedre forelesninger enn Bjørn&quot;</code></pre>
 </section>
 <section class="slide level2">
 
 <p>Det kan fort bli veldig avansert</p>
 <div class="fragment">
-<div class="sourceCode" id="cb19"><pre
-class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>to_mailadresser <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;martin.soyland@stv.uio.no&quot;</span>,</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>                     <span class="st">&quot;solveig_har_en_mail@høhø.com&quot;</span>)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract</span>(to_mailadresser, </span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;([a-z]+</span><span class="sc">\\</span><span class="st">.*)+</span><span class="sc">\\</span><span class="st">@&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>to_mailadresser <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;martin.soyland@stv.uio.no&quot;</span>,</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>                     <span class="st">&quot;solveig_har_en_mail@høhø.com&quot;</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract</span>(to_mailadresser, </span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;([a-z]+</span><span class="sc">\\</span><span class="st">.*)+</span><span class="sc">\\</span><span class="st">@&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;martin.soyland@&quot; &quot;mail@&quot;</code></pre>
-<div class="sourceCode" id="cb21"><pre
-class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract</span>(to_mailadresser, </span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;([a-z]+[[:punct:]]*)+</span><span class="sc">\\</span><span class="st">@&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract</span>(to_mailadresser, </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;([a-z]+[[:punct:]]*)+</span><span class="sc">\\</span><span class="st">@&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;martin.soyland@&quot;      &quot;solveig_har_en_mail@&quot;</code></pre>
 </div>
 </section>
 <section class="slide level2">
 
-<div class="sourceCode" id="cb23"><pre
-class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract</span>(to_mailadresser, </span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;^([a-z]+[[:punct:]]*)+</span><span class="sc">\\</span><span class="st">@([a-z]+[[:punct:]]*)+$&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract</span>(to_mailadresser, </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;^([a-z]+[[:punct:]]*)+</span><span class="sc">\\</span><span class="st">@([a-z]+[[:punct:]]*)+$&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;martin.soyland@stv.uio.no&quot; NA</code></pre>
 <div class="fragment">
-<div class="sourceCode" id="cb25"><pre
-class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract</span>(to_mailadresser, </span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;^([a-z]+[[:punct:]]*)+</span><span class="sc">\\</span><span class="st">@([a-zæøå]+[[:punct:]]*)+$&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract</span>(to_mailadresser, </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;(([a-zæøå]+[[:punct:]]*)+</span><span class="sc">\\</span><span class="st">@*)+&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;martin.soyland@stv.uio.no&quot;    &quot;solveig_har_en_mail@høhø.com&quot;</code></pre>
 </div>
 </section>
-<section id="et-eksemel-å-se-på-etterpå" class="slide level2">
-<h2>Et eksemel å se på etterpå</h2>
-<div class="sourceCode" id="cb27"><pre
-class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="do">#####################</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Regex eksempler ##</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="do">#####################</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Link til alle ISV-ansatte</span></span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>isv_url <span class="ot">&lt;-</span> <span class="fu">str_c</span>(<span class="st">&quot;https://www.sv.uio.no/isv/personer/?page=&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="st">&quot;&amp;u-page=&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Laster ned alle sidene</span></span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(isv_url)){</span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Hvis siden allerede er lagret lokalt, hopper vi over den</span></span>
-<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">file.exists</span>(<span class="fu">str_c</span>(<span class="st">&quot;./data/isv_folk/&quot;</span>, i, <span class="st">&quot;.html&quot;</span>))) <span class="cf">next</span></span>
-<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Hvis siden ikke er lagret, laster vi ned og lagrer</span></span>
-<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">download.file</span>(isv_url[i], <span class="at">destfile =</span> <span class="fu">str_c</span>(<span class="st">&quot;./data/isv_folk/&quot;</span>, i, <span class="st">&quot;.html&quot;</span>))</span>
-<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sover litt</span></span>
-<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Sys.sleep</span>(<span class="dv">2</span>)</span>
-<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Leser inn alle filene og strukturer dem til datasett i en liste</span></span>
-<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>folk_df <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="fu">list.files</span>(<span class="st">&quot;./data/isv_folk&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>), <span class="cf">function</span>(x){</span>
-<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a>  tmp_folk <span class="ot">&lt;-</span> <span class="fu">read_html</span>(x)</span>
-<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a>  tmp_folk <span class="ot">&lt;-</span> tmp_folk <span class="sc">%&gt;%</span> </span>
-<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_elements</span>(<span class="st">&quot;table&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_table</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a>    .[[<span class="dv">1</span>]] <span class="sc">%&gt;%</span> </span>
-<span id="cb27-37"><a href="#cb27-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>()</span>
-<span id="cb27-38"><a href="#cb27-38" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-39"><a href="#cb27-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(tmp_folk)</span>
-<span id="cb27-40"><a href="#cb27-40" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-41"><a href="#cb27-41" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb27-42"><a href="#cb27-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-43"><a href="#cb27-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Binder sammen alle datasettene i lista</span></span>
-<span id="cb27-44"><a href="#cb27-44" aria-hidden="true" tabindex="-1"></a>folk_df <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(folk_df)</span>
-<span id="cb27-45"><a href="#cb27-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-46"><a href="#cb27-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Snur navnene for å showboate litt</span></span>
-<span id="cb27-47"><a href="#cb27-47" aria-hidden="true" tabindex="-1"></a><span class="co"># Originalt: [Etternavn, Fornavn]</span></span>
-<span id="cb27-48"><a href="#cb27-48" aria-hidden="true" tabindex="-1"></a><span class="co"># Ønsket resultat: [Fornavn Etternavn]</span></span>
-<span id="cb27-49"><a href="#cb27-49" aria-hidden="true" tabindex="-1"></a>snudd_navn <span class="ot">&lt;-</span> <span class="fu">lapply</span>(folk_df<span class="sc">$</span>Navn, <span class="cf">function</span>(x){</span>
-<span id="cb27-50"><a href="#cb27-50" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-51"><a href="#cb27-51" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Spitter ut navn og tittel, som er i samme kolonne</span></span>
-<span id="cb27-52"><a href="#cb27-52" aria-hidden="true" tabindex="-1"></a>  tmp <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span> <span class="fu">str_split</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st">n&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">unlist</span>()</span>
-<span id="cb27-53"><a href="#cb27-53" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-54"><a href="#cb27-54" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Det første elementet etter split er [Etternavn, Fornavn]</span></span>
-<span id="cb27-55"><a href="#cb27-55" aria-hidden="true" tabindex="-1"></a>  tmp_navn <span class="ot">&lt;-</span> tmp[<span class="dv">1</span>]</span>
-<span id="cb27-56"><a href="#cb27-56" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-57"><a href="#cb27-57" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Splitter navnet på komma + mellomrom (&quot;, &quot;)</span></span>
-<span id="cb27-58"><a href="#cb27-58" aria-hidden="true" tabindex="-1"></a>  tmp_navn <span class="ot">&lt;-</span> tmp_navn <span class="sc">%&gt;%</span> <span class="fu">str_split</span>(., <span class="st">&quot;, &quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">unlist</span>()</span>
-<span id="cb27-59"><a href="#cb27-59" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-60"><a href="#cb27-60" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Limer sammen del 2 av navnet med del 1</span></span>
-<span id="cb27-61"><a href="#cb27-61" aria-hidden="true" tabindex="-1"></a>  <span class="co"># altså: str_c(fornavn, etternavn) </span></span>
-<span id="cb27-62"><a href="#cb27-62" aria-hidden="true" tabindex="-1"></a>  tmp_navn <span class="ot">&lt;-</span> <span class="fu">str_c</span>(tmp_navn[<span class="dv">2</span>], tmp_navn[<span class="dv">1</span>], <span class="at">sep =</span> <span class="st">&quot; &quot;</span>)</span>
-<span id="cb27-63"><a href="#cb27-63" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-64"><a href="#cb27-64" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Bytter ut alle sekvenser med mellomrom med bare ett mellomrom</span></span>
-<span id="cb27-65"><a href="#cb27-65" aria-hidden="true" tabindex="-1"></a>  tmp_navn <span class="ot">&lt;-</span> <span class="fu">str_replace</span>(tmp_navn, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">s+&quot;</span>, <span class="st">&quot; &quot;</span>)</span>
-<span id="cb27-66"><a href="#cb27-66" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-67"><a href="#cb27-67" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Gir resultatet tilbake til &quot;snudd_navn&quot;</span></span>
-<span id="cb27-68"><a href="#cb27-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(tmp_navn)</span>
-<span id="cb27-69"><a href="#cb27-69" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-70"><a href="#cb27-70" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb27-71"><a href="#cb27-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-72"><a href="#cb27-72" aria-hidden="true" tabindex="-1"></a><span class="co"># Basically det samme som med navn, bare nå med tittel</span></span>
-<span id="cb27-73"><a href="#cb27-73" aria-hidden="true" tabindex="-1"></a>tittel <span class="ot">&lt;-</span> <span class="fu">lapply</span>(folk_df<span class="sc">$</span>Navn, <span class="cf">function</span>(x){</span>
-<span id="cb27-74"><a href="#cb27-74" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-75"><a href="#cb27-75" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Splitter navn på &quot;\n&quot;</span></span>
-<span id="cb27-76"><a href="#cb27-76" aria-hidden="true" tabindex="-1"></a>  tmp <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span> <span class="fu">str_split</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st">n&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">unlist</span>()</span>
-<span id="cb27-77"><a href="#cb27-77" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-78"><a href="#cb27-78" aria-hidden="true" tabindex="-1"></a>  <span class="co"># hvis lengden på tmp er større enn 1 ...</span></span>
-<span id="cb27-79"><a href="#cb27-79" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">length</span>(tmp) <span class="sc">&gt;</span> <span class="dv">1</span>){</span>
-<span id="cb27-80"><a href="#cb27-80" aria-hidden="true" tabindex="-1"></a>    tmp_tittel <span class="ot">&lt;-</span> tmp[<span class="dv">2</span>] <span class="co">#...skal tittelen være element 2 i tmp</span></span>
-<span id="cb27-81"><a href="#cb27-81" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb27-82"><a href="#cb27-82" aria-hidden="true" tabindex="-1"></a>    tmp_tittel <span class="ot">&lt;-</span> <span class="cn">NA</span> <span class="co"># ...hvis ikke, har ikke personen tittel (NA)</span></span>
-<span id="cb27-83"><a href="#cb27-83" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb27-84"><a href="#cb27-84" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-85"><a href="#cb27-85" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Trimmer white space i tittel-strengen</span></span>
-<span id="cb27-86"><a href="#cb27-86" aria-hidden="true" tabindex="-1"></a>  tmp_tittel <span class="ot">&lt;-</span> tmp_tittel <span class="sc">%&gt;%</span> </span>
-<span id="cb27-87"><a href="#cb27-87" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_trim</span>()</span>
-<span id="cb27-88"><a href="#cb27-88" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-89"><a href="#cb27-89" aria-hidden="true" tabindex="-1"></a>  <span class="co"># returnerer resultatet til &quot;tittel</span></span>
-<span id="cb27-90"><a href="#cb27-90" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(tmp_tittel)</span>
-<span id="cb27-91"><a href="#cb27-91" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb27-92"><a href="#cb27-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-93"><a href="#cb27-93" aria-hidden="true" tabindex="-1"></a><span class="co"># Setter inn snudd navn og tittel i tibble</span></span>
-<span id="cb27-94"><a href="#cb27-94" aria-hidden="true" tabindex="-1"></a>folk_df<span class="sc">$</span>snudd_navn <span class="ot">&lt;-</span> snudd_navn <span class="sc">%&gt;%</span> <span class="fu">unlist</span>()</span>
-<span id="cb27-95"><a href="#cb27-95" aria-hidden="true" tabindex="-1"></a>folk_df<span class="sc">$</span>tittel <span class="ot">&lt;-</span> tittel <span class="sc">%&gt;%</span> <span class="fu">unlist</span>()</span>
-<span id="cb27-96"><a href="#cb27-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-97"><a href="#cb27-97" aria-hidden="true" tabindex="-1"></a><span class="co"># Fjerner de gamle variablene og endrer litt på rekkefølge</span></span>
-<span id="cb27-98"><a href="#cb27-98" aria-hidden="true" tabindex="-1"></a>folk_df <span class="ot">&lt;-</span> folk_df <span class="sc">%&gt;%</span> </span>
-<span id="cb27-99"><a href="#cb27-99" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(snudd_navn, tittel,</span>
-<span id="cb27-100"><a href="#cb27-100" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">E-post</span><span class="st">`</span>, Telefon,</span>
-<span id="cb27-101"><a href="#cb27-101" aria-hidden="true" tabindex="-1"></a>         Emneord)</span>
-<span id="cb27-102"><a href="#cb27-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-103"><a href="#cb27-103" aria-hidden="true" tabindex="-1"></a><span class="co"># Trekker ut bare de som har &quot;Komparativ politikk&quot; som emneord</span></span>
-<span id="cb27-104"><a href="#cb27-104" aria-hidden="true" tabindex="-1"></a>folk_kp <span class="ot">&lt;-</span> folk_df <span class="sc">%&gt;%</span> </span>
-<span id="cb27-105"><a href="#cb27-105" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(Emneord, <span class="st">&quot;Komparativ politikk&quot;</span>))</span>
-<span id="cb27-106"><a href="#cb27-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-107"><a href="#cb27-107" aria-hidden="true" tabindex="-1"></a><span class="co"># Skal telle hvor mange ganger emneord blir brukt</span></span>
-<span id="cb27-108"><a href="#cb27-108" aria-hidden="true" tabindex="-1"></a><span class="co"># Her splitter jeg emneordene på både komma og \n</span></span>
-<span id="cb27-109"><a href="#cb27-109" aria-hidden="true" tabindex="-1"></a>telle_emner <span class="ot">&lt;-</span> folk_df<span class="sc">$</span>Emneord <span class="sc">%&gt;%</span> </span>
-<span id="cb27-110"><a href="#cb27-110" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_split</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st">,|</span><span class="sc">\\</span><span class="st">n&quot;</span>)</span>
-<span id="cb27-111"><a href="#cb27-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-112"><a href="#cb27-112" aria-hidden="true" tabindex="-1"></a><span class="co"># Den resulterende listen går vi gjennom med lapply og ...</span></span>
-<span id="cb27-113"><a href="#cb27-113" aria-hidden="true" tabindex="-1"></a>telle_emner <span class="ot">&lt;-</span> <span class="fu">lapply</span>(telle_emner, <span class="cf">function</span>(x){</span>
-<span id="cb27-114"><a href="#cb27-114" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-115"><a href="#cb27-115" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ...trekker ut bare de elementene som inneholder tekst</span></span>
-<span id="cb27-116"><a href="#cb27-116" aria-hidden="true" tabindex="-1"></a>  <span class="co"># og trimmer strengene</span></span>
-<span id="cb27-117"><a href="#cb27-117" aria-hidden="true" tabindex="-1"></a>  tmp_emner <span class="ot">&lt;-</span> x[<span class="fu">which</span>(<span class="fu">str_detect</span>(x,<span class="st">&quot;[a-zæøå]+&quot;</span>))] <span class="sc">%&gt;%</span> </span>
-<span id="cb27-118"><a href="#cb27-118" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_trim</span>()</span>
-<span id="cb27-119"><a href="#cb27-119" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-120"><a href="#cb27-120" aria-hidden="true" tabindex="-1"></a>  <span class="co"># hvis tmp_emner er tom, returnerer vi med NA</span></span>
-<span id="cb27-121"><a href="#cb27-121" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">identical</span>(<span class="fu">character</span>(), tmp_emner)){</span>
-<span id="cb27-122"><a href="#cb27-122" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="cn">NA</span>)</span>
-<span id="cb27-123"><a href="#cb27-123" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb27-124"><a href="#cb27-124" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-125"><a href="#cb27-125" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Hvis den ikke er tom, returnerer vi emnene</span></span>
-<span id="cb27-126"><a href="#cb27-126" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(tmp_emner)</span>
-<span id="cb27-127"><a href="#cb27-127" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-128"><a href="#cb27-128" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb27-129"><a href="#cb27-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-130"><a href="#cb27-130" aria-hidden="true" tabindex="-1"></a>telle_emner <span class="ot">&lt;-</span> telle_emner <span class="sc">%&gt;%</span> </span>
-<span id="cb27-131"><a href="#cb27-131" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb27-132"><a href="#cb27-132" aria-hidden="true" tabindex="-1"></a>  <span class="fu">table</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb27-133"><a href="#cb27-133" aria-hidden="true" tabindex="-1"></a>  .[<span class="fu">which</span>(. <span class="sc">&gt;</span> <span class="dv">3</span>)] <span class="sc">%&gt;%</span> </span>
-<span id="cb27-134"><a href="#cb27-134" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span>
-<span id="cb27-135"><a href="#cb27-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-136"><a href="#cb27-136" aria-hidden="true" tabindex="-1"></a>telle_emner<span class="sc">$</span>emneord <span class="ot">&lt;-</span> telle_emner<span class="sc">$</span>.</span>
-<span id="cb27-137"><a href="#cb27-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-138"><a href="#cb27-138" aria-hidden="true" tabindex="-1"></a>telle_emner <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(n)</span>
-<span id="cb27-139"><a href="#cb27-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-140"><a href="#cb27-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-141"><a href="#cb27-141" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(telle_emner, <span class="fu">aes</span>(<span class="at">x =</span> emneord, <span class="at">y =</span> n)) <span class="sc">+</span></span>
-<span id="cb27-142"><a href="#cb27-142" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
-<span id="cb27-143"><a href="#cb27-143" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>,</span>
-<span id="cb27-144"><a href="#cb27-144" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">vjust =</span> .<span class="dv">5</span>,</span>
-<span id="cb27-145"><a href="#cb27-145" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div>
+<section id="et-praktisk-eksempel" class="slide level2">
+<h2>Et praktisk eksempel</h2>
+<p>Skraper personer fra <a
+href="https://www.sv.uio.no/isv/personer">ISV</a></p>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="do">#####################</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Regex eksempler ##</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="do">#####################</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Link til alle ISV-ansatte</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>isv_url <span class="ot">&lt;-</span> <span class="fu">str_c</span>(<span class="st">&quot;https://www.sv.uio.no/isv/personer/?page=&quot;</span>, </span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>                 <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, </span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>                 <span class="st">&quot;&amp;u-page=&quot;</span>, </span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>                 <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Laster ned alle sidene</span></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(isv_url)){</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Hvis siden allerede er lagret lokalt, hopper vi over den</span></span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">file.exists</span>(<span class="fu">str_c</span>(<span class="st">&quot;./data/isv_folk/&quot;</span>, i, <span class="st">&quot;.html&quot;</span>))) <span class="cf">next</span></span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Hvis siden ikke er lagret, laster vi ned og lagrer</span></span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">download.file</span>(isv_url[i], </span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>                <span class="at">destfile =</span> <span class="fu">str_c</span>(<span class="st">&quot;./data/isv_folk/&quot;</span>, i, <span class="st">&quot;.html&quot;</span>))</span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sover litt</span></span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Sys.sleep</span>(<span class="dv">2</span>)</span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Leser inn alle filene og strukturer dem til datasett i en liste</span></span>
+<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a>isv_folk_filer <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;./data/isv_folk&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a>folk_df <span class="ot">&lt;-</span> <span class="fu">lapply</span>(isv_folk_filer, <span class="cf">function</span>(x){</span>
+<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a>  tmp_folk <span class="ot">&lt;-</span> <span class="fu">read_html</span>(x)</span>
+<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-38"><a href="#cb25-38" aria-hidden="true" tabindex="-1"></a>  tmp_folk <span class="ot">&lt;-</span> tmp_folk <span class="sc">%&gt;%</span> </span>
+<span id="cb25-39"><a href="#cb25-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_elements</span>(<span class="st">&quot;table&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-40"><a href="#cb25-40" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_table</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb25-41"><a href="#cb25-41" aria-hidden="true" tabindex="-1"></a>    .[[<span class="dv">1</span>]] <span class="sc">%&gt;%</span> </span>
+<span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>()</span>
+<span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-44"><a href="#cb25-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(tmp_folk)</span>
+<span id="cb25-45"><a href="#cb25-45" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-46"><a href="#cb25-46" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb25-47"><a href="#cb25-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-48"><a href="#cb25-48" aria-hidden="true" tabindex="-1"></a><span class="co"># Binder sammen alle datasettene i lista</span></span>
+<span id="cb25-49"><a href="#cb25-49" aria-hidden="true" tabindex="-1"></a>folk_df <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(folk_df)</span>
+<span id="cb25-50"><a href="#cb25-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-51"><a href="#cb25-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Snur navnene for å showboate litt</span></span>
+<span id="cb25-52"><a href="#cb25-52" aria-hidden="true" tabindex="-1"></a><span class="co"># Originalt: [Etternavn, Fornavn]</span></span>
+<span id="cb25-53"><a href="#cb25-53" aria-hidden="true" tabindex="-1"></a><span class="co"># Ønsket resultat: [Fornavn Etternavn]</span></span>
+<span id="cb25-54"><a href="#cb25-54" aria-hidden="true" tabindex="-1"></a>snudd_navn <span class="ot">&lt;-</span> <span class="fu">lapply</span>(folk_df<span class="sc">$</span>Navn, <span class="cf">function</span>(x){</span>
+<span id="cb25-55"><a href="#cb25-55" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-56"><a href="#cb25-56" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Spitter ut navn og tittel, som er i samme kolonne</span></span>
+<span id="cb25-57"><a href="#cb25-57" aria-hidden="true" tabindex="-1"></a>  tmp <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span> <span class="fu">str_split</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st">n&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">unlist</span>()</span>
+<span id="cb25-58"><a href="#cb25-58" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-59"><a href="#cb25-59" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Det første elementet etter split er [Etternavn, Fornavn]</span></span>
+<span id="cb25-60"><a href="#cb25-60" aria-hidden="true" tabindex="-1"></a>  tmp_navn <span class="ot">&lt;-</span> tmp[<span class="dv">1</span>]</span>
+<span id="cb25-61"><a href="#cb25-61" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-62"><a href="#cb25-62" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Splitter navnet på komma + mellomrom (&quot;, &quot;)</span></span>
+<span id="cb25-63"><a href="#cb25-63" aria-hidden="true" tabindex="-1"></a>  tmp_navn <span class="ot">&lt;-</span> tmp_navn <span class="sc">%&gt;%</span> <span class="fu">str_split</span>(., <span class="st">&quot;, &quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">unlist</span>()</span>
+<span id="cb25-64"><a href="#cb25-64" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-65"><a href="#cb25-65" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Limer sammen del 2 av navnet med del 1</span></span>
+<span id="cb25-66"><a href="#cb25-66" aria-hidden="true" tabindex="-1"></a>  <span class="co"># altså: str_c(fornavn, etternavn) </span></span>
+<span id="cb25-67"><a href="#cb25-67" aria-hidden="true" tabindex="-1"></a>  tmp_navn <span class="ot">&lt;-</span> <span class="fu">str_c</span>(tmp_navn[<span class="dv">2</span>], tmp_navn[<span class="dv">1</span>], <span class="at">sep =</span> <span class="st">&quot; &quot;</span>)</span>
+<span id="cb25-68"><a href="#cb25-68" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-69"><a href="#cb25-69" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Bytter ut alle sekvenser med mellomrom med bare ett mellomrom</span></span>
+<span id="cb25-70"><a href="#cb25-70" aria-hidden="true" tabindex="-1"></a>  tmp_navn <span class="ot">&lt;-</span> <span class="fu">str_replace</span>(tmp_navn, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">s+&quot;</span>, <span class="st">&quot; &quot;</span>)</span>
+<span id="cb25-71"><a href="#cb25-71" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-72"><a href="#cb25-72" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Gir resultatet tilbake til &quot;snudd_navn&quot;</span></span>
+<span id="cb25-73"><a href="#cb25-73" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(tmp_navn)</span>
+<span id="cb25-74"><a href="#cb25-74" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-75"><a href="#cb25-75" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb25-76"><a href="#cb25-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-77"><a href="#cb25-77" aria-hidden="true" tabindex="-1"></a><span class="co"># Basically det samme som med navn, bare nå med tittel</span></span>
+<span id="cb25-78"><a href="#cb25-78" aria-hidden="true" tabindex="-1"></a>tittel <span class="ot">&lt;-</span> <span class="fu">lapply</span>(folk_df<span class="sc">$</span>Navn, <span class="cf">function</span>(x){</span>
+<span id="cb25-79"><a href="#cb25-79" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-80"><a href="#cb25-80" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Splitter navn på &quot;\n&quot;</span></span>
+<span id="cb25-81"><a href="#cb25-81" aria-hidden="true" tabindex="-1"></a>  tmp <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span> <span class="fu">str_split</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st">n&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">unlist</span>()</span>
+<span id="cb25-82"><a href="#cb25-82" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-83"><a href="#cb25-83" aria-hidden="true" tabindex="-1"></a>  <span class="co"># hvis lengden på tmp er større enn 1 ...</span></span>
+<span id="cb25-84"><a href="#cb25-84" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">length</span>(tmp) <span class="sc">&gt;</span> <span class="dv">1</span>){</span>
+<span id="cb25-85"><a href="#cb25-85" aria-hidden="true" tabindex="-1"></a>    tmp_tittel <span class="ot">&lt;-</span> tmp[<span class="dv">2</span>] <span class="co">#...skal tittelen være element 2 i tmp</span></span>
+<span id="cb25-86"><a href="#cb25-86" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb25-87"><a href="#cb25-87" aria-hidden="true" tabindex="-1"></a>    tmp_tittel <span class="ot">&lt;-</span> <span class="cn">NA</span> <span class="co"># ...hvis ikke, har ikke personen tittel (NA)</span></span>
+<span id="cb25-88"><a href="#cb25-88" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb25-89"><a href="#cb25-89" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-90"><a href="#cb25-90" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Trimmer white space i tittel-strengen</span></span>
+<span id="cb25-91"><a href="#cb25-91" aria-hidden="true" tabindex="-1"></a>  tmp_tittel <span class="ot">&lt;-</span> tmp_tittel <span class="sc">%&gt;%</span> </span>
+<span id="cb25-92"><a href="#cb25-92" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_trim</span>()</span>
+<span id="cb25-93"><a href="#cb25-93" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-94"><a href="#cb25-94" aria-hidden="true" tabindex="-1"></a>  <span class="co"># returnerer resultatet til &quot;tittel</span></span>
+<span id="cb25-95"><a href="#cb25-95" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(tmp_tittel)</span>
+<span id="cb25-96"><a href="#cb25-96" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb25-97"><a href="#cb25-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-98"><a href="#cb25-98" aria-hidden="true" tabindex="-1"></a><span class="co"># Setter inn snudd navn og tittel i tibble</span></span>
+<span id="cb25-99"><a href="#cb25-99" aria-hidden="true" tabindex="-1"></a>folk_df<span class="sc">$</span>snudd_navn <span class="ot">&lt;-</span> snudd_navn <span class="sc">%&gt;%</span> <span class="fu">unlist</span>()</span>
+<span id="cb25-100"><a href="#cb25-100" aria-hidden="true" tabindex="-1"></a>folk_df<span class="sc">$</span>tittel <span class="ot">&lt;-</span> tittel <span class="sc">%&gt;%</span> <span class="fu">unlist</span>()</span>
+<span id="cb25-101"><a href="#cb25-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-102"><a href="#cb25-102" aria-hidden="true" tabindex="-1"></a><span class="co"># Fjerner de gamle variablene og endrer litt på rekkefølge</span></span>
+<span id="cb25-103"><a href="#cb25-103" aria-hidden="true" tabindex="-1"></a>folk_df <span class="ot">&lt;-</span> folk_df <span class="sc">%&gt;%</span> </span>
+<span id="cb25-104"><a href="#cb25-104" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(snudd_navn, tittel,</span>
+<span id="cb25-105"><a href="#cb25-105" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">E-post</span><span class="st">`</span>, Telefon,</span>
+<span id="cb25-106"><a href="#cb25-106" aria-hidden="true" tabindex="-1"></a>         Emneord)</span>
+<span id="cb25-107"><a href="#cb25-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-108"><a href="#cb25-108" aria-hidden="true" tabindex="-1"></a><span class="co"># Trekker ut bare de som har &quot;Komparativ politikk&quot; som emneord</span></span>
+<span id="cb25-109"><a href="#cb25-109" aria-hidden="true" tabindex="-1"></a>folk_kp <span class="ot">&lt;-</span> folk_df <span class="sc">%&gt;%</span> </span>
+<span id="cb25-110"><a href="#cb25-110" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(Emneord, <span class="st">&quot;Komparativ politikk&quot;</span>))</span>
+<span id="cb25-111"><a href="#cb25-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-112"><a href="#cb25-112" aria-hidden="true" tabindex="-1"></a><span class="co"># Skal telle hvor mange ganger emneord blir brukt</span></span>
+<span id="cb25-113"><a href="#cb25-113" aria-hidden="true" tabindex="-1"></a><span class="co"># Her splitter jeg emneordene på både komma og \n</span></span>
+<span id="cb25-114"><a href="#cb25-114" aria-hidden="true" tabindex="-1"></a>telle_emner <span class="ot">&lt;-</span> folk_df<span class="sc">$</span>Emneord <span class="sc">%&gt;%</span> </span>
+<span id="cb25-115"><a href="#cb25-115" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_split</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st">,|</span><span class="sc">\\</span><span class="st">n&quot;</span>)</span>
+<span id="cb25-116"><a href="#cb25-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-117"><a href="#cb25-117" aria-hidden="true" tabindex="-1"></a><span class="co"># Den resulterende listen går vi gjennom med lapply og ...</span></span>
+<span id="cb25-118"><a href="#cb25-118" aria-hidden="true" tabindex="-1"></a>telle_emner <span class="ot">&lt;-</span> <span class="fu">lapply</span>(telle_emner, <span class="cf">function</span>(x){</span>
+<span id="cb25-119"><a href="#cb25-119" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-120"><a href="#cb25-120" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ...trekker ut bare de elementene som inneholder tekst</span></span>
+<span id="cb25-121"><a href="#cb25-121" aria-hidden="true" tabindex="-1"></a>  <span class="co"># og trimmer strengene</span></span>
+<span id="cb25-122"><a href="#cb25-122" aria-hidden="true" tabindex="-1"></a>  tmp_emner <span class="ot">&lt;-</span> x[<span class="fu">which</span>(<span class="fu">str_detect</span>(x,<span class="st">&quot;[a-zæøå]+&quot;</span>))] <span class="sc">%&gt;%</span> </span>
+<span id="cb25-123"><a href="#cb25-123" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_trim</span>()</span>
+<span id="cb25-124"><a href="#cb25-124" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-125"><a href="#cb25-125" aria-hidden="true" tabindex="-1"></a>  <span class="co"># hvis tmp_emner er tom, returnerer vi med NA</span></span>
+<span id="cb25-126"><a href="#cb25-126" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">identical</span>(<span class="fu">character</span>(), tmp_emner)){</span>
+<span id="cb25-127"><a href="#cb25-127" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="cn">NA</span>)</span>
+<span id="cb25-128"><a href="#cb25-128" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb25-129"><a href="#cb25-129" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-130"><a href="#cb25-130" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Hvis den ikke er tom, returnerer vi emnene</span></span>
+<span id="cb25-131"><a href="#cb25-131" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(tmp_emner)</span>
+<span id="cb25-132"><a href="#cb25-132" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-133"><a href="#cb25-133" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb25-134"><a href="#cb25-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-135"><a href="#cb25-135" aria-hidden="true" tabindex="-1"></a>telle_emner <span class="ot">&lt;-</span> telle_emner <span class="sc">%&gt;%</span> </span>
+<span id="cb25-136"><a href="#cb25-136" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb25-137"><a href="#cb25-137" aria-hidden="true" tabindex="-1"></a>  <span class="fu">table</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb25-138"><a href="#cb25-138" aria-hidden="true" tabindex="-1"></a>  .[<span class="fu">which</span>(. <span class="sc">&gt;</span> <span class="dv">3</span>)] <span class="sc">%&gt;%</span> </span>
+<span id="cb25-139"><a href="#cb25-139" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span>
+<span id="cb25-140"><a href="#cb25-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-141"><a href="#cb25-141" aria-hidden="true" tabindex="-1"></a>telle_emner<span class="sc">$</span>emneord <span class="ot">&lt;-</span> telle_emner<span class="sc">$</span>.</span>
+<span id="cb25-142"><a href="#cb25-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-143"><a href="#cb25-143" aria-hidden="true" tabindex="-1"></a>telle_emner <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(n)</span>
+<span id="cb25-144"><a href="#cb25-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-145"><a href="#cb25-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-146"><a href="#cb25-146" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(telle_emner, <span class="fu">aes</span>(<span class="at">x =</span> emneord, <span class="at">y =</span> n)) <span class="sc">+</span></span>
+<span id="cb25-147"><a href="#cb25-147" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
+<span id="cb25-148"><a href="#cb25-148" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>,</span>
+<span id="cb25-149"><a href="#cb25-149" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">vjust =</span> .<span class="dv">5</span>,</span>
+<span id="cb25-150"><a href="#cb25-150" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div>
+<p><a href="https://www.rexegg.com/regex-quickstart.html">Cheet
+sheet</a></p>
 </section></section>
 <section>
-<section id="section" class="title-slide slide level1"
+<section id="hva-er-forbehandling-av-tekst-sånn-egentlig"
+class="title-slide slide level1">
+<h1>Hva er forbehandling av tekst, sånn egentlig?</h1>
+<ul>
+<li class="fragment">Det vi gjør med data før vi skal analysere
+(<font style='color:#4B0DFB;font-weight:bold'>preprosessering</font>)
+<ul>
+<li class="fragment">gjelder egentlig alle type data, ikke bare
+tekst</li>
+</ul></li>
+<li class="fragment">Valg av
+<font style='color:#6CFA00;font-weight:bold'>datastruktur</font>
+<ul>
+<li class="fragment">hva skal være dokumentene (enhetene) våre?</li>
+</ul></li>
+<li class="fragment">Dele opp teksten via
+<font style='color:#009970;font-weight:bold'>tokenisering</font></li>
+<li class="fragment">Grep for å
+<font style='color:#E39F0B;font-weight:bold'>redusere
+kompleksitet</font>
+<ul>
+<li class="fragment">språk er ekstremt komplekst for en datamaskin å
+forstå</li>
+</ul></li>
+<li class="fragment">Hvordan vi går fra
+<font style='color:#FF0700;font-weight:bold'>tekst til tall</font>
+<ul>
+<li class="fragment">ikke alltid frekvens</li>
+</ul></li>
+</ul>
+</section>
+<section id="noen-sentrale-begreper" class="slide level2">
+<h2>Noen sentrale begreper</h2>
+<ul>
+<li
+class="fragment"><p><font style='color:#4B0DFB;font-weight:bold'>Preprosessering:</font>
+det samme som forbehandling av tekst</p></li>
+<li
+class="fragment"><p><font style='color:#0BE3E2;font-weight:bold'>Type:</font>
+unikt segment bokstaver, som sammen gir mening</p>
+<ul>
+<li class="fragment">Ord og segmenter som “i dag”, “Sogn i Fjordane”,
+osv</li>
+</ul></li>
+<li
+class="fragment"><p><font style='color:#6CFA00;font-weight:bold'>Token:</font>
+et spesifikt tilfelle av en type</p>
+<ul>
+<li class="fragment">“veldig, veldig bra” har 3 typer men 2 tokens</li>
+</ul></li>
+<li
+class="fragment"><p><font style='color:#E39F0B;font-weight:bold'>Term:</font>
+det vi analyseteknikker ser på som en type vi måler</p>
+<ul>
+<li class="fragment">stem: “hels” av “helse” eksisterer ikke</li>
+</ul></li>
+<li
+class="fragment"><p><font style='color:#FF0700;font-weight:bold'>Corpus:</font>
+en samling dokumenter</p>
+<ul>
+<li class="fragment">Latin for noe sånt som “innsamlet materiale”</li>
+</ul></li>
+</ul>
+</section></section>
+<section>
+<section id="section-1" class="title-slide slide level1"
 data-background="words.png">
 <h1 data-background="words.png"></h1>
 <p></br></br></br></br></p>
@@ -801,8 +910,23 @@ data-background="words.png">
 Sekk med ord
 </p>
 </section>
-<section id="antagelse" class="slide level2">
-<h2>Antagelse</h2>
+<section id="bow-antagelse" class="slide level2"
+data-background="torn_negate.png" data-background-size="2500px">
+<h2 data-background="torn_negate.png" data-background-size="2500px">BoW
+antagelse</h2>
+<p></br></br></br></p>
+<ul>
+<li class="fragment">Vi antar at en tekst gir samme mening etter å ha …
+<ol type="1">
+<li class="fragment">… klippet ut ordene fra teksten</li>
+<li class="fragment">… lagt ordene i en pose</li>
+<li class="fragment">… ristet posen</li>
+<li class="fragment">… kastet ordene ut igjen</li>
+</ol></li>
+</ul>
+</section>
+<section id="bow-antagelse-1" class="slide level2">
+<h2>BoW antagelse</h2>
 </br>
 <p style="font-size:25px;color:#598456;font-weight:bold">
 Hva handler sangen om?
@@ -829,21 +953,6 @@ Hva handler sangen om?
 ##  være jeg står på sånn kan bryte evig for men
 ##  bare fyr plass vil hva med men plass og som
 ##  helst er stor dritdigg ut selv jeg som plass vil</code></pre>
-</section>
-<section id="antagelse-1" class="slide level2"
-data-background="torn_negate.png" data-background-size="2500px">
-<h2 data-background="torn_negate.png"
-data-background-size="2500px">Antagelse</h2>
-<p></br></br></br></p>
-<ul>
-<li class="fragment">Vi antar at en tekst gir samme mening etter å ha …
-<ol type="1">
-<li class="fragment">… klippet ut ordene fra teksten</li>
-<li class="fragment">… lagt ordene i en pose</li>
-<li class="fragment">… ristet posen</li>
-<li class="fragment">… kastet ordene ut igjen</li>
-</ol></li>
-</ul>
 </section>
 <section id="rekkefølge-er-viktig" class="slide level2">
 <h2>Rekkefølge er viktig!</h2>
@@ -888,96 +997,310 @@ data-background-size="2500px">Antagelse</h2>
 ## [39] &quot;Sånn at sola kan få plass&quot;                                      
 ## [40] &quot;Og bryte gjennom hvis den vil, vil, vil&quot;                        
 ## [41] &quot;&quot;</code></pre>
-</section>
-<section id="valg" class="slide level2"
-data-background="assumpt_reality.jpg" data-background-size="30%"
-data-background-position="right">
-<h2 data-background="assumpt_reality.jpg" data-background-size="30%"
-data-background-position="right">Valg</h2>
-<ol type="1">
-<li class="fragment">Hva er enheten i analysen?
-<ul>
-<li class="fragment">Individuelle tekster</li>
-<li class="fragment">Alle tekster av en forfatter (slått sammen)</li>
-<li class="fragment">Setninger, avsnitt, osv</li>
-</ul></li>
-<li class="fragment">Dele opp teksten (<em>tokenize</em>)
-<ul>
-<li class="fragment">Bokstaver (?)</li>
-<li class="fragment">Enkeltord</li>
-<li class="fragment">Ngrams</li>
-<li class="fragment">Setninger</li>
-</ul></li>
-<li class="fragment">Reduksjon av kompleksitet (kommer etterpå)</li>
-<li class="fragment">Lage <em>Document-Feature Matrix</em>
-(<code>tidytext::{dfm/tdm/dtm}</code>)</li>
-</ol>
 </section></section>
 <section>
-<section id="enhet-i-analysen" class="title-slide slide level1">
-<h1>Enhet i analysen</h1>
-<p>Alle tekstene til Klossmajor – Ordner seg for snille jenter</p>
+<section id="valg-av-analyseenhet" class="title-slide slide level1">
+<h1>Valg av analyseenhet</h1>
+<p><img data-src="assumpt_reality_negate.png" style="width:66.0%" /></p>
+<ul>
+<li class="fragment">Hva er enheten i analysen din?</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<p></br></br></br></p>
+<p><font style='color:#4B0DFB;font-weight:bold'>Spørsmål i Stortinget –
+hva er enheten?</font></p>
 <div class="fragment">
-<div class="sourceCode" id="cb30"><pre
-class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>klossmajor_filer <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;./data/klossmajor&quot;</span>, </span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>                               <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>klossmajor <span class="ot">&lt;-</span> <span class="fu">lapply</span>(klossmajor_filer, <span class="cf">function</span>(x){</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  tmp <span class="ot">&lt;-</span> <span class="fu">readLines</span>(x) <span class="sc">%&gt;%</span> </span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>(<span class="at">tekst =</span> .)</span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>  tmp<span class="sc">$</span>tittel <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span> </span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_remove_all</span>(<span class="st">&quot;./data/klossmajor/|.txt&quot;</span>)  </span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>  tmp<span class="sc">$</span>linje <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(tmp)</span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>  tmp <span class="ot">&lt;-</span> tmp <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(tittel, linje, tekst)</span>
-<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(tmp)</span>
-<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>klossmajor <span class="ot">&lt;-</span> klossmajor <span class="sc">%&gt;%</span> <span class="fu">bind_rows</span>()</span></code></pre></div>
+<pre><code>##    question_from_id qustion_to_id                           title
+## 1               MMK          ODDØ auke i vinnings-, valds- og tra
+## 2               RSK          KRCL hvordan statsråden vil forhindr
+## 3               HBL            JP hva Regjeringen har gjort for å
+## 4               RUI          ODDØ behov for _innstramminger i våp
+## 5               JIA            DH samhandling mellom helsetjenest
+## 6               MMK           ISC _konkurranseutsetjing og privat
+## 7               ASK            DH å sikre at alle følger regelver
+## 8              AAMH            JP grep for å _sikre norsk landbru
+## 9               ESF            AG tiltak for å sikre _næringsutvi
+## 10              SKB           EIS tiltak for å bedre _situasjonen</code></pre>
 </div>
 </section>
-<section id="linjer-setninger" class="slide level2">
-<h2>Linjer / Setninger</h2>
-<div class="sourceCode" id="cb31"><pre
-class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>klossmajor <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">3</span>)</span></code></pre></div>
+<section id="valg-av-analyseenhet-1" class="slide level2">
+<h2>Valg av analyseenhet</h2>
+<p>Eksempel: </br> Alle tekstene til Klossmajor – Ordner seg for snille
+jenter</p>
+<div class="fragment">
+<div class="sourceCode" id="cb29"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>klossmajor_filer <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;./data/klossmajor&quot;</span>, </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>                               <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>klossmajor <span class="ot">&lt;-</span> <span class="fu">lapply</span>(klossmajor_filer, <span class="cf">function</span>(x){</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  tmp <span class="ot">&lt;-</span> <span class="fu">readLines</span>(x) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>(<span class="at">tekst =</span> .)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>  tmp<span class="sc">$</span>tittel <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span> </span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_remove_all</span>(<span class="st">&quot;./data/klossmajor/|.txt&quot;</span>)  </span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>  tmp<span class="sc">$</span>linje <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(tmp)</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>  tmp <span class="ot">&lt;-</span> tmp <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(tittel, linje, tekst)</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(tmp)</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>klossmajor <span class="ot">&lt;-</span> klossmajor <span class="sc">%&gt;%</span> <span class="fu">bind_rows</span>()</span></code></pre></div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="linjer-setninger">Linjer / Setninger</h3>
+<div class="sourceCode" id="cb30"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>klossmajor <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 3 × 3
 ##   tittel linje tekst                      
 ##   &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;                      
 ## 1 Blør       1 [Vers 1]                   
 ## 2 Blør       2 Du, du skal få alt du vil  
 ## 3 Blør       3 Alt som jeg har og litt til</code></pre>
-<div class="sourceCode" id="cb33"><pre
-class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>klossmajor <span class="sc">%&gt;%</span> <span class="fu">sample_n</span>(<span class="dv">3</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 3 × 3
-##   tittel     linje tekst                                                      
-##   &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;                                                      
-## 1 Likerklikk    42 Mens hun liker det hun hater med et likerklikk             
-## 2 Jenter        15 For det ordner seg for snille jenter                       
-## 3 Jenter        22 Om ikke det er bra nok lenger, spiller vi på andre strenger</code></pre>
 <ul>
-<li class="fragment">Problemer?</li>
+<li class="fragment">Finnes det en bedre måte å dele inn data i her?
+<ul>
+<li class="fragment">Ja, i spor/sanger</li>
+</ul></li>
+</ul>
+</section></section>
+<section>
+<section id="tokenisering-tokenizing" class="title-slide slide level1">
+<h1>Tokenisering (<em>tokenizing</em>)</h1>
+<ul>
+<li class="fragment">Vanligvis deler vi analyseenhetene opp i ord …</li>
+<li class="fragment">… men det finnes andre måter:</li>
+</ul>
+<div class="fragment">
+<div class="sourceCode" id="cb32"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tokenizers)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>eks_streng <span class="ot">&lt;-</span> <span class="st">&quot;Her er en streng vi </span><span class="sc">\n</span><span class="st"> kan bruke som eksempelet vårt&quot;</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tokenize_characters</span>(eks_streng, <span class="at">simplify =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>##  [1] &quot;h&quot; &quot;e&quot; &quot;r&quot; &quot;e&quot; &quot;r&quot; &quot;e&quot; &quot;n&quot; &quot;s&quot; &quot;t&quot; &quot;r&quot; &quot;e&quot; &quot;n&quot; &quot;g&quot; &quot;v&quot; &quot;i&quot; &quot;k&quot; &quot;a&quot; &quot;n&quot; &quot;b&quot;
+## [20] &quot;r&quot; &quot;u&quot; &quot;k&quot; &quot;e&quot; &quot;s&quot; &quot;o&quot; &quot;m&quot; &quot;e&quot; &quot;k&quot; &quot;s&quot; &quot;e&quot; &quot;m&quot; &quot;p&quot; &quot;e&quot; &quot;l&quot; &quot;e&quot; &quot;t&quot; &quot;v&quot; &quot;å&quot;
+## [39] &quot;r&quot; &quot;t&quot;</code></pre>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="sourceCode" id="cb34"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tokenize_words</span>(eks_streng, <span class="at">simplify =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>##  [1] &quot;her&quot;        &quot;er&quot;         &quot;en&quot;         &quot;streng&quot;     &quot;vi&quot;        
+##  [6] &quot;kan&quot;        &quot;bruke&quot;      &quot;som&quot;        &quot;eksempelet&quot; &quot;vårt&quot;</code></pre>
+<div class="fragment">
+<div class="sourceCode" id="cb36"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tokenize_lines</span>(eks_streng, <span class="at">simplify =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;Her er en streng vi &quot;           &quot; kan bruke som eksempelet vårt&quot;</code></pre>
+<p></br></p>
+<ul>
+<li class="fragment">Og mange flere
+<code>tokenizers::tokenize*()</code></li>
+<li class="fragment"><code>tidytext::unnest_tokens()</code> bruker
+<code>tokenizers::tokenize*()</code></li>
+</ul>
+</div>
+</section></section>
+<section>
+<section id="reduksjon-av-kompleksitet" class="title-slide slide level1"
+data-background="sparse.png">
+<h1 data-background="sparse.png">Reduksjon av kompleksitet</h1>
+<p></br></br></br></p>
+<ul>
+<li class="fragment">😕 Språk er komplekst!</li>
+<li class="fragment">🧝‍♀️ Men vi kan gjøre magi med forenkling</li>
+<li class="fragment">👎 Kompleks representasjon gir oss lite</li>
+<li class="fragment">🤔 Hvor mye og hvilken reduksjon, avhenger av
+spørsmålet man stiller!</li>
 </ul>
 </section>
-<section id="spor" class="slide level2">
-<h2>Spor</h2>
-<div class="sourceCode" id="cb35"><pre
-class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>klossmajor <span class="ot">&lt;-</span> klossmajor <span class="sc">%&gt;%</span>     <span class="co"># tibble med alle sanger</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(tekst <span class="sc">!=</span> <span class="st">&quot;&quot;</span>) <span class="sc">%&gt;%</span>        <span class="co"># fjerner tomme linjer</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tittel) <span class="sc">%&gt;%</span>           <span class="co"># grupperer på tittel</span></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(token, tekst,    <span class="co"># splitter opp teksten til tokens</span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">to_lower =</span> <span class="cn">TRUE</span>, <span class="co"># lowercase på alt</span></span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">strip_punct =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span>   <span class="co"># fjerne punktsetting</span></span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(token) <span class="sc">%&gt;%</span>            <span class="co"># teller tokens innefor gruppen (sangene)</span></span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cast_dfm</span>(.,                 <span class="co"># gjør om til en Document Feature Matrix ...</span></span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">document =</span> tittel, <span class="co"># ...der &quot;tittel&quot; er dokumentene</span></span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">term =</span> token,      <span class="co"># ...&quot;token&quot; er kolonnen med ord</span></span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">value =</span> n)   <span class="co"># ... og &quot;n&quot; teller antal ganger ordet er brukt</span></span>
-<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>klossmajor <span class="sc">%&gt;%</span> <span class="fu">print</span>()</span></code></pre></div>
+<section id="store-bokstaver" class="slide level2">
+<h2>Store bokstaver?</h2>
+<ul>
+<li class="fragment"><em>Lowercase</em> av alle ord -&gt; gjøre alle
+bokstaver små
+<ul>
+<li class="fragment">Ord i starten av setningen betyr det samme som de
+midt i setningen</li>
+</ul></li>
+<li class="fragment">Er det alltid riktig?</li>
+</ul>
+<div class="fragment">
+<div class="sourceCode" id="cb38"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;Fjell kan være høye, sier Kari Fjell&quot;</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  tokenizers<span class="sc">::</span><span class="fu">tokenize_words</span>(.,</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>                             <span class="at">lowercase =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>                             <span class="at">stopwords =</span> <span class="cn">NULL</span>,</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>                             <span class="at">strip_punct =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>                             <span class="at">simplify =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;fjell&quot; &quot;kan&quot;   &quot;være&quot;  &quot;høye&quot;  &quot;,&quot;     &quot;sier&quot;  &quot;kari&quot;  &quot;fjell&quot;</code></pre>
+</div>
+</section>
+<section id="tall-punktsetting" class="slide level2">
+<h2>Tall // Punktsetting?</h2>
+<ul>
+<li class="fragment">Det er veldig vanlig å fjerne tall og punktsetting
+fra corpus
+<ul>
+<li class="fragment">Gir sjelden informasjon som er relevant</li>
+</ul></li>
+<li class="fragment">Er det alltid riktig?</li>
+</ul>
+<div class="fragment">
+<div class="sourceCode" id="cb40"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;Lov om endring i skattebetalingsloven, §5-7, endres 1.januar 2023&quot;</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  tokenizers<span class="sc">::</span><span class="fu">tokenize_words</span>(.,</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>                             <span class="at">lowercase =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>                             <span class="at">stopwords =</span> <span class="cn">NULL</span>,</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>                             <span class="at">strip_punct =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>                             <span class="at">strip_numeric =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>                             <span class="at">simplify =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;lov&quot;                  &quot;om&quot;                   &quot;endring&quot;             
+## [4] &quot;i&quot;                    &quot;skattebetalingsloven&quot; &quot;endres&quot;              
+## [7] &quot;januar&quot;</code></pre>
+</div>
+</section>
+<section id="stoppord" class="slide level2">
+<h2>Stoppord?</h2>
+<ul>
+<li class="fragment">Ord som for seg selv (sekk med ord) ikke gir
+substansiell mening</li>
+<li class="fragment">Er det alltid riktig?</li>
+</ul>
+<div class="fragment">
+<div class="sourceCode" id="cb42"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;Etter jeg hadde forelesning, var jeg ikke fornøyd&quot;</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  tokenizers<span class="sc">::</span><span class="fu">tokenize_words</span>(.,</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>                             <span class="at">lowercase =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>                             <span class="at">stopwords =</span> quanteda<span class="sc">::</span><span class="fu">stopwords</span>(<span class="st">&quot;no&quot;</span>),</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>                             <span class="at">strip_punct =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>                             <span class="at">strip_numeric =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>                             <span class="at">simplify =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;forelesning&quot; &quot;fornøyd&quot;</code></pre>
+</div>
+</section>
+<section id="stemming-eller-lemmatisering" class="slide level2">
+<h2>Stemming eller lemmatisering?</h2>
+<p><font style='color:#F47F31'>Stemming kutter av halen og bevarer
+<strong>stammen</strong> av ord</font></p>
+<div class="fragment">
+<pre><code>## Før stemming:</code></pre>
+<pre><code>## mange fine fugler fløy på himmelen men én fugl var langt bak</code></pre>
+<pre><code>## Etter stemming:</code></pre>
+<pre><code>## mang fin fugl fløy på himmel men én fugl var langt bak</code></pre>
+</div>
+<div class="fragment">
+<p><font style='color:#289F12'>Funker dårlig på sterke
+bøyninger:</font></p>
+<pre><code>## Før stemming:</code></pre>
+<pre><code>## [1] &quot;fot, foten, føtter&quot;</code></pre>
+<pre><code>## Etter stemming:</code></pre>
+<pre><code>## [1] &quot;fot&quot;  &quot;fot&quot;  &quot;føtt&quot;</code></pre>
+</div>
+</section>
+<section class="slide level2">
+
+<p></br></p>
+<p><font style='color:#1AA3DB'>Lemmatisering er å bøye ordet til sin
+gramatiske rotform</font></p>
+<pre><code>## Warning in spacy_parse.character(&quot;fot, foten, føtter&quot;, pos = FALSE):
+## lemmatization may not work properly in model &#39;nb_core_news_lg&#39;</code></pre>
+<pre><code>##   doc_id sentence_id token_id  token lemma entity
+## 1  text1           1        1    fot   fot       
+## 2  text1           1        2      ,     ,       
+## 3  text1           1        3  foten   fot       
+## 4  text1           1        4      ,     ,       
+## 5  text1           1        5 føtter   fot</code></pre>
+<p></br></p>
+<div class="fragment">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Metoder</th>
+<th style="text-align: left;">Koder</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Stemming</td>
+<td style="text-align: left;"><code>quanteda::dfm_wordstem()</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td
+style="text-align: left;"><code>tokenizers::tokenize_word_stems()</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>SnowballC::wordStem()</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lemmatisering</td>
+<td style="text-align: left;"><code>spacyr::spacy_parse()</code>
+(OBS!)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Oslo-Bergen tagger</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section></section>
+<section>
+<section id="dokumenttrekkmatrise-dfm" class="title-slide slide level1">
+<h1>Dokumenttrekkmatrise (<em>DFM</em>)</h1>
+<ul>
+<li class="fragment">Når vi har bestemt oss for enhets- og
+reduksjonsstrategi vil vi…
+<ul>
+<li class="fragment">…gå over til tallanlyse</li>
+</ul></li>
+<li class="fragment">Her tokeniserer vil til ord og teller på
+spor/sanger:</li>
+</ul>
+<div class="fragment">
+<div class="sourceCode" id="cb54"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>km_count <span class="ot">&lt;-</span> klossmajor <span class="sc">%&gt;%</span> </span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tittel) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(., token, tekst) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(token)</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>km_count <span class="sc">%&gt;%</span> <span class="fu">tail</span>(., <span class="at">n =</span> <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 3 × 3
+## # Groups:   tittel [1]
+##   tittel          token      n
+##   &lt;chr&gt;           &lt;chr&gt;  &lt;int&gt;
+## 1 Snakkes i baren vers       2
+## 2 Snakkes i baren vi         4
+## 3 Snakkes i baren viderе     1</code></pre>
+</div>
+</section>
+<section class="slide level2">
+
+<ul>
+<li class="fragment">Så gjør vi om til DFM med…
+<ul>
+<li class="fragment">…trekk (ord) som kolonner</li>
+<li class="fragment">…dokument (sanger) som rader</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<div class="sourceCode" id="cb56"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>km_dfm <span class="ot">&lt;-</span> km_count <span class="sc">%&gt;%</span> </span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cast_dfm</span>(., tittel, token, n)</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>km_dfm</span></code></pre></div>
 <pre><code>## Document-feature matrix of: 9 documents, 427 features (79.42% sparse) and 0 docvars.
 ##                    features
 ## docs                1 2 å alt bare blinder blør bo deg der
@@ -988,81 +1311,233 @@ class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb35-1"><a hre
 ##   Jenter            0 0 0   0    2       0    0  0   0   0
 ##   Likerklikk        1 1 0   2    0       0    0  0   3   0
 ## [ reached max_ndoc ... 3 more documents, reached max_nfeat ... 417 more features ]</code></pre>
-</section></section>
-<section>
-<section id="reduksjon-av-kompleksitet"
-class="title-slide slide level1">
-<h1>Reduksjon av kompleksitet</h1>
-
+</div>
 </section>
-<section id="store-bokstaver" class="slide level2">
-<h2>Store bokstaver?</h2>
+<section id="trekkreduksjon-i-dfm" class="slide level2">
+<h2>Trekkreduksjon i DFM</h2>
+<div class="sourceCode" id="cb58"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>km_dfm <span class="ot">&lt;-</span> klossmajor <span class="sc">%&gt;%</span> </span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tittel) <span class="sc">%&gt;%</span> </span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(., </span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">output =</span> token, </span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">input =</span> tekst,</span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">token =</span> <span class="st">&quot;words&quot;</span>,</span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">to_lower =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">stopwords =</span> quanteda<span class="sc">::</span><span class="fu">stopwords</span>(<span class="st">&quot;no&quot;</span>),</span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">strip_punct =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">strip_numeric =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">token =</span> quanteda<span class="sc">::</span><span class="fu">char_wordstem</span>(token, <span class="at">language =</span> <span class="st">&quot;norwegian&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb58-12"><a href="#cb58-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(token) <span class="sc">%&gt;%</span> </span>
+<span id="cb58-13"><a href="#cb58-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cast_dfm</span>(., <span class="at">document =</span> tittel, <span class="at">term =</span> token, <span class="at">value =</span> n)</span></code></pre></div>
+<div class="fragment">
+<pre><code>## Document-feature matrix of: 9 documents, 325 features (84.55% sparse) and 0 docvars.
+##                    features
+## docs                alt blind blør bo få fall finn fred gjør grei
+##   Blør                4     1    6  2  3    1    2    1    1    2
+##   Flaske med vin      0     0    0  0  0    2    0    0    0    0
+##   Heier bare på meg  12     0    0  0  0    1    0    0    3    4
+##   Jævlig              0     0    0  0  0    0    0    0    5    1
+##   Jenter              0     0    0  0  0    1    0    0    0    0
+##   Likerklikk          2     0    0  0  0    0    0    0    0    0
+## [ reached max_ndoc ... 3 more documents, reached max_nfeat ... 315 more features ]</code></pre>
+</div>
+</section>
+<section id="hvilke-spor-er-likest" class="slide level2">
+<h2>Hvilke spor er likest?</h2>
 <ul>
-<li class="fragment"><em>Lowercase</em> av alle ord -&gt; gjøre alle
-bokstaver små</li>
-<li class="fragment">Er det alltid riktig?</li>
+<li class="fragment"><p style="color:#42D225">
+[07] Ordbøker, tekstlikhet og sentiment
+</p></li>
 </ul>
 <div class="fragment">
-<div class="sourceCode" id="cb37"><pre
-class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tolower</span>(<span class="st">&quot;Fjell kan være høye, sier Kari Fjell&quot;</span>)</span></code></pre></div>
-<pre><code>## [1] &quot;fjell kan være høye, sier kari fjell&quot;</code></pre>
+<p><img src="uke_03_prepros1_files/figure-revealjs/kloss_cos-1.png" width="657.6" /></p>
 </div>
 </section></section>
-<section id="trekke-ut-trekk-fra-tekstene"
+<section>
+<section id="litt-mer-avansert-preprosessering"
 class="title-slide slide level1">
-<h1>Trekke ut trekk fra tekstene</h1>
-
+<h1>Litt mer avansert preprosessering</h1>
+<ul>
+<li class="fragment">Noen ganger ønsker vi å bevare kompleksitet i form
+av …
+<ul>
+<li class="fragment">…rekkefølge på ord (ngrams)</li>
+<li class="fragment">…ordeksklusivitet (tf-idf)</li>
+<li class="fragment">…ords grammatiske funksjon (PoS)</li>
+<li class="fragment">…enhetsgjenkjenning (NER)</li>
+</ul></li>
+</ul>
 </section>
+<section id="ngrams" class="slide level2">
+<h2>Ngrams</h2>
+<p></br>
+<font style='color:#6BACDB;font-weight:bold'>Unigram:</font></p>
+<pre><code>##  [1] &quot;men&quot;   &quot;med&quot;   &quot;litt&quot;  &quot;vin&quot;   &quot;kan&quot;   &quot;det&quot;   &quot;bli&quot;   &quot;bedre&quot; &quot;i&quot;    
+## [10] &quot;kveld&quot;</code></pre>
+<div class="fragment">
+<p></br> <font style='color:#DBC360;font-weight:bold'>Bigram:</font></p>
+<pre><code>## [1] &quot;men med&quot;   &quot;med litt&quot;  &quot;litt vin&quot;  &quot;vin kan&quot;   &quot;kan det&quot;   &quot;det bli&quot;  
+## [7] &quot;bli bedre&quot; &quot;bedre i&quot;   &quot;i kveld&quot;</code></pre>
+</div>
+<div class="fragment">
+<p></br>
+<font style='color:#5F318F;font-weight:bold'>Trigram:</font></p>
+<pre><code>## [1] &quot;men med litt&quot;  &quot;med litt vin&quot;  &quot;litt vin kan&quot;  &quot;vin kan det&quot;  
+## [5] &quot;kan det bli&quot;   &quot;det bli bedre&quot; &quot;bli bedre i&quot;   &quot;bedre i kveld&quot;</code></pre>
+</div>
+</section>
+<section id="tf-idf" class="slide level2">
+<h2>TF-IDF</h2>
+<p></br></p>
+<p><span class="math display">\[tf=\frac{antall\ ganger\ token\ er\ i\
+dokumentet}{antall\ tokens\ i \ dokumentet}\]</span></br></p>
+<div class="fragment">
+<p><span class="math display">\[idf=log(\frac{totalt\ antall\
+dokument}{antall\ dokumenter\ som\ inneholder\ token})\]</span></br></p>
+</div>
+<div class="fragment">
+<p><span class="math display">\[tf-idf=tf*idf\]</span></br></p>
+</div>
+</section>
+<section class="slide level2">
 
-<section id="section-1" class="title-slide slide level1">
-<h1></h1>
+<p></br> <font style='color:#DBC360;font-weight:bold'>Toppord basert på
+frekvens:</font></p>
+<pre><code>## # A tibble: 4 × 6
+## # Groups:   tittel [4]
+##   tittel            token     n     tf   idf  tf_idf
+##   &lt;chr&gt;             &lt;chr&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+## 1 Heier bare på meg alt      12 0.0411 0.811 0.0333 
+## 2 Jævlig            helt      5 0.0204 0.588 0.0120 
+## 3 Likerklikk        sier      7 0.0235 1.50  0.0353 
+## 4 Snakkes i baren   litt      7 0.0391 0.251 0.00983</code></pre>
+<div class="fragment">
+<p></br> <font style='color:#5F318F;font-weight:bold'>Toppord basert på
+TF-IDF:</font></p>
+<pre><code>## # A tibble: 4 × 6
+## # Groups:   tittel [4]
+##   tittel            token           n     tf   idf tf_idf
+##   &lt;chr&gt;             &lt;chr&gt;       &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Heier bare på meg takk           12 0.0411  2.20 0.0903
+## 2 Jævlig            andrevalget     3 0.0122  2.20 0.0269
+## 3 Likerklikk        likerklikk      6 0.0201  2.20 0.0442
+## 4 Snakkes i baren   aktuell         3 0.0168  2.20 0.0368</code></pre>
+</div>
+</section>
+<section class="slide level2">
 
+<p></br><font style='color:#6BACDB;font-weight:bold'>Effekt på
+likhetsanalyse:</font></p>
+<p><img src="uke_03_prepros1_files/figure-revealjs/tfidf_plotsimil-1.png" width="768" /></p>
+</section>
+<section id="taledeler-parts-of-speech" class="slide level2">
+<h2>Taledeler (<em>parts-of-speech</em>)</h2>
+<p></br> <font style='color:#DBC360;font-weight:bold'>Grammatiske
+funksjonen til et ord (<code>spacyr</code>)</font></p>
+<p></br></p>
+<pre><code>##     doc_id sentence_id token_id  token  pos
+## 186  text1          14        1    Det PRON
+## 187  text1          14        2     er  AUX
+## 188  text1          14        3   bare  ADV
+## 189  text1          14        4    det PRON
+## 190  text1          14        5    jeg PRON
+## 191  text1          14        6 tenker VERB</code></pre>
+</section>
+<section id="navngitte-enheter-named-entity" class="slide level2">
+<h2>Navngitte enheter (<em>named entity</em>)</h2>
+<p></br> <font style='color:#5F318F;font-weight:bold'>Stort sett
+personer, steder, organisajoner, etc:</font></p>
+<pre><code>##   doc_id sentence_id token_id           token   pos entity
+## 1  text1           1        1             NSB PROPN  ORG_B
+## 2  text1           1        3  Jernbaneverket PROPN  ORG_B
+## 3  text1           1        6      Hallenskog PROPN  LOC_B
+## 4  text1           1        7         stasjon  NOUN  LOC_I
+## 5  text1           1        9 Spikkestadbanen PROPN  LOC_B
+## 6  text1           2        5            Oslo PROPN  LOC_B
+## 7  text1           4        1      Hallenskog PROPN  LOC_B</code></pre>
+<!-- # Husk! -->
+<!-- @Lauderdale2016: -->
+<!-- > [...] predictive sources of variation in word use [in...] descending order of importance: </br> -->
+<!-- > (1) language, </br> -->
+<!-- > (2) style, </br> -->
+<!-- > (3) topic, and only then </br> -->
+<!-- > (4) position, preference, or sentiment.</br> -->
+</section></section>
+<section id="oppsummering" class="title-slide slide level1">
+<h1>Oppsummering</h1>
+<ul>
+<li class="fragment">Preprosessering …
+<ul>
+<li class="fragment">…👨‍🌾 foregår mellom anskaffelse og analyse av
+tekst</li>
+<li class="fragment">…✅ påvirker analyse <span class="citation"
+data-cites="Denny2018">(Denny and Spirling 2018)</span></li>
+<li class="fragment">…💹 reduserer kompleksitet i data</li>
+<li class="fragment">…🙅‍♀️ bestemmer forutsettninger (<em>sekk med
+ord</em>)</li>
+<li class="fragment">…🤔 har ikke en standard oppskrift – bruk
+huet!</li>
+</ul></li>
+</ul>
 </section>
 
 <section id="scrapescript-for-klossmajor"
 class="title-slide slide level1" data-background="klossmajor.png">
 <h1 data-background="klossmajor.png">Scrapescript for Klossmajor</h1>
 <div class="fragment">
-<div class="sourceCode" id="cb39"><pre
-class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Laster inn bibliotek</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Url for albumforside</span></span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>base_url <span class="ot">&lt;-</span> <span class="st">&quot;https://genius.com/albums/Klossmajor/Ordner-seg-for-snille-jenter&quot;</span></span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Trekker ut liste av sanger</span></span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>track_list <span class="ot">&lt;-</span> <span class="fu">read_html</span>(base_url)</span>
-<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Trekker ut linkene til hver sang</span></span>
-<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>track_list_links <span class="ot">&lt;-</span> track_list <span class="sc">%&gt;%</span> </span>
-<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_elements</span>(<span class="st">&quot;div.chart_row-content &gt; a&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_attr</span>(<span class="st">&quot;href&quot;</span>)</span>
-<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a><span class="co"># For hver sanglink...</span></span>
-<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> track_list_links){</span>
-<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Les inn siden</span></span>
-<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a>  tmp <span class="ot">&lt;-</span> <span class="fu">read_html</span>(i)</span>
-<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a>  lyrics <span class="ot">&lt;-</span> tmp <span class="sc">%&gt;%</span> </span>
-<span id="cb39-24"><a href="#cb39-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_elements</span>(<span class="at">xpath =</span> <span class="st">&#39;//*[@id=&quot;lyrics-root&quot;]/div[1]&#39;</span>) <span class="sc">%&gt;%</span> <span class="co"># ...trekk ut denne &quot;xpath&quot;</span></span>
-<span id="cb39-25"><a href="#cb39-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text2</span>() <span class="sc">%&gt;%</span>                                           <span class="co"># ...gjør om til tekst (med \\n tags)</span></span>
-<span id="cb39-26"><a href="#cb39-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_split</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">n&quot;</span>) <span class="sc">%&gt;%</span>                                       <span class="co"># ...split opp teksten i linjer</span></span>
-<span id="cb39-27"><a href="#cb39-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unlist</span>()                                                   <span class="co"># ...gjør om fra liste til vektor</span></span>
-<span id="cb39-28"><a href="#cb39-28" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb39-29"><a href="#cb39-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Trekk ut tittel på sangen</span></span>
-<span id="cb39-30"><a href="#cb39-30" aria-hidden="true" tabindex="-1"></a>  title <span class="ot">&lt;-</span> tmp <span class="sc">%&gt;%</span> </span>
-<span id="cb39-31"><a href="#cb39-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_elements</span>(<span class="st">&quot;h1 &gt; span&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb39-32"><a href="#cb39-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text</span>()</span>
-<span id="cb39-33"><a href="#cb39-33" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb39-34"><a href="#cb39-34" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Skriv sangen til fil</span></span>
-<span id="cb39-35"><a href="#cb39-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">writeLines</span>(lyrics, <span class="fu">paste0</span>(<span class="st">&quot;./data/klossmajor/&quot;</span>, title, <span class="st">&quot;.txt&quot;</span>))</span>
-<span id="cb39-36"><a href="#cb39-36" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb39-37"><a href="#cb39-37" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sov litt</span></span>
-<span id="cb39-38"><a href="#cb39-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Sys.sleep</span>(<span class="dv">2</span>)</span>
-<span id="cb39-39"><a href="#cb39-39" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb67"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Laster inn bibliotek</span></span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Url for albumforside</span></span>
+<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a>base_url <span class="ot">&lt;-</span> <span class="st">&quot;https://genius.com/albums/Klossmajor/Ordner-seg-for-snille-jenter&quot;</span></span>
+<span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Trekker ut liste av sanger</span></span>
+<span id="cb67-9"><a href="#cb67-9" aria-hidden="true" tabindex="-1"></a>track_list <span class="ot">&lt;-</span> <span class="fu">read_html</span>(base_url)</span>
+<span id="cb67-10"><a href="#cb67-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-11"><a href="#cb67-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Trekker ut linkene til hver sang</span></span>
+<span id="cb67-12"><a href="#cb67-12" aria-hidden="true" tabindex="-1"></a>track_list_links <span class="ot">&lt;-</span> track_list <span class="sc">%&gt;%</span> </span>
+<span id="cb67-13"><a href="#cb67-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_elements</span>(<span class="st">&quot;div.chart_row-content &gt; a&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb67-14"><a href="#cb67-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_attr</span>(<span class="st">&quot;href&quot;</span>)</span>
+<span id="cb67-15"><a href="#cb67-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-16"><a href="#cb67-16" aria-hidden="true" tabindex="-1"></a><span class="co"># For hver sanglink...</span></span>
+<span id="cb67-17"><a href="#cb67-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> track_list_links){</span>
+<span id="cb67-18"><a href="#cb67-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb67-19"><a href="#cb67-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Les inn siden</span></span>
+<span id="cb67-20"><a href="#cb67-20" aria-hidden="true" tabindex="-1"></a>  tmp <span class="ot">&lt;-</span> <span class="fu">read_html</span>(i)</span>
+<span id="cb67-21"><a href="#cb67-21" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb67-22"><a href="#cb67-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb67-23"><a href="#cb67-23" aria-hidden="true" tabindex="-1"></a>  lyrics <span class="ot">&lt;-</span> tmp <span class="sc">%&gt;%</span> </span>
+<span id="cb67-24"><a href="#cb67-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_elements</span>(<span class="at">xpath =</span> <span class="st">&#39;//*[@id=&quot;lyrics-root&quot;]/div[1]&#39;</span>) <span class="sc">%&gt;%</span> <span class="co"># ...trekk ut denne &quot;xpath&quot;</span></span>
+<span id="cb67-25"><a href="#cb67-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text2</span>() <span class="sc">%&gt;%</span>                                           <span class="co"># ...gjør om til tekst (med \\n tags)</span></span>
+<span id="cb67-26"><a href="#cb67-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_split</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">n&quot;</span>) <span class="sc">%&gt;%</span>                                       <span class="co"># ...split opp teksten i linjer</span></span>
+<span id="cb67-27"><a href="#cb67-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unlist</span>()                                                   <span class="co"># ...gjør om fra liste til vektor</span></span>
+<span id="cb67-28"><a href="#cb67-28" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb67-29"><a href="#cb67-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Trekk ut tittel på sangen</span></span>
+<span id="cb67-30"><a href="#cb67-30" aria-hidden="true" tabindex="-1"></a>  title <span class="ot">&lt;-</span> tmp <span class="sc">%&gt;%</span> </span>
+<span id="cb67-31"><a href="#cb67-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_elements</span>(<span class="st">&quot;h1 &gt; span&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb67-32"><a href="#cb67-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text</span>()</span>
+<span id="cb67-33"><a href="#cb67-33" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb67-34"><a href="#cb67-34" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Skriv sangen til fil</span></span>
+<span id="cb67-35"><a href="#cb67-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">writeLines</span>(lyrics, <span class="fu">paste0</span>(<span class="st">&quot;./data/klossmajor/&quot;</span>, title, <span class="st">&quot;.txt&quot;</span>))</span>
+<span id="cb67-36"><a href="#cb67-36" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb67-37"><a href="#cb67-37" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sov litt</span></span>
+<span id="cb67-38"><a href="#cb67-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Sys.sleep</span>(<span class="dv">2</span>)</span>
+<span id="cb67-39"><a href="#cb67-39" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div id="refs" class="references csl-bib-body hanging-indent"
+role="doc-bibliography">
+<div id="ref-Denny2018" class="csl-entry" role="doc-biblioentry">
+Denny, Matthew J., and Arthur Spirling. 2018. <span>“<span>T</span>ext
+<span>P</span>reprocessing <span>F</span>or <span>U</span>nsupervised
+<span>L</span>earning: <span>W</span>hy <span>I</span>t
+<span>M</span>atters, <span>W</span>hen <span>I</span>t
+<span>M</span>isleads, <span>A</span>nd <span>W</span>hat
+<span>T</span>o <span>D</span>o <span>A</span>bout
+<span>I</span>t.”</span> <em>Political Analysis</em> 26(2): 168–89. <a
+href="https://doi.org/10.1017/pan.2017.44">https://doi.org/10.1017/pan.2017.44</a>.
+</div>
+</div>
 </div>
 </section>
     </div>
