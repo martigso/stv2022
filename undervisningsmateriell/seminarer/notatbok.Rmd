@@ -182,7 +182,7 @@ tilbakemelding på denne slik at du kan oppdatere oppgaven fra seminar til semin
 
 Seminarledere:
 
-- Eli Sofie Baltzersen <e.s.baltzersern@stv.uio.no>
+- Eli Sofie Baltzersen <e.s.baltzersen@stv.uio.no>
 - Eric Gabo Ekeberg Nilsen <e.g.e.nilsen@stv.uio.no>
 
 ## Oppgaver
