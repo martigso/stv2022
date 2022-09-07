@@ -1,0 +1,1642 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>uke04_prepros2.knit</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="uke04_prepros2_files/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  { color: #cccccc; background-color: #303030; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ffcfaf; } /* Alert */
+code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bn { color: #dca3a3; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #f0dfaf; } /* ControlFlow */
+code span.ch { color: #dca3a3; } /* Char */
+code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+code span.co { color: #7f9f7f; } /* Comment */
+code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+code span.do { color: #7f9f7f; } /* Documentation */
+code span.dt { color: #dfdfbf; } /* DataType */
+code span.dv { color: #dcdccc; } /* DecVal */
+code span.er { color: #c3bf9f; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #c0bed1; } /* Float */
+code span.fu { color: #efef8f; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+code span.kw { color: #f0dfaf; } /* Keyword */
+code span.op { color: #f0efd0; } /* Operator */
+code span.ot { color: #efef8f; } /* Other */
+code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+code span.sc { color: #dca3a3; } /* SpecialChar */
+code span.ss { color: #cc9393; } /* SpecialString */
+code span.st { color: #cc9393; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #cc9393; } /* VerbatimString */
+code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="uke04_prepros2_files/reveal.js-3.3.0.1/css/theme/simple.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+    <link rel="stylesheet" href="style.css"/>
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+    <script src="uke04_prepros2_files/header-attrs-2.14/header-attrs.js"></script>
+    <link href="uke04_prepros2_files/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="uke04_prepros2_files/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+
+<section class="slide level2">
+
+<font size=12>STV2022 – Store tekstdata</font></br></br>
+<p style="font-size:10;color:#79B47C">
+[04] Forbehandling av tekst 2
+</p>
+<p></br> <img data-src="uio_logo.jpg" style="width:50.0%" /></p>
+<p>Solveig Bjørkholt <font size=6>&lt;<a
+href="mailto:solveig.bjorkholt@stv.uio.no"
+class="email">solveig.bjorkholt@stv.uio.no</a>&gt;</font></br></p>
+</section>
+<section>
+<section id="plan-for-i-dag" class="title-slide slide level1">
+<h1>Plan for i dag:</h1>
+<ul>
+<li class="fragment">Litt repetisjon på anskaffelse av tekst</li>
+<li class="fragment">Rydde og strukturere data (<code>stringr</code> og
+<em>regex</em>)</li>
+<li class="fragment">Forbehandling - hvilke valg bør man ta?</li>
+<li class="fragment">Tokenisering av tekst</li>
+<li class="fragment">Vektorisering av tekst og word embeddings</li>
+</ul>
+</section>
+<section id="pakker-vi-skal-jobbe-med-i-dag" class="slide level2">
+<h2>Pakker vi skal jobbe med i dag</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># Grunnleggende R-funksjoner</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom) <span class="co"># For å rydde opp i modell-output</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest) <span class="co"># For å skrape informasjon fra nettet</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytext) <span class="co"># Grunnleggende R-funksjoner for å jobbe med tekst</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda) <span class="co"># Mange metodiske verktøy for å jobbe med tekst</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textstats) <span class="co"># Brukes for å beregne distanse-mål</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fastTextR) <span class="co"># For å jobbe med word embeddings</span></span></code></pre></div>
+<p><br> <br></p>
+<p><img src="figurer/libraries.png" width="100%" /></p>
+</section></section>
+<section>
+<section id="laste-inn-data" class="title-slide slide level1"
+data-background="./figurer/virksommeord.png"
+data-background-position="bottom" data-background-size="70%">
+<h1 data-background="./figurer/virksommeord.png"
+data-background-position="bottom" data-background-size="70%">Laste inn
+data</h1>
+<p>Vi bruker data fra Martin sin kravling på <a
+href="http://virksommeord.no/"
+class="uri">http://virksommeord.no/</a></p>
+</section>
+<section class="slide level2">
+
+<p><strong>Martin lastet ned alle <code>.html</code>-filene med
+<em>tale</em> i URL-en.</strong></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Laster inn pakke for kravling</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Rcrawler)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">Rcrawler</span>(<span class="st">&quot;http://virksommeord.no/&quot;</span>, <span class="co"># Nettsiden vi skal kravle</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">DIR =</span> <span class="st">&quot;./crawl&quot;</span>,           <span class="co"># mappen vi lagrer filene i</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">no_cores =</span> <span class="dv">4</span>,              <span class="co"># kjerner for å prosessere data</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">dataUrlfilter =</span> <span class="st">&quot;/tale/&quot;</span>,  <span class="co"># subset filter for kravling</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">RequestsDelay =</span> <span class="dv">2</span> <span class="sc">+</span> <span class="fu">abs</span>(<span class="fu">rnorm</span>(<span class="dv">1</span>)))</span></code></pre></div>
+<ul>
+<li class="fragment">Gå inn på Canvas</li>
+<li class="fragment">Last ned <code>virksommeord.zip</code> og legg i en
+mappe på din PC</li>
+<li class="fragment">Unzip filen</li>
+<li class="fragment">Gå inn i R og sett working directory til mappen der
+du unzippet filen</li>
+</ul>
+<div class="fragment">
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;C:/MinPC/Dokumenter/STV2022/forelesning04/&quot;</span>)</span></code></pre></div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="å-laste-ned-data-fra-en-.html-fil">Å laste ned data fra en
+<code>.html</code>-fil</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest) <span class="co"># Pakken som gjør at man kan jobbe med html-filer i R</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>html_fil <span class="ot">&lt;-</span> <span class="fu">read_html</span>(<span class="st">&quot;./data/virksommeord/1 .html&quot;</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>overskrift <span class="ot">&lt;-</span> html_fil <span class="sc">%&gt;%</span> </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Les inn den første filen fra mappen</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_node</span>(<span class="st">&quot;h1&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Finn alle nodene som inneholder &quot;h1&quot; (h1 for &quot;heading 1&quot;)</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>() </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Hent ut teksten fra disse nodene</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> html_fil <span class="sc">%&gt;%</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_node</span>(<span class="st">&quot;#left-of-sidebar &gt; div.main-content &gt; div.tale-header &gt; ul&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>()</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>tale <span class="ot">&lt;-</span> html_fil <span class="sc">%&gt;%</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="st">&quot;p&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Finn alle nodene som inneholder &quot;p&quot; (p for &quot;paragraph&quot;)</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>()</span></code></pre></div>
+</section>
+<section class="slide level2">
+
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>overskrift</span></code></pre></div>
+<pre><code>## [1] &quot;Åtte krav for prostituerte&quot;</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>metadata</span></code></pre></div>
+<pre><code>## [1] &quot;\r\n\t\t\t\tKatharina  Sass\r\n\t\t\t\t\r\n\t\t\t\t\r\n\t\t\t\tDigital 1. mai-markering\r\n\t\t\t\t1. mai 2020\r\n\t\t\t\t\r\n\t\t\t\t\r\n\t\t\t&quot;</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>tale</span></code></pre></div>
+<pre><code>##  [1] &quot;Kilde: www.kvinnefronten.no&quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+##  [2] &quot;Kjære alle som feirer 1.mai i dette korona-året 2020. &quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+##  [3] &quot;Jeg er Katharina Sass, medlem i Kvinnefronten i Bergen, og jeg har i mange år vært aktivist mot prostitusjon både her i Norge og i mitt hjemland Tyskland.&quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+##  [4] &quot;Vi som kjemper for at også menneskerettighetene til prostituerte kvinner og andre mennesker i prostitusjon blir respektert, vi står overfor store utfordringer i disse tider. Korona-krisen har nemlig gjort at det har blitt innført prohibisjon i mange land. Dvs. at kvinner og andre i prostitusjon blir kriminalisert, de risikerer å bli straffet hvis de fortsetter å selge sex til tross for korona.&quot;                                                                                                                                                                                                                                         
+##  [5] &quot;I Tyskland har allerede flere kvinner fått bøter opp til 5000 euro for å ha solgt sex i disse siste ukene. Jeg vet ikke om noe slikt har skjedd i Norge. Men hvis det er tilfelle så vil vi i Kvinnefronten gjerne vite det, slik at vi kan hjelpe. Det er nemlig helt forkastelig å bøtelegge kvinner i prostitusjon, uansett korona.&quot;                                                                                                                                                                                                                                                                                                               
+##  [6] &quot;Hvorfor det? Vel, spør dere selv: Hvem er det som selger sex nå midt under en pandemi? Det er jo de mest fortvilte, de som virkelig ikke har noe annet valg. Og de har svært ofte ikke tilgang til sosialhjelp eller helsehjelp. Mange har ikke lovlig opphold, de er helt avhengig av hallikene sine, de har ikke noe sted å bo annet enn bordellene eller leilighetene der prostitusjon foregår. Mange har barn i sine hjemland som de må forsørge. Mange er også avhengige av narkotika. Noen har kanskje lovlig opphold, men har ingen nettverk utenfor prostitusjonsmiljøet som de kunne ha brukt, som kunne ha hjulpet dem i denne situasjonen.&quot;
+##  [7] &quot;Så vi som er aktivister mot prostitusjon har derfor 8 veldig enkle krav til våre regjeringer. Og det gjelder både her i Norge og i Tyskland og internasjonalt:&quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+##  [8] &quot;1.Gi mennesker i prostitusjon husly gratis. For eksempel på hoteller eller ungdomsherberger som uansett står tomme nå. Sørg for at de i hvert fall ikke må overnatte på bordellene eller i leilighetene der de blir utnyttet. For da blir de enda mer avhengig av sine halliker.&quot;                                                                                                                                                                                                                                                                                                                                                                     
+##  [9] &quot;2.Gi mennesker i prostitusjon ubetinget sosialhjelp. En kvinne som har blitt misbrukt av utallige menn i Norge eller i Tyskland eller hvor hun nå oppholder seg, hun bør ikke måtte tigge om å få sosialhjelp i det landet. Det bør være en selvfølge at hun får det. Og som et akutt tiltak bør hun få finansiell krisehjelp nå, og det inkluderer også å få betalt reise hjem til sitt hjemland eller sine barn, for de som ønsker det i dagens situasjon.&quot;                                                                                                                                                                                         
+## [10] &quot;3.Gi mennesker i prostitusjon tilgang til gratis, frivillig og ukomplisert helsehjelp.&quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+## [11] &quot;4.Gi mennesker i prostitusjon tilgang til gratis mat og hygieneprodukter.&quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+## [12] &quot;5.Invester mye mer i hjelpetiltak som legger opp til å få kvinnene og andre ut av prostitusjon og som gir reelle alternativer. Det er helt feil å stenge ned hjelpetiltak, eller gjøre dem om til telefontjenester nå under konorakrisen. Det er helt uansvarlig, for da når man ikke frem til de aller svakeste. Så dette må åpnes opp igjen så fort som mulig. Gjerne med smitteverntiltak, men det må åpnes opp igjen.&quot;                                                                                                                                                                                                                            
+## [13] &quot;6.Gi mennesker i prostitusjon ubetinget oppholdstillatelse nå.&quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+## [14] &quot;7.Kriminaliser mennene som fortsetter å kjøpe sex til tross for korona. Kriminaliser bordelleierne og hallikene som fortsetter å utnytte mennesker i prostitusjon. I Norge er sexkjøp og bordellvirksomhet heldigvis forbudt uansett, men i Tyskland og mange andre land er ikke dette tilfellet. Så da er Koronakrisen faktisk en mulighet til å innføre sexkjøpslov og forbud av bordellvirksomhet.&quot;                                                                                                                                                                                                                                                
+## [15] &quot;Og så til det aller aller viktigste:&quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+## [16] &quot;8.Mennesker i prostitusjon må aldri kriminaliseres eller straffes. I prostitusjon er det hallikene og bordelleierne og kjøperne som har makten, det er ikke de prostituerte. Og derfor må loven alltid stå på de prostituerte sin side. Å være fattig, fortvilt og i tillegg offer for seksuell vold, for det er jo det sexkjøp er, er ikke noen forbrytelse, ikke under korona-tider heller. Derfor krever vi at alle lover og regler som kriminaliserer prostituerte nå trekkes tilbake med en gang.&quot;                                                                                                                                               
+## [17] &quot;Takk for meg&quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+## [18] &quot;Virksomme ord støttes av Fritt ord og administreres av institutt for informasjons- og medievitenskap ved Universitetet i Bergen&quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+## [19] &quot;Vi har 2566 taler i databasen&quot;</code></pre>
+<h3
+id="for-løkke-laster-inn-data-fra-alle-.html-filene-i-mappen">For-løkke:
+Laster inn data fra <em>alle</em> .html-filene i mappen</h3>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>filer <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;./data/virksommeord/&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># List opp alle filene i mappen virksommeord, med full filsti</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>overskrifter <span class="ot">&lt;-</span> <span class="fu">list</span>() <span class="co"># Lag en tom liste som vi kan fylle opp</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>taler <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(filer)) { <span class="co"># For hver enhet (i) i objektet filer...</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  html_fil <span class="ot">&lt;-</span> <span class="fu">read_html</span>(filer[i]) <span class="co"># ... les inn nr. i av filene med read_html()</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  overskrifter[i] <span class="ot">&lt;-</span> html_fil <span class="sc">%&gt;%</span> <span class="co"># ... og i overskrift-listen, fyll opp plass nr. i med ...</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_node</span>(<span class="st">&quot;h1&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># ... den første noden som har tag &quot;h1&quot;</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text</span>() <span class="co"># ... sin tekst</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  metadata[i] <span class="ot">&lt;-</span> html_fil <span class="sc">%&gt;%</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_node</span>(<span class="st">&quot;#left-of-sidebar &gt; div.main-content &gt; div.tale-header &gt; ul&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text</span>()</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>  taler[i] <span class="ot">&lt;-</span> <span class="fu">read_html</span>(filer[i]) <span class="sc">%&gt;%</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_nodes</span>(<span class="st">&quot;p&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_c</span>(., <span class="at">collapse =</span> <span class="st">&quot; &quot;</span>) <span class="co"># Her limer vi sammen alle avsnittene til en tekst med &quot; &quot; som mellomrom</span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>taler_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">overskrift =</span> overskrifter, <span class="co"># Lag en variabel kalt &quot;overskrift&quot; med innholdet fra &quot;overskrifter&quot;-objektet</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">metadata =</span> metadata,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">tekst =</span> taler) <span class="sc">%&gt;%</span> <span class="co"># Lag en variabel kalt &quot;tekst&quot; med innholdet fra &quot;taler&quot;-objektet</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(<span class="at">cols =</span> <span class="fu">c</span>(overskrift, metadata, tekst)) <span class="co"># Gjør dem om fra liste til vanlige vektorer</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># write.table(taler_df, file = &quot;./data/taler_df.txt&quot;, fileEncoding = &quot;UTF-8&quot;) # For å lagre lokalt</span></span></code></pre></div>
+</section>
+<section class="slide level2">
+
+<p>Om du ikke får til for-løkken, bruk:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>taler_df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;https://www.dropbox.com/s/2dkmn0z64z1b4rt/taler_df.txt?dl=1&quot;</span>, </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">fileEncoding =</span> <span class="st">&quot;UTF-8&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span></code></pre></div>
+<p>OBS: kan ta litt tid + krever internett.</p>
+</section>
+<section id="det-endelige-datasettet" class="slide level2">
+<h2>Det endelige datasettet</h2>
+<ul>
+<li class="fragment">Hva er analyseenheten her?</li>
+</ul>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>taler_df</span></code></pre></div>
+<pre><code>## # A tibble: 100 x 3
+##    overskrift                                             metadata         tekst
+##    &lt;chr&gt;                                                  &lt;chr&gt;            &lt;chr&gt;
+##  1 Åtte krav for prostituerte                             &quot;\r\n\t\t\t\tKa~ &quot;Kil~
+##  2 Gi oss sjansen til å gjøre de store og viktige jobbene &quot;\r\n\t\t\t\tRa~ &quot;Kil~
+##  3 Enhver Krænkelse bør ophøre                            &quot;\r\n\t\t\t\tPe~ &quot;Kil~
+##  4 Vi kan alle gjøre en forskjell                         &quot;\r\n\t\t\t\tEr~ &quot;Kil~
+##  5 Skape og dele                                          &quot;\r\n\t\t\t\tRo~ &quot;Kil~
+##  6 Ærefulde og sikrende Vilkaar                           &quot;\r\n\t\t\t\tLo~ &quot;Kil~
+##  7 Riksrådsforhandlingene VI                              &quot;\r\n\t\t\t\tJa~ &quot;Kil~
+##  8 Å bevare freden for vårt eget land                     &quot;\r\n\t\t\t\tHa~ &quot;Kil~
+##  9 Vi har gjennomskuet Israels krigspropaganda            &quot;\r\n\t\t\t\tOl~ &quot;Kil~
+## 10 Vi skaper verdier og fordeler rettferdig               &quot;\r\n\t\t\t\tRo~ &quot;Kil~
+## # ... with 90 more rows</code></pre>
+</section></section>
+<section>
+<section id="forbehandling-av-tekst" class="title-slide slide level1">
+<h1>Forbehandling av tekst</h1>
+<div class="left" style="float:left;width:65%">
+<ul>
+<li class="fragment">Del 1: Rydde og strukturere
+<ul>
+<li class="fragment">tidyverse-funksjoner + <em>regex</em></li>
+</ul></li>
+<li class="fragment">Del 2: Preprosesseringsvalg
+<ul>
+<li class="fragment">Tokenisering</li>
+<li class="fragment">Sette til liten bokstav</li>
+<li class="fragment">Fjerne punktsetting og symboler</li>
+<li class="fragment">Fjerne tall</li>
+<li class="fragment">Fjerne stoppord</li>
+<li class="fragment">Stemming og lemmatisering</li>
+<li class="fragment">Fjerne svært sjeldne ord</li>
+</ul></li>
+<li class="fragment">Del 3: Vektorisering (fra tekst til tall)
+<ul>
+<li class="fragment">Sekk med ord</li>
+<li class="fragment">TF-IDF</li>
+<li class="fragment">Word embeddings</li>
+</ul></li>
+</ul>
+</div>
+<div class="right" style="float:right;width:35%">
+<p><img src="figurer/text_preprocessing.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+</section>
+<section id="rydde-og-strukturere" class="slide level2">
+<h2>Rydde og strukturere</h2>
+<ul>
+<li class="fragment">Vi må ofte rydde og strukturere i tekst for å få
+det datasettet vi trenger</li>
+<li class="fragment"><em>regex</em> er spesielt nyttig i slike
+tilfeller</li>
+</ul>
+<div class="fragment">
+<p><strong>Spesielle tegn i regex</strong></p>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 86%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Tegn</strong></th>
+<th><strong>Betydning</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>\</td>
+<td>Brukes for å omgå et tegn som betyr noe i regex</td>
+</tr>
+<tr class="even">
+<td>^</td>
+<td>Starten på en streng</td>
+</tr>
+<tr class="odd">
+<td>$</td>
+<td>Slutten på en streng</td>
+</tr>
+<tr class="even">
+<td>.</td>
+<td>Passer til et hvilket som helst tegn</td>
+</tr>
+<tr class="odd">
+<td>|</td>
+<td>Passer til forrige ELLER neste tegn/gruppe</td>
+</tr>
+<tr class="even">
+<td>?</td>
+<td>Passer null eller én av de forrige</td>
+</tr>
+<tr class="odd">
+<td>*</td>
+<td>Passer til null, én eller flere av de forrige</td>
+</tr>
+<tr class="even">
+<td>+</td>
+<td>Passer til en eller fler av det forrige</td>
+</tr>
+<tr class="odd">
+<td>( )</td>
+<td>En gruppe tegn</td>
+</tr>
+<tr class="even">
+<td>[ ]</td>
+<td>Passer til et sett av tegn</td>
+</tr>
+<tr class="odd">
+<td>{ }</td>
+<td>Passer til et spesifikt antall av forekomster av det forrige</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="slide level2">
+
+<ul>
+<li class="fragment">Bruker en blanding av <code>stringr</code>-pakken
+og <em>regex</em> for å opprette nye variabler.</li>
+</ul>
+<div class="fragment">
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>taler_df <span class="ot">&lt;-</span> taler_df <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">taler =</span> <span class="fu">str_extract</span>(metadata, <span class="st">&quot;[A-ZÆØÅa-zæøå]+</span><span class="sc">\\</span><span class="st">s+[A-ZÆØÅa-zæøå]+&quot;</span>), </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>         <span class="co"># To ord med først stor bokstav så små boksaver og whitespace (mellomrom) mellom</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>         </span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">dato =</span> <span class="fu">str_extract</span>(metadata, <span class="st">&quot;([0-9]+</span><span class="sc">\\</span><span class="st">. [a-z]+)? [0-9]{4}&quot;</span>), </span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>         <span class="co"># Henter ut tall fulgt av punktum, så bokstaver, så fire tall (f. eks. 1. desember 2020)</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>         </span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">aar =</span> <span class="fu">str_extract</span>(dato, <span class="st">&quot;[0-9]{4}&quot;</span>), </span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>         <span class="co"># Henter ut fra variabelen &quot;dato&quot; første segment med fire tall etter hverandre</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">tekst =</span> <span class="fu">str_remove</span>(tekst, <span class="st">&quot;Kilde: &quot;</span>), </span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>         <span class="co"># Overskriver tekst-variabelen, og fjerner første gang &quot;Kilde: &quot; dukker opp fra alle tekstene.</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>         </span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">tekst =</span> <span class="fu">str_squish</span>(tekst),</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">overskrift =</span> <span class="fu">str_squish</span>(overskrift)) </span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>         <span class="co"># Fjerner all &quot;støy&quot; fra teksten (f. eks. linjeskift \n)</span></span></code></pre></div>
+</div>
+</section>
+<section id="noen-stringr-funksjoner" class="slide level2">
+<h2>Noen <code>stringr</code> funksjoner</h2>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>eksempel <span class="ot">&lt;-</span> <span class="st">&quot;  Pakken stringr har mange nyttige funksjoner.   </span><span class="sc">\n</span><span class="st"> De kan brukes for å rydde og strukturere tekst.&quot;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">substr</span>(eksempel, <span class="dv">1</span>, <span class="dv">5</span>) <span class="co"># Hent ut deler av en streng (her fra posisjon 1 til posisjon 5)</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str_length</span>(eksempel) <span class="co"># Sjekk hvor mange tegn som finnes i en streng</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="fu">str_c</span>(eksempel, <span class="st">&quot; Blant annet.&quot;</span>) <span class="co"># Putt sammen to strenger. (Samme funksjon som paste og paste0)</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="fu">str_to_upper</span>(eksempel) <span class="co"># Gjør alle bokstaver til store bokstaver</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="fu">str_to_lower</span>(eksempel) <span class="co"># Gjør alle bokstaver til små bokstaver</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="fu">str_to_title</span>(eksempel) <span class="co"># Gi alle ord en stor forbokstav og deretter små bokstaver</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="fu">str_to_sentence</span>(eksempel) <span class="co"># Gi alle setninger en stor forbokstav og deretter små bokstaver</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="fu">str_detect</span>(eksempel, <span class="st">&quot;nyttige&quot;</span>) <span class="co"># Sjekk om mønsteret er en del av strengen</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="fu">str_subset</span>(eksempel, <span class="st">&quot;nyttige&quot;</span>) <span class="co"># Hent ut de strengene fra listen som har et spesifikt mønster</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="fu">str_locate</span>(eksempel, <span class="st">&quot;nyttige&quot;</span>) <span class="co"># Undersøk hvor i en streng et spesifikt mønster er</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract</span>(eksempel, <span class="st">&quot;nyttige&quot;</span>) <span class="co"># Hent ut kun deler av strengen som passer til et spesifikt mønster</span></span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a><span class="fu">str_remove</span>(eksempel, <span class="st">&quot;nyttige&quot;</span>) <span class="co"># Fjern fra en streng alle steder som passer til et spesifikt mønster</span></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a><span class="fu">str_replace</span>(eksempel, <span class="st">&quot;nyttige&quot;</span>, <span class="st">&quot;vanskelige&quot;</span>) <span class="co"># Erstatt deler av en streng med noe annet</span></span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a><span class="fu">str_trim</span>(eksempel) <span class="co"># Fjern whitespace fra foran og bak en streng</span></span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a><span class="fu">str_squish</span>(eksempel) <span class="co"># Fjern whitespace fra foran, bak og inni en streng</span></span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a><span class="fu">str_split</span>(eksempel, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>) <span class="co"># Lag en liste av strenger ved å splitte dem på et spesifikt mønster (her linjeskift, \n)</span></span></code></pre></div>
+</section></section>
+<section>
+<section id="preprosesseringsvalg" class="title-slide slide level1">
+<h1>Preprosesseringsvalg</h1>
+<p>Hvilke av disse burde vi gjøre? 🤔</p>
+<ul>
+<li class="fragment">Sette til liten bokstav</li>
+<li class="fragment">Fjerne punktsetting og symboler</li>
+<li class="fragment">Fjerne tall</li>
+<li class="fragment">Fjerne stoppord</li>
+<li class="fragment">Stemming og lemmatisering</li>
+<li class="fragment">Fjerne svært sjeldne ord</li>
+</ul>
+</section>
+<section id="analysen-kan-være-sensitiv-til-forbehandlingsvalg"
+class="slide level2">
+<h2>Analysen kan være sensitiv til forbehandlingsvalg</h2>
+<p><img src="figurer/topic_model_preprocess_sensitivity.PNG" width="60%" style="display: block; margin: auto;" /></p>
+<p><br></p>
+<p>Denny &amp; Spirling (2018) foreslår en framgangsmåte for å teste
+sensitivitet til forbehandlingsvalg:</p>
+</section>
+<section id="pretext" class="slide level2">
+<h2><code>preText</code></h2>
+<p>Finner “outliers” - hvor ulik blir en tekst de andre tekstene med en
+viss preprosessering?</p>
+<ul>
+<li class="fragment">Bruker en “distance metric” (som vi skal se mer på
+senere i emnet)</li>
+<li class="fragment">Rangerer dokumentparene som er mest ulike og
+genererer <em>preText scores</em> utfra dette.</li>
+<li class="fragment">Kan dermed lage en regresjonslikning for å måle
+hvilket preprosesseringssteg som har mest innvirkning på tekstene.</li>
+</ul>
+<!-- $preText score_i = β_0 + β_1Punctuation_i + β_2Numbers_i$ -->
+<!--   $+ β_3Lowercase_i + β_4Stem_i + β_5Stop Words_i +$ -->
+<!--   $β_6N-Grams_i + β_7Infrequent Terms_i + ε_i$ -->
+<div class="fragment">
+<p>Dessverre er ikke <code>preText</code> tilgjengelig lenger, men vi
+kan bruke intuisjonen videre:</p>
+<ul>
+<li class="fragment">Hvor mye endrer analysen seg når man gjør et visst
+preprosesseringssteg?</li>
+</ul>
+</div>
+</section>
+<section id="to-ulike-preprosesseringssteg" class="slide level2">
+<h2>To ulike preprosesseringssteg:</h2>
+<div class="left" style="float:left;width:49%">
+<p><small></p>
+<ul>
+<li class="fragment">Liten bokstav: Ja</li>
+<li class="fragment">Fjerne punktsetting og symboler: Ja</li>
+<li class="fragment">Fjerne tall: Ja</li>
+<li class="fragment">Fjerne stoppord: Ja</li>
+<li class="fragment">Stemming: Ja</li>
+<li class="fragment">Fjerne sjeldne ord: Ja (minst 15 %)</li>
+</ul>
+<p></small></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>taler_dfm1 <span class="ot">&lt;-</span> taler_df <span class="sc">%&gt;%</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(overskrift, aar) <span class="sc">%&gt;%</span> <span class="co"># Grupperer på overskrift og aar (sistnevnte fordi vi skal bruke aar senere)</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(., <span class="co"># Fra det gjeldende datasettet...</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">output =</span> token, <span class="co"># ... lag tokens kalt &quot;token&quot;</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">input =</span> tekst, <span class="co"># ... fra variabelen kalt &quot;tekst&quot;</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">token =</span> <span class="st">&quot;words&quot;</span>, <span class="co"># ... og la dette være unigram </span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">to_lower =</span> <span class="cn">TRUE</span>, <span class="co"># Sett alle bokstaver til små</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">stopwords =</span> quanteda<span class="sc">::</span><span class="fu">stopwords</span>(<span class="st">&quot;no&quot;</span>), <span class="co"># Fjern stoppordene i denne stoppord-lista</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">strip_punct =</span> <span class="cn">TRUE</span>, <span class="co"># Fjern punktsetting</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">strip_numeric =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> <span class="co"># Fjern tall</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">token =</span> quanteda<span class="sc">::</span><span class="fu">char_wordstem</span>(token, <span class="at">language =</span> <span class="st">&quot;norwegian&quot;</span>)) <span class="sc">%&gt;%</span> <span class="co"># Lag ord-stammer</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(token) <span class="sc">%&gt;%</span> <span class="co"># Tell opp frekvens av token per dokument</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cast_dfm</span>(., <span class="at">document =</span> overskrift, <span class="at">term =</span> token, <span class="at">value =</span> n) <span class="co"># Lag en document feature matrix</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>taler_dfm1 <span class="ot">&lt;-</span> <span class="fu">dfm_trim</span>(taler_dfm1, <span class="at">min_docfreq =</span> <span class="fl">0.15</span>, <span class="at">docfreq_type =</span> <span class="st">&quot;prop&quot;</span>) <span class="co"># Fjern ord som dukker opp svært sjelden</span></span></code></pre></div>
+</div>
+<div class="right" style="float:right;width:49%">
+<p><small></p>
+<ul>
+<li class="fragment">Liten bokstav: Ja</li>
+<li class="fragment">Fjerne punktsetting og symboler: Ja</li>
+<li class="fragment">Fjerne tall: Ja</li>
+<li class="fragment"><font style='color:#FFAF00;font-weight:bold'>Fjerne
+stoppord: Nei</font></li>
+<li class="fragment">Stemming: Ja</li>
+<li class="fragment">Fjerne sjeldne ord: Ja (minst 15 %)</li>
+</ul>
+<p></small></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>taler_dfm2 <span class="ot">&lt;-</span> taler_df <span class="sc">%&gt;%</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(overskrift, aar) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(., </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">output =</span> token, </span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">input =</span> tekst,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">token =</span> <span class="st">&quot;words&quot;</span>,</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">to_lower =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>                <span class="co">#stopwords = quanteda::stopwords(&quot;no&quot;),</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">strip_punct =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">strip_numeric =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">token =</span> quanteda<span class="sc">::</span><span class="fu">char_wordstem</span>(token, <span class="at">language =</span> <span class="st">&quot;norwegian&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(token) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cast_dfm</span>(., <span class="at">document =</span> overskrift, <span class="at">term =</span> token, <span class="at">value =</span> n)</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>taler_dfm2 <span class="ot">&lt;-</span> <span class="fu">dfm_trim</span>(taler_dfm2, <span class="at">min_docfreq =</span> <span class="fl">0.15</span>, <span class="at">docfreq_type =</span> <span class="st">&quot;prop&quot;</span>)</span></code></pre></div>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lag to dataframes med informasjon om distanse mellom dokumenter og gi distanse-variabelen nye navn i hvert objekt for å kunne sette dem sammen</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>dist1 <span class="ot">&lt;-</span> <span class="fu">as.dist</span>(<span class="fu">textstat_dist</span>(taler_dfm1)) <span class="sc">%&gt;%</span> <span class="fu">tidy</span>() <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">distance1 =</span> distance)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>dist2 <span class="ot">&lt;-</span> <span class="fu">as.dist</span>(<span class="fu">textstat_dist</span>(taler_dfm2)) <span class="sc">%&gt;%</span> <span class="fu">tidy</span>() <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">distance2 =</span> distance)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>diff_data <span class="ot">&lt;-</span> <span class="fu">left_join</span>(dist1, dist2, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;item1&quot;</span>, <span class="st">&quot;item2&quot;</span>)) <span class="co"># Sett sammen de to dataframene</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>diff_data <span class="sc">%&gt;%</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">differanse =</span> distance1 <span class="sc">-</span> distance2) <span class="sc">%&gt;%</span> <span class="co"># Lag en variabel med differansen mellom distansemålet i det første datasettet og i det andre</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(item1) <span class="sc">%&gt;%</span> <span class="co"># Grupper på første dokument</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">gjennomsnittlig_differanse =</span> <span class="fu">mean</span>(differanse)) <span class="sc">%&gt;%</span> <span class="co"># Finn gjennomsnittlig differanse til de andre dokumentene</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">item1 =</span> <span class="fu">fct_reorder</span>(item1, <span class="fu">desc</span>(gjennomsnittlig_differanse))) <span class="sc">%&gt;%</span> <span class="co"># Ranger slik at den med høyest differanse kommer øverst</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> item1, <span class="at">y =</span> gjennomsnittlig_differanse)) <span class="sc">+</span> <span class="co"># Plot dokument mot gjennomsnittlig differanse</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> item1, <span class="at">xend =</span> item1,  <span class="co"># Lag et &quot;lollipop&quot;-diagram</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> <span class="dv">0</span>, <span class="at">yend =</span> gjennomsnittlig_differanse),  </span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>               <span class="at">color=</span><span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> </span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+</section>
+<section
+id="gjennomsnittlig-endring-i-distanse-mål-med-og-uten-stoppord"
+class="slide level2" data-background="white">
+<h2 data-background="white">Gjennomsnittlig endring i distanse-mål med
+og uten stoppord</h2>
+<p><img src="uke04_prepros2_files/figure-revealjs/unnamed-chunk-17-1.png" width="672" /></p>
+</section>
+<section id="problemstillingsspesifikk-sjekk" class="slide level2">
+<h2>Problemstillingsspesifikk sjekk</h2>
+<ul>
+<li class="fragment">Hvor mye forskjellen ligger på, kommer også an på
+problemstillingen / forskningsspørsmålet og hypotesene</li>
+<li class="fragment">For eksempel:</li>
+</ul>
+<div class="fragment">
+<p>“Hvor forskjellige er taler fra hverandre i ulike år?”</p>
+<ul>
+<li class="fragment">H1: Taler fra da Norge var nytt og selvstendig vil
+ha større forskjeller fra hverandre enn Norge som etablert nasjon.</li>
+</ul>
+</div>
+<div class="fragment">
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>ant_taler <span class="ot">&lt;-</span> taler_df <span class="sc">%&gt;%</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(aar) <span class="sc">%&gt;%</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="co"># Tell opp hvor mange dokumenter som opptrer innenfor hvert år</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>diff_data  <span class="sc">%&gt;%</span> <span class="co"># Plot dette i et søylediagram</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(taler_df, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;item1&quot;</span> <span class="ot">=</span> <span class="st">&quot;overskrift&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">differanse =</span> distance1 <span class="sc">-</span> distance2) <span class="sc">%&gt;%</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(aar) <span class="sc">%&gt;%</span> <span class="co"># Grupper på år og ...</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">gjennomsnittlig_differanse =</span> <span class="fu">mean</span>(differanse)) <span class="sc">%&gt;%</span> <span class="co"># ... finn gjennomsnittlig differanse per år</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(ant_taler, <span class="at">by =</span> <span class="st">&quot;aar&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># Få med informasjon om hvor mange taler det var det året</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(gjennomsnittlig_differanse, aar)) <span class="sc">+</span>  </span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> n, <span class="at">x =</span> <span class="sc">-</span><span class="dv">10</span>), <span class="at">color =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span> <span class="co"># Plasser informasjonen om antall taler i søylen på søylediagrammet</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Gjennomsnittlig endring&quot;</span>, <span class="at">y =</span> <span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+</div>
+</section>
+<section
+id="gjennomsnittlig-endring-i-distanse-mål-med-og-uten-stoppord-per-år"
+class="slide level2" data-background="white">
+<h2 data-background="white">Gjennomsnittlig endring i distanse-mål med
+og uten stoppord per år</h2>
+<p><img src="uke04_prepros2_files/figure-revealjs/unnamed-chunk-19-1.png" width="768" /></p>
+</section></section>
+<section>
+<section id="tokensiering" class="title-slide slide level1">
+<h1>Tokensiering</h1>
+<p><img src="figurer/tokenizing.jpeg" width="100%" /></p>
+</section>
+<section class="slide level2">
+
+<ul>
+<li class="fragment">Enhetene: Dokumenter (bøker, rapporter, tweeter,
+setninger…)</li>
+<li class="fragment">Variablene: Tokens (ord, bokstaver,
+setninger…)</li>
+</ul>
+<p><br></p>
+<div class="fragment">
+<p><strong>Eksempel med setninger som dokument og ord som
+variabler:</strong></p>
+<table>
+<colgroup>
+<col style="width: 40%" />
+<col style="width: 4%" />
+<col style="width: 5%" />
+<col style="width: 6%" />
+<col style="width: 7%" />
+<col style="width: 4%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 5%" />
+<col style="width: 10%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Dokument</strong></th>
+<th>vi</th>
+<th>har</th>
+<th>sett</th>
+<th>havet</th>
+<th>er</th>
+<th>enormt</th>
+<th>større</th>
+<th>enn</th>
+<th>begriper</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>vi har sett havet vi</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>havet er enormt</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>større enn vi begriper</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="fjerning-av-stoppord-med-bigram">Fjerning av stoppord med
+bigram</h3>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>bigrams_separated <span class="ot">&lt;-</span> taler_df <span class="sc">%&gt;%</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(<span class="at">input =</span> tekst,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">output =</span> bigram,</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">token =</span> <span class="st">&quot;ngrams&quot;</span>,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">n =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(bigram, <span class="fu">c</span>(<span class="st">&quot;ord1&quot;</span>, <span class="st">&quot;ord2&quot;</span>), </span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>           <span class="co"># Separer variabel &quot;bigram&quot; inn i to variabler, &quot;ord1&quot; og &quot;ord2&quot;</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">sep =</span> <span class="st">&quot; &quot;</span>) <span class="co"># Separerer på mellomrom</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>stoppord <span class="ot">&lt;-</span> stopwords<span class="sc">::</span><span class="fu">stopwords</span>(<span class="st">&quot;no&quot;</span>) </span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Finner norske stoppord fra &quot;stopwords&quot; pakken</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>bigrams_filtered <span class="ot">&lt;-</span> bigrams_separated <span class="sc">%&gt;%</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>ord1 <span class="sc">%in%</span> stoppord) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Filtrerer ut stoppord fra variabel &quot;ord1&quot; (utropstegn betyr &quot;ikke&quot;)</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>ord2 <span class="sc">%in%</span> stoppord) </span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Filtrerer ut stoppord fra variabel &quot;ord2&quot;</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>bigrams_filtered <span class="sc">%&gt;%</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(overskrift, ord1, ord2) <span class="sc">%&gt;%</span></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">3</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 3 x 3
+##   overskrift                 ord1                 ord2 
+##   &lt;chr&gt;                      &lt;chr&gt;                &lt;chr&gt;
+## 1 Åtte krav for prostituerte www.kvinnefronten.no kjære
+## 2 Åtte krav for prostituerte feirer               1    
+## 3 Åtte krav for prostituerte 1                    mai</code></pre>
+</section></section>
+<section>
+<section id="vektorisering" class="title-slide slide level1">
+<h1>Vektorisering</h1>
+<ul>
+<li class="fragment">Enhetene er dokumenter, variablene er tokens. Hva
+er verdiene?</li>
+<li class="fragment">Kan være for eksempel:
+<ul>
+<li class="fragment">sekk med ord (bag of words)</li>
+<li class="fragment">TF-IDF</li>
+<li class="fragment"><strong>word embeddings</strong></li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="eksempel-på-vektorisering-med-sekk-med-ord">Eksempel på
+vektorisering med sekk med ord:</h3>
+<p>Sekk med ord (bag of words, BoW)</p>
+<p>Frekvensen av ord per dokument, dvs. antall ganger et ord forekommer
+per dokument.</p>
+<p><br></p>
+<table>
+<colgroup>
+<col style="width: 40%" />
+<col style="width: 4%" />
+<col style="width: 5%" />
+<col style="width: 6%" />
+<col style="width: 7%" />
+<col style="width: 4%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 5%" />
+<col style="width: 10%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Dokument</strong></th>
+<th>vi</th>
+<th>har</th>
+<th>sett</th>
+<th>havet</th>
+<th>er</th>
+<th>enormt</th>
+<th>større</th>
+<th>enn</th>
+<th>begriper</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>vi har sett havet vi</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>havet er enormt</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>havet er større enn vi begriper</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="slide level2">
+
+<h3 id="eksempel-på-vektorisering-med-tf-idf">Eksempel på vektorisering
+med TF-IDF:</h3>
+<p>TF-IDF: (Term Frequency Inverse Document Frequency):</p>
+<p>Et vektet antall ganger ord forekommer per dokument.</p>
+<p><br></p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 31%" />
+<col style="width: 4%" />
+<col style="width: 6%" />
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 8%" />
+<col style="width: 9%" />
+<col style="width: 8%" />
+<col style="width: 6%" />
+<col style="width: 10%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Dokument</strong></th>
+<th>vi</th>
+<th>har</th>
+<th>sett</th>
+<th>havet</th>
+<th>er</th>
+<th>enormt</th>
+<th>større</th>
+<th>enn</th>
+<th>begriper</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>vi har sett havet vi</td>
+<td>0</td>
+<td>0.16</td>
+<td>0.16</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>havet er enormt</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.14</td>
+<td>0.37</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>havet er større enn vi begriper</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.07</td>
+<td>0</td>
+<td>0.18</td>
+<td>0.18</td>
+<td>0.18</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="word-embeddings" class="slide level2">
+<h2>Word embeddings</h2>
+<p>Grimmer, Roberts &amp; Stewart (2022, p. 79): “The core insight of
+<em>distributional representations</em> is to represent a word as a
+<em>dense</em> vector in a low-dimensional space learned from unlabeled
+data.”</p>
+<p>Med andre ord:</p>
+<ul>
+<li class="fragment">Vi unngår å måtte lage datasett med ekstremt mange
+variabler (også kalt “dimensjoner”) (low-dimensional space).</li>
+<li class="fragment">Fordi vi representerer ord annerledes slik at vi
+unngår mange nuller i kolonnene (dense vector).</li>
+<li class="fragment">Siden algoritmen er ikke-veiledet (“unsupervised”),
+så trenger vi ikke ferdig-klassifisert data (labeled data).</li>
+<li class="fragment">Algoritmen lærer utfra tanken om at et ords verdi
+kan representeres utfra ordfordelingen den opptrer i (distributional
+representations).</li>
+</ul>
+</section>
+<section id="word-embeddings-1" class="slide level2">
+<h2>Word embeddings</h2>
+<p>Fordelingshypotesen: Ord som opptrer i samme kontekst har samme
+mening.</p>
+<ul>
+<li class="fragment"><p>“You shall know a word by the company it keeps”
+(Firth, 1957)</p></li>
+<li class="fragment"><p>Ordene plasseres i et vektorrom (<em>vector
+space</em>) med like mange dimensjoner som vi har “kontekster”, og måler
+ordenes retning etter hvor hyppig de opptrer i samme kontekst.</p></li>
+</ul>
+</section>
+<section id="section" class="slide level2"
+data-background="./figurer/vectorspace.jpg">
+<h2 data-background="./figurer/vectorspace.jpg"></h2>
+</section>
+<section id="tre-fordeler-med-word-embeddings" class="slide level2">
+<h2>Tre fordeler med word embeddings</h2>
+<p><strong>1. De gir et estimat på likhet.</strong></p>
+<p>I en vektorrommet vil ord med liknende mening peke i samme retning,
+og stå i forhold til nabo-ord.</p>
+<p><img src="figurer/king_queen.png" width="60%" style="display: block; margin: auto;" /></p>
+</section>
+<section class="slide level2">
+
+<p><strong>2. De muliggjør automatisk generalisering.</strong></p>
+<p>Vi trenger ikke ha alle ordene i vårt datasett, siden word embeddings
+gjør at vi automatisk vet hvilke ord som likner.</p>
+<p>For eksempel:</p>
+<ul>
+<li class="fragment">Vi ønkser å bruke et datasett på twitterutsagn
+under koronapandemien for å hvordan positivitet og negativitet endrer
+seg mellom kommuner.</li>
+<li class="fragment">Datasettet har 1000 rader (dvs. observasjoner,
+altså dokumenter, som i vårt tilfelle er tweeter).</li>
+<li class="fragment">Ordet “fantastisk” dukker aldri opp i tweetene, men
+det gjør ordet “bra”.</li>
+<li class="fragment">Vi trener word embeddings på hele den norske
+Wikipedia. Modellen skjønnet at ordene “bra” og “fantastisk” likner
+hverandre.</li>
+<li class="fragment">Vi kan trekke linjen at når ordet “bra” regnes som
+positivt, så gjør også ordet “fantastisk” det.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<p><strong>3. De kan (til dels) måle et ords mening.</strong></p>
+<ul>
+<li class="fragment">Mening i dette tilfellet betyr at ordene dukker opp
+i samme kontekst.</li>
+<li class="fragment">Slik kan vi vurdere variasjon i mening (f. eks.
+mellom land eller over tid).</li>
+</ul>
+<p><br></p>
+<div class="fragment">
+<p>State of the Union taler (Grimmer et al., 2022):</p>
+<ul>
+<li class="fragment"><em>Manifacturing</em> før 1960: exportation,
+oil-related, energy-intensive, import/export, defense-related</li>
+<li class="fragment"><em>Manifacturing</em> etter 1960: retooling, jobs,
+offshoring, outsources, globalized, low-skilled, retraining</li>
+</ul>
+</div>
+</section>
+<section id="word-embeddings---datasett" class="slide level2">
+<h2>Word embeddings - datasett</h2>
+<div class="left" style="float:left;width:45%">
+<ul>
+<li class="fragment">Vi kan lage egne datasett med word embeddings.</li>
+<li class="fragment">Disse er gjerne trent på veldig store mengder
+tekst.</li>
+<li class="fragment">Vi kan enten lage egne datasett med word
+embeddings, eller bruke allerede eksisterende data.</li>
+</ul>
+</div>
+<div class="right" style="float:right;width:45%">
+<p><img src="figurer/large_archive.jpg" width="80%" style="display: block; margin: auto;" /></p>
+</div>
+</section>
+<section id="word-embeddings---datasett-1" class="slide level2">
+<h2>Word embeddings - datasett</h2>
+<p>Designvalg i word embeddings:</p>
+<ol type="1">
+<li class="fragment"><strong>Datakilde:</strong> Word embeddings bør
+være trent på tekst som er innenfor samme “domenefelt”.</li>
+<li class="fragment"><strong>Størrelse på kontekstvindu:</strong> Hva
+som menes med “nærliggende” ord må defineres.</li>
+<li class="fragment"><strong>Dimensjonalitet:</strong> Flere dimensjoner
+gir mer kompleksitet, typisk har vi et sted mellom 50 og 500.</li>
+<li class="fragment"><strong>Valg av algoritme:</strong>
+<ul>
+<li class="fragment">Latent semantisk analyse</li>
+<li class="fragment">Nevrale ord-embeddings (continous bag of words
+(<em>CBOW</em>) og skipgram-modellen)</li>
+<li class="fragment">Ferdigtrente embeddings (<code>word2vec</code>,
+<code>GloVe</code>, <code>fastText</code>)</li>
+</ul></li>
+</ol>
+</section>
+<section id="lager-word-embeddings-med-fasttextr" class="slide level2">
+<h2>Lager word embeddings med <code>fastTextR</code></h2>
+<p>Flere pakker for å lage word embeddings, f. eks.
+<code>word2vec</code>, <code>GloVe</code> og <code>fastTextR</code></p>
+<ul>
+<li class="fragment">Eksempel med <code>fastTextR</code></li>
+<li class="fragment">Obs: krever en spesiell form for preprosessering,
+se script fra forelesning for å se hvordan</li>
+</ul>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>ft_cbow <span class="ot">&lt;-</span> <span class="fu">ft_train</span>(taletekster, </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">type =</span> <span class="st">&quot;cbow&quot;</span>, <span class="co"># Finn word embedding med CBOW</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">control =</span> <span class="fu">ft_control</span>(<span class="at">window_size =</span> 5L)) <span class="co"># La modellen lære fra de fem nærmeste ordene</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>ft_skipgram <span class="ot">&lt;-</span> <span class="fu">ft_train</span>(taletekster, </span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>                        <span class="at">type =</span> <span class="st">&quot;skipgram&quot;</span>, <span class="co"># Finn word embeddings med skipgram</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>                        <span class="at">control =</span> <span class="fu">ft_control</span>(<span class="at">window_size =</span> 5L)) <span class="co"># La modellen lære fra de fem nærmeste ordene</span></span></code></pre></div>
+</section>
+<section id="lager-word-embeddings-med-fasttextr-1"
+class="slide level2">
+<h2>Lager word embeddings med <code>fastTextR</code></h2>
+<ul>
+<li class="fragment">Bruker <code>ft_word_vectors</code> for å finne
+målet på ordene.</li>
+<li class="fragment">Her for ordene “godt” og “norge” på dimensjon 1, 2,
+3, 4, og 5.</li>
+</ul>
+<div class="fragment">
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ft_word_vectors</span>(ft_cbow, <span class="fu">c</span>(<span class="st">&quot;godt&quot;</span>, <span class="st">&quot;norge&quot;</span>))[,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code></pre></div>
+<pre><code>##                [,1]          [,2]          [,3]          [,4]         [,5]
+## godt  -0.0012784299  0.0003698020 -0.0004565331 -0.0001233523 -0.001227778
+## norge  0.0002549113 -0.0001809372  0.0002066236  0.0002806669  0.001085047</code></pre>
+</div>
+</section>
+<section id="lager-word-embeddings-med-fasttextr-2"
+class="slide level2">
+<h2>Lager word embeddings med <code>fastTextR</code></h2>
+<ul>
+<li class="fragment">Bruker <code>ft_nearest_neighbors</code> for å
+finne hvilke ord som likner mest.</li>
+</ul>
+<div class="fragment">
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">ord =</span> <span class="fu">names</span>(<span class="fu">ft_nearest_neighbors</span>(ft_cbow, <span class="st">&quot;norge&quot;</span>, <span class="at">k =</span> 5L)),</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">score =</span> <span class="fu">ft_nearest_neighbors</span>(ft_cbow, <span class="st">&quot;norge&quot;</span>, <span class="at">k =</span> 5L))</span></code></pre></div>
+<pre><code>## # A tibble: 5 x 2
+##   ord      score
+##   &lt;chr&gt;    &lt;dbl&gt;
+## 1 norges   0.619
+## 2 daglig   0.386
+## 3 fader    0.363
+## 4 kostet   0.304
+## 5 styrelse 0.303</code></pre>
+</div>
+<div class="fragment">
+<p>Synes du dette virker som en god modell?</p>
+</div>
+</section>
+<section id="word-embeddings-med-ferdigtrent-data-fra-fasttext"
+class="slide level2">
+<h2>Word embeddings med ferdigtrent data fra FastText</h2>
+<p><img src="figurer/fasttext_wordembed.PNG" width="90%" style="display: block; margin: auto;" /></p>
+</section>
+<section id="word-embeddings-med-ferdigtrent-data-fra-fasttext-1"
+class="slide level2">
+<h2>Word embeddings med ferdigtrent data fra FastText</h2>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>pretrained <span class="ot">&lt;-</span> <span class="fu">ft_load</span>(<span class="st">&quot;./data/cc.no.300.bin&quot;</span>) </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Hvis du ønsker å laste ned ferdigtrente word embeddings til din PC, kan du finne Fasttext sine her: https://fasttext.cc/docs/en/crawl-vectors.html</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">ord =</span> <span class="fu">names</span>(<span class="fu">ft_nearest_neighbors</span>(pretrained, <span class="st">&quot;norge&quot;</span>, <span class="at">k =</span> 5L)),</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">score =</span> <span class="fu">ft_nearest_neighbors</span>(pretrained, <span class="st">&quot;norge&quot;</span>, <span class="at">k =</span> 5L))</span></code></pre></div>
+<pre><code>## # A tibble: 5 x 2
+##   ord       score
+##   &lt;chr&gt;     &lt;dbl&gt;
+## 1 sverige   0.581
+## 2 norge.    0.565
+## 3 usa       0.553
+## 4 trondheim 0.541
+## 5 oslo      0.540</code></pre>
+<!-- ## Hvordan aggreggere opp fra ord til dokument? -->
+<!-- - Smooth Inverse Frequency (SIF): Ta gjennomsnittet av word embeddings for hvert ord i dokumentet. -->
+<!-- - `doc2vec`: Finner representasjoner på avsnittsnivå. -->
+<!-- - Dyplæringsalgoritmer, f. eks. RNN (tilbakevendende nevralt nettverk, *recurrent neural network*) -->
+</section>
+<section id="validering-av-word-embeddings" class="slide level2">
+<h2>Validering av word embeddings</h2>
+<ul>
+<li class="fragment">Vurder utfra din egen problemstilling - hvor god er
+tekstrepresentasjonen for <em>din</em> analyse?</li>
+</ul>
+<p><br></p>
+<ul>
+<li class="fragment">Kan vurdere hvor mye ordene likner på hverandre
+utfra dokumentmassen med ordlikhetsanalyser, f. eks.
+<em>cosine</em>.</li>
+</ul>
+<p><br></p>
+<ul>
+<li class="fragment">Kan bruke menneskekodere for å validere hvor vidt
+de helst velger maskin- eller menneskevalgte ord som mest likt et gitt
+ord.</li>
+</ul>
+</section>
+<section id="det-nyeste-innen-word-embeddings" class="slide level2">
+<h2>Det nyeste innen word embeddings</h2>
+<p><strong>Kontekstualisert word embedding</strong></p>
+<ul>
+<li class="fragment">BERT (Bidirectional Encoder Representations from
+Transformers)</li>
+<li class="fragment">GPT-3 (Generative Pre-trained Transformer)</li>
+</ul>
+<div class="fragment">
+<p><strong>Men:</strong> Krever enormt mye prosessorkraft, og kan både
+være dyrt (kjører gjerne modellen i skyen) og tidkrevende (dager, uker
+eller til og med måneder).</p>
+</div>
+</section></section>
+<section id="takk-for-i-dag" class="title-slide slide level1">
+<h1>Takk for i dag :)</h1>
+<p><img src="figurer/librarian.png" width="80%" /></p>
+</section>
+    </div>
+  </div>
+
+  <script src="uke04_prepros2_files/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="uke04_prepros2_files/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+        // Display a presentation progress bar
+        progress: true,
+        // Display the page number of the current slide
+        slideNumber: true,
+        // Push each slide change to the browser history
+        history: true,
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+        // Enable the slide overview mode
+        overview: true,
+        // Vertical centering of slides
+        center: false,
+        // Enables touch navigation on devices with touch input
+        touch: true,
+        // Turns fragments on and off globally
+        fragments: true,
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+        // Transition style
+        transition: 'convex', // none/fade/slide/convex/concave/zoom
+        // Transition speed
+        transitionSpeed: 'default', // default/fast/slow
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+
+
+        chalkboard: {
+        },
+
+        keyboard: {
+          67: function() { RevealChalkboard.toggleNotesCanvas() },    // toggle notes canvas when 'c' is pressed
+          66: function() { RevealChalkboard.toggleChalkboard() }, // toggle chalkboard when 'b' is pressed
+          46: function() { RevealChalkboard.clear() },    // clear chalkboard when 'DEL' is pressed
+           8: function() { RevealChalkboard.reset() },    // reset chalkboard data on current slide when 'BACKSPACE' is pressed
+          68: function() { RevealChalkboard.download() }, // downlad recorded chalkboard drawing when 'd' is pressed
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'uke04_prepros2_files/reveal.js-3.3.0.1/plugin/notes/notes.js', async: true },
+          { src: 'uke04_prepros2_files/reveal.js-3.3.0.1/plugin/chalkboard/chalkboard.js', async: true },
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+  </body>
+</html>
