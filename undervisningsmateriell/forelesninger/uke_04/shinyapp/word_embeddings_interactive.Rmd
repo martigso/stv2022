@@ -1,0 +1,64 @@
+---
+title: "Illustrasjon av word embeddings"
+author: "Solveig Bjørkholt"
+output: flexdashboard::flex_dashboard
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(shiny)
+library(fastTextR)
+```
+
+Column
+-----------------------------------------------------------------------
+
+### Word embeddings med egentrent data fra virksommeord.no
+
+```{r, echo = FALSE}
+
+ft_cbow <- ft_train("../data/talertekster.txt", 
+                    type = "cbow",
+                    control = ft_control(window_size = 5L))
+
+fluidPage(
+    textInput("ord1", "Skriv et ord:", "")
+  )
+
+fluidPage(
+    numericInput("tall1", "Antall like ord:", 5)
+  )
+
+renderTable({
+    tibble(ord = names(ft_nearest_neighbors(ft_cbow, input$ord1, k = input$tall1)),
+           score = ft_nearest_neighbors(ft_cbow, input$ord1, k = input$tall1))
+})
+
+
+```
+
+Column
+-----------------------------------------------------------------------
+
+### Word embeddings med ferdigtrent data
+
+```{r, echo = FALSE}
+
+pretrained <- ft_load("../data/cc.no.300.bin") 
+
+fluidPage(
+    textInput("ord2", "Skriv et ord:", "")
+)
+
+fluidPage(
+    numericInput("tall2", "Antall like ord:", 5)
+  )
+
+renderTable({
+    tibble(ord = names(ft_nearest_neighbors(pretrained, input$ord2, k = input$tall2)),
+           score = ft_nearest_neighbors(pretrained, input$ord2, k = input$tall2))
+})
+
+```
