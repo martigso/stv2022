@@ -1,4 +1,4 @@
-## ----setup, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE------------------------------------------------------
+## ----setup, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE----------------------------------------------------------------------------------------
 
 # setwd("./undervisningsmateriell/seminarer")
 library(knitr)
@@ -24,7 +24,7 @@ library(ggplot2)
 load("./data/saker.rda")
 
 
-## ----siste_commit, echo=FALSE------------------------------------------------------------------------------------------
+## ----siste_commit, echo=FALSE----------------------------------------------------------------------------------------------------------------------------
 
 gh_com <- "https://github.com/martigso/stv2022/commits/master.atom" %>% 
   rvest::read_html(.)
@@ -45,7 +45,7 @@ gh_com_date_latest <- gh_com %>%
 cat(paste0(gh_com_title_latest, " (", gh_com_date_latest, ")"))
 
 
-## ----laste_data_data, eval=-1------------------------------------------------------------------------------------------
+## ----laste_data_data, eval=-1----------------------------------------------------------------------------------------------------------------------------
  
 library(stortingscrape)
 #saker <- cases$root
@@ -57,19 +57,19 @@ saker %>%
 
 
 
-## ----rda_save, eval=FALSE----------------------------------------------------------------------------------------------
+## ----rda_save, eval=FALSE--------------------------------------------------------------------------------------------------------------------------------
 ## 
 ## save(saker, file = "./data/saker.rda")
 ## 
 
 
-## ----rda_load----------------------------------------------------------------------------------------------------------
+## ----rda_load--------------------------------------------------------------------------------------------------------------------------------------------
 
 load("./data/saker.rda")
 
 
 
-## ----csv---------------------------------------------------------------------------------------------------------------
+## ----csv-------------------------------------------------------------------------------------------------------------------------------------------------
 
 library(readr)
 
@@ -77,19 +77,19 @@ saker <- read_csv("./data/saker.csv", show_col_types = FALSE)
 
 
 
-## ----sav---------------------------------------------------------------------------------------------------------------
+## ----sav-------------------------------------------------------------------------------------------------------------------------------------------------
 library(haven)
 saker <- read_sav("./data/saker.sav")
 
 
 
-## ----dta---------------------------------------------------------------------------------------------------------------
+## ----dta-------------------------------------------------------------------------------------------------------------------------------------------------
 
 saker <- read_dta("./data/saker.dta")
 
 
 
-## ----txt---------------------------------------------------------------------------------------------------------------
+## ----txt-------------------------------------------------------------------------------------------------------------------------------------------------
 
 filer <- list.files("./data/txt", pattern = ".txt", full.names = TRUE)
 filer
@@ -102,26 +102,26 @@ titler[[1]]
 
 
 
-## ----txt2--------------------------------------------------------------------------------------------------------------
+## ----txt2------------------------------------------------------------------------------------------------------------------------------------------------
 
 names(titler) <- str_extract(filer, "[0-9]+")
 names(titler)
 
 
 
-## ----txt3--------------------------------------------------------------------------------------------------------------
+## ----txt3------------------------------------------------------------------------------------------------------------------------------------------------
 saker_txt <- data.frame(titler = unlist(titler),
                         id = names(titler))
 
 
-## ----txt4--------------------------------------------------------------------------------------------------------------
+## ----txt4------------------------------------------------------------------------------------------------------------------------------------------------
 saker_merge <- left_join(saker_txt, saker[, c("id", "title")], by = "id")
 
 saker_merge$titler == saker_merge$title
 
 
 
-## ----msw_zip-----------------------------------------------------------------------------------------------------------
+## ----msw_zip---------------------------------------------------------------------------------------------------------------------------------------------
 
 unzip("data/ba_thesis.docx", exdir = "data/wordfiles")
 
@@ -129,14 +129,14 @@ list.files("data/wordfiles/")
 
 
 
-## ----read_msw_feil, warning=TRUE---------------------------------------------------------------------------------------
+## ----read_msw_feil, warning=TRUE-------------------------------------------------------------------------------------------------------------------------
 
 readLines("./data/ba_thesis.docx", n = 2)
 
 
 
 
-## ----docx--------------------------------------------------------------------------------------------------------------
+## ----docx------------------------------------------------------------------------------------------------------------------------------------------------
 
 library(textreadr)
 
@@ -146,7 +146,7 @@ ba_docx[43:46]
 
 
 
-## ----read_pdf----------------------------------------------------------------------------------------------------------
+## ----read_pdf--------------------------------------------------------------------------------------------------------------------------------------------
 
 ba_pdf <- read_pdf("./data/ba_thesis.pdf")
 
@@ -158,23 +158,23 @@ ba_pdf[11:14]
 
 
 
-## ----wiki_bilde, out.width="100%", echo = FALSE------------------------------------------------------------------------
+## ----wiki_bilde, out.width="100%", echo = FALSE----------------------------------------------------------------------------------------------------------
 knitr::include_graphics("./figurer/wikipedia.png")
 
 
-## ----wiki_bilde2, out.width="100%", echo = FALSE-----------------------------------------------------------------------
+## ----wiki_bilde2, out.width="100%", echo = FALSE---------------------------------------------------------------------------------------------------------
 knitr::include_graphics("./figurer/wikipedia2.png")
 
 
-## ----wiki_bilde3, out.width="50%", fig.align="center", echo = FALSE----------------------------------------------------
+## ----wiki_bilde3, out.width="50%", fig.align="center", echo = FALSE--------------------------------------------------------------------------------------
 knitr::include_graphics("./figurer/wikipedia3.png")
 
 
-## ----laste_rvest-------------------------------------------------------------------------------------------------------
+## ----laste_rvest-----------------------------------------------------------------------------------------------------------------------------------------
 library(rvest)
 
 
-## ----laste_ned_appelsin, eval=FALSE------------------------------------------------------------------------------------
+## ----laste_ned_appelsin, eval=FALSE----------------------------------------------------------------------------------------------------------------------
 ## 
 ## download.file("https://en.wikipedia.org/wiki/Orange_(fruit)", # Last ned en html-fil ...
 ##                 destfile = "./data/links/Oranges.html") # ... inn i en spesifikk mappe
@@ -184,7 +184,7 @@ library(rvest)
 ## 
 
 
-## ----lese_appelsin, warning=FALSE, error=FALSE, message=FALSE, eval=-4-------------------------------------------------
+## ----lese_appelsin, warning=FALSE, error=FALSE, message=FALSE, eval=-4-----------------------------------------------------------------------------------
 
 library(rvest)
 
@@ -194,58 +194,56 @@ read_html("./data/links/Oranges.html") # Les inn fra din nedlastede fil
 
 
 
-## ----appelsin_bilde, out.width="100%", echo = FALSE--------------------------------------------------------------------
+## ----appelsin_bilde, out.width="100%", echo = FALSE------------------------------------------------------------------------------------------------------
 knitr::include_graphics("./figurer/oranges1.png")
 
 
-## ----appelsin_bilde2, out.width="100%", echo = FALSE-------------------------------------------------------------------
+## ----appelsin_bilde2, out.width="100%", echo = FALSE-----------------------------------------------------------------------------------------------------
 knitr::include_graphics("./figurer/oranges2.png")
 
 
-## ----strukturere_appelsin----------------------------------------------------------------------------------------------
+## ----strukturere_appelsin--------------------------------------------------------------------------------------------------------------------------------
 
 read_html("./data/links/Oranges.html") %>%
-  html_node("#mw-content-text > div.mw-parser-output > p:nth-child(9)") %>%
+  html_element("#mw-content-text > div.mw-parser-output > p:nth-child(9)") %>%
   html_text(trim = TRUE)
 
 
 
-## ----appelsin_bilde3, out.width="100%", echo = FALSE-------------------------------------------------------------------
+## ----appelsin_bilde3, out.width="100%", echo = FALSE-----------------------------------------------------------------------------------------------------
 knitr::include_graphics("./figurer/oranges3.png")
 
 
-## ----appelsintabell----------------------------------------------------------------------------------------------------
+## ----appelsintabell--------------------------------------------------------------------------------------------------------------------------------------
 
 read_html("./data/links/Oranges.html") %>%
-  html_node("#mw-content-text > div.mw-parser-output > table.infobox.nowrap") %>%
+  html_element("#mw-content-text > div.mw-parser-output > table.infobox.nowrap") %>%
   html_table()
 
 
 
-## ----appelsintabell2---------------------------------------------------------------------------------------------------
+## ----appelsintabell2-------------------------------------------------------------------------------------------------------------------------------------
 
 read_html("./data/links/Oranges.html") %>%
-  html_node("#mw-content-text > div.mw-parser-output > table.infobox.nowrap") %>%
+  html_element("#mw-content-text > div.mw-parser-output > table.infobox.nowrap") %>%
   html_table() %>%
   na_if("") %>% # Erstatter "" med NA (missing)
   na.omit() # Fjerner alle NA
 
 
 
-## ----trekke_ut_lenker, eval = FALSE------------------------------------------------------------------------------------
+## ----trekke_ut_lenker, eval = FALSE----------------------------------------------------------------------------------------------------------------------
 ## 
 ## read_html("./data/links/Oranges.html") %>%
-##   html_node("#mw-content-text > div.mw-parser-output > p:nth-child(9)") %>%
-##   html_elements("a") %>%
+##   html_elements("#mw-content-text > div.mw-parser-output > p:nth-child(9) > a") %>%
 ##   html_attr("href")
 ## 
 
 
-## ----trekke_ut_lenker2-------------------------------------------------------------------------------------------------
+## ----trekke_ut_lenker2-----------------------------------------------------------------------------------------------------------------------------------
 
 links <- read_html("./data/links/Oranges.html") %>%
-  html_node("#mw-content-text > div.mw-parser-output > p:nth-child(9)") %>%
-  html_elements("a") %>%
+  html_elements("#mw-content-text > div.mw-parser-output > p:nth-child(9) > a") %>%
   html_attr("href") %>%
   str_extract("/wiki.*") %>% # Samle bare de URL-ene som starter med "/wiki", fulgt av hva som helst (.*)
   na.omit() %>% # Alle andre strenger blir NA, vi fjerner disse
@@ -253,7 +251,7 @@ links <- read_html("./data/links/Oranges.html") %>%
 
 
 
-## ----laste_ned_flere_sider, eval=FALSE---------------------------------------------------------------------------------
+## ----laste_ned_flere_sider, eval=FALSE-------------------------------------------------------------------------------------------------------------------
 ## 
 ## linkstopic <- str_remove(links, "https://en.wikipedia.org//wiki/")
 ## 
@@ -265,7 +263,7 @@ links <- read_html("./data/links/Oranges.html") %>%
 ## 
 
 
-## ----laste_inn_flere_filer---------------------------------------------------------------------------------------------
+## ----laste_inn_flere_filer-------------------------------------------------------------------------------------------------------------------------------
 
 fruit_files <- list.files("./data/links", full.names = TRUE) # Liste med filene vi har lastet ned
 
@@ -291,7 +289,7 @@ info[[3]][2]
 
 
 
-## ----swapi_intro, echo=1:5, eval=6-------------------------------------------------------------------------------------
+## ----swapi_intro, echo=1:5, eval=6-----------------------------------------------------------------------------------------------------------------------
 
 person1_url <- "https://swapi.dev/api/people/1/"
 
@@ -301,7 +299,7 @@ readLines("./data/swapi/person1.json")
 
 
 
-## ----swapi_luke--------------------------------------------------------------------------------------------------------
+## ----swapi_luke------------------------------------------------------------------------------------------------------------------------------------------
 
 library(jsonlite)
 
@@ -315,11 +313,11 @@ person1$starships
 
 
 
-## ----swapi_long_ex, file="r/swapi_ex.R", eval=FALSE, class.source="fold-hide"------------------------------------------
+## ----swapi_long_ex, file="r/swapi_ex.R", eval=FALSE, class.source="fold-hide"----------------------------------------------------------------------------
 ## 
 
 
-## ----entur_dl, eval=FALSE----------------------------------------------------------------------------------------------
+## ----entur_dl, eval=FALSE--------------------------------------------------------------------------------------------------------------------------------
 ## 
 ## if(file.exists("./data/ruter.xml") == FALSE){
 ##   download.file(url = "https://api.entur.io/realtime/v1/rest/et?datasetId=RUT",
@@ -335,7 +333,7 @@ person1$starships
 ## 
 
 
-## ----entur_les, eval=FALSE---------------------------------------------------------------------------------------------
+## ----entur_les, eval=FALSE-------------------------------------------------------------------------------------------------------------------------------
 ## 
 ## library(rvest)
 ## 
@@ -343,11 +341,11 @@ person1$starships
 ## 
 
 
-## ----entur_jukselitt, echo=FALSE, eval=TRUE----------------------------------------------------------------------------
+## ----entur_jukselitt, echo=FALSE, eval=TRUE--------------------------------------------------------------------------------------------------------------
 load("./data/entur_alle_stop.rda")
 
 
-## ----entur_strukt, eval=FALSE, echo=TRUE-------------------------------------------------------------------------------
+## ----entur_strukt, eval=FALSE, echo=TRUE-----------------------------------------------------------------------------------------------------------------
 ## # Deler opp .xml-dokumentet i hver del som er innenfor
 ## # <recordedcall> . . . </recordedcall
 ## stopp <- ruter %>% html_elements("recordedcall")
@@ -372,7 +370,7 @@ load("./data/entur_alle_stop.rda")
 ## 
 
 
-## ----entur_wordcloud---------------------------------------------------------------------------------------------------
+## ----entur_wordcloud-------------------------------------------------------------------------------------------------------------------------------------
 
 # Viser data
 head(alle_stopp)
@@ -403,7 +401,7 @@ stop_name_count %>%
 
 
 
-## ----kravling, eval=FALSE----------------------------------------------------------------------------------------------
+## ----kravling, eval=FALSE--------------------------------------------------------------------------------------------------------------------------------
 ## # Laster inn pakke for kravling
 ## library(Rcrawler)
 ## 
@@ -414,7 +412,7 @@ stop_name_count %>%
 ##          RequestsDelay = 2 + abs(rnorm(1)))
 
 
-## ----bow, tidy=TRUE, results='markup'----------------------------------------------------------------------------------
+## ----bow, tidy=TRUE, results='markup'--------------------------------------------------------------------------------------------------------------------
 
 regndans <- readLines("./data/regndans.txt")
 
@@ -426,17 +424,17 @@ cat(bow[sample(1:length(bow))])
 
 
 
-## ----dragepust---------------------------------------------------------------------------------------------------------
+## ----dragepust-------------------------------------------------------------------------------------------------------------------------------------------
 
 regndans[which(str_detect(regndans, "dragepust"))]
 
 
 
-## ----regndans_full, echo=FALSE-----------------------------------------------------------------------------------------
+## ----regndans_full, echo=FALSE---------------------------------------------------------------------------------------------------------------------------
 cat(paste(regndans, collapse = "\n"))
 
 
-## ----zipf, echo=TRUE, eval=TRUE, warning=FALSE-------------------------------------------------------------------------
+## ----zipf, echo=TRUE, eval=TRUE, warning=FALSE-----------------------------------------------------------------------------------------------------------
 
 library(janeaustenr)
 library(dplyr)
@@ -467,13 +465,13 @@ tidy_books %>% head(300) %>%
 
 
 
-## ----quanteda_stopwords_nor, fold.output=FALSE-------------------------------------------------------------------------
+## ----quanteda_stopwords_nor, fold.output=FALSE-----------------------------------------------------------------------------------------------------------
 
 quanteda::stopwords("no")
 
 
 
-## ----no4_stoppordliste-------------------------------------------------------------------------------------------------
+## ----no4_stoppordliste-----------------------------------------------------------------------------------------------------------------------------------
 library(tidytext)
 
 load("./data/no4.rda")
@@ -500,7 +498,7 @@ no4_tokens %>%
 
 
 
-## ----no4_idf_stop------------------------------------------------------------------------------------------------------
+## ----no4_idf_stop----------------------------------------------------------------------------------------------------------------------------------------
 
 idf_stop <- no4_tokens %>%
   bind_tf_idf(token, titler, n) %>% 
@@ -513,7 +511,7 @@ idf_stop
 
 
 
-## ----no4_idf_stop_gone-------------------------------------------------------------------------------------------------
+## ----no4_idf_stop_gone-----------------------------------------------------------------------------------------------------------------------------------
 
 idf_stop <- idf_stop %>% 
   filter(idf < 1)
@@ -527,7 +525,7 @@ no4_tokens %>%
 
 
 
-## ----fjerne_puktsetting------------------------------------------------------------------------------------------------
+## ----fjerne_puktsetting----------------------------------------------------------------------------------------------------------------------------------
 
 no4_tokens <- no4 %>%
   group_by(spor, titler) %>%
@@ -541,7 +539,7 @@ no4_tokens$token %>%
 
 
 
-## ----ikke_fjerne_puktsetting-------------------------------------------------------------------------------------------
+## ----ikke_fjerne_puktsetting-----------------------------------------------------------------------------------------------------------------------------
 
 no4_tokens <- no4 %>%
   group_by(spor, titler) %>%
@@ -553,7 +551,7 @@ table(str_detect(no4_tokens$token, "[[:punct:]]"))
 
 
 
-## ----fjerne_tall-------------------------------------------------------------------------------------------------------
+## ----fjerne_tall-----------------------------------------------------------------------------------------------------------------------------------------
 no4_tokens <- no4 %>%
   group_by(spor, titler) %>%
   unnest_tokens(output = token,
@@ -564,7 +562,7 @@ table(str_detect(no4_tokens$token, "[0-9]"))
 
 
 
-## ----stemming----------------------------------------------------------------------------------------------------------
+## ----stemming--------------------------------------------------------------------------------------------------------------------------------------------
 
 stem1 <- tokenizers::tokenize_words("det satt to katter på et bord") %>% 
   unlist() %>% 
@@ -578,7 +576,7 @@ cbind(stem1, stem2, samme = stem1 == stem2)
 
 
 
-## ----uregel_stemming---------------------------------------------------------------------------------------------------
+## ----uregel_stemming-------------------------------------------------------------------------------------------------------------------------------------
 
 stem1 <- tokenizers::tokenize_words("jeg har én god fot og én dårlig hånd") %>% 
   unlist() %>% 
@@ -592,7 +590,7 @@ cbind(stem1, stem2, samme = stem1 == stem2)
 
 
 
-## ----spacyr_ex, eval = FALSE, echo = TRUE, warning=FALSE---------------------------------------------------------------
+## ----spacyr_ex, eval = FALSE, echo = TRUE, warning=FALSE-------------------------------------------------------------------------------------------------
 ## 
 ## library(spacyr)
 ## spacy_initialize("nb_core_news_lg")
@@ -604,7 +602,7 @@ cbind(stem1, stem2, samme = stem1 == stem2)
 ## spacy_eksempel
 
 
-## ----spacy_juksechunk, echo=FALSE--------------------------------------------------------------------------------------
+## ----spacy_juksechunk, echo=FALSE------------------------------------------------------------------------------------------------------------------------
 
 load("./data/spacy_eksempel.rda")
 
@@ -612,7 +610,7 @@ spacy_eksempel
 
 
 
-## ----merke_subverb-----------------------------------------------------------------------------------------------------
+## ----merke_subverb---------------------------------------------------------------------------------------------------------------------------------------
 
 tekst2 <- stortingscrape::read_obt("./data/lemmatisering/tekst2_tag.txt")
 
@@ -620,7 +618,7 @@ tekst2
 
 
 
-## ----pos_eks, warning=FALSE, eval=FALSE--------------------------------------------------------------------------------
+## ----pos_eks, warning=FALSE, eval=FALSE------------------------------------------------------------------------------------------------------------------
 ## 
 ## grei1 <- "den snegler seg fremover"
 ## grei2 <- "det er mange snegler her"
@@ -634,7 +632,7 @@ tekst2
 ## grei
 
 
-## ----spacy_juksechunk2, echo=FALSE-------------------------------------------------------------------------------------
+## ----spacy_juksechunk2, echo=FALSE-----------------------------------------------------------------------------------------------------------------------
 
 load("./data/spacy_eksempel2.rda")
 
@@ -642,11 +640,11 @@ grei
 
 
 
-## ----tokenizing_fig, out.width="100%", echo = FALSE--------------------------------------------------------------------
+## ----tokenizing_fig, out.width="100%", echo = FALSE------------------------------------------------------------------------------------------------------
 knitr::include_graphics("./figurer/tokenizing.jpeg")
 
 
-## ----unigram-----------------------------------------------------------------------------------------------------------
+## ----unigram---------------------------------------------------------------------------------------------------------------------------------------------
 no4 %>%
   group_by(spor, titler) %>%
   unnest_tokens(output = token,
@@ -654,7 +652,7 @@ no4 %>%
                 token = "words")
 
 
-## ----bigram------------------------------------------------------------------------------------------------------------
+## ----bigram----------------------------------------------------------------------------------------------------------------------------------------------
 no4 %>%
   group_by(spor, titler) %>%
   unnest_tokens(output = token,
@@ -663,7 +661,7 @@ no4 %>%
                 n = 2) 
 
 
-## ----we_strukturere----------------------------------------------------------------------------------------------------
+## ----we_strukturere--------------------------------------------------------------------------------------------------------------------------------------
 
 stoppord <- stopwords::stopwords("Norwegian") # Finner stoppord fra den norske bokmålslista til "stopwords" pakken
 
@@ -680,12 +678,12 @@ no4_prepped <- no4 %>%
 
 
 
-## ----we_tmpfile--------------------------------------------------------------------------------------------------------
+## ----we_tmpfile------------------------------------------------------------------------------------------------------------------------------------------
 no4_tekster <- tempfile() # Oppretter en midlertidig fil på PCen
 writeLines(text = no4_prepped %>% pull(tekst), con = no4_tekster) # I denne filen skriver vi inn teksten fra datasettet. 
 
 
-## ----fasttextr_train_test----------------------------------------------------------------------------------------------
+## ----fasttextr_train_test--------------------------------------------------------------------------------------------------------------------------------
 
 library(fastTextR)
 
@@ -699,26 +697,307 @@ ft_skipgram <- ft_train(no4_tekster,
 
 
 
-## ----we_features-------------------------------------------------------------------------------------------------------
+## ----we_features-----------------------------------------------------------------------------------------------------------------------------------------
 ft_word_vectors(ft_cbow, c("fordi", "himmel"))
 
 
-## ----we_nearest_neighbors----------------------------------------------------------------------------------------------
+## ----we_nearest_neighbors--------------------------------------------------------------------------------------------------------------------------------
 ft_nearest_neighbors(ft_cbow, "himmel", k = 5L)
 
 
-## ----norsentlex_hidden, echo=FALSE-------------------------------------------------------------------------------------
+## ----governing_with_words, out.width="40%", fig.align='center', echo = FALSE-----------------------------------------------------------------------------
+knitr::include_graphics("./figurer/governing_with_words.jfif")
+
+
+## ---- message=FALSE, warning = FALSE, error = FALSE------------------------------------------------------------------------------------------------------
+
+library(tidyverse)
+library(jsonlite)
+library(plotly)
+
+tedtalks <- read_csv("./data/teds.csv") %>% # Leser inn data fra en .csv-fil
+  janitor::clean_names() # Bruker funksjonen "clean_names" fra pakken "janitor" for å gjøre variabelnavnene litt penere
+
+tedtalks_subset <- tedtalks %>% # Fra objektet tedtalks
+  rename(doc_id = id) %>% # Endrer navn på variabelen "id" til å hete "doc_id" isteden
+  select(doc_id, transcript, topics) %>% # Henter ut variablene doc_id, transcript og topics
+  mutate(topics = map(topics, # Variabelen topics ligger inne i json-format, jeg bruker "map" for å gå over hver rad 
+                      ~ fromJSON(.) %>% # og gjør om fra json-format slik at vi får to variabler "id" på topic og "name" på topic
+                        as_tibble())) %>% # Gjør om til en vanlig tibble (en R dataframe)
+  unnest(cols = c(topics)) %>% # Hver talk har flere topics, når jeg bruker unnest får hver topic sin egen rad
+  select(-id) # Fjerner variabelen som indikerer topicet sin id
+
+tedtalks_subset %>%
+  count(name) %>% # Teller opp hvor mange ganger hver topic dukker opp
+  plot_ly(x = ~n, # Plotter med plotly-pakken (kunne også brukt ggplot, men da blir det ikke interaktivt)
+          y = ~name, # Setter antall ganger topic dukker opp på x-aksen og navnet på topicet på y-aksen
+          text = ~name, # Når man hovrer over søylene, skal man få opp navn på topic
+          type = "bar")  %>% # Lager et stolpediagram (bar chart)
+  layout(xaxis = list(title = ""), # Ønsker ikke at det skal være tekst på y-eller x-aksen
+         yaxis = list(title = "", categoryorder = "total ascending")) # Sorter søylene i synkende rekkefølge ift. y-aksen (altså antallet)
+
+
+
+## ---- message=FALSE, warning = FALSE, error = FALSE------------------------------------------------------------------------------------------------------
+
+tedtalks_subset <- tedtalks_subset %>%
+  filter(name %in% c("politics", "international relations")) %>% # Hent ut de talene som har politics og/eller international relations som tema
+  mutate(tema = "politikk") %>% # Lag en variabel "topic" med verdien "politikk".
+  select(doc_id, tema) %>% # Hent ut id på TED-talken og dens topic
+  unique() # Fjern duplikater
+
+ted <- tedtalks_subset %>%
+  full_join(tedtalks %>% # Sett sammen datasettet som bare inneholder talks som handlet om politikk, med det fulle datasettet...
+              select(id, transcript, topics), # ...der jeg plukker ut kun variablene "id", "transcript" og "topics"
+            by = c("doc_id" = "id")) %>% # Endre navn på id til doc_id
+  mutate(tema = replace_na(tema, "annet")) %>% # Variabel "tema" har missingverdien for de talkene som ikke handler om politikk, jeg bytter ut missing med "annet"
+  select(transcript, tema) %>% # Hent ut to kolonner, kolonnen med tekst (transcript) og kolonnen med merke (tema)
+  rename(text = transcript) %>% # Endre navn på transcript-variabelen til "text" (for at senere kode skal fungere)
+  drop_na(text) # Fjern missingverdier fra variabelen "text"
+
+
+
+## --------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ted %>% 
+  count(tema) # Tell opp hvor mange rader som har hver sin verdi på variabelen "tema". 
+
+
+
+## ----overfitting, out.width="50%", fig.align='center', echo = FALSE--------------------------------------------------------------------------------------
+knitr::include_graphics("./figurer/overfitting.png")
+
+
+## ----testtreningvalideringssett, out.width="50%", fig.align='center', echo = FALSE-----------------------------------------------------------------------
+knitr::include_graphics("./figurer/split_data2.png")
+
+
+## ---- message=FALSE, warning = FALSE, error = FALSE------------------------------------------------------------------------------------------------------
+
+library(tidymodels)
+
+set.seed(930) # Denne koden gjør at R gir tilsvarende resultater hver gang man kjører samme kode (dvs. splitter på samme sted)
+
+ted_splitt <- initial_split(ted, #  Del datasettet i to
+                            prop = 0.8, # 80 prosent av data (dvs. 80 prosen av radene/talksene) skal gå inn i treningsdata, resten blir testdata
+                            strata = tema) # Passer på at Y, tema, er godt representert i både treningsdatasett og testdatasett
+
+ted_trening <- training(ted_splitt) # Lager treningsdatasett
+ted_test <- testing(ted_splitt) # Lager testdatasett
+
+ted_trening %>% head()
+ted_test %>% head()
+
+ted_folds <- vfold_cv(ted_trening, # Splitt treningsdatasettet inn i valideringsdatasett 
+                      strata = tema, # Passer på at Y, tema, er godt representert i både valideringsdatasett og treningsdatasett
+                      v = 5) # Splitter opp fem ganger (slik at vi får "5-fold cross validation")
+
+ted_folds
+
+
+
+## ---- message=FALSE, warning = FALSE, error = FALSE------------------------------------------------------------------------------------------------------
+
+library(textrecipes)
+library(quanteda)
+library(tm)
+
+ted_oppskrift <- recipe(tema ~ ., data = ted_trening) %>% # Modellen jeg ønsker å kjøre - jeg vil estimere Y ved å bruke resten av dataene
+  step_mutate(text = str_to_lower(text)) %>% # Setter alle til liten bokstav
+  step_mutate(text = removeNumbers(text)) %>%  # Fjerner tall
+  step_mutate(text = removePunctuation(text)) %>% # Fjerner punktsetting
+  step_tokenize(text) %>% # Tokeniserer teksten
+  step_stem(text) %>% # Lager ordstammer
+  step_stopwords(text, custom_stopword_source = stopwords("en")) %>% # Fjerner stoppord
+  step_tokenfilter(text, max_tokens = 1000, min_times = 2) %>% # Beholder tokens som dukker opp maks 1000 ganger, fjerner de som dukker opp mindre enn 2 ganger
+  step_tfidf(text) # Vektoriserer teksten med TF-IDF
+
+prep(ted_oppskrift) %>% # Iverksetter preprosesseringsstegene slik beskrevet i oppskriften over
+  bake(new_data = NULL) %>% # Ser på hvordan oppskrifts-objektet ser ut
+  head(5) %>% select(1:5) # Henter ut de fem første radene, og de fem første kolonnene
+
+
+
+## --------------------------------------------------------------------------------------------------------------------------------------------------------
+contrl_preds <- control_resamples(save_pred = TRUE) # Velger å lagre prediksjonene etter at modellen har kjørt
+
+
+## ---- eval = FALSE---------------------------------------------------------------------------------------------------------------------------------------
+## 
+## glmn_spec <-
+##   logistic_reg(penalty = 0.001, # Setter et par argumenter for å forhinde modeller fra å overtilpasse seg
+##                mixture = 0.5) %>% # Dette er typisk noe man går fram og tilbake med (kalt å "tune" modellen)
+##   set_engine("glmnet") %>% # Logistisk modell får vi ved å spesifisere "glmnet"
+##   set_mode("classification") # Vi ønsker klassifisering, ikke regresjon
+## 
+## glm_wf <- workflow(ted_oppskrift, # Datasettet vårt etter preprosessering
+##                    glmn_spec) # Modellen som spesifisert over, altså logitisk
+## 
+## glm_rs <- fit_resamples( # Passer modellen ved å bruke testdata og valideringsdata i sekvens fem ganger
+##   glm_wf, # Dette objektet forteller hva som er data og hva som er modellen
+##   resamples = ted_folds, # Spesifiserer hva valideringsdataene er
+##   control = contrl_preds # Legger valgene som jeg lagret over
+## )
+## 
+
+
+## ---- echo = FALSE---------------------------------------------------------------------------------------------------------------------------------------
+load("./data/glm_rs.rda")
+
+
+## ---- eval = FALSE---------------------------------------------------------------------------------------------------------------------------------------
+## 
+## rf_spec <-
+##   rand_forest(trees = 500) %>% # Spesifiserer valg for å prøve å sørge for at modellen er best mulig tilpasset data
+##   set_mode("classification")
+## 
+## rf_wf <- workflow(ted_oppskrift,
+##                   rf_spec)
+## 
+## ranger_rs <- fit_resamples(
+##   rf_wf,
+##   resamples = ted_folds,
+##   control = contrl_preds
+## )
+## 
+
+
+## ---- echo = FALSE---------------------------------------------------------------------------------------------------------------------------------------
+load("./data/ranger_rs.rda")
+
+
+## ---- eval = FALSE---------------------------------------------------------------------------------------------------------------------------------------
+## 
+## svm_spec <-
+##   svm_rbf() %>%
+##   set_engine("kernlab", scaled = FALSE) %>% # Valg for å tune modellen
+##   set_mode("classification")
+## 
+## svm_wf <- workflow(ted_oppskrift,
+##                    svm_spec)
+## 
+## svm_rs <- fit_resamples(
+##   svm_wf,
+##   resamples = ted_folds,
+##   control = contrl_preds,
+## )
+## 
+
+
+## ---- echo = FALSE---------------------------------------------------------------------------------------------------------------------------------------
+
+svm_spec <-
+  svm_rbf() %>%
+  set_engine("kernlab", scaled = FALSE) %>% # Valg for å tune modellen
+  set_mode("classification") 
+
+svm_wf <- workflow(ted_oppskrift, 
+                   svm_spec)
+
+load("./data/svm_rs.rda")
+
+
+## ----klasse1, out.width="80%", fig.align='center', echo = FALSE------------------------------------------------------------------------------------------
+knitr::include_graphics("./figurer/klass1.PNG")
+
+
+## ----klasse2, out.width="80%", fig.align='center', echo = FALSE------------------------------------------------------------------------------------------
+knitr::include_graphics("./figurer/klass2.PNG")
+
+
+## --------------------------------------------------------------------------------------------------------------------------------------------------------
+
+collect_metrics(glm_rs) # Accuracy til den logistiske modellen er på 95 prosent. Den klassifiserer 95 prosent av observasjonene riktig.
+collect_metrics(ranger_rs) # Random forest klassifiserer 95,2 prosent av observasjonene riktig
+collect_metrics(svm_rs) # SVM klassifiserer 95,9 prosent riktig.
+
+
+
+## --------------------------------------------------------------------------------------------------------------------------------------------------------
+# Lager forvirringsmatriser for hver av modellene
+
+metrikk_glm <- collect_predictions(glm_rs)
+metrikk_glm %>%
+  conf_mat(truth = tema, estimate = .pred_class) %>%
+  autoplot(type = "heatmap")
+
+metrikk_rf <- collect_predictions(ranger_rs) 
+metrikk_rf %>%
+  conf_mat(truth = tema, estimate = .pred_class) %>%
+  autoplot(type = "heatmap")
+
+metrikk_svm <- collect_predictions(svm_rs) 
+metrikk_svm %>%
+  conf_mat(truth = tema, estimate = .pred_class) %>%
+  autoplot(type = "heatmap")
+
+
+
+## --------------------------------------------------------------------------------------------------------------------------------------------------------
+# Undersøker recall for hver av modellene
+spec(metrikk_rf, metrikk_rf$.pred_class, metrikk_rf$tema)
+spec(metrikk_glm, metrikk_glm$.pred_class, metrikk_glm$tema)
+spec(metrikk_svm, metrikk_svm$.pred_class, metrikk_svm$tema)
+
+
+## --------------------------------------------------------------------------------------------------------------------------------------------------------
+
+final_fitted <- last_fit(svm_wf, ted_splitt) # Passer SVM-modellen til testdatasettet
+
+collect_metrics(final_fitted) # Sjekker hvor bra modellen gjorde det (accuracy og ROC-kurve)
+
+
+
+## ---- eval = FALSE---------------------------------------------------------------------------------------------------------------------------------------
+## 
+## library(tidytext)
+## library(quanteda)
+## library(rainette)
+## 
+## tedtalks_tfidf <- tedtalks %>%
+##   group_by(id) %>%
+##   unnest_tokens(input = transcript,
+##                 output = token,
+##                 strip_punct = TRUE,
+##                 strip_numeric = TRUE,
+##                 token = "words") %>%
+##   filter(!token %in% stopwords("en")) %>%
+##   count(token) %>%
+##   bind_tf_idf(token, id, n) %>%
+##   na.omit()
+## 
+## tedtalks_dfm <- tedtalks_tfidf %>%
+##   cast_dfm(id, token, tf_idf) %>%
+##   dfm_trim(min_termfreq = 2, max_termfreq = 1000)
+## 
+## rainette_cluster <- rainette(
+##   tedtalks_dfm,
+##   k = 8)
+## 
+
+
+## ---- echo = FALSE---------------------------------------------------------------------------------------------------------------------------------------
+load("./data/rainette_cluster.rda")
+load("./data/tedtalks_dfm.rda")
+library(rainette)
+
+
+## --------------------------------------------------------------------------------------------------------------------------------------------------------
+rainette_plot(rainette_cluster, tedtalks_dfm, k = 6)
+
+
+## ----norsentlex_hidden, echo=FALSE-----------------------------------------------------------------------------------------------------------------------
 load("./data/nor_fullform_sent.rda")
 load("./data/nor_lemma_sent.rda")
 
 
-## ----norsentlex_load, eval=FALSE---------------------------------------------------------------------------------------
+## ----norsentlex_load, eval=FALSE-------------------------------------------------------------------------------------------------------------------------
 ## # devtools::install_github("martigso/NorSentLex")
 ## 
 ## # library(NorSentLex)
 
 
-## ----norsentlex_general------------------------------------------------------------------------------------------------
+## ----norsentlex_general----------------------------------------------------------------------------------------------------------------------------------
 
 # Ordbøker i fullform
 names(nor_fullform_sent)
@@ -728,7 +1007,7 @@ names(nor_lemma_sent)
 
 
 
-## ----pos_fullform, echo=-1---------------------------------------------------------------------------------------------
+## ----pos_fullform, echo=-1-------------------------------------------------------------------------------------------------------------------------------
 set.seed(58493)
 nor_fullform_sent$positive %>% head()
 nor_fullform_sent$positive %>% tail()
@@ -736,13 +1015,13 @@ nor_fullform_sent$positive %>% sample(., 6)
 
 
 
-## ----pos_subst, echo=-1------------------------------------------------------------------------------------------------
+## ----pos_subst, echo=-1----------------------------------------------------------------------------------------------------------------------------------
 set.seed(8943)
 nor_lemma_sent$lemma_noun_positive %>% sample(., 6)
 
 
 
-## ----regndans_sent_setup-----------------------------------------------------------------------------------------------
+## ----regndans_sent_setup---------------------------------------------------------------------------------------------------------------------------------
 
 library(tidytext)
 
@@ -754,7 +1033,7 @@ no4 <- no4 %>%
 
 
 
-## ----regndans_sent-----------------------------------------------------------------------------------------------------
+## ----regndans_sent---------------------------------------------------------------------------------------------------------------------------------------
 
 
 no4$pos_sent <- ifelse(no4$ord %in% nor_fullform_sent$positive, 1, 0)
@@ -766,7 +1045,7 @@ table(no4$pos_sent,
 
 
 
-## ----no4_sent_sum------------------------------------------------------------------------------------------------------
+## ----no4_sent_sum----------------------------------------------------------------------------------------------------------------------------------------
 
 no4_sent <- no4 %>% 
   group_by(titler) %>% 
@@ -777,7 +1056,7 @@ no4_sent <- no4 %>%
 no4_sent
 
 
-## ----no4_vis-----------------------------------------------------------------------------------------------------------
+## ----no4_vis---------------------------------------------------------------------------------------------------------------------------------------------
 
 no4_sent %>% 
   mutate(neg_sent = neg_sent * -1) %>% 
@@ -796,7 +1075,7 @@ no4_sent %>%
 
 
 
-## ----writeManifest, echo=FALSE, eval=FALSE-----------------------------------------------------------------------------
+## ----writeManifest, echo=FALSE, eval=FALSE---------------------------------------------------------------------------------------------------------------
 ## 
 ## # Oppdaterer manifest -- jeg tror vi må kjøre denne manuelt hver
 ## # gang før vi pusher til github. uio-serveren er hvertfall ikke fornøyd

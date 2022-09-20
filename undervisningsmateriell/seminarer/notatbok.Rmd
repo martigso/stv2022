@@ -507,7 +507,7 @@ Når vi skraper en nettside, er det fem steg vi må gjennom:
 1. I RStudio, skriv `read_html` og sett som argument addressen eller filstien til nettsiden du vil hente informasjon fra.
 2. "Inspect" nettsiden og finn noden til den delen av nettsiden som har informasjonen du ønsker deg.
 3. Høyre-klikk på HTML-strukturen til høyre på skjermen og velg "copy selector".
-4. Gå tilbake til RStudio. I `html_node` spesifiserer du den relevante noden ved å lime inn det du kopierte i forrige steg. 
+4. Gå tilbake til RStudio. I `html_element` spesifiserer du den relevante noden ved å lime inn det du kopierte i forrige steg. 
 5. Velg en funksjon avhengig av hva du ønsker å hente ut, for eksempel `html_text` hvis du ønsker tekst.
 
 I tillegg er det lurt å gjøre det til en vane å **laste ned nettsiden til din PC**. Dette vil hjelpe på flere måter:
@@ -558,12 +558,12 @@ For å skrape denne informasjonen, sett musepekeren over avsnittet og høyreklik
 knitr::include_graphics("./figurer/oranges2.png")
 ```
 
-Lim inn dette under `html_node`. Videre, siden vi ønsker oss tekst, velg `html_text`. For å ta ut whitespace kan vi sette `trim = TRUE`.
+Lim inn dette under `html_element`. Videre, siden vi ønsker oss tekst, velg `html_text`. For å ta ut whitespace kan vi sette `trim = TRUE`.
 
 ```{r strukturere_appelsin}
 
 read_html("./data/links/Oranges.html") %>%
-  html_node("#mw-content-text > div.mw-parser-output > p:nth-child(9)") %>%
+  html_element("#mw-content-text > div.mw-parser-output > p:nth-child(9)") %>%
   html_text(trim = TRUE)
 
 ```
@@ -581,7 +581,7 @@ knitr::include_graphics("./figurer/oranges3.png")
 ```{r appelsintabell}
 
 read_html("./data/links/Oranges.html") %>%
-  html_node("#mw-content-text > div.mw-parser-output > table.infobox.nowrap") %>%
+  html_element("#mw-content-text > div.mw-parser-output > table.infobox.nowrap") %>%
   html_table()
 
 ```
@@ -591,7 +591,7 @@ Vi kan i tillegg rydde litt opp i koden for å få en penere tabell.
 ```{r appelsintabell2}
 
 read_html("./data/links/Oranges.html") %>%
-  html_node("#mw-content-text > div.mw-parser-output > table.infobox.nowrap") %>%
+  html_element("#mw-content-text > div.mw-parser-output > table.infobox.nowrap") %>%
   html_table() %>%
   na_if("") %>% # Erstatter "" med NA (missing)
   na.omit() # Fjerner alle NA
@@ -605,8 +605,7 @@ Internett er proppfullt av lenker. Det er lurt å vite hvordan man skraper dem, 
 ```{r trekke_ut_lenker, eval = FALSE}
 
 read_html("./data/links/Oranges.html") %>%
-  html_node("#mw-content-text > div.mw-parser-output > p:nth-child(9)") %>%
-  html_elements("a") %>%
+  html_elements("#mw-content-text > div.mw-parser-output > p:nth-child(9) > a") %>%
   html_attr("href")
 
 ```
@@ -616,8 +615,7 @@ For å få fullstendige lenker, må hente ut de lenkene vi tenker å bruke og li
 ```{r trekke_ut_lenker2}
 
 links <- read_html("./data/links/Oranges.html") %>%
-  html_node("#mw-content-text > div.mw-parser-output > p:nth-child(9)") %>%
-  html_elements("a") %>%
+  html_elements("#mw-content-text > div.mw-parser-output > p:nth-child(9) > a") %>%
   html_attr("href") %>%
   str_extract("/wiki.*") %>% # Samle bare de URL-ene som starter med "/wiki", fulgt av hva som helst (.*)
   na.omit() %>% # Alle andre strenger blir NA, vi fjerner disse
@@ -920,6 +918,53 @@ Nå teksten gir mening! Tolkninger kan selvfølgelig variere fra individ til ind
 Hovedpoenget med å vise dette er at *sekk med ord*-antagelsen er veldig sterk og ofte veldig urealistisk. Tekster (og språk generelt) er ekstremt komplekst. Det kan variere mellom geografiske områder (nasjoner, dialekter, osv), aldersgrupper, arenaer (talestol, dialog, monolog, osv), og individuell stil. Oppi alt dette skal vi prøve å finne mønster som sier noe om likhet/ulikhet mellom tekster. Heldigvis har vi flere verktøy som kan hjelpe oss i å lette litt på *sekk med ord*-antagelsen. Men antagelsen vil likevel alltid være der, i en eller annen form. La oss se litt på hvilke teknikker vi kan bruke for å gjøre modellering av tekst noe mer omgripelig¸ men aller først skal vi se litt på hvilke trekk som muligens ikke gir oss så mye informasjon om det vi er ute etter, eller støy, som vi ofte vil fjerne.
 
 <!-- mange gifte par vs. gifte et par -->
+
+## Regex
+
+Regex står for "regular expressions". Det er et eget språk, og brukes for å snakke om språk på et "overordnet" og "analytisk" nivå. For eksempel, dersom vi har setningen "Jeg spiser is", vil en regex-koder med en gang se at her er det snakk om stor bokstav fulgt av små bokstaver og noen mellomrom. Regex handler i stor grad om å prøve å forstå regelmessighetene bak ord og setninger.
+
+
+| **Tegn** | **Betydning**                                                |
+|----------|--------------------------------------------------------------|
+| \        | Brukes for å omgå et tegn som betyr noe i regex              |
+| ^        | Starten på en streng                                         |
+| $        | Slutten på en streng                                         |
+| .        | Passer til et hvilket som helst tegn                         |
+| \|       | Passer til forrige ELLER neste tegn/gruppe                   |
+| ?        | Passer null eller én av de forrige                           |
+| *        | Passer til null, én eller flere av de forrige                |
+| +        | Passer til en eller fler av det forrige                      |
+| ( )      | En gruppe tegn                                               |
+| [ ]      | Passer til et sett av tegn                                   |
+| { }      | Passer til et spesifikt antall av forekomster av det forrige |
+
+
+**Eksempler:**
+
+`Finished\? matches “Finished?”`
+
+`^http matches strings that begin with http`
+
+`[^0-9] matches any character not 0-9`
+
+`ing$ matches “exciting” but not “ingenious”`
+
+`gr.y matches “gray“, “grey”`
+
+`Red|Yellow matches “Red” or “Yellow”`
+
+`colou?r matches colour and color`
+
+`Ah? matches “Al” or “Ah”`
+
+`Ah* matches “Ahhhhh” or “A”`
+
+`Ah+ matches “Ah” or “Ahhh” but not “A”`
+
+`[cbf]ar matches “car“, “bar“, or “far”`
+
+`[a-zA-Z] matches ascii letters a-z (uppercase and lower case)`
+
 
 ## Fjerne trekk?
 
@@ -1351,9 +1396,379 @@ Som du ser, virker det ikke som modellen i særlig god grad klarer å fange opp 
 
 # Veildedet læring {#sup}
 
+```{r governing_with_words, out.width="40%", fig.align='center', echo = FALSE}
+knitr::include_graphics("./figurer/governing_with_words.jfif")
+```
+
+Valgkamper dreier seg gjerne om enkelte saker som er viktige der og da, men viktigheten av disse sakene skifter over tid. Innvandring, miljø, bompenger, enkelte saker får mer oppmerksomhet enn andre under valg. Derfor kan det være interessant å spørre seg hvor vidt det at noe er en sak i valgkampen, egentlig har noe å si for andre prosesser, for eksempel agenda, diskusjoner, og iverksetting av faktisk politikk. Med utgangspunkt i saker knyttet til rase var det var dette [Gillion (2016)](https://www.cambridge.org/core/books/governing-with-words/5D4F713A016401E3FC3922C66D371FF2) satte seg fore å gjøre (Grimmer et al. 2022). Han samlet inn store mengder tekst fra presidentdebatter, taler, radioinnlegg, også videre, for å kunne måle hvordan retorikk i valgkampen påvirket andre deler av politikken. 
+
+Første steg i prosessen etter å ha samlet inn data, handler om å *måle*. Hvordan visste Gillion at en tekst (debattinnlegg, tale, eller liknende) handlet om rase? Han kunne kanskje brukt noen stikkord og sagt at dersom disse og disse ordene dukker opp, så handler teksten om rase, men dette ville vært en grovsortering. Isteden ansatte Gillion noen folk til å lese gjennom tekstene, vurdere om de handlet om rase eller ikke, og merke dem deretter.
+
+Gillion sin analyseenhet er avsnitt, og han har millioner av avsnitt som må merkes. Dermed har han et problem. Hvis mennesker gjør denne jobben vil det ta evigheter, og det blir dyrt å lønne dem for strevet. Derfor ba Gillion disse menneskene om bare å merke (også kalt å "kode")^[Uttrykket "koding" kan brukes på to forskjellige aktiviteter. På den ene siden snakker vi om å "kode" som å programmere - hvilket er det vi lærer i dette emnet. Å "kode" kan også bety å bygge ut et datasett. Når man ansetter noen til å merke rader i et datasett avhengig av om de faller innenfor en kategori eller ikke, kalles dette også ofte for koding (men en ganske annen form for koding).] noen av tekstene. Deretter brukte han denne kunnskapen om hvor vidt en viss type tekst ga uttrykk for å handle om rase, til å trene opp en modell som kunne merke de resterende tekstene. Dette er et godt eksempel på hva **veiledet maskinlæring** brukes til. 
+
+Veiledet læring fungerer godt når vi har *merket* data, det vil si at vi vet hva `Y` er. I tilfellet over, var `Y` kjent for enkelte av tekstene. Takket være de som merket avsnittene, vet vi noe om hvordan en viss kombinasjon av ord (altså `X`ene) øker sannsynligheten for at et avsnitt omhandler rase (`Y`). Hva som er `X`ene, vil variere avhengig av hvordan vi har vektorisert teksten (fra tekst til tall), men hvis vi bruker en "sekk med ord"-framgangsmåte, så er `X` et ord, og $\beta$ er effekten av dette ordet på om avsnittet handler om rase. Enkelt demonstrert får vi:
+
+$rase_D = \alpha + \beta_1ord1 + \beta_2ord2 + \beta_3ord3 ...$^[Denne regresjonslikningen er en forenkling. Hvordan sannsynligheten for at et avsnitt handler om rase estimeres, avhenger av hvilken modell vi bruker. Likningen for logistisk regresjon er mer komplisert enn denne, og det samme gjelder SVM, random forest, og andre modeller vi kan bruke for å estimere Y. Intuisjonen er imidlertid den samme - vi bruker tilgjengelig informasjon om ordenes fordeling blant dokumentene for å måle hvor vidt avsnittet handler om rase.]
+
+
+### Merket ("labelled") data
+
+Å jobbe med maskinlæring er omfattende, og her gir vi kun en liten introduksjon. Det kan likevel være fint å se hvordan dette gjøres i R, for å få en oversikt over hvordan det fungerer i praksis. Her viser jeg hvordan man kan klassifisere tekster. Estimering kalles klassifisering når målet er å estimere en kategorisk variabel. Hadde `Y` vært kontinuerlig, hadde vi kalt det regresjon.
+
+Som eksempel bruker vi innlegg fra et datasett som har lagret diverse TED-talks. Dette datasettet har 5631 rader (altså talks). Siden TED er et forum for å snakke om nye ideer, kan vi tenke oss at dette er et datasett som reflekterer noen av de gryende problemstillingene i samfunnet. La oss si at vi er interessert i å vite hvor mange av disse talene som handler om politikk. En mulighet hadde vært å lese enkelte av talene, merke dem etter om de handlet om politikk eller ikke, og brukt denne informasjonen for å klassifisere resten av talene. I dette tilfellet har datasettet allerede en kolonne kalt "topics" som lister opp hva TED-talken har handlet om. I plottet under kan du selv utforske hvilke temaer de ulike TED-talksene handlet om, og hvilke temaer som gikk igjen mest. 
+
+```{r, message=FALSE, warning = FALSE, error = FALSE}
+
+library(tidyverse)
+library(jsonlite)
+library(plotly)
+
+tedtalks <- read_csv("./data/teds.csv") %>% # Leser inn data fra en .csv-fil
+  janitor::clean_names() # Bruker funksjonen "clean_names" fra pakken "janitor" for å gjøre variabelnavnene litt penere
+
+tedtalks_subset <- tedtalks %>% # Fra objektet tedtalks
+  rename(doc_id = id) %>% # Endrer navn på variabelen "id" til å hete "doc_id" isteden
+  select(doc_id, transcript, topics) %>% # Henter ut variablene doc_id, transcript og topics
+  mutate(topics = map(topics, # Variabelen topics ligger inne i json-format, jeg bruker "map" for å gå over hver rad 
+                      ~ fromJSON(.) %>% # og gjør om fra json-format slik at vi får to variabler "id" på topic og "name" på topic
+                        as_tibble())) %>% # Gjør om til en vanlig tibble (en R dataframe)
+  unnest(cols = c(topics)) %>% # Hver talk har flere topics, når jeg bruker unnest får hver topic sin egen rad
+  select(-id) # Fjerner variabelen som indikerer topicet sin id
+
+tedtalks_subset %>%
+  count(name) %>% # Teller opp hvor mange ganger hver topic dukker opp
+  plot_ly(x = ~n, # Plotter med plotly-pakken (kunne også brukt ggplot, men da blir det ikke interaktivt)
+          y = ~name, # Setter antall ganger topic dukker opp på x-aksen og navnet på topicet på y-aksen
+          text = ~name, # Når man hovrer over søylene, skal man få opp navn på topic
+          type = "bar")  %>% # Lager et stolpediagram (bar chart)
+  layout(xaxis = list(title = ""), # Ønsker ikke at det skal være tekst på y-eller x-aksen
+         yaxis = list(title = "", categoryorder = "total ascending")) # Sorter søylene i synkende rekkefølge ift. y-aksen (altså antallet)
+
+```
+
+Jeg bruker kolonnen "topics" for å lage en variabel som sier om en talk handlet om politikk. Framgangsmåten er slik: hvis talen har enten "politics" eller "international relations" som en topic, så handler den om politikk, hvis ikke handlet den om noe annet. I koden under *strukturerer* jeg datasettet slik at jeg får en variabel, "tema", med et merke på tekstene som enten er "politikk" eller "annet".
+
+```{r, message=FALSE, warning = FALSE, error = FALSE}
+
+tedtalks_subset <- tedtalks_subset %>%
+  filter(name %in% c("politics", "international relations")) %>% # Hent ut de talene som har politics og/eller international relations som tema
+  mutate(tema = "politikk") %>% # Lag en variabel "topic" med verdien "politikk".
+  select(doc_id, tema) %>% # Hent ut id på TED-talken og dens topic
+  unique() # Fjern duplikater
+
+ted <- tedtalks_subset %>%
+  full_join(tedtalks %>% # Sett sammen datasettet som bare inneholder talks som handlet om politikk, med det fulle datasettet...
+              select(id, transcript, topics), # ...der jeg plukker ut kun variablene "id", "transcript" og "topics"
+            by = c("doc_id" = "id")) %>% # Endre navn på id til doc_id
+  mutate(tema = replace_na(tema, "annet")) %>% # Variabel "tema" har missingverdien for de talkene som ikke handler om politikk, jeg bytter ut missing med "annet"
+  select(transcript, tema) %>% # Hent ut to kolonner, kolonnen med tekst (transcript) og kolonnen med merke (tema)
+  rename(text = transcript) %>% # Endre navn på transcript-variabelen til "text" (for at senere kode skal fungere)
+  drop_na(text) # Fjern missingverdier fra variabelen "text"
+
+```
+
+Dette er et ubalansert datasett. Det er 249 TED-talks som handler om politikk, og 4734 TED-talks som handler om noe annet (etter at jeg fjernet missingverdier).
+
+```{r}
+
+ted %>% 
+  count(tema) # Tell opp hvor mange rader som har hver sin verdi på variabelen "tema". 
+
+```
+
+I dette tilfellet er hele datasettet merket. Typisk vil vi være interessert i å bruke veiledet læring hvis vi plutselig fikk tilgang på flere TED-talks som *ikke* hadde informasjon om hvor vidt de handlet om politikk. Kanskje ville dette vært tilfellet for nyere eller eldre innlegg? Kluet er da å bruke den dataen vi har, for å trene en modell som kan klassifisere TED-talks der vi ikke vet tema.
+
+
+### Treningsdata, valideringsdata og testdata
+
+Et viktig poeng når man jobber med maskinlæring, er at modellen kan bli veldig god på å forstå mønstre og sammenhenger innad i data. Den kan faktisk bli så god at hvis du gir den en tekst, så vet den helt sikkert om denne teksten handler om politikk eller ikke. Men det at modellen er veldig god på den dataen vi bruker for å estimere modellen, betyr ikke at den kommer til å være god på data som *ikke* er brukt for å estimere modellen. Her er det variasjon og forskjelligheter som gjør at de sammenhengene modellen tenkte var brennsikre for sin egen data, ikke gjelder ellers. Dette problemet kaller *overtilpasning* (*overfitting*). 
+
+```{r overfitting, out.width="50%", fig.align='center', echo = FALSE}
+knitr::include_graphics("./figurer/overfitting.png")
+```
+
+For å unngå at modellen overtilpasser seg, velger vi å splitte opp data og gi modellen porsjoner av datasettet å trene på.
+
+ - **Treningsdata:** Den dataen modellen bruker for å estimere klassifikasjonsmodellen.
+ - **Valideringsdata:** Den dataen modellen bruker regelmessig for å sjekke at klassifiseringene ikke er overtilpasset treningsdata.
+ - **Testdata:** Datasettet som brukes som en endelig test på om modellen klarer å klassifisere observasjonene godt (nok).
+
+```{r testtreningvalideringssett, out.width="50%", fig.align='center', echo = FALSE}
+knitr::include_graphics("./figurer/split_data2.png")
+```
+
+```{r, message=FALSE, warning = FALSE, error = FALSE}
+
+library(tidymodels)
+
+set.seed(930) # Denne koden gjør at R gir tilsvarende resultater hver gang man kjører samme kode (dvs. splitter på samme sted)
+
+ted_splitt <- initial_split(ted, #  Del datasettet i to
+                            prop = 0.8, # 80 prosent av data (dvs. 80 prosen av radene/talksene) skal gå inn i treningsdata, resten blir testdata
+                            strata = tema) # Passer på at Y, tema, er godt representert i både treningsdatasett og testdatasett
+
+ted_trening <- training(ted_splitt) # Lager treningsdatasett
+ted_test <- testing(ted_splitt) # Lager testdatasett
+
+ted_trening %>% head()
+ted_test %>% head()
+
+ted_folds <- vfold_cv(ted_trening, # Splitt treningsdatasettet inn i valideringsdatasett 
+                      strata = tema, # Passer på at Y, tema, er godt representert i både valideringsdatasett og treningsdatasett
+                      v = 5) # Splitter opp fem ganger (slik at vi får "5-fold cross validation")
+
+ted_folds
+
+```
+
+### Preprosessering 
+
+Tekstene må preprosesseres før vi kan bruke en modell på dem. Her bruker jeg "textrecipes", som er laget spesielt for å få en [god arbeidsflyt når man jobber med maskinklæring på tekst](https://juliasilge.com/blog/chocolate-ratings/). Under kan du se at vi får ut en dokument-term-matrise (document feature matrix, DFM), der radene er dokumenter (talks i vårt tilfelle), og variablene er ord. Siden vi har brukt TF-IDF, er verdiene en vektet representasjon av hvor viktig dette ordet er for det gitte dokumentet. Dette er akkurat slik vi har jobbet med før, men `textrecipes` pakken slenger på en pretekst foran ordet, derfor har alle ordene fortegnelsen "tfidf_text".
+
+```{r, message=FALSE, warning = FALSE, error = FALSE}
+
+library(textrecipes)
+library(quanteda)
+library(tm)
+
+ted_oppskrift <- recipe(tema ~ ., data = ted_trening) %>% # Modellen jeg ønsker å kjøre - jeg vil estimere Y ved å bruke resten av dataene
+  step_mutate(text = str_to_lower(text)) %>% # Setter alle til liten bokstav
+  step_mutate(text = removeNumbers(text)) %>%  # Fjerner tall
+  step_mutate(text = removePunctuation(text)) %>% # Fjerner punktsetting
+  step_tokenize(text) %>% # Tokeniserer teksten
+  step_stem(text) %>% # Lager ordstammer
+  step_stopwords(text, custom_stopword_source = stopwords("en")) %>% # Fjerner stoppord
+  step_tokenfilter(text, max_tokens = 1000, min_times = 2) %>% # Beholder tokens som dukker opp maks 1000 ganger, fjerner de som dukker opp mindre enn 2 ganger
+  step_tfidf(text) # Vektoriserer teksten med TF-IDF
+
+prep(ted_oppskrift) %>% # Iverksetter preprosesseringsstegene slik beskrevet i oppskriften over
+  bake(new_data = NULL) %>% # Ser på hvordan oppskrifts-objektet ser ut
+  head(5) %>% select(1:5) # Henter ut de fem første radene, og de fem første kolonnene
+
+```
+
+### Velg modell
+
+Det finnes mange forskjellige modeller vi kan bruke for å estimere Y. Dere har sikkert vært borti lineær regresjon - dette er én type modell. Det finnes imidlertid flere, og noen av dem er svært avanserte. Så avanserte at noen kaller dem en "black box" - du putter data inn, modellen gjør noen kompliserte matematiske beregninger, og du får klassifiseringer ut. Dette gjelder spesielt modeller som bygger på nevrale nett og dyplæring. Vi skal ikke gå mye inn i ulike modeller i dette emnet, men pensum tar for seg applikasjonen av tre ulike modeller i statsvitenskap; support vector machine ([D'Orazio et al., 2016](https://www.cambridge.org/core/journals/political-analysis/article/separating-the-wheat-from-the-chaff-applications-of-automated-document-classification-using-support-vector-machines/1E5431CC964E45218255584A4331D423), og random forest og logistisk regresjon ([Muchlinski et al., 2016](https://www.cambridge.org/core/journals/political-analysis/article/comparing-random-forest-with-logistic-regression-for-predicting-classimbalanced-civil-war-onset-data/109E1511378A38BB4B41F721E6017FB1)). 
+
+Hvordan implementerer vi disse modellene i R? Under demonstrerer jeg for hver av modellene ved bruk av `tidymodels`-pakken. Men først, la meg legge inn et objekt som forteller R litt om hvordan den skal beregne disse modellene. 
+
+```{r}
+contrl_preds <- control_resamples(save_pred = TRUE) # Velger å lagre prediksjonene etter at modellen har kjørt
+```
+
+#### Logistisk regresjon 
+
+```{r, eval = FALSE}
+
+glmn_spec <- 
+  logistic_reg(penalty = 0.001, # Setter et par argumenter for å forhinde modeller fra å overtilpasse seg
+               mixture = 0.5) %>% # Dette er typisk noe man går fram og tilbake med (kalt å "tune" modellen)
+  set_engine("glmnet") %>% # Logistisk modell får vi ved å spesifisere "glmnet"
+  set_mode("classification") # Vi ønsker klassifisering, ikke regresjon
+
+glm_wf <- workflow(ted_oppskrift, # Datasettet vårt etter preprosessering
+                   glmn_spec) # Modellen som spesifisert over, altså logitisk
+
+glm_rs <- fit_resamples( # Passer modellen ved å bruke testdata og valideringsdata i sekvens fem ganger
+  glm_wf, # Dette objektet forteller hva som er data og hva som er modellen
+  resamples = ted_folds, # Spesifiserer hva valideringsdataene er
+  control = contrl_preds # Legger valgene som jeg lagret over
+)
+
+```
+
+```{r, echo = FALSE}
+load("./data/glm_rs.rda")
+```
+
+#### Random forest
+
+```{r, eval = FALSE}
+
+rf_spec <-
+  rand_forest(trees = 500) %>% # Spesifiserer valg for å prøve å sørge for at modellen er best mulig tilpasset data
+  set_mode("classification") 
+
+rf_wf <- workflow(ted_oppskrift, 
+                  rf_spec) 
+
+ranger_rs <- fit_resamples(
+  rf_wf,
+  resamples = ted_folds,
+  control = contrl_preds
+)
+
+```
+
+```{r, echo = FALSE}
+load("./data/ranger_rs.rda")
+```
+
+#### SVM
+
+```{r, eval = FALSE}
+
+svm_spec <-
+  svm_rbf() %>%
+  set_engine("kernlab", scaled = FALSE) %>% # Valg for å tune modellen
+  set_mode("classification") 
+
+svm_wf <- workflow(ted_oppskrift, 
+                   svm_spec)
+
+svm_rs <- fit_resamples(
+  svm_wf,
+  resamples = ted_folds,
+  control = contrl_preds,
+)
+
+```
+
+```{r, echo = FALSE}
+
+svm_spec <-
+  svm_rbf() %>%
+  set_engine("kernlab", scaled = FALSE) %>% # Valg for å tune modellen
+  set_mode("classification") 
+
+svm_wf <- workflow(ted_oppskrift, 
+                   svm_spec)
+
+load("./data/svm_rs.rda")
+```
+
+
+### Vurder hvor gode modellene er
+
+Det finnes flere måter å vurdere hvor godt en modell har gjort det, og hvilket mål man bruker avhenger gjerne av hva man er mest opptatt av. "Accuracy" er et mål som gir oss overordnet treffsikkerhet på modellen. Den spør: "Hvor mange av alle observasjonene, klarte modellen å klassifisere riktig?" Men vi kunne også vært spesielt interessert i antall sanne positive, falske positive, også videre. Modellen kommer nemlig aldri til å kunne klassifisere alle observasjonene riktig, og vi må gjøre en vurdering på hvor vidt vi ønsker en skjevhet i den ene eller andre retningen. Tenk deg for eksempel at vi har en modell som måler risikoen for å begå en kriminell handling etter å ha vært i fengsel - er det da viktigst at modellen predikerer de som begår kriminalitet feil, eller de som ikke begår kriminalitet? 
+
+ - Accuracy: Hvor mange observasjoner klarte modellen å klassifisere riktig?
+ - Recall (sensitivity): Hvor godt modellen klassifiserer sanne positive.
+ - Precision: Hvor mange positive utfall som var sanne positive.
+ - Specificity: Hvor mange negative utfall som var sanne negative.
+ - F1: En vektet form for "accuracy", som gir høyere vekt til falske negative og positive.
+
+```{r klasse1, out.width="80%", fig.align='center', echo = FALSE}
+knitr::include_graphics("./figurer/klass1.PNG")
+```
+
+```{r klasse2, out.width="80%", fig.align='center', echo = FALSE}
+knitr::include_graphics("./figurer/klass2.PNG")
+```
+
+```{r}
+
+collect_metrics(glm_rs) # Accuracy til den logistiske modellen er på 95 prosent. Den klassifiserer 95 prosent av observasjonene riktig.
+collect_metrics(ranger_rs) # Random forest klassifiserer 95,2 prosent av observasjonene riktig
+collect_metrics(svm_rs) # SVM klassifiserer 95,9 prosent riktig.
+
+```
+
+Forvirringsmatriser (confusion matrix) gir oss en oversikt over hvor mange tekster som ble klassifisert riktig og hvor mange som ble klassifisert feil innenfor hver kategori. Her ser vi noe av problemet med å stole på "accuracy" alene. Random forest latet til å klassifisere flere tekster riktig enn den logistiske modellen, men den klassifiserer også alle tekstene som "annet".
+
+```{r}
+# Lager forvirringsmatriser for hver av modellene
+
+metrikk_glm <- collect_predictions(glm_rs)
+metrikk_glm %>%
+  conf_mat(truth = tema, estimate = .pred_class) %>%
+  autoplot(type = "heatmap")
+
+metrikk_rf <- collect_predictions(ranger_rs) 
+metrikk_rf %>%
+  conf_mat(truth = tema, estimate = .pred_class) %>%
+  autoplot(type = "heatmap")
+
+metrikk_svm <- collect_predictions(svm_rs) 
+metrikk_svm %>%
+  conf_mat(truth = tema, estimate = .pred_class) %>%
+  autoplot(type = "heatmap")
+
+```
+
+Specificity, som fokuserer på sanne og falske negative, gir oss en annen historie enn accuracy. Her gjør random forest det elendig. Fordi den ikke har klassifisert noen observasjoner til å ha tema "politikk", blir specificity NA. Vår SVM-modell gjør det fortsatt ganske bra, med en precision på 93 prosent - mot den logistiske modellen sine 47 prosent. La oss ta med oss SVM-modellen videre.
+
+```{r}
+# Undersøker recall for hver av modellene
+spec(metrikk_rf, metrikk_rf$.pred_class, metrikk_rf$tema)
+spec(metrikk_glm, metrikk_glm$.pred_class, metrikk_glm$tema)
+spec(metrikk_svm, metrikk_svm$.pred_class, metrikk_svm$tema)
+```
+
+Til slutt kjører vi den endelige modellen på testdatasettet for å se hvor godt modellen klassifiserer her. Testdatasettet har ikke vært i bruk før nå, vi har holdt det fullstendig utenfor hele analysen. Dette er dermed den siste sjekken av hvor godt modellen klarer å klassifisere TED-talks som den aldri har sett før.  
+
+```{r}
+
+final_fitted <- last_fit(svm_wf, ted_splitt) # Passer SVM-modellen til testdatasettet
+
+collect_metrics(final_fitted) # Sjekker hvor bra modellen gjorde det (accuracy og ROC-kurve)
+
+```
+
+
+### Bruk modellen videre
+
+Hvis modellen er god nok, kan vi nå gå videre med å applisere modellen på TED-talksene der vi ikke vet tema. Det er viktig at vi validerer modellen grundig og vurderer om den er god nok, for alle målefeil tar vi med oss videre i analysen. På den positive siden, å bruke veiledet læring for å merke dataene, gjør at vi også kan gi et mål på hvor stor vi kan anta at målefeilen er.
 
 
 # Ikke-veiledet læring {#unsup}
+
+Mye data er ikke merket. Det er typisk at vi står foran en stor samling tekster, men vi vet ikke hva tekstene handler om eller hvordan vi skal gruppere dem. I dette tilfellet er ikke-veiledet maskinlæring nyttig. 
+
+Det er vanlig å bruke ikke-veiledet maskinlæring for å: 
+
+ - Gruppere tekster etter hvilke tekster som likner på hverandre (klustring)
+ - Finne tekster som er spesielt annerledes fra andre tekster (anormalitetsdeteksjon)
+ - Redusere antallet variabler som vi har med å gjøre (dimensjonsreduksjon)
+ 
+Word-embeddings, som vi har vært gjennom overfor, er en form for ikke-veiledet læring. Her gjør vi en dimensjonsreduksjon. Et av målene med word embeddings var nemlig å gå fra et høy-dimensjonalt rom der hvert ord blir en variabel, til et lav-dimensjonalt rom der hver ord representeres på et knippe dimensjoner, ofte et sted mellom 50 og 500. Vi skal også gå gjennom temamodeller senere, hvilket er en måte å gruppere (klustre) tekster. Likhetsanalyser, som vi også skal gjennom, er også gjerne ikke-veiledete. 
+
+Siden vi skal gjennom såpass mange modeller senere, går vi ikke like grundig inn i materien på ikke-veiledet læring her, som over. Imidlertid er det bare å bla til kapitlene om word-embeddings, likhetsanalyser og temamodellering for å se eksempler på ikke-veiledet læring på tekstdata.
+
+### Hierarkisk klustring
+
+Som en innføring, er det under et eksempel på ikke-veiledet læring ved bruk av hierarkisk klustring. Her prøver modellen å organisere tekstene i grupper som hører sammen i et tre. 
+
+```{r, eval = FALSE}
+
+library(tidytext)
+library(quanteda)
+library(rainette)
+
+tedtalks_tfidf <- tedtalks %>%
+  group_by(id) %>%
+  unnest_tokens(input = transcript,
+                output = token,
+                strip_punct = TRUE,
+                strip_numeric = TRUE,
+                token = "words") %>%
+  filter(!token %in% stopwords("en")) %>%
+  count(token) %>% 
+  bind_tf_idf(token, id, n) %>%
+  na.omit()
+
+tedtalks_dfm <- tedtalks_tfidf %>%
+  cast_dfm(id, token, tf_idf) %>%
+  dfm_trim(min_termfreq = 2, max_termfreq = 1000)
+
+rainette_cluster <- rainette(
+  tedtalks_dfm,
+  k = 8)
+
+```
+
+```{r, echo = FALSE}
+load("./data/rainette_cluster.rda")
+load("./data/tedtalks_dfm.rda")
+library(rainette)
+```
+
+```{r}
+rainette_plot(rainette_cluster, tedtalks_dfm, k = 6)
+```
+
+
 
 # Ordbøker {#ordboker}
 

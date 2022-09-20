@@ -9,7 +9,7 @@ output:
     code_folding: show
     transition: convex
     self_contained: false
-    reveal_plugins: ["chalkboard", "notes"]
+    reveal_plugins: ["chalkboard", "notes", "zoom"]
     reveal_options:
       slideNumber: true
 css: style.css
@@ -128,6 +128,7 @@ metadata
 tale
 ```
 
+---
 
 ### For-løkke: Laster inn data fra *alle* .html-filene i mappen
 
@@ -160,6 +161,8 @@ for (i in seq_along(filer)) { # For hver enhet (i) i objektet filer...
 }
 
 ```
+
+---
 
 ```{r}
 
@@ -785,19 +788,20 @@ prepp_tekst <- function(data, tekstvar){
 talerprepp <- prepp_tekst(data = taler_df, tekstvar = tekst)
 
 taletekster <- tempfile()
-writeLines(text = talerprepp %>% pull(tekst), con = taletekster)
+writeLines(text = talerprepp %>% mutate(tekst = str_c(overskrift, tekst)) %>% pull(tekst), con = taletekster)
 
 ```
 
 ```{r}
 
 ft_cbow <- ft_train(taletekster, 
+                    min_count = 1L,
                     type = "cbow", # Finn word embedding med CBOW
-                    control = ft_control(window_size = 5L)) # La modellen lære fra de fem nærmeste ordene
+                    control = ft_control(window_size = 10L)) # La modellen lære fra de fem nærmeste ordene
 
 ft_skipgram <- ft_train(taletekster, 
                         type = "skipgram", # Finn word embeddings med skipgram
-                        control = ft_control(window_size = 5L)) # La modellen lære fra de fem nærmeste ordene
+                        control = ft_control(window_size = 10L)) # La modellen lære fra de fem nærmeste ordene
 
 ```
 
@@ -811,7 +815,7 @@ ft_skipgram <- ft_train(taletekster,
 
 ```{r}
 
-ft_word_vectors(ft_cbow, c("godt", "norge"))[,1:5]
+ft_word_vectors(ft_cbow, c("godt", "fint"))[,1:5]
 
 ```
 
@@ -822,8 +826,8 @@ ft_word_vectors(ft_cbow, c("godt", "norge"))[,1:5]
 . . .
 
 ```{r}
-tibble(ord = names(ft_nearest_neighbors(ft_cbow, "norge", k = 5L)),
-       score = ft_nearest_neighbors(ft_cbow, "norge", k = 5L))
+tibble(ord = names(ft_nearest_neighbors(ft_cbow, "fint", k = 5L)),
+       score = ft_nearest_neighbors(ft_cbow, "fint", k = 5L))
 ```
 
 . . .
