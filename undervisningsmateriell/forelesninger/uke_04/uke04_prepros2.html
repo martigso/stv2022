@@ -637,6 +637,9 @@ du unzippet filen</li>
 ## [17] &quot;Takk for meg&quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
 ## [18] &quot;Virksomme ord støttes av Fritt ord og administreres av institutt for informasjons- og medievitenskap ved Universitetet i Bergen&quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
 ## [19] &quot;Vi har 2566 taler i databasen&quot;</code></pre>
+</section>
+<section class="slide level2">
+
 <h3
 id="for-løkke-laster-inn-data-fra-alle-.html-filene-i-mappen">For-løkke:
 Laster inn data fra <em>alle</em> .html-filene i mappen</h3>
@@ -665,6 +668,9 @@ Laster inn data fra <em>alle</em> .html-filene i mappen</h3>
 <span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_c</span>(., <span class="at">collapse =</span> <span class="st">&quot; &quot;</span>) <span class="co"># Her limer vi sammen alle avsnittene til en tekst med &quot; &quot; som mellomrom</span></span>
 <span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</section>
+<section class="slide level2">
+
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>taler_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">overskrift =</span> overskrifter, <span class="co"># Lag en variabel kalt &quot;overskrift&quot; med innholdet fra &quot;overskrifter&quot;-objektet</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">metadata =</span> metadata,</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">tekst =</span> taler) <span class="sc">%&gt;%</span> <span class="co"># Lag en variabel kalt &quot;tekst&quot; med innholdet fra &quot;taler&quot;-objektet</span></span>
@@ -1612,6 +1618,7 @@ eller til og med måneder).</p>
         // Optional reveal.js plugins
         dependencies: [
           { src: 'uke04_prepros2_files/reveal.js-3.3.0.1/plugin/notes/notes.js', async: true },
+          { src: 'uke04_prepros2_files/reveal.js-3.3.0.1/plugin/zoom-js/zoom.js', async: true },
           { src: 'uke04_prepros2_files/reveal.js-3.3.0.1/plugin/chalkboard/chalkboard.js', async: true },
         ]
       });

@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>uke_06_laering.knit</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="uke_06_laering_files/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  { color: #cccccc; background-color: #303030; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ffcfaf; } /* Alert */
+code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bn { color: #dca3a3; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #f0dfaf; } /* ControlFlow */
+code span.ch { color: #dca3a3; } /* Char */
+code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+code span.co { color: #7f9f7f; } /* Comment */
+code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+code span.do { color: #7f9f7f; } /* Documentation */
+code span.dt { color: #dfdfbf; } /* DataType */
+code span.dv { color: #dcdccc; } /* DecVal */
+code span.er { color: #c3bf9f; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #c0bed1; } /* Float */
+code span.fu { color: #efef8f; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+code span.kw { color: #f0dfaf; } /* Keyword */
+code span.op { color: #f0efd0; } /* Operator */
+code span.ot { color: #efef8f; } /* Other */
+code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+code span.sc { color: #dca3a3; } /* SpecialChar */
+code span.ss { color: #cc9393; } /* SpecialString */
+code span.st { color: #cc9393; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #cc9393; } /* VerbatimString */
+code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="uke_06_laering_files/reveal.js-3.3.0.1/css/theme/simple.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+    <link rel="stylesheet" href="style.css"/>
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+    <script src="uke_06_laering_files/header-attrs-2.14/header-attrs.js"></script>
+    <link href="uke_06_laering_files/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="uke_06_laering_files/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+    <script src="uke_06_laering_files/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+    <script src="uke_06_laering_files/plotly-binding-4.10.0/plotly.js"></script>
+    <script src="uke_06_laering_files/typedarray-0.1/typedarray.min.js"></script>
+    <script src="uke_06_laering_files/jquery-3.5.1/jquery.min.js"></script>
+    <link href="uke_06_laering_files/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+    <script src="uke_06_laering_files/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+    <link href="uke_06_laering_files/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
+    <script src="uke_06_laering_files/plotly-main-2.5.1/plotly-latest.min.js"></script>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+
+<section class="slide level2">
+
+<font size=12>STV2022 – Store tekstdata</font></br></br>
+<p style="font-size:10;color:#D13F11">
+[06] Veiledet og ikke-veiledet læring
+</p>
+<p></br> <img data-src="uio_logo.jpg" style="width:50.0%" /></p>
+<p>Solveig Bjørkholt <font size=6>&lt;<a
+href="mailto:solveig.bjorkholt@stv.uio.no"
+class="email">solveig.bjorkholt@stv.uio.no</a>&gt;</font></br></p>
+</section>
+<section id="disposisjon" class="title-slide slide level1">
+<h1>Disposisjon</h1>
+<ul>
+<li class="fragment">Hva betyr “læring”?
+<ul>
+<li class="fragment">Læring vs. regelbasert fremgangsmåte.</li>
+</ul></li>
+<li class="fragment">Veiledet læring
+<ul>
+<li class="fragment">Treningsdatasett</li>
+<li class="fragment">Å trene modeller</li>
+<li class="fragment">Å validere modeller</li>
+</ul></li>
+<li class="fragment">Ikke-veiledet læring
+<ul>
+<li class="fragment">Konseptualisering</li>
+</ul></li>
+<li class="fragment">Oppsummering</li>
+</ul>
+</section>
+
+<section>
+<section id="hva-betyr-læring" class="title-slide slide level1">
+<h1>Hva betyr “læring”?</h1>
+<div class="left" style="float:left;width:45%">
+<p><br></p>
+<ul>
+<li class="fragment">Maskinen forstår mønstre og sammenhenger selv</li>
+<li class="fragment">Skiller seg fra regelbasert framgangsmåte</li>
+</ul>
+</div>
+<div class="right" style="float:right;width:45%">
+<p><img data-src="figurer/rules-ml.jpg" style="width:55.0%"
+alt="rules-ML" /> </br></p>
+</div>
+<div class="fragment">
+<p><img data-src="figurer/ai-ml.png" style="width:60.0%" alt="AI-ML" />
+</br></p>
+</div>
+</section>
+<section id="eksempel-på-regelbasert-framgangsmåte-vs.-læring"
+class="slide level2">
+<h2>Eksempel på regelbasert framgangsmåte vs. læring</h2>
+<p>Hvilken e-post er spam?</p>
+<blockquote>
+<p>“Hallo, jeg er Mr. Charles W. Jackson Jr., MEGAVINNEREN av $344,6
+millioner i Mega Millions Jackpot, jeg donerer til 5 tilfeldige
+individer.”</p>
+</blockquote>
+<blockquote>
+<p>“Hei. Hvordan gjør vi det med STV2022 framover, skal vi ta
+mesteparten av diskusjonen på Discord eller fortsette på mail?”</p>
+</blockquote>
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>tekst1 <span class="ot">&lt;-</span> <span class="st">&quot;Hallo, jeg er Mr. Charles W. Jackson Jr., MEGAVINNEREN av $344,6 millioner i Mega Millions Jackpot, jeg donerer til 5 tilfeldige individer.&quot;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>tekst2 <span class="ot">&lt;-</span> <span class="st">&quot;Hei. Hvordan gjør vi det med STV2022 framover, skal vi ta mesteparten av diskusjonen på Discord eller fortsette på mail?&quot;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>emails <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">email_nr =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">tekst =</span> <span class="fu">c</span>(tekst1, tekst2),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">klasse =</span> <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;&quot;</span>))</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>emails</span></code></pre></div>
+<pre><code>## # A tibble: 2 x 3
+##   email_nr tekst                                                          klasse
+##      &lt;dbl&gt; &lt;chr&gt;                                                          &lt;chr&gt; 
+## 1        1 Hallo, jeg er Mr. Charles W. Jackson Jr., MEGAVINNEREN av $34~ &quot;&quot;    
+## 2        2 Hei. Hvordan gjør vi det med STV2022 framover, skal vi ta mes~ &quot;&quot;</code></pre>
+</section>
+<section id="regelbasert-framgangsmåte" class="slide level2">
+<h2>Regelbasert framgangsmåte</h2>
+<ul>
+<li class="fragment"><p>Mennesker må prøve å forstå mønstre og
+sammenhenger selv.</p></li>
+<li class="fragment"><p>Lag et sett med regler for når noe er det ene og
+det andre utfra det du observerer.</p>
+<ul>
+<li class="fragment"><strong>Regel: Hvis tekst inneholder ord i store
+bokstaver, så er det spam.</strong></li>
+</ul></li>
+</ul>
+<div class="fragment">
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>emails <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">klasse =</span> <span class="fu">ifelse</span>(<span class="fu">str_detect</span>(tekst, <span class="st">&quot;[A-Z]{2,}&quot;</span>), <span class="co"># # Hvis teksten inneholder to eller flere store bokstaver etter hverandre</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;spam&quot;</span>, <span class="co"># så gi variabel &quot;klasse&quot; verdi &quot;spam&quot;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;legit&quot;</span>)) <span class="sc">%&gt;%</span> <span class="co"># hvis ikke, gi den verdi &quot;legit&quot;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(email_nr, klasse, tekst) <span class="co"># Hent ut variabler email_nr, klasse og tekst i denne rekkefølgen</span></span></code></pre></div>
+<pre><code>## # A tibble: 2 x 3
+##   email_nr klasse tekst                                                         
+##      &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;                                                         
+## 1        1 spam   Hallo, jeg er Mr. Charles W. Jackson Jr., MEGAVINNEREN av $34~
+## 2        2 spam   Hei. Hvordan gjør vi det med STV2022 framover, skal vi ta mes~</code></pre>
+</div>
+</section>
+<section class="slide level2">
+
+<p><img data-src="figurer/rulebased.PNG" style="width:100.0%"
+alt="Regelbasert metode" /></p>
+<div class="fragment">
+<p><img data-src="figurer/norges-lover.jpg" style="width:30.0%"
+alt="Norges lover" /></p>
+</div>
+</section>
+<section id="læringsframgangsmåte" class="slide level2">
+<h2>Læringsframgangsmåte</h2>
+<ul>
+<li class="fragment">La maskinen lære mønstrene selv</li>
+</ul>
+<p><img data-src="figurer/machinebased.PNG" style="width:100.0%"
+alt="Maskinlæringsbasert" /></p>
+</section>
+<section class="slide level2">
+
+<p><strong>Kan automatisere prosesser</strong> <img
+data-src="figurer/machinebased2.PNG" style="width:70.0%"
+alt="Maskinlæringsbasert automatisering" /></p>
+<p><strong>Kan hjelpe mennesker i beslutningsprosesser</strong> <img
+data-src="figurer/machinebased3.PNG" style="width:70.0%"
+alt="Maskinlæringsbasert menneskehjelp" /></p>
+</section>
+<section class="slide level2">
+
+<div class="left" style="float:left;width:45%">
+<p><strong>Veiledet læring</strong> <br></p>
+<p><br></p>
+<p><img data-src="figurer/supervised.PNG" style="width:110.0%"
+alt="Supervised" /></p>
+<ul>
+<li class="fragment">Vi har et utvalg eposter som vi vet er
+spam/legit.</li>
+<li class="fragment">Maskinen bruker denne informasjonen for å
+klassifisere nye eposter som spam/legit.</li>
+</ul>
+</div>
+<div class="right" style="float:right;width:45%">
+<p><strong>Ikke-veiledet læring</strong></p>
+<p><br></p>
+<p><img data-src="figurer/unsupervised.PNG" style="width:110.0%"
+alt="Unsupervised" /></p>
+<ul>
+<li class="fragment">Vi har en mengde besøkende til en blogg med litt
+informasjon om alder, kjønn, etc.</li>
+<li class="fragment">Maskinen bruker denne informasjonen til å finne
+grupper som likner hverandre.</li>
+</ul>
+</div>
+</section>
+<section class="slide level2">
+
+<p><img data-src="figurer/ml-overview.PNG" style="width:70.0%"
+alt="Maskinlæring oversikt" /></p>
+</section></section>
+<section>
+<section id="veiledet-læring" class="title-slide slide level1">
+<h1>Veiledet læring</h1>
+<p>Brukes når vi har data der vi allerede vet <code>Y</code> for et sett
+av data.</p>
+<p><span class="math inline">\(Y = \alpha + \beta_1X_1 + \beta_2X_2 +
+e\)</span></p>
+<ul>
+<li class="fragment"><p>Hvis målenivå er <em>kategorisk</em>:
+Klassifisering</p></li>
+<li class="fragment"><p>Hvis målenivå er <em>kontinuerlig</em>:
+Regresjon</p></li>
+<li class="fragment"><p>Klassifisering er mest vanlig i tekst</p></li>
+<li class="fragment"><p>Y kalles da også for “label” (merkelapp /
+“klasse”)</p></li>
+</ul>
+<p><img data-src="figurer/document_class.png" style="width:30.0%"
+alt="Dokumentklasse1" /></p>
+</section>
+<section id="framgangsmåte-ved-veiledet-læring" class="slide level2">
+<h2>Framgangsmåte ved veiledet læring:</h2>
+<ul>
+<li class="fragment">Steg 1: Lag et treningsdatasett der du gir en
+merkelapp til et utvalg av dokumentene</li>
+<li class="fragment">Steg 2: Bruk treningsdatasettet for å trene opp en
+modell som kan klassifisere resten av dokumentene</li>
+<li class="fragment">Steg 3: Sjekk hvor bra modellen gjorde det på å
+klassifisere dokumentene</li>
+<li class="fragment">Steg 4: Bruk de klassifiserte dokumentene i
+analyse</li>
+</ul>
+<p><br> <br></p>
+<div class="fragment">
+<h3 id="tre-ledd-i-forskningsprosessen">Tre ledd i
+forskningsprosessen:</h3>
+<ul>
+<li class="fragment">Oppdagelse, <strong>Måling</strong>, Slutning</li>
+</ul>
+</div>
+</section>
+<section id="eksempel-fra-ssb" class="slide level2">
+<h2>Eksempel fra SSB</h2>
+<p><img data-src="figurer/aku_coders.JPG" style="width:100.0%"
+alt="AKU-koding" /></p>
+<ul>
+<li class="fragment">En manuell prosess med å klassifisere personer sitt
+yrke (fra tekst til en yrkeskode)</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<pre><code>## # A tibble: 15 x 5
+##       id text                         human_coded machine_coded   prob
+##    &lt;int&gt; &lt;chr&gt;                        &lt;chr&gt;       &lt;chr&gt;          &lt;dbl&gt;
+##  1     1 fagarbeider                  5311        5311          0.365 
+##  2     2 miljøterapeut                5311        3412          0.284 
+##  3     3 fostermor                    5311        5311          0.992 
+##  4     4 selger                       3322        5223          0.445 
+##  5     5 butikksjef                   1420        1420          0.830 
+##  6     6 førstekonsulet               2422        2422          0.174 
+##  7     7 konsulent                    2422        2422          0.140 
+##  8     8 senior rådgiver              2152        2422          0.260 
+##  9     9 resepsjonist                 3423        4226          0.616 
+## 10    10 personalkonsulent            2422        2423          0.730 
+## 11    11 lektor                       2330        2330          0.699 
+## 12    12 lærer                        2341        7132          0.149 
+## 13    13 sjafør                       9611        8332          0.0832
+## 14    14 servicemedarbeider renholder 9112        9112          0.845 
+## 15    15 saksbehandler                4214        2422          0.291</code></pre>
+<ul>
+<li class="fragment">En automatisert prosess ved å bruke maskinlæring
+for å klassifisere personer sitt yrke</li>
+</ul>
+</section>
+<section id="eksempel-for-i-dag" class="slide level2">
+<h2>Eksempel for i dag</h2>
+<p><img data-src="figurer/ted.png" style="width:80.0%"
+alt="TED-talks" /></p>
+<p>$politikk_D = + _1person + _2bil + _3hus + _4forventning … $</p>
+<pre><code>## Rows: 5,631
+## Columns: 9
+## $ id            &lt;dbl&gt; 21, 1, 7, 47, 55, 16, 64, 71, 3, 66, 86, 54, 92, 94, 93,~
+## $ title         &lt;chr&gt; &quot;Meet the founder of the blog revolution&quot;, &quot;Averting the~
+## $ summary       &lt;chr&gt; &quot;The founding mother of the blog revolution, Movable Typ~
+## $ transcript    &lt;chr&gt; &quot;Over the past couple of days, as I&#39;ve been preparing fo~
+## $ topics        &lt;list&gt; [&lt;tbl_df[8 x 2]&gt;], [&lt;tbl_df[9 x 2]&gt;], [&lt;tbl_df[8 x 2]&gt;]~
+## $ duration      &lt;dbl&gt; 992, 957, 1266, 1126, 1524, 1394, 1212, 1248, 1105, 1151~
+## $ likes         &lt;chr&gt; &quot;17K&quot;, &quot;110K&quot;, &quot;60K&quot;, &quot;80K&quot;, &quot;14K&quot;, &quot;364K&quot;, &quot;42K&quot;, &quot;128K~
+## $ recorded_date &lt;date&gt; 2006-02-23, 2006-02-25, 2006-02-24, 2005-07-14, 2006-02~
+## $ speakers      &lt;list&gt; [&lt;tbl_df[1 x 2]&gt;], [&lt;tbl_df[1 x 2]&gt;], [&lt;tbl_df[1 x 2]&gt;]~</code></pre>
+</section>
+<section id="steg-1-merkelapp-på-et-utvalg-av-dokumentene"
+class="slide level2">
+<h2>Steg 1: Merkelapp på et utvalg av dokumentene</h2>
+<ul>
+<li class="fragment">Kan eksistere fra før, eller kan måtte merkes fra
+start av.</li>
+<li class="fragment">Blir mer og mer relevant desto flere dokumenter vi
+har.</li>
+</ul>
+<div class="fragment">
+<div id="htmlwidget-2e032d170aaa0ca7bb97" style="width:768px;height:576px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2e032d170aaa0ca7bb97">{"x":{"visdat":{"69e467944c6":["function () ","plotlyVisDat"]},"cur_data":"69e467944c6","attrs":{"69e467944c6":{"x":{},"y":{},"text":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"","categoryorder":"total ascending"},"yaxis":{"domain":[0,1],"automargin":true,"title":"","categoryorder":"total ascending","type":"category","categoryarray":["3D printing","activism","addiction","Africa","aging","agriculture","AI","AIDS","algorithm","aliens","Alzheimer's","ancient world","animals","animation","Antarctica","Anthropocene","anthropology","archaeology","architecture","art","Asia","asteroid","astrobiology","astronomy","atheism","Audacious Project","augmented reality","Autism spectrum disorder","bacteria","beauty","bees","behavioral economics","Best of the Web","Big Bang","biodiversity","bioethics","biology","biomimicry","bionics","biosphere","biotech","birds","blindness","blockchain","body language","books","botany","brain","Brazil","Buddhism","bullying","business","cancer","capitalism","chemistry","china","Christianity","cities","climate change","code","cognitive science","collaboration","collective","comedy","communication","community","compassion","computers","conducting","consciousness","conservation","consumerism","coral reefs","coronavirus","corruption","Countdown","creativity","crime","CRISPR","crowdsourcing","cryptocurrency","culture","curiosity","cyber security","dance","dark matter","data","death","decision-making","deextinction","demo","democracy","depression","design","dinosaurs","disability","discovery","disease","diversity","DNA","driverless cars","drones","drugs","ebola","ecology","economics","education","Egypt","electricity","emotions","empathy","encryption","energy","engineering","entertainment","entrepreneur","environment","equality","ethics","Europe","evolution","exercise","exploration","family","farming","fashion","fear","feminism","film","finance","fish","flight","food","forensics","fossil fuels","friendship","fungi","future","gaming","gardening","gender","genetics","geology","glaciers","global issues","goals","government","grammar","graphic design","happiness","health","health care","hearing","heart","Hinduism","history","homelessness","human body","human rights","Humanities","humanity","humor","identity","illness","illusion","immigration","inclusion","india","indigenous peoples","industrial design","infrastructure","innovation","insects","international development","international relations","Internet","interview","invention","investing","Islam","journalism","Judaism","justice system","kids","language","law","leadership","LGBTQIA+","library","Life","literature","love","machine learning","magic","manufacturing","maps","marine biology","marketing","Mars","math","media","medical imaging","medical research","medicine","meditation","memory","mental health","metaverse","microbes","microbiology","Middle East","military","mindfulness","Mission Blue","money","Moon","motivation","museums","music","nanotechnology","NASA","natural disaster","natural resources","nature","neurology","neuroscience","NFTs","nuclear energy","ocean","online privacy","pain","painting","paleontology","pandemic","parenting","performance","personal growth","personality","philanthropy","philosophy","photography","physics","Planets","plants","plastic","podcast","poetry","policy","politics","pollution","potential","poverty","pregnancy","primates","prison","product design","productivity","prosthetics","protest","psychology","PTSD","public health","public space","public speaking","quantum","race","refugees","relationships","religion","renewable energy","resources","rivers","robots","rocket science","science","science fiction","self","sex","sexual violence","shopping","sight","Slavery","sleep","smell","social change","social media","society","sociology","software","solar energy","solar system","sound","South America","space","spoken word","sports","statistics","storytelling","street art","String theory","success","suicide","Sun","Surgery","surveillance","sustainability","synthetic biology","teaching","technology","TED-Ed","TED Books","TED Connects","TED en Español","TED Fellows","TED Membership","TED Prize","TED Residency","TEDMED","TEDx","telescopes","television","terrorism","theater","time","toys","Transgender","transportation","travel","trees","trust","typography","United States","universe","urban planning","UX design","Vaccines","veganism","violence","virtual reality","virus","visualizations","vulnerability","war","water","weather","wind energy","women","women in business","work","work-life balance","worklife","writing","youth"]},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[1267,1231,878,828,805,772,710,700,675,670,615,600,593,583,507,501,472,439,421,414,396,395,382,378,369,367,331,327,327,319,298,296,296,295,294,287,277,274,266,264,260,251,249,247,244,236,234,226,224,223,214,211,205,203,201,200,195,190,188,179,174,174,173,164,160,160,151,150,149,149,146,143,141,138,138,133,132,132,128,127,126,126,125,121,120,118,118,118,118,117,115,114,114,113,112,110,110,107,106,106,104,104,103,102,100,100,100,99,99,98,96,96,96,95,94,94,93,93,89,89,88,85,82,81,79,79,78,76,76,74,73,72,72,72,72,71,69,68,68,68,66,65,64,64,64,64,63,62,62,62,62,61,61,60,60,58,58,58,57,57,56,56,56,54,54,53,53,52,51,51,51,50,50,50,49,49,48,48,48,47,46,46,45,45,45,45,44,43,43,43,42,42,42,42,41,40,40,40,39,38,38,38,37,37,37,36,36,36,35,34,34,34,34,34,33,33,33,32,32,31,31,31,30,30,29,28,28,28,28,28,28,27,27,27,27,27,27,27,27,27,27,26,25,25,25,25,24,24,24,23,23,23,23,23,23,23,22,22,22,22,22,22,22,22,21,21,21,21,20,20,20,20,19,19,19,19,19,18,18,18,18,18,18,17,17,17,16,16,16,16,16,16,16,16,15,15,15,15,15,15,15,14,14,14,14,14,14,13,13,13,13,13,13,12,12,12,12,11,11,11,11,11,10,10,10,9,9,9,8,8,8,8,7,7,7,7,6,6,5,5,5,4,4,3,3,2,2,1,1,1,1,1,1],"y":["science","technology","TED-Ed","culture","animation","education","society","TEDx","social change","global issues","business","design","history","health","innovation","humanity","biology","communication","art","future","creativity","community","climate change","entertainment","environment","activism","sustainability","medicine","personal growth","brain","health care","economics","performance","music","nature","collaboration","psychology","TED Fellows","animals","work","politics","human body","women","invention","identity","kids","storytelling","government","engineering","equality","leadership","medical research","Internet","public health","Africa","computers","data","disease","war","cities","math","space","United States","food","evolution","ocean","race","mental health","physics","writing","exploration","Countdown","gender","family","neuroscience","humor","architecture","relationships","self","photography","illness","universe","policy","language","religion","AI","democracy","energy","media","happiness","decision-making","motivation","violence","entrepreneur","law","journalism","philosophy","potential","film","parenting","emotions","visualizations","poetry","social media","biodiversity","money","software","ancient world","pollution","international development","literature","love","teaching","death","finance","genetics","beauty","books","biotech","robots","poverty","water","cancer","agriculture","astronomy","infrastructure","transportation","cognitive science","success","DNA","youth","algorithm","ecology","india","sex","sports","coronavirus","crime","insects","justice system","machine learning","memory","compassion","empathy","goals","product design","comedy","demo","fish","investing","urban planning","aging","Planets","anthropology","feminism","chemistry","code","conservation","disability","pandemic","immigration","women in business","work-life balance","Middle East","renewable energy","depression","virus","microbiology","farming","plants","refugees","consciousness","electricity","statistics","marine biology","natural resources","china","dance","LGBTQIA+","bacteria","Best of the Web","prison","drugs","ethics","gaming","natural disaster","TEDMED","Asia","fear","Vaccines","curiosity","personality","TED en Español","terrorism","corruption","indigenous peoples","sleep","time","marketing","philanthropy","productivity","sociology","discovery","fashion","online privacy","Anthropocene","consumerism","sight","UX design","Audacious Project","flight","industrial design","public space","sound","diversity","solar system","trees","behavioral economics","TED Prize","bioethics","capitalism","magic","military","weather","TED Residency","illusion","inclusion","solar energy","spoken word","surveillance","theater","archaeology","biosphere","Europe","human rights","manufacturing","maps","sexual violence","Slavery","travel","trust","heart","AIDS","birds","nanotechnology","Transgender","encryption","gardening","telescopes","drones","friendship","library","medical imaging","painting","Surgery","virtual reality","aliens","Big Bang","biomimicry","Mars","Mission Blue","protest","South America","synthetic biology","mindfulness","museums","plastic","quantum","addiction","botany","dark matter","resources","Egypt","paleontology","pregnancy","primates","prosthetics","astrobiology","blindness","cyber security","interview","PTSD","TED Books","exercise","public speaking","vulnerability","bees","dinosaurs","fossil fuels","fungi","geology","hearing","TED Connects","television","Alzheimer's","blockchain","driverless cars","Life","nuclear energy","science fiction","toys","Antarctica","Autism spectrum disorder","ebola","neurology","shopping","smell","3D printing","body language","Islam","Moon","rivers","wind energy","Brazil","Christianity","coral reefs","suicide","CRISPR","glaciers","graphic design","international relations","rocket science","bullying","meditation","String theory","augmented reality","Buddhism","grammar","asteroid","deextinction","homelessness","Sun","bionics","conducting","cryptocurrency","typography","forensics","metaverse","atheism","microbes","NASA","street art","worklife","Judaism","NFTs","pain","podcast","collective","crowdsourcing","Hinduism","Humanities","TED Membership","veganism"],"text":["science","technology","TED-Ed","culture","animation","education","society","TEDx","social change","global issues","business","design","history","health","innovation","humanity","biology","communication","art","future","creativity","community","climate change","entertainment","environment","activism","sustainability","medicine","personal growth","brain","health care","economics","performance","music","nature","collaboration","psychology","TED Fellows","animals","work","politics","human body","women","invention","identity","kids","storytelling","government","engineering","equality","leadership","medical research","Internet","public health","Africa","computers","data","disease","war","cities","math","space","United States","food","evolution","ocean","race","mental health","physics","writing","exploration","Countdown","gender","family","neuroscience","humor","architecture","relationships","self","photography","illness","universe","policy","language","religion","AI","democracy","energy","media","happiness","decision-making","motivation","violence","entrepreneur","law","journalism","philosophy","potential","film","parenting","emotions","visualizations","poetry","social media","biodiversity","money","software","ancient world","pollution","international development","literature","love","teaching","death","finance","genetics","beauty","books","biotech","robots","poverty","water","cancer","agriculture","astronomy","infrastructure","transportation","cognitive science","success","DNA","youth","algorithm","ecology","india","sex","sports","coronavirus","crime","insects","justice system","machine learning","memory","compassion","empathy","goals","product design","comedy","demo","fish","investing","urban planning","aging","Planets","anthropology","feminism","chemistry","code","conservation","disability","pandemic","immigration","women in business","work-life balance","Middle East","renewable energy","depression","virus","microbiology","farming","plants","refugees","consciousness","electricity","statistics","marine biology","natural resources","china","dance","LGBTQIA+","bacteria","Best of the Web","prison","drugs","ethics","gaming","natural disaster","TEDMED","Asia","fear","Vaccines","curiosity","personality","TED en Español","terrorism","corruption","indigenous peoples","sleep","time","marketing","philanthropy","productivity","sociology","discovery","fashion","online privacy","Anthropocene","consumerism","sight","UX design","Audacious Project","flight","industrial design","public space","sound","diversity","solar system","trees","behavioral economics","TED Prize","bioethics","capitalism","magic","military","weather","TED Residency","illusion","inclusion","solar energy","spoken word","surveillance","theater","archaeology","biosphere","Europe","human rights","manufacturing","maps","sexual violence","Slavery","travel","trust","heart","AIDS","birds","nanotechnology","Transgender","encryption","gardening","telescopes","drones","friendship","library","medical imaging","painting","Surgery","virtual reality","aliens","Big Bang","biomimicry","Mars","Mission Blue","protest","South America","synthetic biology","mindfulness","museums","plastic","quantum","addiction","botany","dark matter","resources","Egypt","paleontology","pregnancy","primates","prosthetics","astrobiology","blindness","cyber security","interview","PTSD","TED Books","exercise","public speaking","vulnerability","bees","dinosaurs","fossil fuels","fungi","geology","hearing","TED Connects","television","Alzheimer's","blockchain","driverless cars","Life","nuclear energy","science fiction","toys","Antarctica","Autism spectrum disorder","ebola","neurology","shopping","smell","3D printing","body language","Islam","Moon","rivers","wind energy","Brazil","Christianity","coral reefs","suicide","CRISPR","glaciers","graphic design","international relations","rocket science","bullying","meditation","String theory","augmented reality","Buddhism","grammar","asteroid","deextinction","homelessness","Sun","bionics","conducting","cryptocurrency","typography","forensics","metaverse","atheism","microbes","NASA","street art","worklife","Judaism","NFTs","pain","podcast","collective","crowdsourcing","Hinduism","Humanities","TED Membership","veganism"],"type":"bar","orientation":"h","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</section>
+<section
+id="steg-2-trene-modell-for-å-klassifisere-de-resterende-dokumentene"
+class="slide level2">
+<h2>Steg 2: Trene modell for å klassifisere de resterende
+dokumentene</h2>
+<h3
+id="splitter-datasettet-inn-i-et-treningssett-et-testsett-og-et-valideringssett.">2.1
+Splitter datasettet inn i et treningssett, et testsett og et
+valideringssett.</h3>
+<ul>
+<li class="fragment"><strong>Treningssett:</strong> De dataene modellen
+bruker for å lære mønstre og sammenhenger.</li>
+<li class="fragment"><strong>Valideringssett:</strong> Del av data som
+modellen sjekker at den har lært godt mot.</li>
+<li class="fragment"><strong>Testsett:</strong> Endelig data som brukes
+for å sjekke at modellen er god nok.</li>
+</ul>
+<div class="fragment">
+<p><img data-src="figurer/split_data.png" style="width:30.0%"
+alt="Validering1" /></p>
+</div>
+</section>
+<section class="slide level2">
+
+<p><img data-src="figurer/split_data2.png" style="width:60.0%"
+alt="Validering2" /></p>
+</section>
+<section class="slide level2">
+
+<p><em>Hvorfor splitter vi opp i så mange sett?</em> <br> Fordi vi må
+sjekke at modellen gjør det godt nok på out-of-sample data (data som
+ikke har blitt brukt for å beregne modellen).</p>
+<p><img data-src="figurer/overfitting.png" style="width:100.0%"
+alt="Overfitting" /></p>
+</section>
+<section class="slide level2">
+
+<h3 id="preprosesserer-teksten">2.2 Preprosesserer teksten</h3>
+<p><img data-src="figurer/text_preprocessing.png" style="width:80.0%"
+alt="Preprosessering" /></p>
+</section>
+<section class="slide level2">
+
+<h3 id="velger-modell">2.3 Velger modell</h3>
+<p>Hvor mange husker lineær regresjon?</p>
+<ul>
+<li class="fragment">Det finnes mange ulike modeller.</li>
+</ul>
+<p><br></p>
+<div class="fragment">
+<p><img data-src="figurer/models-tradeoff.png" style="width:80.0%"
+alt="Modeller" /></p>
+</div>
+</section>
+<section class="slide level2">
+
+<p>I pensum nevner de disse modellene for klassifikasjon:</p>
+<ul>
+<li class="fragment">Support vector machine (SVM)</li>
+<li class="fragment">Logistisk regresjon</li>
+<li class="fragment">Random forest</li>
+</ul>
+<div class="fragment">
+<p><img data-src="figurer/svm.png" style="width:30.0%" alt="SVM" /> <img
+data-src="figurer/logistic.PNG" style="width:30.0%" alt="Logistisk" />
+<img data-src="figurer/forest.png" style="width:45.0%"
+alt="Randomforest" /></p>
+</div>
+</section>
+<section id="steg-3-sjekk-hvor-bra-modellen-gjorde-det"
+class="slide level2">
+<h2>Steg 3: Sjekk hvor bra modellen gjorde det</h2>
+<ul>
+<li class="fragment">Accuracy: Hvor mange observasjoner klarte modellen
+å klassifisere riktig?</li>
+<li class="fragment">Recall (sensitivity): Hvor godt modellen
+klassifiserer sanne positive.</li>
+<li class="fragment">Precision: Hvor mange positive utfall som var sanne
+positive.</li>
+<li class="fragment">Specificity: Hvor mange negative utfall som var
+sanne negative.</li>
+<li class="fragment">F1: En vektet form for “accuracy”, som gir høyere
+vekt til falske negative og positive.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<p><img data-src="figurer/klass1.PNG" style="width:50.0%"
+alt="Validering1" /> <img data-src="figurer/klass2.PNG"
+style="width:50.0%" alt="Validering2" /></p>
+</section>
+<section class="slide level2">
+
+<h3 id="andre-metoder">Andre metoder:</h3>
+<ul>
+<li class="fragment"><p>Forvirringsmatrise (confusion matrix)</p></li>
+<li class="fragment"><p>ROC-kurve and AUC (area under the
+curve)</p></li>
+</ul>
+<div class="fragment">
+<p><img src="uke_06_laering_files/figure-revealjs/unnamed-chunk-6-1.png" width="768" /></p>
+</div>
+</section>
+<section id="steg-4-bruk-de-klassifiserte-dokumentene-i-analyse"
+class="slide level2">
+<h2>Steg 4: Bruk de klassifiserte dokumentene i analyse</h2>
+<p>Hva er <em>din</em> problemstilling?</p>
+<p><img data-src="figurer/science-girl.jpg" style="width:30.0%"
+alt="science-girl" /></p>
+</section></section>
+<section>
+<section id="ikke-veiledet-læring" class="title-slide slide level1">
+<h1>Ikke-veiledet læring</h1>
+<p>Brukes når vi har data der vi ikke vet <code>Y</code>.</p>
+<p><img data-src="figurer/document_class.png" style="width:60.0%"
+alt="Dokumentklasse1" /></p>
+</section>
+<section class="slide level2">
+
+<p><strong>Eksempler</strong></p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 57%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Modell</strong></th>
+<th><strong>Beskrivelse</strong></th>
+<th><strong>Formål</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Diskriminerende ord</td>
+<td>Måler hvilke ord som brukes svært ofte i forskjellige tekster.</td>
+<td>Anormalitet</td>
+</tr>
+<tr class="even">
+<td>Klustring</td>
+<td>Grupperer tekster inn i “klustre” etter hvor mye de likner
+hverandre.</td>
+<td>Gruppering</td>
+</tr>
+<tr class="odd">
+<td>Temamodeller</td>
+<td>Måler i hvor stor grad tekstene tilhører hvert av K ulike tema.</td>
+<td>Gruppering</td>
+</tr>
+<tr class="even">
+<td>Lav-dimensjonal ord-embedding</td>
+<td>Finner ord som hører sammen i et lav-dimensjonalt rom.</td>
+<td>Dimensjonsreduksjon</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<ul>
+<li class="fragment"><strong>Oppdagelse</strong>, Måling, Slutning</li>
+</ul>
+</section>
+<section id="hva-mener-vi-med-oppdagelse" class="slide level2">
+<h2>Hva mener vi med “oppdagelse”?</h2>
+<div class="left" style="float:left;width:45%">
+<ul>
+<li class="fragment"><p>Oppdagelse handler om å avdekke og forstå
+konsepter, f. eks:</p>
+<ul>
+<li class="fragment">“Staten”</li>
+<li class="fragment">“Velferd”</li>
+<li class="fragment">“Nasjonalisme”</li>
+</ul></li>
+</ul>
+</div>
+<div class="right" style="float:right;width:45%">
+<p><br> <br></p>
+<p><img data-src="figurer/nlp_concpet.png" style="width:80.0%"
+alt="NLPconcept" /></p>
+</div>
+</section>
+<section class="slide level2">
+
+<p><img data-src="figurer/concept.jpg" style="width:70.0%"
+alt="Concept" /></p>
+</section>
+<section id="prinsipper-når-man-jobber-med-ikke-veiledet-læring"
+class="slide level2">
+<h2>Prinsipper når man jobber med ikke-veiledet læring</h2>
+<ul>
+<li class="fragment"><p>Kontekstrelevans: Substanskunnskap er viktig for
+å forstå output fra en modell.</p></li>
+<li class="fragment"><p>Ingen grunnleggende sannhet: Konseptualiseringer
+er som modeller - enten nyttige eller unyttige, men aldri fulle
+representasjoner av virkeligheten.</p></li>
+<li class="fragment"><p>Vurder konseptet, ikke metoden: Det finnes ingen
+<em>go-to</em>-metode, konseptet må vurderes utfra nyttigheten av
+det.</p></li>
+<li class="fragment"><p>Det er best å bruke et trenings- og
+testdatasett: Også her kan det være lurt å teste konseptets gyldighet på
+et datasett som ikke er brukt for å konstruere konseptet.</p></li>
+</ul>
+</section></section>
+<section id="takk-for-i-dag" class="title-slide slide level1">
+<h1>Takk for i dag!</h1>
+<p><img data-src="figurer/sup-unsup.PNG" style="width:100.0%"
+alt="Oppsummering" /></p>
+</section>
+    </div>
+  </div>
+
+  <script src="uke_06_laering_files/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="uke_06_laering_files/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+        // Display a presentation progress bar
+        progress: true,
+        // Display the page number of the current slide
+        slideNumber: true,
+        // Push each slide change to the browser history
+        history: true,
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+        // Enable the slide overview mode
+        overview: true,
+        // Vertical centering of slides
+        center: false,
+        // Enables touch navigation on devices with touch input
+        touch: true,
+        // Turns fragments on and off globally
+        fragments: true,
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+        // Transition style
+        transition: 'convex', // none/fade/slide/convex/concave/zoom
+        // Transition speed
+        transitionSpeed: 'default', // default/fast/slow
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+
+
+        chalkboard: {
+        },
+
+        keyboard: {
+          67: function() { RevealChalkboard.toggleNotesCanvas() },    // toggle notes canvas when 'c' is pressed
+          66: function() { RevealChalkboard.toggleChalkboard() }, // toggle chalkboard when 'b' is pressed
+          46: function() { RevealChalkboard.clear() },    // clear chalkboard when 'DEL' is pressed
+           8: function() { RevealChalkboard.reset() },    // reset chalkboard data on current slide when 'BACKSPACE' is pressed
+          68: function() { RevealChalkboard.download() }, // downlad recorded chalkboard drawing when 'd' is pressed
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'uke_06_laering_files/reveal.js-3.3.0.1/plugin/notes/notes.js', async: true },
+          { src: 'uke_06_laering_files/reveal.js-3.3.0.1/plugin/zoom-js/zoom.js', async: true },
+          { src: 'uke_06_laering_files/reveal.js-3.3.0.1/plugin/chalkboard/chalkboard.js', async: true },
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+  </body>
+</html>

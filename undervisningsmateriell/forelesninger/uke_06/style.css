@@ -1,0 +1,69 @@
+.reveal {
+  font-size: 26pt;
+  color: #160D08;
+}
+
+.reveal h1{
+  color: #315A39;
+}
+
+.reveal h2{
+  font-weight: 300;
+  color: #6A8B92;
+  text-decoration: none;
+}
+
+.reveal h3{
+  color: #557260;
+}
+
+.reveal section img { 
+  background:none; 
+  border:none; 
+  box-shadow:none; 
+  }
+
+body{
+  background: #FBFBF9;
+  color: #F0F0F0;
+  font-family: "Lucida Console", "Courier New", monospace;
+}
+
+ol{
+  font-style: normal;
+}
+
+a:link,
+a:visited{
+  color: #84C3BE;
+}
+
+.white-titles { 
+  color: white; 
+} 
+
+.table{
+  border-collapse: collapse;
+}
+
+slides > slide {
+  overflow-x: auto !important;
+  overflow-y: auto !important;
+}
+
+.small-code pre code {
+  font-size: 3pt;
+  color: #F0F0F0;
+  background-color: #626E60;
+}
+
+pre {
+  max-height: 600px;
+  max-width: 1200px;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+h2.author {
+  text-decoration: none;
+}
