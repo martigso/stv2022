@@ -1,0 +1,467 @@
+---
+title: " "
+date: '`r format(Sys.time(), "%d-%m-%Y")`'
+output:
+  revealjs::revealjs_presentation:
+    css: style.css
+    highlight: breezedark
+    incremental: yes
+    code_folding: show
+    transition: convex
+    self_contained: false
+    reveal_plugins: ["chalkboard", "notes", "zoom", "menu"]
+    reveal_options:
+      slideNumber: true
+css: style.css
+bibliography: ../../../referanser/stv2022.bib
+csl: american-political-science-association.csl
+editor_options: 
+  chunk_output_type: console
+
+---
+
+<font size=12>STV2022 -- Store tekstdata</font></br></br>
+<p style='font-size:10;color:#5B28D4'>[05] Bruke API (Stortinget)</p></br>
+![](uio_logo.png){width=50%} 
+
+Martin Søyland 
+<font size=6>\<martin.soyland@stv.uio.no\></font></br>
+
+```{r setup, include=FALSE,warning=FALSE,message=FALSE}
+# setwd("./undervisningsmateriell/forelesninger/uke_05/")
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(class.source = "code-bg")
+refs <- bibtex::read.bib("../../../referanser/stv2022.bib")
+
+library(tidytext);library(quanteda);library(tidyverse);library(tidytext);library(rvest)
+
+str_break <- function(x, width = 7L) {
+  x <- unlist(quanteda::tokenize_fastestword(x))
+  n <- length(x)
+  if (n <= width) return(x)
+  n1 <- seq(1L, n, by = width)
+  n2 <- seq(width, n, by = width)
+  if (n %% width != 0) n2 = c(n2, n)
+  
+  lines <- character()
+  for(i in 1:length(n1)){
+    lines[i] <- paste(x[n1[i]:n2[i]], collapse = " ")
+  }
+ return(lines) 
+}
+
+load("data/wq1920.rda")
+load("data/wq2021.rda")
+load("data/covid.rda")
+load("data/covid_stm.rda")
+```
+
+
+# Disposisjon
+
+1. Stortingets API oversikt `r emo::ji("scroll")`
+1. .xml-formatet `r emo::ji("person_shrugging")`
+1. stortingscrape `r emo::ji("bear")`
+1. Oppgavene `r emo::ji("see_no_evil")`
+
+
+
+
+
+# Stortingets API -- oversikt
+
+</br></br></br>
+![st_logo](./logo.svg){width=200%}
+
+[data.stortinget.no](https://data.stortinget.no/dokumentasjon-og-hjelp/)
+
+## Kobling mellom deler av API (eksempel)
+
+```txt
+Parlamentariske perioder
+├── "2001-2005", "2017-2021", osv
+└── https://data.stortinget.no/eksport/stortingsperioder
+    └── Representanter i en periode
+        └── "GHB", "SIVJ", "EIGE", "ALYS", osv
+            ├── Representantdata
+            │   └── https://data.stortinget.no/eksport/person?personid=GHB
+            ├── Biografisk representantdata
+            │   └── https://data.stortinget.no/eksport/kodetbiografi?personid=EIGE
+            └── Bilde av representant
+                └── https://data.stortinget.no/eksport/personbilde?personid=ALYS
+                
+```
+
+
+## .xml-formatet {data-background="xmljson.png" data-background-size=20% data-background-position="right"}
+
+- APIer gir somregel enten `.xml` eller `.json`
+- Vi bruker `.xml` i dag
+    - det gjør også `stortingscrape`
+- `.xml` det ligner på `.html`
+- Kan leses med `rvest::read_html()`
+    - går bakvei via pakken `xml2`
+- (Hvis du treffer på `.json` -> `jsonlite`) `r emo::ji("cowboy")`
+    
+
+
+## Rå `.xml`
+
+</br> </br>
+```{r}
+if(file.exists("./data/xml/sesjoner.xml") == FALSE){
+  download.file("https://data.stortinget.no/eksport/sesjoner",
+              destfile = "./data/xml/sesjoner.xml")
+}
+```
+
+```{bash}
+xmllint --encode utf8 --format ./data/xml/sesjoner.xml
+```
+
+## Strukturere `.xml`
+
+
+```{r readxmleks1, echo=-1, eval=-4}
+sesjoner <- read_html("./data/xml/sesjoner.xml")
+
+# Leser rå xml-fil
+sesjoner <- read_html("https://data.stortinget.no/eksport/sesjoner")
+
+sesjoner
+```
+
+```{r readxmleks2, echo=TRUE}
+# Trekker ut alle "id"-nodene
+sesjoner %>% html_elements("id") %>% head()
+```
+
+---
+
+```{r readxmleks3, echo=TRUE}
+# Trekker ut sesjonstart
+sesjoner %>% 
+  html_elements("sesjoner_liste > sesjon > fra") %>% 
+  html_text() %>% 
+  as.Date() %>% 
+  head()
+
+# Trekker ut sesjonslutt
+sesjoner %>% 
+  html_elements("sesjoner_liste > sesjon > til") %>% 
+  html_text() %>% 
+  as.Date() %>% 
+  head()
+
+```
+
+---
+
+```{r struktxml, echo=TRUE}
+
+
+sesjoner_df <- tibble(
+  from = sesjoner %>% 
+    html_elements("sesjoner_liste > sesjon > fra") %>% 
+    html_text() %>% 
+    as.Date(), 
+  id = sesjoner %>% 
+    html_elements("sesjoner_liste > sesjon > id") %>% 
+    html_text(), 
+  to = sesjoner %>% 
+    html_elements("sesjoner_liste > sesjon > til") %>% 
+    html_text() %>% 
+    as.Date()
+)
+
+sesjoner_df %>% 
+  filter(from < as.Date("2022-01-01")) %>% 
+  head()
+
+```
+
+
+# {data-background="https://github.com/martigso/stortingscrape/raw/master/man/figures/logo.png" data-background-size=40%}
+
+## Filosofi
+
+- Brukervalg
+    - Sy datasett etter eget behov
+- Forenkle datastrukturer
+    - 2 dimensionale datasett, når mulig
+    - Lister med datasett, hvis nødvendig
+- Enkel arbeidsflyt
+    - Kobling av forskjellige deler av APIet
+    - Example: MP age and roll call votes
+- Begrense duplikater i data
+    - Ungå at samme data hentes av flere funksjoner
+
+## Omfang
+
+</br> </br> 
+![](./Everything-Meme.jpg){width=70%}
+
+## Omfang
+
+```{r avail_data, echo=FALSE}
+
+library(rvest)
+doc <- read_html("./doc_help.html")
+
+cat((doc %>% html_elements("div > a") %>% html_text())[7:44], sep = "\n")
+
+```
+
+</br>
+
+[Liste over alle funksjoner](https://martigso.github.io/stortingscrape/functions.html)
+
+## Kobling mellom deler av API
+
+```txt
+`get_parlperiods()`
+└── # datasett med alle stortingsperioder>
+    └── `get_parlperiod_mps("2005-2009")`
+        └── # datasett med alle representanter for periode
+            ├── `get_mp("SIVJ")`
+            │   └── # generell data om spesifikk representant
+            ├── `get_mp_bio("SIVJ")`
+            │   └── # biografiske data for representant
+            └── `get_mp_pic("SIVJ")`
+                └── # bilde av representant
+```
+. . .
+
+```{r, eval=FALSE}
+get_mp_pic("GHB", size = "stort", destfile = "gro.png")
+get_mp_pic("EIGE", size = "stort", destfile = "einar.png")
+get_mp_pic("K_AWI", size = "stort", destfile = "kåre.png")
+```
+
+![](gro.png){width=25%} ![](einar.png){width=25%} ![](kåre.png){width=25%}
+
+## Et faktisk eksempel på tekst til tall til analyse
+
+. . .
+
+> Hypotese:
+> Representanter på Stortinget ble mer negative til regjeringens håndtering av koronapandemien 
+> over tid.
+
+. . .
+
+</br>
+Fremgangsmåte: <font style='color:#842948'>hente</font> > <font style='color:#456423'>strukturere</font> > <font style='color:#965712'>konvertere</font> > <font style='color:#124785'>analysere</font>
+
+. . .
+
+</br>
+Antagelse: </br> `r emo::ji("rotating_light")`<font style='color:#FF0101'>Sentiment måler negativitet/positivitet til regjeringen</font>`r emo::ji("rotating_light")`
+
+## Hente og strukturere data
+
+
+```{r get_wq, echo=TRUE, eval=FALSE}
+library(stortingscrape)
+
+# Henter alle høringer i sesjonene 2019-2020 og 2020-2021
+wq1920 <- get_session_questions("2019-2020", 
+                                q_type = "skriftligesporsmal", 
+                                good_manners = 2)
+
+wq2021 <- get_session_questions("2020-2021", 
+                                q_type = "skriftligesporsmal", 
+                                good_manners = 2)
+
+# Binder sammen de to sesjonene til ett objekt
+wqs <- bind_rows(wq1920, wq2021)
+
+# Filtrerer ut de som nevner "CoV", "koron[..]", "smittevern" eller "vaksine
+covid <- wqs %>% 
+  filter(str_detect(title, "[Cc]o[Vv]|[Kk]oron|[Ss]mittevern|[Mm]unnbind|[Vv]aksine") == TRUE)
+
+```
+
+```{r show_title_data, echo=FALSE, eval=TRUE}
+covid %>% 
+  select(question_from_id, qustion_to_minister_title, title) %>% 
+  mutate(qustion_to_minister_title = str_remove(qustion_to_minister_title, "ministeren"),
+         title = str_c(substr(title, 1, 15), "[...]")) %>% 
+  tail(., n = 4)
+```
+
+
+## Hente og strukturere data
+
+```{r, eval=FALSE, echo=TRUE}
+
+covid$justification <- NA
+
+for(i in 1:nrow(covid)){
+  tmp_question <- get_question(covid$id[i], good_manners = 1)
+  covid$justification[i] <- tmp_question$justification
+}
+
+
+```
+
+
+```{r}
+str_sub(covid$justification, 1, 65) %>% 
+  head() %>% 
+  print()
+```
+
+## Fra tekst til tall
+
+
+
+
+```{r tekst_til_tall, echo=TRUE}
+
+covid_tokens <- covid %>%
+  mutate(sendt_date = as.Date(sendt_date)) %>% 
+  group_by(id, sendt_date) %>% 
+  unnest_tokens(., 
+                output = token, 
+                input = justification) %>% 
+  filter(str_detect(token, "[0-9]") == FALSE) %>% 
+  count(token) %>% 
+  bind_tf_idf(., 
+              term = token,
+              document = id,
+              n = n)
+
+covid_tokens %>% head(., 4)
+
+```
+
+
+## Lage stoppordliste
+
+
+
+```{r stopordliste, echo=TRUE}
+stop_words <- covid_tokens %>% 
+  ungroup() %>% 
+  group_by(token) %>% 
+  summarize(token = unique(token),
+            idf = unique(idf)) %>% 
+  arrange(idf) %>% 
+  filter(idf < 1) %>% 
+  pull(token)
+
+stop_words
+
+covid_tokens <- covid_tokens %>% 
+  filter(token %in% stop_words == FALSE) 
+
+```
+
+## Topp TF-IDF ord
+
+```{r top_tfidf, echo=FALSE, warning=FALSE, error=FALSE, message=FALSE}
+covid_nokkelord <- c("kriseturnus", "smitteverntiltakene",
+                     "koronaviruset", "rehabilitering",
+                     "sykehuset", "senskader",
+                     "antistoffer", "influensa",
+                     "smittevernlegens", "vaksinedose",
+                     "covax")
+
+covid_tokens$color <- ifelse(covid_tokens$token %in% covid_nokkelord,
+                                       "yes",
+                                       "no")
+
+covid_tokens %>%
+  filter(tf_idf > 0.15) %>% 
+  slice_max(., 
+            order_by = tf_idf, 
+            n = 1, 
+            with_ties = FALSE) %>% 
+  ggplot(., aes(label = token, size = tf_idf, color = color)) +
+  ggwordcloud::geom_text_wordcloud() +
+  scale_size_area(max_size = 10) +
+  scale_color_manual(values = c("gray70", "cyan")) +
+  ggdark::dark_theme_void()
+
+
+```
+
+## Kritikk eller informasjonssamling?
+
+```{r}
+
+library(NorSentLex)
+
+covid_tokens_sentiment <- covid_tokens %>% 
+  mutate(sentiment = ifelse(
+    token %in% nor_fullform_sent$positive, 1,
+    ifelse(
+      token %in% nor_fullform_sent$negative, -1, 0)))
+
+
+
+
+ggplot(covid_tokens_sentiment, aes(x = sendt_date, y = sentiment)) +
+  geom_smooth(method = "lm", formula = y ~ poly(x, degree = 2)) +
+  ggdark::dark_theme_classic() +
+  theme(panel.grid.major.y = element_line(color = "gray50",
+                                          linetype = "dashed")) +
+  labs(x = "Dato spørsmål ble sendt",
+       y = "Sentiment")
+
+```
+
+
+## Emnemodell som alternativ
+
+```{r, message=FALSE, eval=FALSE}
+library(stm)
+
+
+q_dfm <- wqs %>% 
+  group_by(id) %>% 
+  unnest_tokens(.,
+                output = token,
+                input = title) %>% 
+  filter(token %in% quanteda::stopwords(language = "no") == FALSE) %>% 
+  filter(str_detect(token, "[0-9]") == FALSE) %>% 
+  filter(str_detect(token, "[[:punct:]]") == FALSE) %>% 
+  count(token) %>% 
+  cast_dfm(., 
+           document = id,
+           term = token,
+           value = n)
+
+covid_stm <- stm(q_dfm, K = 0, init.type = "Spectral")
+
+```
+
+```{r, echo=TRUE, message=FALSE, warning=FALSE}
+stm::findTopic(covid_stm, "covid", type = "frex")
+
+covid_topics <- stm::labelTopics(covid_stm, n = 12)
+covid_topics$frex[c(34, 43, 87), ] %>% t()
+
+```
+
+
+
+# Oppgavene
+
+. . .
+
+<p style='font-size:52pt;color:#FB0237'>Læring i problemløsing!</p>
+
+1. Er det noe du ikke får til? Feks `lapply()` eller `for()`-loop?
+    - Prøv med 1 dokument/tekst først
+    - Identifiser evt feil og rett opp
+    - Kjør loop på nytt. Virker det nå?
+    - Rinse and repeat
+2. Er du redd for å ikke få godkjent?
+    - Endre fokus
+    - "Hva kan jeg gjøre for å få best mulig innlevering?"
+    - Skriv det ned!
+3. ...
+
+## {data-background="../uke_01/figureitout.gif"}
