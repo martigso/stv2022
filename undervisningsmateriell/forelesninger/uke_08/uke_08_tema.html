@@ -494,30 +494,112 @@ boligbygging, selv om grunneiere står i kø for å selge. Det vi har nok
 av fra naturens side, nemlig plass, har politikere og byråkrater greid å
 gjøre til mangelvare.</font></p>
 </blockquote>
-</div>
-<div class="fragment">
-<p>Carl I. Hagen, FrPs landsmøte 1988</p>
+<p><font size="4">Carl I. Hagen, FrPs landsmøte 1988</font></p>
 </div>
 </section>
 
 <section>
-<section id="oversikt-emnemodellering" class="title-slide slide level1">
-<h1>Oversikt emnemodellering</h1>
-<aside class="notes">
-<ul>
-<li class="fragment">Store mengder tekst krever i noen tilfeller (RQs)
-strukturering av tekstene – alt er ikke relevant.</li>
-<li class="fragment">Ofte gjort manuelt (aviser, tidsskrifter, twitter
-#, generell manuell koding)</li>
-<li class="fragment">Men veldig tidkrevende -&gt; emnemodellering</li>
-</ul>
-</aside>
+<section id="hva-er-emnemodellering" class="title-slide slide level1">
+<h1>Hva er emnemodellering</h1>
+<p>Emnemodellering er <font style='color:cyan'>klassifisering</font> av
+tekst </br> ________________________________________________<br> Vi
+bruker <font style='color:cyan'>klassifisering</font> til alt mulig
+rart! 🔎</p>
+<div class="fragment">
+<p><img data-src="nyt.png" style="width:50.0%" alt="nyt" /></p>
+</div>
+<div class="fragment">
+<p><img data-src="twitch.png" style="width:50.0%" alt="twitch" /></p>
+</div>
+<div class="fragment">
+<p><img data-src="emneord_ansatte.png" style="width:50.0%"
+alt="emneord_ansatte" /></p>
+</div>
 </section>
 <section class="slide level2">
 
-<p><img data-src="bleifig.png" /></p>
-<p><font size="4">Fra <span class="citation" data-cites="Blei2012">Blei
-(2012)</span></font></p>
+<p>Emnemodellering bruker
+<font style='color:#842948'>sameksisterende</font> ord til å estimere
+emner (<em>topics</em>)</p>
+<img data-src="bleifig.png" />
+<div style="text-align: left">
+Hentet fra: <span class="citation" data-cites="Blei2012">Blei
+(2012)</span>
+</div>
+</section>
+<section class="slide level2">
+
+<blockquote>
+<p><font size="5">I <font style='color:red'>Norge</font> har vi mer enn
+nok <font style='color:red'>plass</font>, vi har folk som vil
+<font style='color:blue'>kjøpe hus</font> og
+<font style='color:green'>bygge hus</font> som har fått
+<font style='color:blue'>lån</font>, vi har
+<font style='color:green'>bygningsarbeidere</font> og
+<font style='color:green'>entreprenører</font>, vi har
+<font style='color:green'>materialer</font> og
+<font style='color:green'>redskap</font>. Hva er flaskehalsen? Den
+eneste ting <font style='color:orange'>politikere</font> og
+<font style='color:orange'>byråkrater</font> må sørge for, nemlig
+<font style='color:orange'>tillatelse til å bygge</font>. Det er ikke
+<font style='color:orange'>regulert</font> eller
+<font style='color:orange'>planlagt</font> nok
+<font style='color:red'>områder</font> til
+<font style='color:green'>boligbygging</font>, selv om
+<font style='color:blue'>grunneiere</font> står i kø for å
+<font style='color:blue'>selge</font>. Det vi har nok av fra
+<font style='color:red'>naturens</font> side, nemlig
+<font style='color:red'>plass</font>, har
+<font style='color:orange'>politikere</font> og
+<font style='color:orange'>byråkrater</font> greid å gjøre til
+<font style='color:blue'>mangelvare.</font></font></p>
+</blockquote>
+<div class="fragment">
+<table>
+<colgroup>
+<col style="width: 59%" />
+<col style="width: 24%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Emne</th>
+<th style="text-align: left;">Nøkkelord</th>
+<th style="text-align: left;">Andel av tekst</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><font style='color:red'>Areal</font></td>
+<td style="text-align: left;">Norge, plass, områder</td>
+<td style="text-align: left;">0.06</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><font style='color:blue'>Økonomi og
+eiendom </font></td>
+<td style="text-align: left;">kjøpe, lån, mangelvare</td>
+<td style="text-align: left;">0.07</td>
+</tr>
+<tr class="odd">
+<td
+style="text-align: left;"><font style='color:green'>Eiendomsutvikling</font></td>
+<td style="text-align: left;">bygge, hus, redskap</td>
+<td style="text-align: left;">0.07</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><font style='color:orange'>Politikk of
+forvaltning</font></td>
+<td style="text-align: left;">politikere, byråkrater</td>
+<td style="text-align: left;">0.08</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Stoppord</td>
+<td style="text-align: left;">har, vi, enn, som</td>
+<td style="text-align: left;">0.49</td>
+</tr>
+</tbody>
+</table>
+</div>
 </section></section>
 <section>
 <section id="lda" class="title-slide slide level1">
@@ -832,6 +914,10 @@ the ACM</em> 55(4): 77–84.
         backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
         // Number of slides away from the current that are visible
         viewDistance: 3,
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1080,
 
         menu: {
    

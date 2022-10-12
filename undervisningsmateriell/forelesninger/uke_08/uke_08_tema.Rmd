@@ -12,6 +12,7 @@ output:
     reveal_plugins: ["chalkboard", "notes", "zoom", "menu"]
     reveal_options:
       slideNumber: true
+      width: 1080
 css: style.css
 bibliography: stv2022.bib
 csl: american-political-science-association.csl
@@ -68,28 +69,49 @@ str_break <- function(x, width = 7L) {
 
 > <font size="5">I Norge har vi mer enn nok plass, vi har folk som vil kjøpe hus og bygge hus som har fått lån, vi har bygningsarbeidere og entreprenører, vi har materialer og redskap. Hva er flaskehalsen? Den eneste ting politikere og byråkrater må sørge for, nemlig tillatelse til å bygge. Det er ikke regulert eller planlagt nok områder til boligbygging, selv om grunneiere står i kø for å selge. Det vi har nok av fra naturens side, nemlig plass, har politikere og byråkrater greid å gjøre til mangelvare.</font>
 
+<font size="4">Carl I. Hagen, FrPs landsmøte 1988</font>
+
+
+# Hva er emnemodellering
+
+Emnemodellering er <font style='color:cyan'>klassifisering</font> av tekst </br> 
+________________________________________________<br>
+Vi bruker <font style='color:cyan'>klassifisering</font> til alt mulig rart! `r emo::ji("mag_right")`
+
 . . .
 
-Carl I. Hagen, FrPs landsmøte 1988 
+![nyt](./nyt.png){width=50%}
+
+. . .
+
+![twitch](./twitch.png){width=50%}
+
+. . .
+
+![emneord_ansatte](./emneord_ansatte.png){width=50%}
 
 
-# Oversikt emnemodellering
-
-
-
-
-<aside class="notes">
-- Store mengder tekst krever i noen tilfeller (RQs) strukturering av tekstene -- alt er ikke relevant.
-- Ofte gjort manuelt (aviser, tidsskrifter, twitter #, generell manuell koding)
-- Men veldig tidkrevende -> emnemodellering
-</aside>
 
 ---
 
+Emnemodellering bruker <font style='color:#842948'>sameksisterende</font> ord til å estimere emner (*topics*)
 
 ![](./bleifig.png)
+<div style="text-align: left">Hentet fra: @Blei2012 </div>
 
-<font size="4">Fra @Blei2012</font>
+---
+
+> <font size="5">I <font style='color:red'>Norge</font> har vi mer enn nok <font style='color:red'>plass</font>, vi har folk som vil <font style='color:blue'>kjøpe hus</font> og <font style='color:green'>bygge hus</font> som har fått <font style='color:blue'>lån</font>, vi har <font style='color:green'>bygningsarbeidere</font> og <font style='color:green'>entreprenører</font>, vi har <font style='color:green'>materialer</font> og <font style='color:green'>redskap</font>. Hva er flaskehalsen? Den eneste ting <font style='color:orange'>politikere</font> og <font style='color:orange'>byråkrater</font> må sørge for, nemlig <font style='color:orange'>tillatelse til å bygge</font>. Det er ikke <font style='color:orange'>regulert</font> eller <font style='color:orange'>planlagt</font> nok <font style='color:red'>områder</font> til <font style='color:green'>boligbygging</font>, selv om <font style='color:blue'>grunneiere</font> står i kø for å <font style='color:blue'>selge</font>. Det vi har nok av fra <font style='color:red'>naturens</font> side, nemlig <font style='color:red'>plass</font>, har <font style='color:orange'>politikere</font> og <font style='color:orange'>byråkrater</font> greid å gjøre til <font style='color:blue'>mangelvare.</font></font>
+
+. . .
+
+| Emne                                                     | Nøkkelord              | Andel av tekst|
+|:---------------------------------------------------------|:-----------------------|:--------------|
+|<font style='color:red'>Areal</font>                      | Norge, plass, områder  | 0.06          |
+|<font style='color:blue'>Økonomi og eiendom </font>       | kjøpe, lån, mangelvare | 0.07          |
+|<font style='color:green'>Eiendomsutvikling</font>        | bygge, hus, redskap    | 0.07          |
+|<font style='color:orange'>Politikk of forvaltning</font> | politikere, byråkrater | 0.08          |
+| Stoppord                                                 | har, vi, enn, som      | 0.49          |
 
 # LDA
 
