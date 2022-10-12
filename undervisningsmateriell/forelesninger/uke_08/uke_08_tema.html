@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>uke_08_tema.knit</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="uke_08_tema_files/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+
+<link rel="stylesheet" href="uke_08_tema_files/reveal.js-3.3.0.1/css/theme/simple.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal .slide-menu-button {
+      left: 105px !important;
+    }
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+    <link rel="stylesheet" href="style.css"/>
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+    <script src="uke_08_tema_files/header-attrs-2.16/header-attrs.js"></script>
+    <link href="uke_08_tema_files/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="uke_08_tema_files/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+
+<section class="slide level2">
+
+<font size=12>STV2022 – Store tekstdata</font></br></br>
+<p style="font-size:10;color:#42D225">
+[08] Klassifisering av tekst – temamodellering
+</p>
+<p></br> <img data-src="uio_logo.png" style="width:50.0%" /></p>
+<p>Martin Søyland <font size=6>&lt;<a
+href="mailto:martin.soyland@stv.uio.no"
+class="email">martin.soyland@stv.uio.no</a>&gt;</font></br></p>
+</section>
+<section id="disposisjon" class="title-slide slide level1">
+<h1>Disposisjon</h1>
+<ul>
+<li class="fragment">En øvelse i kategorisering</li>
+<li class="fragment">Om emnemodeller</li>
+<li class="fragment">?</li>
+<li class="fragment">?</li>
+</ul>
+</section>
+
+<section id="en-øvelse-i-kategorisering"
+class="title-slide slide level1">
+<h1>En øvelse i kategorisering</h1>
+<ul>
+<li class="fragment">Bruk 2 minutter på å diskutere hvordan følgende
+tekst kan kategoriseres (gis et emne):</li>
+</ul>
+<div class="fragment">
+<blockquote>
+<p><font size="5">I Norge har vi mer enn nok plass, vi har folk som vil
+kjøpe hus og bygge hus som har fått lån, vi har bygningsarbeidere og
+entreprenører, vi har materialer og redskap. Hva er flaskehalsen? Den
+eneste ting politikere og byråkrater må sørge for, nemlig tillatelse til
+å bygge. Det er ikke regulert eller planlagt nok områder til
+boligbygging, selv om grunneiere står i kø for å selge. Det vi har nok
+av fra naturens side, nemlig plass, har politikere og byråkrater greid å
+gjøre til mangelvare.</font></p>
+</blockquote>
+</div>
+<div class="fragment">
+<p>Carl I. Hagen, FrPs landsmøte 1988</p>
+</div>
+</section>
+
+<section>
+<section id="oversikt-emnemodellering" class="title-slide slide level1">
+<h1>Oversikt emnemodellering</h1>
+<aside class="notes">
+<ul>
+<li class="fragment">Store mengder tekst krever i noen tilfeller (RQs)
+strukturering av tekstene – alt er ikke relevant.</li>
+<li class="fragment">Ofte gjort manuelt (aviser, tidsskrifter, twitter
+#, generell manuell koding)</li>
+<li class="fragment">Men veldig tidkrevende -&gt; emnemodellering</li>
+</ul>
+</aside>
+</section>
+<section class="slide level2">
+
+<p><img data-src="bleifig.png" /></p>
+<p><font size="4">Fra <span class="citation" data-cites="Blei2012">Blei
+(2012)</span></font></p>
+</section></section>
+<section>
+<section id="lda" class="title-slide slide level1">
+<h1>LDA</h1>
+<ul>
+<li class="fragment">LDA is the “simplest” form of topic models</li>
+<li class="fragment">The intuition is that documents exhibit multiple
+topics (multi-membership model)</li>
+<li class="fragment">Topics are defined to be a distribution over a
+fixed vocabulary</li>
+<li class="fragment">Topics are assumed to be specified before any data
+has been generated</li>
+<li class="fragment">Beforehand, we do not know the topics, per-document
+topic distributions, and the per-document per-word topic assignments
+<ul>
+<li class="fragment">“Hidden structure”</li>
+</ul></li>
+<li class="fragment">IMPORTANT: focus on understanding the application
+of topic models and the foundation of the estimation
+<ul>
+<li class="fragment">We do not expect you to memorize formulas etc.</li>
+</ul></li>
+</ul>
+</section>
+<section id="assumptions" class="slide level2">
+<h2>Assumptions</h2>
+<ol type="1">
+<li class="fragment">LDA makes the “bag of words” assumption, that the
+order of the words in the document does not matter.
+<ul>
+<li class="fragment">“While this assumption is unrealistic, it is
+reasonable if our only goal is to uncover the course semantic structure
+of the texts. h For more sophisticated goals such as language generation
+it is patently not appropriate”</li>
+</ul></li>
+<li class="fragment">The order of documents does not matter
+<ul>
+<li class="fragment">“This assumption may be unrealistic when analyzing
+long-running collections that span years or centuries.”</li>
+<li class="fragment">“One approach to this problem is the dynamic topic
+model”</li>
+</ul></li>
+<li class="fragment">The number of topics is assumed known and fixed
+<ul>
+<li class="fragment">“The Bayesian non-parametric topic model provides
+an elegant solution: the number of topics is determined by the
+collection during posterior inference, and furthermore, new documents
+can exhibit previously unseen topics”</li>
+</ul></li>
+</ol>
+</section>
+<section id="approach" class="slide level2">
+<h2>Approach</h2>
+<ul>
+<li class="fragment">We “start” with something -&gt; update, update,
+update, until good changes disappear (iterations)</li>
+<li class="fragment">Number of topics: how to pick?
+<ul>
+<li class="fragment">You need supply number of topics</li>
+<li class="fragment">There are different ways to pick number of
+topics</li>
+</ul></li>
+<li class="fragment">Making sense of topics
+<ul>
+<li class="fragment">Words describe topics. Texts define topic
+generation</li>
+</ul></li>
+<li class="fragment">Validation
+<ul>
+<li class="fragment">Top scoring words</li>
+<li class="fragment">Top scoring texts</li>
+</ul></li>
+<li class="fragment">Context</li>
+</ul>
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="stm" class="title-slide slide level1">
+<h1>STM</h1>
+<ul>
+<li class="fragment">Very similar to vanilla topic models, but with two
+main differences.</li>
+<li class="fragment">Prevalence:
+<ul>
+<li class="fragment">As-if regression variable effect estimation</li>
+</ul></li>
+<li class="fragment">Spectral initialization
+<ul>
+<li class="fragment">“deterministic inialization using the spectral
+algorithm”</li>
+<li class="fragment">Roberts, M., Stewart, B., &amp; Tingley, D. (2016).
+“Navigating the Local Modes of Big Data: The Case of Topic Models. In
+Data Analytics in Social Science, Government, and Industry.”</li>
+</ul></li>
+</ul>
+</section>
+<section id="assumptions-1" class="slide level2">
+<h2>Assumptions</h2>
+<ul>
+<li class="fragment">Assumptions are similar to LDA</li>
+<li class="fragment">The “spectral” configuration with K=0 does relax
+the third assumption (number of topics is know and fixed)
+<ul>
+<li class="fragment">HOWEVER: “When init.type=”Spectral” and K=0 the
+number of topics is set […] this does not estimate the “true” number of
+topics and does not necessarily have any particular statistical
+properties for consistently estimating the number of topics. It can
+however provide a useful starting point.”</li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="topic-models-in-practice" class="title-slide slide level1">
+<h1>Topic Models in practice</h1>
+
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="estimating-lda" class="title-slide slide level1">
+<h1>Estimating LDA</h1>
+
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="checking-lda-results" class="title-slide slide level1">
+<h1>Checking LDA results</h1>
+
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="stm-with-set-k" class="title-slide slide level1">
+<h1>STM with set K</h1>
+
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="checking-stm-results" class="title-slide slide level1">
+<h1>Checking STM results</h1>
+
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="estimating-stm-with-optimal-k"
+class="title-slide slide level1">
+<h1>Estimating STM with “optimal” K</h1>
+
+</section>
+<section class="slide level2">
+
+</section>
+<section class="slide level2">
+
+</section></section>
+<section
+id="do-mps-in-party-centered-systems-respond-to-constituency-economic-shocks"
+class="title-slide slide level1">
+<h1>Do MPs in Party-Centered Systems Respond to Constituency Economic
+Shocks</h1>
+<ul>
+<li class="fragment">Early June 2014, the oil price was well above 100
+dollars.</li>
+<li class="fragment">During the autumn of 2014, the price fell week by
+week</li>
+<li class="fragment">Below 50 dollars by January 1, 2015</li>
+</ul>
+</section>
+
+<section id="stm-model" class="title-slide slide level1">
+<h1>STM model</h1>
+
+</section>
+
+<section id="investigating-the-model" class="title-slide slide level1">
+<h1>Investigating the model</h1>
+
+</section>
+
+<section id="finding-topics-on-oil" class="title-slide slide level1">
+<h1>Finding topics on oil</h1>
+<div class="fragment">
+<ul>
+<li class="fragment">Let’s get back on track; we want oil!</li>
+</ul>
+</div>
+</section>
+
+<section id="estimate-effect" class="title-slide slide level1">
+<h1>Estimate effect</h1>
+
+</section>
+
+<section id="visualize-the-effect" class="title-slide slide level1">
+<h1>Visualize the effect</h1>
+
+</section>
+
+<section id="model-fit" class="title-slide slide level1">
+<h1>Model fit</h1>
+<div class="fragment">
+<ul>
+<li class="fragment">Semantically interpretable topic has two
+qualities:</li>
+</ul>
+<ol type="1">
+<li class="fragment">It is cohesive in the sense that high-probability
+words for the topic tend to co-occur within documents</li>
+<li class="fragment">It is exclusive in the sense that the top words for
+that topic are unlikely to appear within top words of other topics</li>
+</ol>
+<ul>
+<li class="fragment"><p>Semantic coherence:</p></li>
+<li class="fragment"><p>Is maximized when the most probable words in a
+given topic frequently co-occur together</p></li>
+<li class="fragment"><p>Semantically coherent models words which are
+most probable under a topic should co-occur within the same
+document.</p></li>
+<li
+class="fragment"><p><code>semanticCoherence(stm_model, documents = dfm_object, M = n_top_words)</code>
+– default: M = 10</p></li>
+<li class="fragment"><p>Exclusivity:</p></li>
+<li class="fragment"><p>Includes some information on word frequency as
+well.</p></li>
+<li class="fragment"><p>It is based on the FREX labeling metric with the
+weight set to .7 in favor of exclusivity by default.</p></li>
+<li
+class="fragment"><p><code>exclusivity(stm_model, M = n_top_words, frexw = weight)</code>
+– default: M = 10, frexw = 0.7</p></li>
+<li class="fragment"><p><em>While these measures are computationally
+efficient and interpretable, they cannot replace human
+judgment!</em></p></li>
+</ul>
+</div>
+</section>
+
+<section id="search-k" class="title-slide slide level1">
+<h1>Search K</h1>
+<div class="fragment">
+<ul>
+<li class="fragment"><code>searchK()</code> can help understand which
+models using different K are the most exclusive and cohesive models</li>
+</ul>
+</div>
+<div class="fragment">
+<div id="refs" class="references csl-bib-body hanging-indent"
+role="doc-bibliography">
+<div id="ref-Blei2012" class="csl-entry" role="doc-biblioentry">
+Blei, David M. 2012. <span>“<span>P</span>robabilistic
+<span>T</span>opic <span>M</span>odels.”</span> <em>Communications of
+the ACM</em> 55(4): 77–84.
+</div>
+</div>
+</div>
+</section>
+    </div>
+  </div>
+
+  <script src="uke_08_tema_files/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="uke_08_tema_files/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+        // Display a presentation progress bar
+        progress: true,
+        // Display the page number of the current slide
+        slideNumber: true,
+        // Push each slide change to the browser history
+        history: true,
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+        // Enable the slide overview mode
+        overview: true,
+        // Vertical centering of slides
+        center: false,
+        // Enables touch navigation on devices with touch input
+        touch: true,
+        // Turns fragments on and off globally
+        fragments: true,
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+        // Transition style
+        transition: 'convex', // none/fade/slide/convex/concave/zoom
+        // Transition speed
+        transitionSpeed: 'default', // default/fast/slow
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        menu: {
+   
+    
+    
+    
+    
+    
+    
+ 
+          custom: false,
+          themes: false,
+          transitions: false
+        },
+
+
+
+        chalkboard: {
+        },
+
+        keyboard: {
+          67: function() { RevealChalkboard.toggleNotesCanvas() },    // toggle notes canvas when 'c' is pressed
+          66: function() { RevealChalkboard.toggleChalkboard() }, // toggle chalkboard when 'b' is pressed
+          46: function() { RevealChalkboard.clear() },    // clear chalkboard when 'DEL' is pressed
+           8: function() { RevealChalkboard.reset() },    // reset chalkboard data on current slide when 'BACKSPACE' is pressed
+          68: function() { RevealChalkboard.download() }, // downlad recorded chalkboard drawing when 'd' is pressed
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'uke_08_tema_files/reveal.js-3.3.0.1/plugin/notes/notes.js', async: true },
+          { src: 'uke_08_tema_files/reveal.js-3.3.0.1/plugin/zoom-js/zoom.js', async: true },
+          { src: 'uke_08_tema_files/reveal.js-3.3.0.1/plugin/chalkboard/chalkboard.js', async: true },
+          { src: 'uke_08_tema_files/reveal.js-3.3.0.1/plugin/menu/menu.js', async: true },
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+  </body>
+</html>

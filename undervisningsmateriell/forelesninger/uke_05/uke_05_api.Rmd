@@ -8,8 +8,8 @@ output:
     incremental: yes
     code_folding: show
     transition: convex
-    self_contained: true
-    # reveal_plugins: ["chalkboard", "notes", "zoom", "menu"]
+    self_contained: false
+    reveal_plugins: ["chalkboard", "notes", "zoom", "menu"]
     reveal_options:
       slideNumber: true
 css: style.css

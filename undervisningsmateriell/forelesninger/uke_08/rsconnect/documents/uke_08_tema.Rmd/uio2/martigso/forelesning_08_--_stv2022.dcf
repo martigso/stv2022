@@ -1,0 +1,13 @@
+name: forelesning_08_--_stv2022
+title: Forelesning 08 -- STV2022
+username: martigso
+account: martigso
+server: uio2
+hostUrl: https://shiny.uio.no/__api__
+appId: 211
+bundleId: 1243
+url: https://shiny.uio.no/content/f2c51343-df61-43b0-86be-ffc44a845177/
+when: 1665570727.6381
+lastSyncTime: 1665570727.63811
+asMultiple: FALSE
+asStatic: TRUE

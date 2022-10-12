@@ -1,0 +1,13 @@
+name: stv2022_--_02_anskaffelse_av_tekst
+title: STV2022 -- [02] Anskaffelse av tekst
+username: martigso
+account: martigso
+server: uio2
+hostUrl: https://shiny.uio.no/__api__
+appId: 214
+bundleId: 1246
+url: https://shiny.uio.no/content/9db02855-a99c-438c-94da-6c411d4f3db0/
+when: 1665571461.87296
+lastSyncTime: 1665571461.87297
+asMultiple: FALSE
+asStatic: TRUE

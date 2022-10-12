@@ -1,0 +1,13 @@
+name: stv2022_--_03_forbehandling_av_tekst_1
+title: STV2022 -- [03] Forbehandling av tekst 1
+username: martigso
+account: martigso
+server: uio2
+hostUrl: https://shiny.uio.no/__api__
+appId: 215
+bundleId: 1247
+url: https://shiny.uio.no/content/c21f421b-935e-4a16-a453-f0fc6239c8c8/
+when: 1665571588.56826
+lastSyncTime: 1665571588.56827
+asMultiple: FALSE
+asStatic: TRUE

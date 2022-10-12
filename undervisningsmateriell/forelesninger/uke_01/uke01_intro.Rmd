@@ -2,7 +2,16 @@
 title: " "
 date: '`r format(Sys.time(), "%d-%m-%Y")`'
 output:
-  pdf_document
+  revealjs::revealjs_presentation:
+    css: style.css
+    highlight: breezedark
+    incremental: yes
+    code_folding: show
+    transition: convex
+    self_contained: false
+    reveal_plugins: ["chalkboard", "notes", "zoom", "menu"]
+    reveal_options:
+      slideNumber: true
 css: style.css
 bibliography: ../../../referanser/stv2022.bib
 csl: american-political-science-association.csl

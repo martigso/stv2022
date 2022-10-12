@@ -122,6 +122,9 @@ code span.wa { color: #da4453; } /* Warning */
       border-color: gray;
     }
 
+    .reveal .slide-menu-button {
+      left: 105px !important;
+    }
 
   </style>
 
@@ -511,7 +514,7 @@ style.innerHTML = style_script;
 document.getElementsByTagName('head')[0].appendChild(style);
 </script>
 
-    <script src="uke01_intro_files/header-attrs-2.15/header-attrs.js"></script>
+    <script src="uke01_intro_files/header-attrs-2.16/header-attrs.js"></script>
     <link href="uke01_intro_files/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
     <link href="uke01_intro_files/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 </head>
@@ -1065,8 +1068,7 @@ forskningsprosessen:</p>
 ##  8 sted      5
 ##  9 tid       5
 ## 10 vet       5
-## # … with 395 more rows
-## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+## # … with 395 more rows</code></pre>
 </div>
 </section>
 <section id="deskriptiv-1" class="slide level2">
@@ -1363,6 +1365,20 @@ href="https://doi.org/10.1093/pan/mpu019">Computer-<span>A</span>ssisted
         // Number of slides away from the current that are visible
         viewDistance: 3,
 
+        menu: {
+   
+    
+    
+    
+    
+    
+    
+ 
+          custom: false,
+          themes: false,
+          transitions: false
+        },
+
 
 
         chalkboard: {
@@ -1379,7 +1395,9 @@ href="https://doi.org/10.1093/pan/mpu019">Computer-<span>A</span>ssisted
         // Optional reveal.js plugins
         dependencies: [
           { src: 'uke01_intro_files/reveal.js-3.3.0.1/plugin/notes/notes.js', async: true },
+          { src: 'uke01_intro_files/reveal.js-3.3.0.1/plugin/zoom-js/zoom.js', async: true },
           { src: 'uke01_intro_files/reveal.js-3.3.0.1/plugin/chalkboard/chalkboard.js', async: true },
+          { src: 'uke01_intro_files/reveal.js-3.3.0.1/plugin/menu/menu.js', async: true },
         ]
       });
     </script>
