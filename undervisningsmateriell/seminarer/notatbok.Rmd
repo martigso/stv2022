@@ -2154,7 +2154,7 @@ I forelesning brukte vi et eksempel med tweeter om brexit. Disse var allerede me
 
 #### Steg 1: Les inn data
 
-```{r, eval=FALSE}
+```{r, eval=T}
 
 library(tidyverse)
 library(tidymodels)
@@ -2170,7 +2170,7 @@ For å ikke overtilpasse modellen, må vi splitte opp data og trene på ulike bi
 
 Før vi splitter opp, gjør jeg litt databehandling for å få datasettet klart til analyse. Siden vi har ekstremt mange rader i datasettet, henter jeg ut 1000 tilfeldige rader til denne illustrasjonen. Vanligvis ville vi brukt all tilgjengelig data. Til egne analyser, behold alle observasjoner som er relevant å ta med. Det gjør at treningen av modellen tar lengre tid, men desto mer informasjon modellen har å gå på, dess bedre. 
 
-```{r, eval=FALSE}
+```{r, eval=T}
 
 set.seed(201) # Sår et frø sånn at vi splitter opp på de samme radene i trening-, validering- og testsett hver gang
 
@@ -2189,7 +2189,7 @@ brexit_classify %>%
 
 Hvor balansert er dette datasettet? Det er en stor overvekt av tweeter som er nøytrale.
 
-```{r, eval=FALSE}
+```{r, eval=T}
 
 brexit_classify %>%
   janitor::tabyl(sentiment) # Ser hvor mange observasjoner som har hver sin klasse
@@ -2198,7 +2198,7 @@ brexit_classify %>%
 
 Da er vi klare for å splitte data. Jeg bruker `initial_split` og setter argument `strata` til sentiment for at vi skal få eksempler av både positive, negative og nøytrale tweeter i trening-, validering- og test-settene. 
 
-```{r, eval=FALSE}
+```{r, eval=T}
 
 brexit_classify_split <- initial_split(brexit_classify, # Splitt opp datasettet
                                        strata = sentiment, # Balanser etter utfallsvariabel, sentiment
@@ -2215,7 +2215,7 @@ brexit_testing <- testing(brexit_classify_split) # Hent ut testsettet fra splitt
 
 Tekst er rotene greier, så vi må forbehandle den før vi analyserer. Dette innebærer å fjerne irrelevante deler og støy for å sitte igjen med det som er informasjonsbærende. I takt med `tidymodels`-syntaksen, bruker jeg forbehandlingsmetoden som er gitt av `textrecipes`-pakken. Merk at denne gjør det samme som vi har gjort tidligere når vi har brukt blant annet `unnest_tokens`, det er bare en litt annen måte å gjøre det samme på.
 
-```{r, eval=FALSE}
+```{r, eval=T}
 
 library(textrecipes)
 
@@ -2238,7 +2238,7 @@ brexit_oppskrift <- recipe(sentiment ~ text + influencer, data = brexit_trening)
 
 Her må vi velge hvilken maskinlæringsmodell som er best å bruke. Jeg går ikke nøye inn på dette her, og velger å enkelt bruke en SVM-modell. Denne trener jeg deretter på treningssettet og valideringssettet. 
 
-```{r, eval=FALSE}
+```{r, eval=T}
 
 brexit_modell <- svm_rbf(cost = 3, 
                          rbf_sigma = NULL) %>% # Setter noen "tuning-argumenter". Dere kan lære mer om dette i andre maskinlæringskurs.
@@ -2267,7 +2267,7 @@ tune_res %>%
 
 Det ser ut til at høyest treffsikkerhet får vi når man beholder omtrent 1000 tokens. 
 
-```{r, eval=FALSE}
+```{r, eval=T}
 
 collect_metrics(tune_res) %>% 
   arrange(desc(mean))
@@ -2276,7 +2276,7 @@ collect_metrics(tune_res) %>%
 
 Da velger jeg like gjerne modellen med best accuracy, den som hadde beholdt 981 tokens. 
 
-```{r, eval=FALSE}
+```{r, eval=T}
 
 best_accuracy <- select_best(tune_res, "accuracy")
 
@@ -2287,7 +2287,7 @@ best_accuracy <- select_best(tune_res, "accuracy")
 
 Har modellen blitt trent godt nok til å kunne bruke på annen data? La oss teste med en forvirringsmatrise. 
 
-```{r, eval=FALSE}
+```{r, eval=T}
 
 final_wf <- finalize_workflow( # Ferdigstiller workflow med modellen som gir best accuracy gitt antall tokens
   brexit_wf,
