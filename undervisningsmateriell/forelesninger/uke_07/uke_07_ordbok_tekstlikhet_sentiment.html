@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>uke_07_ordbok_tekstlikhet_sentiment.knit</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="uke_07_ordbok_tekstlikhet_sentiment_files/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  { color: #cccccc; background-color: #303030; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ffcfaf; } /* Alert */
+code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bn { color: #dca3a3; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #f0dfaf; } /* ControlFlow */
+code span.ch { color: #dca3a3; } /* Char */
+code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+code span.co { color: #7f9f7f; } /* Comment */
+code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+code span.do { color: #7f9f7f; } /* Documentation */
+code span.dt { color: #dfdfbf; } /* DataType */
+code span.dv { color: #dcdccc; } /* DecVal */
+code span.er { color: #c3bf9f; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #c0bed1; } /* Float */
+code span.fu { color: #efef8f; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+code span.kw { color: #f0dfaf; } /* Keyword */
+code span.op { color: #f0efd0; } /* Operator */
+code span.ot { color: #efef8f; } /* Other */
+code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+code span.sc { color: #dca3a3; } /* SpecialChar */
+code span.ss { color: #cc9393; } /* SpecialString */
+code span.st { color: #cc9393; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #cc9393; } /* VerbatimString */
+code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="uke_07_ordbok_tekstlikhet_sentiment_files/reveal.js-3.3.0.1/css/theme/simple.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+    <link rel="stylesheet" href="style.css"/>
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+    <script src="uke_07_ordbok_tekstlikhet_sentiment_files/header-attrs-2.14/header-attrs.js"></script>
+    <link href="uke_07_ordbok_tekstlikhet_sentiment_files/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="uke_07_ordbok_tekstlikhet_sentiment_files/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+    <script src="uke_07_ordbok_tekstlikhet_sentiment_files/kePrint-0.0.1/kePrint.js"></script>
+    <link href="uke_07_ordbok_tekstlikhet_sentiment_files/lightable-0.0.1/lightable.css" rel="stylesheet" />
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+
+<section class="slide level2">
+
+<font size=12>STV2022 – Store tekstdata</font></br></br>
+<p style="font-size:10;color:#D13F11">
+[07] Ordbøker, tekstlikhet og sentiment
+</p>
+<p></br> <img data-src="uio_logo.jpg" style="width:50.0%" /></p>
+<p>Solveig Bjørkholt <font size=6>&lt;<a
+href="mailto:solveig.bjorkholt@stv.uio.no"
+class="email">solveig.bjorkholt@stv.uio.no</a>&gt;</font></br></p>
+</section>
+<section id="disposisjon" class="title-slide slide level1">
+<h1>Disposisjon</h1>
+<ul>
+<li class="fragment">Ordfrekvens og ordbøker
+<ul>
+<li class="fragment">Hva ordfrekvens kan brukes til</li>
+<li class="fragment">Hva en ordbok er</li>
+<li class="fragment">Hvordan bruke ordbøker</li>
+</ul></li>
+<li class="fragment">Tekstlikhet
+<ul>
+<li class="fragment">Cosinelikhet</li>
+<li class="fragment">Hvordan vektorisere ved likhetsanalyser</li>
+<li class="fragment">Distansemål</li>
+</ul></li>
+<li class="fragment">Sentiment
+<ul>
+<li class="fragment">Hva er sentiment</li>
+<li class="fragment">Hvordan gjennomføre en sentimentanalyse</li>
+</ul></li>
+</ul>
+</section>
+
+<section>
+<section id="ordbøker" class="title-slide slide level1">
+<h1>Ordbøker</h1>
+<p><img src="figurer/regular_expressions.png" width="70%" style="display: block; margin: auto;" /></p>
+</section>
+<section id="ordfrekvens" class="slide level2">
+<h2>Ordfrekvens</h2>
+<ul>
+<li class="fragment">Noen ganger kan det være nok å telle ord</li>
+<li class="fragment">Må ofte kobles med kvalitativ analyse</li>
+</ul>
+<div class="fragment">
+<p><img src="figurer/count_words.PNG" width="50%" style="display: block; margin: auto;" /></p>
+<p>Mitchell Duneier (2016) <em>Ghetto: The Invention of a Place, the
+History of an Idea</em></p>
+</div>
+</section>
+<section id="datasett-tweeter-om-brexit" class="slide level2">
+<h2>Datasett: Tweeter om Brexit</h2>
+<ul>
+<li class="fragment">Tweeter om Brexit fra januar til mars 2022</li>
+<li class="fragment">Samlet inn til i en masteroppgave om polarisering
+rundt Brexit</li>
+<li class="fragment">Utvalg hentet basert på Twitter bio (indikasjoner
+på om personen er for eller mot Brexit) . . .</li>
+</ul>
+<p><img src="figurer/brexit_picture.jpg" width="50%" style="display: block; margin: auto;" /></p>
+<div class="fragment">
+<p><a
+href="https://www.kaggle.com/datasets/visalakshiiyer/twitter-data-brexit?select=TweetDataset_AntiBrexit_Jan-Mar2022.csv"
+class="uri">https://www.kaggle.com/datasets/visalakshiiyer/twitter-data-brexit?select=TweetDataset_AntiBrexit_Jan-Mar2022.csv</a></p>
+</div>
+</section>
+<section class="slide level2">
+
+<p>Hva forteller dette plottet oss om Brexit?</p>
+<p><img src="figurer/brexit_overtime.png" width="100%" style="display: block; margin: auto;" /></p>
+</section>
+<section id="ordbøker-1" class="slide level2">
+<h2>Ordbøker</h2>
+<p><em>En systematisert ordtelling</em></p>
+<ol type="1">
+<li class="fragment"><p>Lag en liste med ord som deler inn kategorier
+innenfor et konsept, f. eks. “positiv” og “negativ” tone</p></li>
+<li class="fragment"><p>Tell opp hvor ofte hvert ord dukker opp i
+tekstene</p></li>
+<li class="fragment"><p>Lag et vektet (sammenliknbart) mål, f. eks.
+andel av ord som er X og andel som er Y</p></li>
+</ol>
+<p><img data-src="figurer/dictionary.jpg" style="width:40.0%"
+alt="Regelbasert metode" /></p>
+</section>
+<section id="ordbøker-2" class="slide level2">
+<h2>Ordbøker</h2>
+<p>Ordbok for å klassifisere de som er positive og negative til brexit
+utfra deres twitter-bio.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ordbok <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">positiv =</span> <span class="fu">c</span>(<span class="st">&quot;anti eu&quot;</span>, <span class="st">&quot;pro brexit&quot;</span>, <span class="st">&quot;brexit support&quot;</span>),</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">negativ =</span> <span class="fu">c</span>(<span class="st">&quot;pro eu&quot;</span>, <span class="st">&quot;anti brexit&quot;</span>, <span class="st">&quot;rejoin eu&quot;</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>ordbok</span></code></pre></div>
+<pre><code>## # A tibble: 3 x 2
+##   positiv        negativ    
+##   &lt;chr&gt;          &lt;chr&gt;      
+## 1 anti eu        pro eu     
+## 2 pro brexit     anti brexit
+## 3 brexit support rejoin eu</code></pre>
+</section>
+<section class="slide level2">
+
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>brexit <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(influencer, twitter_bio) <span class="sc">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(influencer) <span class="sc">%&gt;%</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(<span class="at">input =</span> twitter_bio,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">output =</span> ord,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">token =</span> <span class="st">&quot;ngrams&quot;</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">n =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">brexitanti =</span> <span class="fu">ifelse</span>(ord <span class="sc">%in%</span> ordbok<span class="sc">$</span>negativ, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">brexitpro =</span> <span class="fu">ifelse</span>(ord <span class="sc">%in%</span> ordbok<span class="sc">$</span>positiv, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(influencer) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">brexit_anti =</span> <span class="fu">sum</span>(brexitanti),</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">brexit_pro =</span> <span class="fu">sum</span>(brexitpro))</span></code></pre></div>
+<pre><code>## # A tibble: 6,623 x 3
+##    influencer       brexit_anti brexit_pro
+##    &lt;chr&gt;                  &lt;dbl&gt;      &lt;dbl&gt;
+##  1 @_____macky_____           1          0
+##  2 @_____Macky_____           1          0
+##  3 @___angelheart__           2          0
+##  4 @___macky__                1          0
+##  5 @_Andy_Denis_              0          0
+##  6 @_deadmansurfing           0          0
+##  7 @_dunnster                 0          0
+##  8 @_glennteale               0          0
+##  9 @_is0bel_                  2          0
+## 10 @_jane_whittle             0          0
+## # ... with 6,613 more rows</code></pre>
+</section>
+<section class="slide level2">
+
+<p><img data-src="figurer/rulebased.PNG" style="width:100.0%"
+alt="Regelbasert metode" /></p>
+<ul>
+<li class="fragment">Hvis disse og disse ordene dukker opp i
+teksten</li>
+<li class="fragment">Så er det tegn på at teksten passer innenfor
+kategori X</li>
+</ul>
+</section>
+<section id="eksempler-på-ferdiglagde-ordbøker" class="slide level2">
+<h2>Eksempler på ferdiglagde ordbøker</h2>
+<p><br></p>
+<ul>
+<li class="fragment"><strong>General Inquirer</strong> -
+<code>SentimentAnalysis</code></li>
+<li class="fragment"><strong>Bing</strong> - <code>tidytext</code></li>
+<li class="fragment"><strong>MPQA Subjectivity Lexicon</strong> -
+<code>abhy/sentiment</code></li>
+<li class="fragment"><strong>Loughran</strong> -
+<code>quanteda</code></li>
+<li class="fragment"><strong>Vader</strong> - <code>vader</code></li>
+<li class="fragment"><strong>Norwegian sentiment lexicon</strong> -
+<code>martigso/NorSentLex</code></li>
+</ul>
+<p><br></p>
+<div class="fragment">
+<p><a
+href="https://journodev.tech/blog-12-main-dictionaries-for-sentiment-analysis/"
+class="uri">https://journodev.tech/blog-12-main-dictionaries-for-sentiment-analysis/</a></p>
+</div>
+</section>
+<section id="fordeler-og-ulemper-med-ordbok-baserte-metoder"
+class="slide level2">
+<h2>Fordeler og ulemper med ordbok-baserte metoder</h2>
+<div class="left" style="float:left;width:49%">
+<p><strong>Fordeler</strong></p>
+<ul>
+<li class="fragment">Enkelt å sette opp</li>
+<li class="fragment">Billig å anvende</li>
+<li class="fragment">Mange eksisterende ordbøker man kan bruke</li>
+</ul>
+</div>
+<div class="right" style="float:right;width:49%">
+<p><strong>Ulemper</strong></p>
+<ul>
+<li class="fragment">Kontekstavhengig</li>
+<li class="fragment">Krever svært mye validering</li>
+<li class="fragment">Utarbeiding av egne ordbøker er tidkrevende</li>
+</ul>
+</div>
+</section>
+<section id="diskusjonsspørsmål" class="slide level2">
+<h2>Diskusjonsspørsmål</h2>
+<ul>
+<li class="fragment">Hva er egenskaper ved en god ordbok?</li>
+<li class="fragment">Hvilke ord tenker du bør befinne seg i en ordbok
+som forsøker å måle teknisk språk vs. allment språk?</li>
+<li class="fragment">Kan vi måle ordfrekvens når vi har tokenisert inn i
+bigrams?</li>
+</ul>
+<p><br></p>
+<p><img src="figurer/qs.png" width="50%" style="display: block; margin: auto;" /></p>
+</section></section>
+<section>
+<section id="tekstlikhet" class="title-slide slide level1">
+<h1>Tekstlikhet</h1>
+<p><img src="figurer/simil.png" width="100%" style="display: block; margin: auto;" /></p>
+</section>
+<section id="hvorfor-tekstlikhet" class="slide level2">
+<h2>Hvorfor tekstlikhet?</h2>
+<ul>
+<li class="fragment">Startet med informasjonsinnhenting innenfor
+informasjonskunnskap</li>
+<li class="fragment"><em>Hvordan vite at vi har funnet alle dokumenter
+som er relevante for et søk?</em></li>
+</ul>
+<div class="fragment">
+<p><img src="figurer/jai-rubix%20farger%20glow%20trans%20298x180%20.png" width="15%" style="display: block; margin: auto;" /></p>
+</div>
+<div class="fragment">
+<ul>
+<li class="fragment">Men svært relevant også i samfunnsfaglig
+forskning</li>
+<li class="fragment">F. eks. <em>Hvor like er to talere
+hverandre?</em></li>
+</ul>
+</div>
+</section>
+<section id="likhetsmål" class="slide level2">
+<h2>Likhetsmål</h2>
+<p>Et likhetsmål har visse egenskaper:</p>
+<ol type="1">
+<li class="fragment"><p>Maksimal likhet oppstår når man sammenlikner et
+dokument med seg selv</p></li>
+<li class="fragment"><p>Dokumenter som ikke deler noen ord har ingen
+likhet</p></li>
+<li class="fragment"><p>Likhet øker ettersom flere av de samme ordene
+brukes</p></li>
+<li class="fragment"><p>Symmetri - dokument A likner like mye på
+dokument B som B likner på A</p></li>
+</ol>
+</section>
+<section id="cosinelikhet" class="slide level2">
+<h2>Cosinelikhet</h2>
+<p><img src="figurer/cosine.PNG" width="40%" style="display: block; margin: auto;" /></p>
+<ul>
+<li class="fragment">Sammenlikn hvor mange ord som er like mellom to
+dokumenter</li>
+<li class="fragment">Mål cosine (grad) for å unngå at antall ord
+påvirker estimatet</li>
+<li class="fragment">Varierer mellom 0 og 1 (vanligvis -1, men vi kan
+ikke ha negativt antall ord)</li>
+</ul>
+</section>
+<section id="hvordan-bør-ord-vektoriseres-ved-likhetsmål"
+class="slide level2">
+<h2>Hvordan bør ord vektoriseres ved likhetsmål?</h2>
+<p><strong>Eksempel: Sammenlikne tre forskjellige tweetere</strong></p>
+<p><br></p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+influencer
+</th>
+<th style="text-align:left;">
+twitter_bio
+</th>
+<th style="text-align:left;">
+country
+</th>
+<th style="text-align:right;">
+antall_tweets
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="citation" data-cites="BreamoreBoy">@BreamoreBoy</span>
+</td>
+<td style="text-align:left;">
+The only good brexiteer is a dead brexiteer.
+</td>
+<td style="text-align:left;">
+Unknown
+</td>
+<td style="text-align:right;">
+1704
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation" data-cites="mrkwilkinson1">@mrkwilkinson1</span>
+</td>
+<td style="text-align:left;">
+Brexiteer love my
+country&lt;U+0001F1EC&gt;&lt;U+0001F1E7&gt;&lt;U+0001F3F4&gt;&lt;U+000E0067&gt;&lt;U+000E0062&gt;&lt;U+000E0077&gt;&lt;U+000E006C&gt;&lt;U+000E0073&gt;&lt;U+000E007F&gt;
+,hate the way politicians let down there voters !
+</td>
+<td style="text-align:left;">
+United Kingdom
+</td>
+<td style="text-align:right;">
+18
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation" data-cites="UKBreturn">@UKBreturn</span>
+</td>
+<td style="text-align:left;">
+Adrienne &lt;U+0001F499&gt;Older Sweary ANTI BREXITEER RE-JOIN ANTI
+TORY.. Retired headteacher..&lt;U+0001F393&gt;doting grandma who
+believes “Fortune favours the brave” FBPPR# no messages ..
+</td>
+<td style="text-align:left;">
+United Kingdom
+</td>
+<td style="text-align:right;">
+336
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="hvordan-bør-ord-vektoriseres-ved-likhetsmål-1"
+class="slide level2">
+<h2>Hvordan bør ord vektoriseres ved likhetsmål?</h2>
+<h3 id="sekk-med-ord">Sekk med ord</h3>
+<p><img src="uke_07_ordbok_tekstlikhet_sentiment_files/figure-revealjs/unnamed-chunk-14-1.png" width="768" /></p>
+</section>
+<section id="hvordan-bør-ord-vektoriseres-ved-likhetsmål-2"
+class="slide level2">
+<h2>Hvordan bør ord vektoriseres ved likhetsmål?</h2>
+<h3 id="tf-idf">TF-IDF</h3>
+<p><img src="uke_07_ordbok_tekstlikhet_sentiment_files/figure-revealjs/unnamed-chunk-16-1.png" width="768" /></p>
+</section>
+<section id="avstandsmål" class="slide level2">
+<h2>Avstandsmål</h2>
+<p>Finner avstand mellom tekster.</p>
+<ul>
+<li class="fragment">Euclidean distanse = den vanligste</li>
+</ul>
+<div class="fragment">
+<p><img src="figurer/euclidean.PNG" width="80%" style="display: block; margin: auto;" /></p>
+</div>
+</section>
+<section id="avstandsmål-1" class="slide level2">
+<h2>Avstandsmål</h2>
+<p>Men det finnes andre, f. eks.:</p>
+<ul>
+<li class="fragment">Minkowski distanse</li>
+<li class="fragment">Manhattan distanse</li>
+<li class="fragment">1 - cosine</li>
+</ul>
+<div class="fragment">
+<p><em>Hvilken man bruker avhenger av analyseformålet.</em></p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">textstat_dist</span>(brexit_dfm_tfidf, <span class="at">method =</span> <span class="st">&quot;euclidean&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.dist</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>()</span></code></pre></div>
+<pre><code>## # A tibble: 3 x 3
+##   item1          item2          distance
+##   &lt;fct&gt;          &lt;fct&gt;             &lt;dbl&gt;
+## 1 @BreamoreBoy   @mrkwilkinson1   0.0264
+## 2 @BreamoreBoy   @UKBreturn       0.0135
+## 3 @mrkwilkinson1 @UKBreturn       0.0269</code></pre>
+</div>
+</section>
+<section id="utfordringer-med-likhetanalyser" class="slide level2">
+<h2>Utfordringer med likhetanalyser</h2>
+<ul>
+<li class="fragment"><p>Dokumenter må være samme språk</p></li>
+<li class="fragment"><p>Hva som er likhet kan variere</p>
+<ul>
+<li class="fragment">Hva er likest? To anmeldelser av filmer der begge
+er positive eller begge er av samme film?</li>
+</ul></li>
+<li class="fragment"><p>Dokumenter kan snakke om det samme med på
+forskjellige måter</p>
+<ul>
+<li class="fragment">Ord-embedding kan hjelpe her (kontekst heller enn
+ord)</li>
+</ul></li>
+</ul>
+</section>
+<section id="diskusjonsspørsmål-1" class="slide level2">
+<h2>Diskusjonsspørsmål</h2>
+<ul>
+<li class="fragment">Hvordan tror du det å sette alle ord til liten
+bokstav kan påvirke likhetsmål?</li>
+<li class="fragment">Hvordan tror du det å ta ut stoppord kan påvirke
+likhetsmål?</li>
+<li class="fragment">Kan du tenke deg noen analyseformål der det er
+bedre å bruke sekk med ord enn TF-IDF som tekst-vektorisering for å måle
+cosine-likhet?</li>
+</ul>
+<p><br></p>
+<p><img src="figurer/qs.png" width="50%" style="display: block; margin: auto;" /></p>
+</section></section>
+<section>
+<section id="sentiment" class="title-slide slide level1">
+<h1>Sentiment</h1>
+<p><img src="figurer/sentiment.png" width="60%" style="display: block; margin: auto;" /></p>
+</section>
+<section id="hva-er-sentiment" class="slide level2">
+<h2>Hva er sentiment?</h2>
+<p><img src="figurer/imitation.jpeg" width="60%" style="display: block; margin: auto;" /></p>
+<ul>
+<li class="fragment"><p>Sentiment: Mening, følelse, emosjon,
+subjektivitet, affekt, anmeldelse…</p></li>
+<li class="fragment"><p>Også iblant kalt “meningsuthenting” (opinion
+mining)</p></li>
+<li class="fragment"><p>Det vi forsøker å få frem gjennom
+språket</p></li>
+</ul>
+</section>
+<section id="enheter-og-variabler-i-sentimentanalyse"
+class="slide level2">
+<h2>Enheter og variabler i sentimentanalyse</h2>
+<div class="left" style="float:left;width:49%">
+<p><strong>Enhet</strong></p>
+<ul>
+<li class="fragment">Dokument
+<ul>
+<li class="fragment">F. eks. en anmeldelse, en kommentar, en tweet, et
+avisinnlegg…</li>
+</ul></li>
+<li class="fragment">Setning
+<ul>
+<li class="fragment">Relatert til subjektivitetsestimering</li>
+</ul></li>
+<li class="fragment">Enhet eller aspekt
+<ul>
+<li class="fragment">Finner gjenstand og sentiment tilknyttet gjenstand
+(eks. “bilen er komfortabel men har stygg farge”)</li>
+</ul></li>
+</ul>
+</div>
+<div class="right" style="float:right;width:49%">
+<p><strong>Variabel</strong></p>
+<ul>
+<li class="fragment">Positiv, nøytral eller negativ</li>
+<li class="fragment">2, 1, 0, -1, -2</li>
+<li class="fragment">1-5 stjerner</li>
+</ul>
+</div>
+</section>
+<section id="formell-definisjon-av-sentiment" class="slide level2">
+<h2>Formell definisjon av sentiment</h2>
+<p>Formell definisjon av “mening”:</p>
+<p><span class="math inline">\((e{_i}, a_{ij}, s_{ijkl}, h_{k},
+t_{l})\)</span></p>
+<div class="fragment">
+<p>“Allokeringen av midler i statsbudsjettet har ikke vært
+tilferdsstillende.” <em>Jensen, 5. oktober 2022</em></p>
+<p><br></p>
+<ul>
+<li class="fragment"><span class="math inline">\(e{_i}\)</span>: Enhet -
+statsbudsjettet</li>
+<li class="fragment"><span class="math inline">\(a_{ij}\)</span>: Aspekt
+- allokeringen av midler</li>
+<li class="fragment"><span class="math inline">\(s_{ijkl}\)</span>:
+Mening - ikke tilfredsstillende</li>
+<li class="fragment"><span class="math inline">\(h_{k}\)</span>:
+Meningsholder - Jensen</li>
+<li class="fragment"><span class="math inline">\(t_{l}\)</span>:
+Tidspunkt - 5. oktober 2022</li>
+</ul>
+</div>
+<div class="fragment">
+<p><strong>Sentimentanalyse</strong>: Gitt dokument X, finn alle
+meningssammensetninger <span class="math inline">\((e{_i}, a_{ij},
+s_{ijkl}, h_{k}, t_{l})\)</span>.</p>
+</div>
+</section>
+<section id="eksempel-på-anvendelse" class="slide level2">
+<h2>Eksempel på anvendelse</h2>
+<ul>
+<li class="fragment"><p>Kunders anmeldelse av produkter</p></li>
+<li class="fragment"><p>Polarisering knyttet til politisk
+tilhørighet</p></li>
+<li class="fragment"><p>Tilbakemeldinger i spørreskjema</p></li>
+</ul>
+<p><br></p>
+<p><img src="figurer/sentimentfaces.jpg" width="60%" style="display: block; margin: auto;" /></p>
+</section>
+<section id="hvordan-gjennomføre-en-sentimentanalyse"
+class="slide level2">
+<h2>Hvordan gjennomføre en sentimentanalyse?</h2>
+<p><em>It all comes together…</em></p>
+<ul>
+<li class="fragment">Trenger du å hente ut enheter?
+<ul>
+<li class="fragment">Finn navngitte enheter (se forelesning 3)</li>
+</ul></li>
+<li class="fragment">Trenger du å hente ut aspekter?
+<ul>
+<li class="fragment">Finn taledeler (se forelesning 3)</li>
+</ul></li>
+<li class="fragment">Trenger du å finne sentiment?
+<ul>
+<li class="fragment">Bruk en sentimentordbok (se denne
+forelesningen)</li>
+<li class="fragment">Eller klassifiser utfra et treningsdatasett (se
+forelesning 6)</li>
+</ul></li>
+</ul>
+</section>
+<section id="eksempler-med-sentimentordbok" class="slide level2">
+<h2>Eksempler med sentimentordbok</h2>
+<h3 id="egenlagd-sentimentordbok">Egenlagd sentimentordbok</h3>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ordbok <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">sentiment =</span> <span class="fu">c</span>(<span class="st">&quot;positive&quot;</span>, <span class="st">&quot;positive&quot;</span>, <span class="st">&quot;negative&quot;</span>, <span class="st">&quot;negative&quot;</span>),</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">ord =</span> <span class="fu">c</span>(<span class="st">&quot;happy&quot;</span>, <span class="st">&quot;beautiful&quot;</span>, <span class="st">&quot;impossible&quot;</span>, <span class="st">&quot;ugly&quot;</span>))</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>ordbok</span></code></pre></div>
+<pre><code>## # A tibble: 4 x 2
+##   sentiment ord       
+##   &lt;chr&gt;     &lt;chr&gt;     
+## 1 positive  happy     
+## 2 positive  beautiful 
+## 3 negative  impossible
+## 4 negative  ugly</code></pre>
+</section>
+<section class="slide level2">
+
+<h3 id="ferdiglagd-ordbok-fra-tidytext-kapittel-2">Ferdiglagd ordbok
+(fra tidytext kapittel 2)</h3>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>tidytext_ordbok <span class="ot">&lt;-</span> <span class="fu">get_sentiments</span>(<span class="st">&quot;bing&quot;</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>sentiment <span class="ot">&lt;-</span> brexit <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(influencer, date, hit_sentence) <span class="sc">%&gt;%</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(<span class="at">input =</span> hit_sentence,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">output =</span> ord) <span class="sc">%&gt;%</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(tidytext_ordbok, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;ord&quot;</span> <span class="ot">=</span> <span class="st">&quot;word&quot;</span>))</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>sentiment</span></code></pre></div>
+<pre><code>## # A tibble: 895,823 x 4
+##    influencer       date       ord        sentiment
+##    &lt;chr&gt;            &lt;date&gt;     &lt;chr&gt;      &lt;chr&gt;    
+##  1 @DeniseMembery   2022-01-15 right      positive 
+##  2 @DeniseMembery   2022-01-15 dangerous  negative 
+##  3 @DeniseMembery   2022-01-15 hell       negative 
+##  4 @DeniseMembery   2022-01-15 bent       negative 
+##  5 @DeniseMembery   2022-01-15 precious   positive 
+##  6 @DeniseMembery   2022-01-15 revenge    negative 
+##  7 @DeniseMembery   2022-01-15 propaganda negative 
+##  8 @007stirling     2022-01-15 rich       positive 
+##  9 @007stirling     2022-01-15 oblivious  negative 
+## 10 @ukleadstheworld 2022-01-15 win        positive 
+## # ... with 895,813 more rows</code></pre>
+</section>
+<section class="slide level2">
+
+<p><img src="uke_07_ordbok_tekstlikhet_sentiment_files/figure-revealjs/unnamed-chunk-25-1.png" width="768" /></p>
+</section>
+<section class="slide level2">
+
+<h3 id="ordbok-spesielt-for-sosiale-medier">Ordbok spesielt for sosiale
+medier</h3>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vader)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">193</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>brexit_subset <span class="ot">&lt;-</span> brexit <span class="sc">%&gt;%</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="dv">10</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>brexit_subset <span class="sc">%&gt;%</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">hit_sentence =</span> <span class="fu">str_to_lower</span>(hit_sentence)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sentiment =</span> <span class="fu">vader_df</span>(hit_sentence)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(influencer, sentiment) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(<span class="at">cols =</span> <span class="fu">c</span>(sentiment))</span></code></pre></div>
+<pre><code>## # A tibble: 10 x 8
+##    influencer       text               word_~1 compo~2   pos   neu   neg but_c~3
+##    &lt;chr&gt;            &lt;chr&gt;              &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+##  1 @magaluf22       &quot;rt @alastairmorg~ {0, 0,~   0.784 0.24  0.76  0           0
+##  2 @lcdk_uk         &quot;qt @themarkgodfr~ {1.8, ~   0.421 0.088 0.912 0           0
+##  3 @lucypascoe1984  &quot;rt @marieannuk: ~ {0, 0,~   0     0     1     0           0
+##  4 @paulpeele11     &quot;@evolvepolitics ~ {0, 1.~   0.751 0.444 0.556 0           0
+##  5 @nicolegellson   &quot;@monty_bhoy @iri~ {0, 0,~   0     0     1     0           0
+##  6 @robinmc76       &quot;@danielmgmoylan ~ {0, 0,~  -0.66  0     0.714 0.286       0
+##  7 @MariaMo32975161 &quot;@marieannuk yep ~ {0, 1.~  -0.625 0.059 0.773 0.168       0
+##  8 @StockpilingS    &quot;rt @campbellclar~ {0, 0,~  -0.091 0.08  0.832 0.088       1
+##  9 @peterdilworth1  &quot;rt @bobjsweeney:~ {0, 0,~  -0.599 0     0.794 0.206       0
+## 10 @beerdri01118796 &quot;rt @marshallcart~ {0, 0,~   0     0     1     0           0
+## # ... with abbreviated variable names 1: word_scores, 2: compound, 3: but_count</code></pre>
+</section>
+<section class="slide level2">
+
+<h3 id="norsk-ordbok">Norsk ordbok</h3>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#devtools::install_github(&quot;martigso/NorSentLex&quot;)</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NorSentLex)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>nor_fullform_sent<span class="sc">$</span>positive <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;absolutt&quot;    &quot;absolutta&quot;   &quot;absolutte&quot;   &quot;absoluttene&quot; &quot;absolutter&quot; 
+## [6] &quot;absoluttet&quot;</code></pre>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>nor_fullform_sent<span class="sc">$</span>negative <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;abnorm&quot;   &quot;abnorme&quot;  &quot;abnormt&quot;  &quot;abort&quot;    &quot;aborten&quot;  &quot;abortene&quot;</code></pre>
+</section>
+<section id="eksempel-med-treningsdata" class="slide level2">
+<h2>Eksempel med treningsdata</h2>
+<p>Gitt at vi har ferdigmerket data…</p>
+<pre><code>## # A tibble: 1,000 x 3
+##    influencer       text                                                 senti~1
+##    &lt;chr&gt;            &lt;chr&gt;                                                &lt;chr&gt;  
+##  1 @thomasevansadur &quot;QT @fbpe_mark: Yes. Remainers come this daft. ; @T~ Neutral
+##  2 @davidofhook     &quot;RT @Sky48115666: Aren&#39;t we all sick of defending b~ Negati~
+##  3 @william93666824 &quot;RT @AndyTuohyDesign: @johnredwood Maybe they are h~ Negati~
+##  4 @JaneWright17    &quot;RT @gavinesler: If the UK wants to be regarded as ~ Neutral
+##  5 @mats_247        &quot;RT @QprEver: \U0001f1ec\U0001f1e7Tobias Ellwood \U~ Neutral
+##  6 @nigelschofield6 &quot;RT @andrew_lilico: QT @DmitryOpines: Unless we thi~ Neutral
+##  7 @Smartie98914401 &quot;RT @4114nJ: @Femi_Sorry Er...not quite. The people~ Neutral
+##  8 @felicefan       &quot;@Peston That reality is because we left the EU. No~ Negati~
+##  9 @kazzaB33        &quot;RT @DMinghella: Putin tells his people outrageous ~ Negati~
+## 10 @Spg1990         &quot;RT @tomhfh: Did the Prime Minister really say Ukra~ Neutral
+## # ... with 990 more rows, and abbreviated variable name 1: sentiment</code></pre>
+</section>
+<section class="slide level2">
+
+<p>… så kan vi kjøre en veiledet læringsmodell for å predikere
+sentiment</p>
+<p><img src="uke_07_ordbok_tekstlikhet_sentiment_files/figure-revealjs/unnamed-chunk-29-1.png" width="768" /></p>
+</section>
+<section id="hvordan-få-merket-data-til-sentimentanalyse"
+class="slide level2">
+<h2>Hvordan få merket data til sentimentanalyse?</h2>
+<p><em>Hvordan vet en algoritme at en tekst er positiv eller
+negativ?</em></p>
+<ul>
+<li class="fragment">Steg 1: Få mennesker til å merke et utvalg av
+tekstene.</li>
+<li class="fragment">Steg 2: Tren opp en algoritme til å forstå
+sammenhengene og gjøre samme kategorisering</li>
+<li class="fragment">Steg 3: Anvend algoritmen på resten av
+tekstene.</li>
+</ul>
+</section>
+<section id="utfordringer" class="slide level2">
+<h2>Utfordringer</h2>
+<ul>
+<li class="fragment">Sarkasme og ironi (<em>snakker om
+“krisetider”…</em>)</li>
+<li class="fragment">Negasjoner (<em>jeg liker ikke melk</em>)</li>
+<li class="fragment">Indirekte meninger (<em>da jeg måtte på sykehus var
+det ingen trafikk</em>)</li>
+<li class="fragment">Subjektivitet vs. sentiment (<em>denne laptopen er
+helt genial!!!</em> vs. <em>denne laptopen har lang levetid</em>)</li>
+<li class="fragment">Uttrykker dokumentet sentiment over samme tema hele
+tiden? (<em>økonomien er bra, men helsetilstanden min har forverret
+seg</em>)</li>
+<li class="fragment">Språk</li>
+<li class="fragment">Behov for treningsdata</li>
+</ul>
+</section>
+<section id="diskusjonsspørsmål-2" class="slide level2">
+<h2>Diskusjonsspørsmål</h2>
+<ul>
+<li class="fragment">Hvilke forskjeller i uttrykk for sentiment tror du
+det er mellom en 10-åring og en 60-åring?</li>
+<li class="fragment">Tror du sentiment kan si oss noe om hva folk vil
+stemme i valg?</li>
+<li class="fragment">Hva tenker du om å bruke metoder fra markedsanalyse
+på statsvitenskapelige spørsmål?</li>
+</ul>
+<p><br></p>
+<p><img src="figurer/qs.png" width="50%" style="display: block; margin: auto;" /></p>
+</section></section>
+<section id="takk-for-i-dag" class="title-slide slide level1">
+<h1>Takk for i dag!</h1>
+<p><img src="figurer/takkforidag.png" width="60%" style="display: block; margin: auto;" /></p>
+</section>
+    </div>
+  </div>
+
+  <script src="uke_07_ordbok_tekstlikhet_sentiment_files/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="uke_07_ordbok_tekstlikhet_sentiment_files/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+        // Display a presentation progress bar
+        progress: true,
+        // Display the page number of the current slide
+        slideNumber: true,
+        // Push each slide change to the browser history
+        history: true,
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+        // Enable the slide overview mode
+        overview: true,
+        // Vertical centering of slides
+        center: false,
+        // Enables touch navigation on devices with touch input
+        touch: true,
+        // Turns fragments on and off globally
+        fragments: true,
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+        // Transition style
+        transition: 'convex', // none/fade/slide/convex/concave/zoom
+        // Transition speed
+        transitionSpeed: 'default', // default/fast/slow
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+
+
+        chalkboard: {
+        },
+
+        keyboard: {
+          67: function() { RevealChalkboard.toggleNotesCanvas() },    // toggle notes canvas when 'c' is pressed
+          66: function() { RevealChalkboard.toggleChalkboard() }, // toggle chalkboard when 'b' is pressed
+          46: function() { RevealChalkboard.clear() },    // clear chalkboard when 'DEL' is pressed
+           8: function() { RevealChalkboard.reset() },    // reset chalkboard data on current slide when 'BACKSPACE' is pressed
+          68: function() { RevealChalkboard.download() }, // downlad recorded chalkboard drawing when 'd' is pressed
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'uke_07_ordbok_tekstlikhet_sentiment_files/reveal.js-3.3.0.1/plugin/notes/notes.js', async: true },
+          { src: 'uke_07_ordbok_tekstlikhet_sentiment_files/reveal.js-3.3.0.1/plugin/zoom-js/zoom.js', async: true },
+          { src: 'uke_07_ordbok_tekstlikhet_sentiment_files/reveal.js-3.3.0.1/plugin/chalkboard/chalkboard.js', async: true },
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+  </body>
+</html>
