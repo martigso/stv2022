@@ -1824,7 +1824,7 @@ Bennie hadde to positive ord i sin tekst, "fantastisk" og "glad". Han hadde ogs�
 
 Ordbøker kan brukes til flere ting enn sentiment. Man kan for eksempel lage ordbøker på hvor teknisk en tekst er, eller hvor miljø-orientert den er, eller liknende. Utfordringen er å lage en ordbok som i god nok grad dekker det den er ment å dekke, og å deretter validere ordboken. Det krever ofte mye lesing av tekstene for å sjekke at ordboken har klart å plukke opp alle relevante ord og aggregere riktig.
 
-Aggregering er en annen utfordring. Aggregere vil si å gå fra individuell informasjon til overordnet informasjon - for eksempel fra ordnivå til tekstnivå. Vi vil ikke bare vite om enkelte ord er negative eller positive, men om hele teksten er negativ eller positiv. I eksempel over brukte jeg summen av positive og negative ord, og differansen mellom dem, for å finne ut hva sentiment på teksten var. I mer avanserte tilfeller vil dette sjelden fungere bra, for eksempel i tilfeller der lengden på tekstene varierer en del. Da kan det for eksempel være lurt å dele på antall ord i teksten for å få et vektet aggregat. For mer informasjon om aggregering, ta en titt på [denne artikkelen](https://journals.sagepub.com/doi/full/10.1177/0165551519837187?casa_token=xRZ9zA85yA4AAAAA%3A_OxsD5elbRKcxAfyhf3clckywLWTT00Fw-QsYTK9p5D7ZJRZWWgREjo0iwdU-vigX_H6Sqzt8C_AsA). 
+Aggregering er en annen utfordring. Aggregere vil si å gå fra individuell informasjon til overordnet informasjon - for eksempel fra ordnivå til tekstnivå. Vi vil ikke bare vite om enkelte ord er negative eller positive, men om hele teksten er negativ eller positiv. I eksempel over brukte jeg summen av positive og negative ord, og differansen mellom dem, for å finne ut hva sentiment på teksten var. I mer avanserte tilfeller vil dette sjelden fungere bra, for eksempel i tilfeller der lengden på tekstene varierer en del. Da kan det for eksempel være lurt å dele på antall ord i teksten for å få et vektet aggregat. For mer informasjon om aggregering, ta en titt på [denne artikkelen](https://doi.org/10.1177/0165551519837187). 
 
 Vi skriver med om ordbøker under [sentimentanalyse](#sentiment), der vi tar for oss den norske sentimentordboken `NorSentLex`. 
 
@@ -2154,13 +2154,13 @@ I forelesning brukte vi et eksempel med tweeter om brexit. Disse var allerede me
 
 #### Steg 1: Les inn data
 
-```{r}
+```{r, eval=FALSE}
 
 library(tidyverse)
 library(tidymodels)
 library(tm)
 
-brexit <- readRDS("../data/brexit.rds") # Leser inn datasettet
+brexit <- readRDS("./data/brexit.rds") # Leser inn datasettet
 
 ```
 
@@ -2170,7 +2170,7 @@ For å ikke overtilpasse modellen, må vi splitte opp data og trene på ulike bi
 
 Før vi splitter opp, gjør jeg litt databehandling for å få datasettet klart til analyse. Siden vi har ekstremt mange rader i datasettet, henter jeg ut 1000 tilfeldige rader til denne illustrasjonen. Vanligvis ville vi brukt all tilgjengelig data. Til egne analyser, behold alle observasjoner som er relevant å ta med. Det gjør at treningen av modellen tar lengre tid, men desto mer informasjon modellen har å gå på, dess bedre. 
 
-```{r}
+```{r, eval=FALSE}
 
 set.seed(201) # Sår et frø sånn at vi splitter opp på de samme radene i trening-, validering- og testsett hver gang
 
@@ -2189,7 +2189,7 @@ brexit_classify %>%
 
 Hvor balansert er dette datasettet? Det er en stor overvekt av tweeter som er nøytrale.
 
-```{r}
+```{r, eval=FALSE}
 
 brexit_classify %>%
   janitor::tabyl(sentiment) # Ser hvor mange observasjoner som har hver sin klasse
@@ -2198,7 +2198,7 @@ brexit_classify %>%
 
 Da er vi klare for å splitte data. Jeg bruker `initial_split` og setter argument `strata` til sentiment for at vi skal få eksempler av både positive, negative og nøytrale tweeter i trening-, validering- og test-settene. 
 
-```{r}
+```{r, eval=FALSE}
 
 brexit_classify_split <- initial_split(brexit_classify, # Splitt opp datasettet
                                        strata = sentiment, # Balanser etter utfallsvariabel, sentiment
@@ -2215,7 +2215,7 @@ brexit_testing <- testing(brexit_classify_split) # Hent ut testsettet fra splitt
 
 Tekst er rotene greier, så vi må forbehandle den før vi analyserer. Dette innebærer å fjerne irrelevante deler og støy for å sitte igjen med det som er informasjonsbærende. I takt med `tidymodels`-syntaksen, bruker jeg forbehandlingsmetoden som er gitt av `textrecipes`-pakken. Merk at denne gjør det samme som vi har gjort tidligere når vi har brukt blant annet `unnest_tokens`, det er bare en litt annen måte å gjøre det samme på.
 
-```{r}
+```{r, eval=FALSE}
 
 library(textrecipes)
 
@@ -2238,7 +2238,7 @@ brexit_oppskrift <- recipe(sentiment ~ text + influencer, data = brexit_trening)
 
 Her må vi velge hvilken maskinlæringsmodell som er best å bruke. Jeg går ikke nøye inn på dette her, og velger å enkelt bruke en SVM-modell. Denne trener jeg deretter på treningssettet og valideringssettet. 
 
-```{r}
+```{r, eval=FALSE}
 
 brexit_modell <- svm_rbf(cost = 3, 
                          rbf_sigma = NULL) %>% # Setter noen "tuning-argumenter". Dere kan lære mer om dette i andre maskinlæringskurs.
@@ -2267,7 +2267,7 @@ tune_res %>%
 
 Det ser ut til at høyest treffsikkerhet får vi når man beholder omtrent 1000 tokens. 
 
-```{r}
+```{r, eval=FALSE}
 
 collect_metrics(tune_res) %>% 
   arrange(desc(mean))
@@ -2276,7 +2276,7 @@ collect_metrics(tune_res) %>%
 
 Da velger jeg like gjerne modellen med best accuracy, den som hadde beholdt 981 tokens. 
 
-```{r}
+```{r, eval=FALSE}
 
 best_accuracy <- select_best(tune_res, "accuracy")
 
@@ -2287,7 +2287,7 @@ best_accuracy <- select_best(tune_res, "accuracy")
 
 Har modellen blitt trent godt nok til å kunne bruke på annen data? La oss teste med en forvirringsmatrise. 
 
-```{r}
+```{r, eval=FALSE}
 
 final_wf <- finalize_workflow( # Ferdigstiller workflow med modellen som gir best accuracy gitt antall tokens
   brexit_wf,

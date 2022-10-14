@@ -602,120 +602,81 @@ forvaltning</font></td>
 </div>
 </section></section>
 <section>
-<section id="lda" class="title-slide slide level1">
-<h1>LDA</h1>
+<section id="latent-dirichlet-allocation-lda"
+class="title-slide slide level1">
+<h1>Latent Dirichlet allocation (LDA)</h1>
 <ul>
-<li class="fragment">LDA is the “simplest” form of topic models</li>
-<li class="fragment">The intuition is that documents exhibit multiple
-topics (multi-membership model)</li>
-<li class="fragment">Topics are defined to be a distribution over a
-fixed vocabulary</li>
-<li class="fragment">Topics are assumed to be specified before any data
-has been generated</li>
-<li class="fragment">Beforehand, we do not know the topics, per-document
-topic distributions, and the per-document per-word topic assignments
+<li class="fragment">LDA er den en <em>enkleste</em> emnemodellen:
 <ul>
-<li class="fragment">“Hidden structure”</li>
+<li class="fragment">En tekst kan bestå av mange emner
+(multi-membership)</li>
+<li class="fragment">Emner er definert som å være en fordeling over et
+satt vokabular</li>
+<li class="fragment">Emnene antas å ha eksistert før data ble
+generert</li>
+<li class="fragment">Vi vet ikke innholdet i emnene før vi kjører
+modellen (sjult struktur)</li>
 </ul></li>
-<li class="fragment">IMPORTANT: focus on understanding the application
-of topic models and the foundation of the estimation
-<ul>
-<li class="fragment">We do not expect you to memorize formulas etc.</li>
-</ul></li>
+<li class="fragment">HUSK! Fokuser på å forstå det som kommer ut av
+modellen og hvordan vi kan validere det!</li>
 </ul>
 </section>
-<section id="assumptions" class="slide level2">
-<h2>Assumptions</h2>
+<section id="antagelser" class="slide level2">
+<h2>Antagelser</h2>
 <ol type="1">
-<li class="fragment">LDA makes the “bag of words” assumption, that the
-order of the words in the document does not matter.
-<ul>
-<li class="fragment">“While this assumption is unrealistic, it is
-reasonable if our only goal is to uncover the course semantic structure
-of the texts. h For more sophisticated goals such as language generation
-it is patently not appropriate”</li>
-</ul></li>
-<li class="fragment">The order of documents does not matter
-<ul>
-<li class="fragment">“This assumption may be unrealistic when analyzing
-long-running collections that span years or centuries.”</li>
-<li class="fragment">“One approach to this problem is the dynamic topic
-model”</li>
-</ul></li>
-<li class="fragment">The number of topics is assumed known and fixed
-<ul>
-<li class="fragment">“The Bayesian non-parametric topic model provides
-an elegant solution: the number of topics is determined by the
-collection during posterior inference, and furthermore, new documents
-can exhibit previously unseen topics”</li>
-</ul></li>
+<li class="fragment"><p>Rekkefølgen på ord betyr ingenting (sekk med
+ord)</p></li>
+<li class="fragment"><p>Rekkefølgen på dokumentene betyr
+ingenting</p></li>
+<li class="fragment"><p>Vi vet antall emner og det antallet er
+satt</p></li>
 </ol>
 </section>
-<section id="approach" class="slide level2">
-<h2>Approach</h2>
+<section id="fremgangsmåte" class="slide level2">
+<h2>Fremgangsmåte</h2>
+<p><img data-src="iteration.png" /></p>
 <ul>
-<li class="fragment">We “start” with something -&gt; update, update,
-update, until good changes disappear (iterations)</li>
-<li class="fragment">Number of topics: how to pick?
-<ul>
-<li class="fragment">You need supply number of topics</li>
-<li class="fragment">There are different ways to pick number of
-topics</li>
-</ul></li>
-<li class="fragment">Making sense of topics
-<ul>
-<li class="fragment">Words describe topics. Texts define topic
-generation</li>
-</ul></li>
-<li class="fragment">Validation
-<ul>
-<li class="fragment">Top scoring words</li>
-<li class="fragment">Top scoring texts</li>
-</ul></li>
-<li class="fragment">Context</li>
+<li class="fragment">Vi starter med noe og oppdaterer (iterasjoner) til
+bra endringer forsvinner</li>
 </ul>
 </section>
-<section class="slide level2">
-
+<section id="hvordan-velge-antall-emner" class="slide level2">
+<h2>Hvordan velge antall emner?</h2>
+<ol type="1">
+<li class="fragment">Prøv noe</li>
+<li class="fragment">Validere</li>
+<li class="fragment">Prøv igjen</li>
+<li class="fragment">Validere</li>
+<li class="fragment">…</li>
+</ol>
 </section></section>
-<section>
-<section id="stm" class="title-slide slide level1">
-<h1>STM</h1>
+<section id="structural-topic-models" class="title-slide slide level1">
+<h1>Structural Topic Models</h1>
 <ul>
-<li class="fragment">Very similar to vanilla topic models, but with two
-main differences.</li>
-<li class="fragment">Prevalence:
+<li class="fragment">Veldig lik LDA bortsett fra:
+<ol type="1">
+<li class="fragment">“Prevalence” parameteret
 <ul>
-<li class="fragment">As-if regression variable effect estimation</li>
+<li class="fragment">ca som uavhengige variabler i en regresjon</li>
 </ul></li>
-<li class="fragment">Spectral initialization
+<li class="fragment">“Spectral” initialisering
 <ul>
-<li class="fragment">“deterministic inialization using the spectral
-algorithm”</li>
-<li class="fragment">Roberts, M., Stewart, B., &amp; Tingley, D. (2016).
-“Navigating the Local Modes of Big Data: The Case of Topic Models. In
-Data Analytics in Social Science, Government, and Industry.”</li>
+<li class="fragment">finner antall topics for deg</li>
 </ul></li>
+</ol></li>
 </ul>
+<div class="fragment">
+<p>OBS!</p>
+<blockquote>
+<p>When init.type=‘Spectral’ and K=0 the number of topics is set […]
+this does not estimate the ‘true’ number of topics and does not
+necessarily have any particular statistical properties for consistently
+estimating the number of topics. It can however provide a useful
+starting point.</p>
+</blockquote>
+</div>
 </section>
-<section id="assumptions-1" class="slide level2">
-<h2>Assumptions</h2>
-<ul>
-<li class="fragment">Assumptions are similar to LDA</li>
-<li class="fragment">The “spectral” configuration with K=0 does relax
-the third assumption (number of topics is know and fixed)
-<ul>
-<li class="fragment">HOWEVER: “When init.type=”Spectral” and K=0 the
-number of topics is set […] this does not estimate the “true” number of
-topics and does not necessarily have any particular statistical
-properties for consistently estimating the number of topics. It can
-however provide a useful starting point.”</li>
-</ul></li>
-</ul>
-</section>
-<section class="slide level2">
 
-</section></section>
 <section>
 <section id="topic-models-in-practice" class="title-slide slide level1">
 <h1>Topic Models in practice</h1>

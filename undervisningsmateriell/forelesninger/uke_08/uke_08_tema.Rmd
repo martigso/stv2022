@@ -113,67 +113,58 @@ Emnemodellering bruker <font style='color:#842948'>sameksisterende</font> ord ti
 |<font style='color:orange'>Politikk of forvaltning</font> | politikere, byråkrater | 0.08          |
 | Stoppord                                                 | har, vi, enn, som      | 0.49          |
 
-# LDA
+# Latent Dirichlet allocation (LDA)
 
-- LDA is the "simplest" form of topic models
-- The intuition is that documents exhibit multiple topics (multi-membership model)
-- Topics are defined to be a distribution over a fixed vocabulary
-- Topics are assumed to be specified before any data has been generated
-- Beforehand, we do not know the topics, per-document topic distributions, and the per-document per-word topic assignments
-    - "Hidden structure"
+- LDA er den en _enkleste_ emnemodellen:
+  - En tekst kan bestå av mange emner (multi-membership)
+  - Emner er definert som å være en fordeling over et satt vokabular
+  - Emnene antas å ha eksistert før data ble generert
+  - Vi vet ikke innholdet i emnene før vi kjører modellen (sjult struktur)
 
-- IMPORTANT: focus on understanding the application of topic models and the foundation of the estimation
-    - We do not expect you to memorize formulas etc.
+- HUSK! Fokuser på å forstå det som kommer ut av modellen og hvordan vi kan validere det!
 
----
+## Antagelser
 
-## Assumptions
+1. Rekkefølgen på ord betyr ingenting (sekk med ord)
 
-1. LDA makes the "bag of words" assumption, that the order of the words in the document does not matter.
-    - "While this assumption is unrealistic, it is reasonable if our only goal is to uncover the course semantic structure of the texts. h For more sophisticated goals such as language generation it is patently not appropriate"
+2. Rekkefølgen på dokumentene betyr ingenting
 
-2. The order of documents does not matter
-    - "This assumption may be unrealistic when analyzing long-running collections that span years or centuries."
-    - "One approach to this problem is the dynamic topic model"
+3. Vi vet antall emner og det antallet er satt
 
-3. The number of topics is assumed known and fixed
-    - "The Bayesian non-parametric topic model provides an elegant solution: the number of topics is determined by the collection during posterior inference, and furthermore, new documents can exhibit previously unseen topics"
 
----
+## Fremgangsmåte
 
-## Approach
 
-- We "start" with something -> update, update, update, until good changes disappear (iterations)
-- Number of topics: how to pick?
-    - You need supply number of topics
-    - There are different ways to pick number of topics
-- Making sense of topics
-    - Words describe topics. Texts define topic generation
-- Validation
-    - Top scoring words
-    - Top scoring texts
-- Context
+![](iteration.png)
 
----
+- Vi starter med noe og oppdaterer (iterasjoner) til bra endringer forsvinner 
 
-# STM
 
-- Very similar to vanilla topic models, but with two main differences.
-- Prevalence:
-    - As-if regression variable effect estimation
-- Spectral initialization
-    - "deterministic inialization using the spectral algorithm"
-    - Roberts, M., Stewart, B., & Tingley, D. (2016). "Navigating the Local Modes of Big Data: The Case of Topic Models. In Data Analytics in Social Science, Government, and Industry."
+## Hvordan velge antall emner?
 
----
+1. Prøv noe
+2. Validere
+3. Prøv igjen
+4. Validere
+5. ...
 
-## Assumptions
+# Structural Topic Models
 
-- Assumptions are similar to LDA
-- The "spectral" configuration with K=0 does relax the third assumption (number of topics is know and fixed)
-    - HOWEVER: "When init.type="Spectral" and K=0 the number of topics is set [...] this does not estimate the "true" number of topics and does not necessarily have any particular statistical properties for consistently estimating the number of topics. It can however provide a useful starting point."
+- Veldig lik LDA bortsett fra:
+  1. "Prevalence" parameteret
+      - ca som uavhengige variabler i en regresjon
+  2. "Spectral" initialisering
+      - finner antall topics for deg
 
----
+. . .
+
+OBS! 
+
+> When init.type='Spectral' and K=0 the number of topics is set [...] 
+  this does not estimate the 'true' number of topics and does not necessarily 
+  have any particular statistical properties for consistently estimating the 
+  number of topics. It can however provide a useful starting point.
+
 
 # Topic Models in practice
 
