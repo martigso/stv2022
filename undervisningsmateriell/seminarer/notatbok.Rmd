@@ -1245,8 +1245,6 @@ Vi diskuterer taledeler litt mer under, og morfologi vil vi ikke bruke noe særl
 
 ## Taledeler (parts of speech) {#pos}
 
-<!-- Assigned til Martin -->
-
 I både `spaCy` og `OBT` spytter taggeren ut noe som kalles *parts of speech* (PoS) eller taledeler. Dette er, kort sagt, den grammatiske formen til et ord. Innenfor feltet språkteknoligi er slik informasjon om språk veldig viktig. I samfunnsvitenskap ser vi ofte at å inkludere PoS som språktrekk ofte har marginal påvirkning på resultatene av modellen (se for eksempel [Lapponi et.al (2019)](https://link.springer.com/article/10.1007/s10579-018-9411-5).
 
 Hovedtanken bak PoS, er at vi vil skille mellom ord som skrives likt, men har forskjellig grammatisk funksjon.
@@ -1315,7 +1313,7 @@ no4 %>%
 
 Når vi skal jobbe med tekst, må vi finne en måte å gjøre om teksten til tall. Datamaskinen jobber best med tall. Prosessen med å gjøre om ord til tall kalles "vektorisering". Det finnes flere måter å vektorisere på, deriblant:
   
-  - Sekk av ord (bag of words): Gir oss frekvensen av ord per dokument.
+- Sekk med ord (bag of words): Gir oss frekvensen av ord per dokument.
 - TF-IDF: Gir oss frekvens av ord per dokument, vektet etter hvor hyppig ordet forekommer i dokumentmassen.
 - Word embeddings: Gir oss en vektor i et lav-dimensjonalt rom for hvert ord.
 
@@ -1359,10 +1357,10 @@ writeLines(text = no4_prepped %>% pull(tekst), con = no4_tekster) # I denne file
 ```
 
 **Steg 3:** Nå kan vi kjøre modellen for å lage word embeddings. Noen av valgene vi må ta er:
-  
-  - Hvor stort skal kontekstvinduet være? Altså hvor mange ord foran og bak hovedordet skal algoritmen bruke for å forstå konteksten.
-- Hvor mange dimensjoner skal det være? Her får vi automatisk 100 dimensjoner. For å endre dette måtte vi kjørt modellen via terminalen.
-- Hvilken modell skal vi bruke? Fasttext tilbyr både `cbow` og `skipgram`.
+
+ - Hvor stort skal kontekstvinduet være? Altså hvor mange ord foran og bak hovedordet skal algoritmen bruke for å forstå konteksten.
+ - Hvor mange dimensjoner skal det være? Her får vi automatisk 100 dimensjoner. For å endre dette måtte vi kjørt modellen via terminalen.
+ - Hvilken modell skal vi bruke? Fasttext tilbyr både `cbow` og `skipgram`.
 
 ```{r fasttextr_train_test}
 
@@ -1769,22 +1767,278 @@ rainette_plot(rainette_cluster, tedtalks_dfm, k = 6)
 ```
 
 
-
 # Ordbøker {#ordboker}
+
+Ordbøker er en form for regelbasert estimering (estimere vil si å bruke tilgjengelig informasjon for å gjøre slutninger). Ordbøker bruker ordfrekvens for å si noe om tekstene. Reglene går da ut på å finne ut hvilke ord som gir uttrykk for et fenomen, telle opp disse (altså finne frekvensen), og dermed oppdage hvilke tekster som bruker ordene mest. Disse tekstene kan da antas å gi mest uttrykk for fenomenet.
+
+```{r, out.width="70%", fig.align="center", echo = FALSE}
+knitr::include_graphics("./figurer/rulebased.PNG")
+```
+
+Ordbøker er vanlig å bruke i sentimentanalyse. Fenomenet man da forsøker å måle er sentiment, for eksempel hvor positiv, negativ eller nøytral en tekst er. Vi kan anta at ord som "glad", "best" og "fantastisk" gir uttrykk for positivitet, og "dårlig", "elendig" og "forferdelig" gir uttrykk for negativitet. Utfra dette kan vi konstruere en ordbok.
+
+```{r}
+
+ordbok <- tibble(positiv = c("glad", "beste", "fantastisk"), # Lag en dataframe (også kalt 'tibble') med variabler positiv og negativ
+                 negativ = c("dårlig", "elendig", "forferdelig")) # Legg inn som verdier ordene som regnes som positive og negative
+
+ordbok
+
+```
+
+Ta disse to tilbakemeldingene på en reise av Bennie og Bjarne:
+
+*Bennie:*
+
+> Dette har vært en fantastisk ferie. Jeg blir så glad av å se på bildene, selv om de har litt dårlig kvalitet.
+
+*Bjarne:*
+
+> Det er helt forferdelig at de glemte bagasjen min, i den kofferten hadde jeg mine beste bukser. For en elendig service. 
+
+Hva er deres overordnede sentiment i forhold til reisen? Vi kan anvende ordboken over for å måle forekomsten og frekvensen av negative og positive ord, og bruke disse for å si noe om deres sentiment. 
+
+```{r}
+
+library(dplyr)
+library(tidytext)
+
+# Legger tekstene til Bennie og Bjarne inn i en ny dataframe "tekster"
+tekster <- tibble(person = c("Bennie", "Bjarne"),
+                  tekst = c("Dette har vært en fantastisk ferie. Jeg blir så glad av å se på bildene, selv om de har litt dårlig kvalitet.",
+"Det er helt forferdelig at de har glemt bagasjen min, det var der jeg hadde mine beste bukser. For en elendig service."))
+
+tekster %>%
+  unnest_tokens(input = tekst, # Hent ut bag of words ved bruk av unnest_tokens, hent ut ord fra variabelen "tekst"
+                output = ord) %>% # Kall den nye variabelen "ord"
+  mutate(positiv = ifelse(ord %in% ordbok$positiv, 1, 0), # Lag en ny variabel "positiv" og gi den verdi 1 hver gang variabelen "ord" har samme verdi som variabelen "positiv" i ordbok-datasettet vi lagde over
+         negativ = ifelse(ord %in% ordbok$negativ, 1, 0)) %>% # Gjør samme operasjon for negative ord
+  group_by(person) %>% # Grupper på person
+  summarise(positiv = sum(positiv), # Legg sammen hvor mange ganger hver person hadde positive ord i teksten sin
+            negativ = sum(negativ)) %>% # Og hvor mange ganger hver person hadde negative ord i teksten sin
+  mutate(sentiment = positiv - negativ) # Lag en ny variabel "sentiment" der jeg trekker summen av positive ord fra summen av negative ord
+
+```
+
+Bennie hadde to positive ord i sin tekst, "fantastisk" og "glad". Han hadde også et negativt ord, "dårlig". Bjarne hadde to negative ord, "forferdelig" og "elendig", og ett positivt ord, "beste". Legger vi sammen og trekker positivt og negativt sentiment fra hverandre, får vi overordnet sentiment. Bjarne virker å være negativ til reisen, mens Bennie er positiv til reisen. 
+
+Ordbøker kan brukes til flere ting enn sentiment. Man kan for eksempel lage ordbøker på hvor teknisk en tekst er, eller hvor miljø-orientert den er, eller liknende. Utfordringen er å lage en ordbok som i god nok grad dekker det den er ment å dekke, og å deretter validere ordboken. Det krever ofte mye lesing av tekstene for å sjekke at ordboken har klart å plukke opp alle relevante ord og aggregere riktig.
+
+Aggregering er en annen utfordring. Aggregere vil si å gå fra individuell informasjon til overordnet informasjon - for eksempel fra ordnivå til tekstnivå. Vi vil ikke bare vite om enkelte ord er negative eller positive, men om hele teksten er negativ eller positiv. I eksempel over brukte jeg summen av positive og negative ord, og differansen mellom dem, for å finne ut hva sentiment på teksten var. I mer avanserte tilfeller vil dette sjelden fungere bra, for eksempel i tilfeller der lengden på tekstene varierer en del. Da kan det for eksempel være lurt å dele på antall ord i teksten for å få et vektet aggregat. For mer informasjon om aggregering, ta en titt på [denne artikkelen](https://journals.sagepub.com/doi/full/10.1177/0165551519837187?casa_token=xRZ9zA85yA4AAAAA%3A_OxsD5elbRKcxAfyhf3clckywLWTT00Fw-QsYTK9p5D7ZJRZWWgREjo0iwdU-vigX_H6Sqzt8C_AsA). 
+
+Vi skriver med om ordbøker under [sentimentanalyse](#sentiment), der vi tar for oss den norske sentimentordboken `NorSentLex`. 
 
 # Tekststatistikk {#tekststats}
 
+Tekststatistikk er ulike former for mål som vi kan bruke på tekster for å kvantifisere fenomener. Dette skiller seg fra andre metoder, som å anvende en ekstern ordbok for å sjekke ordfrekvens, eller å bruke modeller på tekstene, slik vi gjør i veiledet og ikke-veiledet læring. Mens ordbøker krever at man utarbeider sin egen ordbok, og modellbaserte metoder krever at man gjør visse antakelser som kreves for å kjøre en modell, så handler tekststatistikk rett og slett om å utføre regneoperasjoner på tekstene for å si noe om dem, for eksempel hvor like eller ulike de er hverandre. 
+
 ## Likhet
 
+Hvor like er to tekster hverandre? Dette kan for eksempel være interessant for å se i hvor stor grad ulike aktører snakker om samme tema på samme måte (for eksempel hvordan stater snakker om internasjonale spørsmål i felles fora). Det vanligste målet på likhet når vi jobber med tekst er *cosine*. Det finnes også andre mål på likhet, for eksempel korrelasjonsmål, jaccard og dice, men vi går ikke mer inn på disse her.
+
+For å finne cosine-likhet mellom tekstene kan vi bruke funksjonen `textstat_simil` med argumentet `method = "cosine"`. Denne funksjonen er en del av `quanteda.textstats`-pakken. Før vi kan komme dit, må vi imidlertid forbehandle (preprosessere), tokenisere og vektorisere teksten, som vanlig. For å illustrere, la oss finne cosine-likheten mellom TED-talksene som vi brukte i seksjonen om veiledet og ikke-veiledet læring. 
+
+#### Steg 1: Les inn data
+
+```{r}
+
+library(tidyverse) # Pakke som brukes for veldig mange funksjoner
+library(tidytext) # Pakke som brukes for veldig mange tekst-funksjoner
+library(quanteda.textstats) # Pakke som har mange funksjoner for å finne tekststatistikk
+
+tedtalks <- read_csv("./data/teds.csv") %>% # Leser inn data fra en .csv-fil
+  janitor::clean_names() # Bruker funksjonen clean_names() fra janitor-pakken for å gjøre om variabelnavnene til små bokstaver med understrek
+
+```
+
+#### Steg 2: Forbehandle og tokenisere tekstene
+
+Her må vi velge om vi ønsker å fjerne alle tall og symboler, hva slags enhet vi ønsker for tokens (f. eks. unigram eller bigram), om vi vil fjerne stoppord og i så fall hvilke, også videre. 
+
+```{r}
+
+tedtalks_token <- tedtalks %>%
+  group_by(title) %>%
+  unnest_tokens(input = transcript, # Gjør om tekstene (variabel med tekstene er kalt "transcript")
+                output = token, # Gjør dem om til enkeltord kalt "token"
+                token = "words", # Skal ha unigram (ett og ett ord)
+                strip_punct = TRUE, # Fjern punktsetting
+                strip_numeric = TRUE) %>% # Fjern tall
+  filter(!token %in% quanteda::stopwords("en")) # Fjern stoppord (engelsk siden TED-talksene er på engelsk)
+
+```
+
+#### Steg 3: Vektorisere tekstene 
+
+Her gjør vi om tekstene til tall. I en "sekk med ord"-modell teller vi rett og slett opp hvor mange ord som forekommer innenfor hver tekst. Her regner jeg ut TF-IDF, som også vekter antallet ord etter hvor hyppig det forekommer i dokumentmassen som helhet, i et forsøk på å vekte ord som er mer toneangivende for gjeldende dokument tyngre. 
+
+```{r}
+
+tedtalks_tfidf <- tedtalks_token %>%
+  count(token, name = "antall") %>% # Tell opp hvor ofte hver token dukker opp (dette gir oss sekk med ord), kaller variabelen "antall"
+  bind_tf_idf(token, title, antall) # Regn om frekvensen av ord til TF-IDF - må supplere med variabel som inneholder ord (token), variabel med navn på dokument (title) og variabel med ordfrekvensen (antall)
+
+```
+
+Når tekstene er vektorisert, gjør vi dem om til en dokument-frekvens-matrise (DFM). Dette er den typen format som mange av tekststatistikk-funksjonene trenger for å kunne regne med.
+
+```{r}
+
+tedtalks_dfm <- tedtalks_tfidf %>%
+  cast_dfm(document = title, # Lag en dokument-frekevens-matrise med funksjonen cast_dfm(), fortell hva som er dokumentnavnene
+           term = token, # Hva som er navnet på variabelen som inneholder tokens
+           value = tf_idf) # Hva som skal bli verdien til hver observasjon på hver variabel (TF-IDF i dette tilfellet)
+
+```
+
+#### Steg 4: Regn ut cosine-likhet
+
+Endelig er vi klare til å regne ut cosine-likheten mellom tekstene. Legg merke til at det er dokument-frekvens-matrisen som brukes som objekt for å regne ut likhetsmålet. 
+
+```{r}
+
+simil_tf_idf_ted <- textstat_simil(tedtalks_dfm, method = "cosine") # Funksjon for å regne ut cosine-likhet
+
+```
+
+#### Steg 5: Bruke funnene
+
+La oss se litt på dataene. Hvilke tekster er mest like hverandre?
+
+```{r}
+
+simil_tf_idf_ted %>% # Går inn i cosine-likhet objektet som ble lagd over
+  as.data.frame(., diag = FALSE) %>% # Gjør om objektet til en dataframe der diagonalen er 0 (tekster likhet med seg selv er uinteressant)
+  arrange(desc(cosine)) %>% # Sorter observasjonene i synkende rekkefølge etter cosine-variabelen
+  slice_head(n = 20) # Hent ut bare de 20 øverste observasjonene
+
+```
+
+Noen tekster har 1 i likhet. Det betyr at de deler *alle* ord. Det virker litt suspekt, så la oss se nærmere på to av tekstene med 1 i cosine-likhet.
+
+```{r}
+
+tedtalks %>% 
+  filter(title %in% c("A dance in a hurricane of paper, wind and light", # Hent ut observasjonene som hadde følgende verdier på variabelen "tittel"
+                      "An 11-year-old prodigy performs old-school jazz")) %>% 
+  select(title, transcript) # Hent ut variabelene title og transcript (altså tittel på talen og teksten på talen)
+
+```
+
+Jepp, her har mye av teksten rett og slett ikke blitt transkribert. Tekstene deler "(Music)" og "(Applause)". Vi bør nok kaste ut disse tekstene før vi gjør en eventuell analyse på TED-talksene, sammen med de andre tekstene som enten er duplikater eller har avkortet transkribering. For å fjerne observasjoner fra datasettet kunne vi for eksempel brukt koden under. Deretter måtte vi gjort steg 1, 2, 3 og 4 om igjen. Slik er det med iterative prosesser. 
+
+```{r, eval = FALSE}
+
+tedtalks <- tedtalks %>%
+  filter(!title %in% c("A dance in a hurricane of paper, wind and light", # Filter med utropstegn foran betyr "ikke"
+                       "An 11-year-old prodigy performs old-school jazz")) # Altså henter vi ut alle observasjoner unntatt de med følgende verdier på variabelen "title"
+
+```
+
+Hva med noen av TED-talksene som ikke hadde 1 i likhet, men latet til å score relativt likt?
+
+```{r}
+
+tedtalks %>% 
+  filter(title %in% c("Questions no one knows the answers to",
+                      "How many universes are there?")) %>% 
+  select(title, transcript) 
+
+```
+
+Dette ser mer riktig ut, begge disse TED-talkene tar for seg de store spørsmålene om livet, universet og evigheten. Cosine-likhet? 0,789.
+
+
 ## Avstand
+
+Noen ganger er vi interessert i likhet mellom tekster, andre ganger er vi mer interessert i hvor forskjellige tekstene er fra hverandre. For eksempel brukte Denny og Spirling (2018) et ulikhetsmål da de forsøkte å finne ut hvor forskjellige tekster ble etter at man hadde forbehandlet dem på forskjellige måter - i et forsøk på å finne ut hvilke forbehandlingssteg som kunne ha spesielt stor innvirkning på analysen. 
+
+Noen former for avstandsmål er:
+
+ - Euclidean distanse
+ - Manhattan distanse
+ - Minkowski distanse
+ - Cosine distanse (differanse mellom 1 og cosine-likhet)
+ 
+For å finne de ulike avstansmålene, bruk funksjonen `textstat_dist` og sett avstandsmålet som argument under `method`, slik som vist under.
+
+```{r, eval = FALSE}
+textstat_dist(tedtalks_dfm, method = "euclidean") 
+```
+
+```{r, eval = FALSE}
+textstat_dist(tedtalks_dfm, method = "manhattan") 
+```
+
+```{r, eval = FALSE}
+textstat_dist(tedtalks_dfm, method = "minkowski") 
+```
+
+Euclidean-avstand er det vanligste distansemålet. La oss ta en titt på hvilke TED-talks som er mest ulike hverandre ifølge euclidean-distansen. 
+
+```{r}
+
+dist_tf_idf_ted <- textstat_dist(tedtalks_dfm, method = "euclidean") # Regn ut euclidean-distanse mellom tekstene
+
+dist_tf_idf_ted %>% 
+  as.data.frame(., diag = FALSE) %>% # Lag en dataframe og sett diagnonalen til 0 (teksters ulikhet med seg selv er uinteressant)
+  arrange(desc(euclidean)) %>% # Sorter observasjonene i synkende rekkefølge etter euclidean-variabelen
+  slice_head(n = 10) # Hent ut de 10 øverste radene
+
+```
+
+Svært mange TED-talks skiller seg mye fra talen med tittel "How I turned my Tourette's tics into art". Det er kanskje ikke så rart. Ser vi på denne talen kan vi se at det dukker opp mange tilfeldige ord underveis i talen (som passer med tittelen), hvilket øker ulikheten til andre taler. 
+
+```{r}
+tedtalks %>%
+  filter(title == "How I turned my Tourette's tics into art") %>%
+  select(title, transcript)
+```
+
+Vi kan plotte ulikheten til talene i et varmediagram (heatmap). Siden vi har så mange observasjoner (5621 TED-talks), velger jeg å plukke ut seks tilfeldige taler til plottet. 
+
+```{r}
+
+set.seed(721) # Dette gjør at vi henter ut de samme 20 tilfeldige observasjonene hver gang vi kjører koden
+
+dist_tf_idf_ted %>% 
+  as.data.frame(., diag = FALSE) %>% # Lager om distanse-målet til en dataframe
+  filter(document1 %in% c("Your body was forged in the spectacular death of stars",
+                          "What coronavirus means for the global economy",
+                          "What reality are you creating for yourself?",
+                          "What playing Monopoly with real money taught me about my kids--and humanity",
+                          "What makes the Great Wall of China so extraordinary",
+                          "What it's like to be a transgender dad")) %>%
+  filter(document2 %in% c("Your body was forged in the spectacular death of stars",
+                          "What coronavirus means for the global economy",
+                          "What reality are you creating for yourself?",
+                          "What playing Monopoly with real money taught me about my kids--and humanity",
+                          "What makes the Great Wall of China so extraordinary",
+                          "What it's like to be a transgender dad")) %>%
+  ggplot(aes(x = document1, y = document2, fill = euclidean)) + # Plotter dokumentene mot hverandre med distansemålet som verdi
+  geom_tile(stat = "identity") + # geom_tile gir et varmediagram
+  geom_text(aes(label = ifelse(euclidean > .001, round(euclidean, 2), ""))) + # Legger tekst inn i cellene
+  scale_fill_gradient2(low = "green", mid = "white", high = "blue", midpoint = 0) + # Bestemmer fargene i cellene
+  labs(x = NULL, y = NULL, color = NULL, fill = NULL) + # Vil ikke ha noe informasjon på aksene
+  theme_minimal() + # Hvit plottebakgrunn
+  theme(axis.text.x = element_text(angle = 30, hjust = 1, vjust = 1)) # Bestemmer vinkel og plassering på teksten på x-aksen
+
+```
+
 
 ## Lesbarhet
 
 ## Uttrykk
 
-# Sentiment {#sentiment}
+# Sentimentanalyse {#sentiment}
 
-## NorSentLex
+Sentimentanalyse vil si å prøve å finne hensikt eller følelse bak en tekst. Dette kan være emosjoner, subjektivitet, eller mening. Disse klassifiserer vi gjerne under den generelle betegnelsen "sentiment". 
+
+Sentimentanalyse er en analyseform, og ikke en metode. Isteden kan vi bruke noen av metodene vi har lært for å gjennomføre en sentimentanalyse. Det er hovedsakelig to metoder. Den ene metoden er å bruke en ordbok med ord som i ulik grad måler sentiment. Den andre metoden er å bruke veiledet læring. Den første metoden krever at man har en ordbok som inneholder mange relevante ord for å fange opp sentiment i den gitte konteksten, den andre metoden krever at man har treningsdata, altså enkelte tekster der vi allerede ved teksten sitt sentiment. 
+
+Her går vi gørst gjennom hvordan man kan gjøre en sentimentanalyse med den norske ordboken NorSentLex. Deretter viser vi hvordan man kan gjennomføre en sentimentanalyse med veiledet læring. 
+
+## Sentimentanalyse på norsk med ordbok: NorSentLex
 
 Det har lenge vært ganske lite ressurser for sentimentanalyse på norsk. @Barnes2019 har ganske nylig satt sammen en stor [ordbok](#ordboker) med positive og negative ord i for både fullform og lemmatisert form med [PoS-tags](#pos)^[se: https://github.com/ltgoslo/norsentlex]. Disse ordbøkene bygger på en en oversatt og manuelt korrigert engelsk korpus av kundetilbakemeldinger [@Hu2004] og er pakket i både rå `.txt`-filer og `.json`-filer. Heldigvis har en tulling også konvertert dette til en pakke i R: [`NorSentLex`](https://github.com/martigso/NorSentLex) (for øyblikket ikke på CRAN). For å laste inn/ned ordbøkene, kan du enten installere R-pakken med `devtools::install_github("martigso/NorSentLex")` eller bruke det du lærte i [skrape-delen](#anskaff) av denne notatboken på [de originale filene](https://github.com/ltgoslo/norsentlex). La oss illustrer med R-pakken:
 
@@ -1892,6 +2146,166 @@ no4_sent %>%
 ```
 
 
+## Sentimentanalyse med veiledet læring
+
+Hvis vi har god treningsdata, kan det være fint å gjøre en sentimentanalyse med veiledet læring. Treningsdata vil si at vi allerede har merket data for noen av observasjonene - med andre ord vet vi allerede sentiment for enkelte tekster. Kanskje har vi satt oss ned og klassifisert dem selv (kodet tekstene til positiv, negativ eller nøytral), kanskje har vi betalt noen andre for å gjøre det, eller kanskje har noen allerede klassifisert tekstene for oss i forbindelse med en annen prosess. Du kan lese mer om dette under delen om [veiledet læring](#sup). 
+
+I forelesning brukte vi et eksempel med tweeter om brexit. Disse var allerede merket som enten "positiv", "negativ" eller "nøytral", altså har vi treningsdata. Her viser jeg hvordan man kan gjennomføre en veiledet læring for å måle sentiment.
+
+#### Steg 1: Les inn data
+
+```{r}
+
+library(tidyverse)
+library(tidymodels)
+library(tm)
+
+brexit <- readRDS("../data/brexit.rds") # Leser inn datasettet
+
+```
+
+#### Steg 2: Splitt opp i treningssett, valideringssett og testsett
+
+For å ikke overtilpasse modellen, må vi splitte opp data og trene på ulike biter av datasettene. Treningssettet bruker vi til å trene modellen på, valideringssettet brukes som en fasit underveis i treningen for å sjekke at modellen gjør det bra også på out-of-sample data. Siste sjekk på om modellen klassifiserer sentiment godt nok gjøres på test-settet. 
+
+Før vi splitter opp, gjør jeg litt databehandling for å få datasettet klart til analyse. Siden vi har ekstremt mange rader i datasettet, henter jeg ut 1000 tilfeldige rader til denne illustrasjonen. Vanligvis ville vi brukt all tilgjengelig data. Til egne analyser, behold alle observasjoner som er relevant å ta med. Det gjør at treningen av modellen tar lengre tid, men desto mer informasjon modellen har å gå på, dess bedre. 
+
+```{r}
+
+set.seed(201) # Sår et frø sånn at vi splitter opp på de samme radene i trening-, validering- og testsett hver gang
+
+brexit_classify <- brexit %>% 
+  filter(sentiment != "Not Rated") %>% # Fjerner kategori "Not Rated", ettersom vi ikke er interessert i å kategorisere denne
+  drop_na(influencer) %>% # Fjern missingverdier fra influencer-variabelen 
+  select(influencer, hit_sentence, sentiment) %>% # Hent ut variablene influener (den som skrev tweeten), hit_sentence (teksten i tweeten) og sentiment (hva slags sentiment tweeten er klassifisert til)
+  rename(text = hit_sentence) %>% # Endre navn på tekst-variabelen til "text" for å gjøre preprosessering mer oversiktlig
+  slice_sample(n = 1000) # Henter ut 1000 tilfeldige rader (dvs. observasjoner) for illustrasjonsformål.
+
+brexit_classify %>%
+  slice_head(n = 5) # Viser de fem første radene i datasettet 
+
+
+```
+
+Hvor balansert er dette datasettet? Det er en stor overvekt av tweeter som er nøytrale.
+
+```{r}
+
+brexit_classify %>%
+  janitor::tabyl(sentiment) # Ser hvor mange observasjoner som har hver sin klasse
+
+```
+
+Da er vi klare for å splitte data. Jeg bruker `initial_split` og setter argument `strata` til sentiment for at vi skal få eksempler av både positive, negative og nøytrale tweeter i trening-, validering- og test-settene. 
+
+```{r}
+
+brexit_classify_split <- initial_split(brexit_classify, # Splitt opp datasettet
+                                       strata = sentiment, # Balanser etter utfallsvariabel, sentiment
+                                       prop = 0.8) # 80 prosent av radene i datasettet går i treningssettet
+
+brexit_trening <- training(brexit_classify_split) # Hent ut treningssettet fra splitten
+brexit_validering <- vfold_cv(brexit_trening, v = 5) # Lag valideringssett av treningsdataene, vi lager fem valideringssett
+
+brexit_testing <- testing(brexit_classify_split) # Hent ut testsettet fra splitten
+
+```
+
+#### Steg 3: Forbehandling av teksten
+
+Tekst er rotene greier, så vi må forbehandle den før vi analyserer. Dette innebærer å fjerne irrelevante deler og støy for å sitte igjen med det som er informasjonsbærende. I takt med `tidymodels`-syntaksen, bruker jeg forbehandlingsmetoden som er gitt av `textrecipes`-pakken. Merk at denne gjør det samme som vi har gjort tidligere når vi har brukt blant annet `unnest_tokens`, det er bare en litt annen måte å gjøre det samme på.
+
+```{r}
+
+library(textrecipes)
+
+brexit_oppskrift <- recipe(sentiment ~ text + influencer, data = brexit_trening) %>% 
+  # Forteller hva som er modellen - sentiment er avhengig variabel mens teksten er uavhengig variabel
+  update_role(influencer, new_role = "id variable") %>% # La med influencer over, her spesifiserer jeg at dette er id-variabel slik at den ikke brukes som en uavhengig variabel i analysen
+  step_text_normalization(text) %>% # Normaliserer teksten, fjerner unicode-støy
+  step_mutate(text = str_to_lower(text)) %>% # Setter alle bokstaver til liten bokstav
+  step_mutate(text = removeNumbers(text)) %>% # Fjerner tall
+  step_mutate(text = removePunctuation(text)) %>% # Fjerner punktsetting
+  step_tokenize(text) %>% # Tokeniserer teksten til unigrams
+  step_stopwords(text, custom_stopword_source = stopwords("en")) %>% # Fjerner stoppord
+  step_tokenfilter(text, max_tokens = tune()) %>% # Setter en tuningsvariabel som vil finne det optimale antallet tokens å fjerne for å få best mulig treffsikkerhet i modellen senere
+  step_stem(text) %>% # Tar stammen av tokensene
+  step_tfidf(text) # Vektoriserer ved å hente ut tf-idf 
+
+```
+
+#### Steg 4: Kjør modellene
+
+Her må vi velge hvilken maskinlæringsmodell som er best å bruke. Jeg går ikke nøye inn på dette her, og velger å enkelt bruke en SVM-modell. Denne trener jeg deretter på treningssettet og valideringssettet. 
+
+```{r}
+
+brexit_modell <- svm_rbf(cost = 3, 
+                         rbf_sigma = NULL) %>% # Setter noen "tuning-argumenter". Dere kan lære mer om dette i andre maskinlæringskurs.
+  set_engine("kernlab") %>% # Måten SVM estimerer på
+  set_mode("classification") # Vi ømsker klassifisering, ikke regresjon
+
+# Lager en workflow-oppskrift
+brexit_wf <- workflow() %>% 
+  add_recipe(brexit_oppskrift) %>%
+  add_model(brexit_modell)
+
+# Tuner modellen
+tune_res <- tune_grid(
+  brexit_wf, # Setter inn workflow-objektet slik det ble lagd over
+  resamples = brexit_validering, # Trener med valideringssettet som sjekk
+  grid = 5, # Kjører over fem ganger (bør økes i egne analyser) 
+  metrics = metric_set(accuracy, sens, spec), # Henter ut treffsikkerhetsmålene "accuracy", "sensitivity" og "specificity" - noen mål er bedre enn andre for å si noe om hvor god modellen er avhengig av om man er mest opptatt av sanne positive, falske positive, falske negative eller sanne negative.
+  control = control_grid(verbose = FALSE, # Ikke la modellen forklare oss hva den driver med mens den kjører
+                         save_pred = TRUE) # Lagre prediksjonene
+)
+
+tune_res %>%
+  autoplot(type = "marginals") # Her ser vi et plott som viser noe om hvordan modellen har valgt hva som er optimalt antall tokens gitt accuracy, sensitivity og specificity. 
+
+```
+
+Det ser ut til at høyest treffsikkerhet får vi når man beholder omtrent 1000 tokens. 
+
+```{r}
+
+collect_metrics(tune_res) %>% 
+  arrange(desc(mean))
+
+```
+
+Da velger jeg like gjerne modellen med best accuracy, den som hadde beholdt 981 tokens. 
+
+```{r}
+
+best_accuracy <- select_best(tune_res, "accuracy")
+
+```
+
+
+#### Steg 5: Vurder hvor god modellen er
+
+Har modellen blitt trent godt nok til å kunne bruke på annen data? La oss teste med en forvirringsmatrise. 
+
+```{r}
+
+final_wf <- finalize_workflow( # Ferdigstiller workflow med modellen som gir best accuracy gitt antall tokens
+  brexit_wf,
+  best_accuracy
+)
+
+final_res <- final_wf %>%
+  last_fit(brexit_classify_split) # Kjører modellen på testsettet
+
+final_res %>%
+  collect_predictions() %>% # Samler prediksjonene fra modellen
+  conf_mat(truth = sentiment,  # Plotter de sanne verdiene
+           estimate = .pred_class) %>% # Opp mot de predikerte verdiene
+  autoplot("heatmap") # Lager et varmediagram (heatmap) som gir oss forvirringsmatrisen
+
+```
+
+Modellen sliter med å klassifisere positivt sentiment riktig. Som vi har sett før, har den en tendens til å klassifisere en overvekt av tekstene inn i den dominerende kategorien - her "neutral". Vi kunne kanskje gjort en større jobb med forbehandlingen av tekstene, tatt ut flere stoppord, tatt mer hensyn til emojis, og vært mer påpasselige når vi trente modellen. Kanskje ville modellen gjort det bedre om vi beholdt enda flere tokens. Hadde vi beholdt alle observasjonene, og ikke bare trent på 1000 av dem, ville modellen også hatt mer informasjon å gå på og kunne gjort det bedre. Å prøve, justere og sjekke på denne måten er en del av den iterative prosessen. 
 
 # Temamodellering {#topicmod}
 

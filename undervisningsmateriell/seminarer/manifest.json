@@ -6552,6 +6552,9 @@
     "figurer/overfitting.png": {
       "checksum": "50277a2ab981c69cd4a56b776e7a0a10"
     },
+    "figurer/rulebased.PNG": {
+      "checksum": "0b5ffdc64e044ccfa2097ac0c757b8de"
+    },
     "figurer/split_data2.png": {
       "checksum": "d5a1f75c9a3ba4865f42fbf6073a4489"
     },
@@ -6568,16 +6571,16 @@
       "checksum": "bd09fdef701e32cf218ae9a76ef13cc6"
     },
     "notatbok.html": {
-      "checksum": "5bf1fc5b327f5e258ae048119d4c907b"
+      "checksum": "0fe43de2784eeb9e858631a86670ec0f"
     },
     "notatbok.log": {
       "checksum": "b3599fe7f632fa832217d4d6c6a42ea5"
     },
     "notatbok.Rmd": {
-      "checksum": "bac61f9d0f3718d9ff1953d84445ed19"
+      "checksum": "08b320ddb7265837503c47971c546fae"
     },
     "notatbok_kode.R": {
-      "checksum": "2b47e1a38ddb316b8464ec51fb10fabb"
+      "checksum": "80f7ccbdecfc0ec26c862ff70ecf9e0a"
     },
     "oppgavebygging.html": {
       "checksum": "8c51fc19faa70f231590a1d44dc440e8"
