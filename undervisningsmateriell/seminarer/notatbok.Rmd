@@ -418,7 +418,7 @@ Heldigvis har andre laget løsninger for oss på dette også. Her viser vi hvord
 
 ```{r docx, eval=FALSE}
 
-library(textreadr)
+# library(textreadr)
 
 ba_docx <- read_docx("./data/ba_thesis.docx")
 

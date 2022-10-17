@@ -138,7 +138,7 @@ readLines("./data/ba_thesis.docx", n = 2)
 
 ## ----docx, eval=FALSE-------------------------------------------------------------
 ## 
-## library(textreadr)
+## # library(textreadr)
 ## 
 ## ba_docx <- read_docx("./data/ba_thesis.docx")
 ## 

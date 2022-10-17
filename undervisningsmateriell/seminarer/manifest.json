@@ -543,35 +543,6 @@
         "Built": "R 4.0.5; x86_64-pc-linux-gnu; 2021-05-10 08:11:22 UTC; unix"
       }
     },
-    "antiword": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "antiword",
-        "Type": "Package",
-        "Title": "Extract Text from Microsoft Word Documents",
-        "Version": "1.3.1",
-        "Authors@R": "c(\n    person(\"Jeroen\", \"Ooms\", ,\"jeroen@berkeley.edu\", role = c(\"aut\", \"cre\"),\n      comment = c(ORCID = \"0000-0002-4035-0289\")),\n    person(\"Adri van Os\", role = \"cph\", comment = \"Author 'antiword' utility\"))",
-        "Description": "Wraps the 'AntiWord' utility to extract text from Microsoft\n    Word documents. The utility only supports the old 'doc' format, not the \n    new xml based 'docx' format. Use the 'xml2' package to read the latter.",
-        "License": "GPL-2",
-        "Encoding": "UTF-8",
-        "Imports": "sys (>= 2.0)",
-        "RoxygenNote": "6.0.1",
-        "URL": "https://docs.ropensci.org/antiword/ (website),\nhttps://github.com/ropensci/antiword (devel)\nhttp://www.winfield.demon.nl (upstream)",
-        "BugReports": "https://github.com/ropensci/antiword/issues",
-        "NeedsCompilation": "yes",
-        "Packaged": "2022-03-21 15:56:21 UTC; jeroen",
-        "Author": "Jeroen Ooms [aut, cre] (<https://orcid.org/0000-0002-4035-0289>),\n  Adri van Os [cph] (Author 'antiword' utility)",
-        "Maintainer": "Jeroen Ooms <jeroen@berkeley.edu>",
-        "Repository": "CRAN",
-        "Date/Publication": "2022-03-21 16:20:02 UTC",
-        "Built": "R 4.2.0; x86_64-pc-linux-gnu; 2022-06-22 10:17:35 UTC; unix"
-      }
-    },
     "askpass": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -3818,38 +3789,6 @@
         "Built": "R 4.2.1; ; 2022-10-12 10:59:05 UTC; unix"
       }
     },
-    "pdftools": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "pdftools",
-        "Type": "Package",
-        "Title": "Text Extraction, Rendering and Converting of PDF Documents",
-        "Version": "3.3.0",
-        "Authors@R": "person(\"Jeroen\", \"Ooms\", role = c(\"aut\", \"cre\"), email = \"jeroen@berkeley.edu\",\n      comment = c(ORCID = \"0000-0002-4035-0289\"))",
-        "Description": "Utilities based on 'libpoppler' for extracting text, fonts, attachments and \n    metadata from a PDF file. Also supports high quality rendering of PDF documents into\n    PNG, JPEG, TIFF format, or into raw bitmap vectors for further processing in R.",
-        "License": "MIT + file LICENSE",
-        "URL": "https://docs.ropensci.org/pdftools/ (website)\nhttps://github.com/ropensci/pdftools#readme (devel)\nhttps://poppler.freedesktop.org (upstream)",
-        "BugReports": "https://github.com/ropensci/pdftools/issues",
-        "SystemRequirements": "Poppler C++ API: libpoppler-cpp-dev (deb) or\npoppler-cpp-devel (rpm), and poppler-data (rpm/deb) package.",
-        "Encoding": "UTF-8",
-        "Imports": "Rcpp (>= 0.12.12), qpdf",
-        "LinkingTo": "Rcpp",
-        "Suggests": "png, webp, tesseract, testthat",
-        "RoxygenNote": "7.1.2",
-        "NeedsCompilation": "yes",
-        "Packaged": "2022-07-07 17:22:38 UTC; jeroen",
-        "Author": "Jeroen Ooms [aut, cre] (<https://orcid.org/0000-0002-4035-0289>)",
-        "Maintainer": "Jeroen Ooms <jeroen@berkeley.edu>",
-        "Repository": "CRAN",
-        "Date/Publication": "2022-07-07 18:10:02 UTC",
-        "Built": "R 4.2.1; x86_64-pc-linux-gnu; 2022-08-28 14:06:19 UTC; unix"
-      }
-    },
     "pillar": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -4245,38 +4184,6 @@
         "Repository": "CRAN",
         "Date/Publication": "2020-04-17 12:10:07 UTC",
         "Built": "R 4.0.5; x86_64-pc-linux-gnu; 2021-04-30 09:26:46 UTC; unix"
-      }
-    },
-    "qpdf": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "qpdf",
-        "Type": "Package",
-        "Title": "Split, Combine and Compress PDF Files",
-        "Version": "1.2.0",
-        "Authors@R": "c(person(\"Jeroen\", \"Ooms\", role = c(\"aut\", \"cre\"), \n    email = \"jeroen@berkeley.edu\", comment = c(ORCID = \"0000-0002-4035-0289\")),\n        person(\"Ben\", \"Raymond\", role = \"ctb\"),\n        person(\"Jay Berkenbilt\", role = \"cph\", comment = \"Author of libqpdf\"))",
-        "Description": "Content-preserving transformations transformations of PDF files such \n    as split, combine, and compress. This package interfaces directly to the 'qpdf' \n    C++ API and does not require any command line utilities. Note that 'qpdf' does\n    not read actual content from PDF files: to extract text and data you need the\n    'pdftools' package.",
-        "License": "Apache License 2.0",
-        "URL": "https://docs.ropensci.org/qpdf/ (website),\nhttps://github.com/ropensci/qpdf (devel),\nhttps://qpdf.sourceforge.io/ (upstream)",
-        "BugReports": "https://github.com/ropensci/qpdf/issues",
-        "Encoding": "UTF-8",
-        "Imports": "Rcpp, askpass, curl",
-        "LinkingTo": "Rcpp",
-        "RoxygenNote": "7.1.2",
-        "Suggests": "testthat",
-        "SystemRequirements": "libjpeg",
-        "NeedsCompilation": "yes",
-        "Packaged": "2022-05-29 08:30:33 UTC; jeroen",
-        "Author": "Jeroen Ooms [aut, cre] (<https://orcid.org/0000-0002-4035-0289>),\n  Ben Raymond [ctb],\n  Jay Berkenbilt [cph] (Author of libqpdf)",
-        "Maintainer": "Jeroen Ooms <jeroen@berkeley.edu>",
-        "Repository": "CRAN",
-        "Date/Publication": "2022-05-29 09:30:02 UTC",
-        "Built": "R 4.2.0; x86_64-pc-linux-gnu; 2022-06-22 10:16:43 UTC; unix"
       }
     },
     "quanteda": {
@@ -5229,37 +5136,6 @@
         "Built": "R 4.2.1; ; 2022-08-28 14:06:56 UTC; unix"
       }
     },
-    "striprtf": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "striprtf",
-        "Type": "Package",
-        "Title": "Extract Text from RTF File",
-        "Version": "0.5.3",
-        "Authors@R": "c(\n    person(\"Kota\", \"Mori\", email = \"kmori05@gmail.com\", role = c(\"aut\", \"cre\"))\n  )",
-        "Description": "Extracts plain text from RTF (Rich Text Format) file.",
-        "License": "MIT + file LICENSE",
-        "Depends": "R (>= 3.0)",
-        "Imports": "magrittr, Rcpp, stringr, utils",
-        "Suggests": "testthat",
-        "RoxygenNote": "7.1.1",
-        "LinkingTo": "Rcpp",
-        "URL": "https://github.com/kota7/striprtf",
-        "BugReports": "https://github.com/kota7/striprtf/issues",
-        "NeedsCompilation": "yes",
-        "Packaged": "2021-09-07 13:41:56 UTC; kota",
-        "Author": "Kota Mori [aut, cre]",
-        "Maintainer": "Kota Mori <kmori05@gmail.com>",
-        "Repository": "CRAN",
-        "Date/Publication": "2021-09-07 14:00:02 UTC",
-        "Built": "R 4.2.0; x86_64-pc-linux-gnu; 2022-06-22 10:17:40 UTC; unix"
-      }
-    },
     "survival": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -5322,36 +5198,6 @@
         "Built": "R 4.0.5; x86_64-pc-linux-gnu; 2021-05-10 08:37:00 UTC; unix"
       }
     },
-    "textreadr": {
-      "Source": "CRAN",
-      "Repository": null,
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "textreadr",
-        "Title": "Read Text Documents into R",
-        "Version": "1.2.0",
-        "Authors@R": "c(person(\"Tyler\", \"Rinker\", email = \"tyler.rinker@gmail.com\", role = c(\"aut\", \"cre\")),\n           person(\"Bryan\", \"Goodrich\", role = \"ctb\"), person(\"Dason\", \"Kurkiewicz\", role = \"ctb\"))",
-        "Maintainer": "Tyler Rinker <tyler.rinker@gmail.com>",
-        "Description": "A small collection of convenience tools for reading text documents into R.",
-        "Depends": "R (>= 3.3.0)",
-        "Suggests": "tesseract, testthat",
-        "Imports": "antiword, curl, data.table, pdftools, readxl, rvest, striprtf,\ntextshape, tools, utils, xml2",
-        "License": "GPL-2",
-        "LazyData": "TRUE",
-        "RoxygenNote": "7.1.2",
-        "BugReports": "https://github.com/trinker/textreadr/issues?state=open",
-        "URL": "https://github.com/trinker/textreadr",
-        "NeedsCompilation": "no",
-        "Packaged": "2021-10-08 22:11:53 UTC; TylerRinker",
-        "Author": "Tyler Rinker [aut, cre],\n  Bryan Goodrich [ctb],\n  Dason Kurkiewicz [ctb]",
-        "Repository": "CRAN",
-        "Date/Publication": "2021-10-09 15:30:02 UTC",
-        "Built": "R 4.2.0; ; 2022-06-22 10:18:00 UTC; unix"
-      }
-    },
     "textrecipes": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -5386,37 +5232,6 @@
         "Repository": "CRAN",
         "Date/Publication": "2022-10-06 03:20:02 UTC",
         "Built": "R 4.2.1; x86_64-pc-linux-gnu; 2022-10-12 10:58:42 UTC; unix"
-      }
-    },
-    "textshape": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "textshape",
-        "Title": "Tools for Reshaping Text",
-        "Version": "1.7.3",
-        "Authors@R": "c(\n        person(\"Tyler\", \"Rinker\", email = \"tyler.rinker@gmail.com\", role = c(\"aut\", \"cre\")), \n        person(\"Joran\", \"Elias\", role = \"ctb\"), \n        person(\"Matthew\", \"Flickinger\", role = \"ctb\"), \n        person('Paul', 'Foster', role = \"ctb\")\n    )",
-        "Maintainer": "Tyler Rinker <tyler.rinker@gmail.com>",
-        "Description": "Tools that can be used to reshape and restructure text data.",
-        "Depends": "R (>= 3.4.0)",
-        "Imports": "data.table, slam, stats, stringi, utils",
-        "Suggests": "testthat",
-        "License": "GPL-2",
-        "LazyData": "TRUE",
-        "RoxygenNote": "7.1.1",
-        "URL": "https://github.com/trinker/textshape",
-        "BugReports": "https://github.com/trinker/textshape/issues",
-        "Collate": "'bind_list.R' 'bind_table.R' 'bind_vector.R' 'change_index.R'\n'cluster_matrix.R' 'column_to_rownames.R' 'combine.R'\n'duration.R' 'flatten.R' 'from_to.R' 'grab_index.R'\n'grab_match.R' 'mtabulate.R' 'split_index.R' 'split_match.R'\n'split_match_regex_to_transcript.R' 'split_portion.R'\n'split_run.R' 'split_sentence.R' 'split_sentence_token.R'\n'split_speaker.R' 'split_token.R' 'split_transcript.R'\n'split_word.R' 'textshape-package.R' 'tidy_colo_dtm.R'\n'utils.R' 'tidy_dtm.R' 'tidy_list.R' 'tidy_matrix.R'\n'tidy_table.R' 'tidy_vector.R' 'unique_pairs.R' 'unnest_text.R'",
-        "NeedsCompilation": "no",
-        "Packaged": "2021-05-25 15:25:11 UTC; TylerRinker",
-        "Author": "Tyler Rinker [aut, cre],\n  Joran Elias [ctb],\n  Matthew Flickinger [ctb],\n  Paul Foster [ctb]",
-        "Repository": "CRAN",
-        "Date/Publication": "2021-05-28 17:50:03 UTC",
-        "Built": "R 4.2.0; ; 2022-06-22 10:17:49 UTC; unix"
       }
     },
     "tibble": {
@@ -6548,16 +6363,16 @@
       "checksum": "bd09fdef701e32cf218ae9a76ef13cc6"
     },
     "notatbok_kode.R": {
-      "checksum": "aa8bea3f6bed8eb3f953cb7986728232"
+      "checksum": "5d4ab1be66df00c11c7e88448b34b92a"
     },
     "notatbok.html": {
-      "checksum": "7a46ea426f3e79ba927ef616550459b5"
+      "checksum": "a22fe302ab2b4d02d345861565f5112b"
     },
     "notatbok.log": {
       "checksum": "a80d9b2d472e971c69ad90b384e15e7a"
     },
     "notatbok.Rmd": {
-      "checksum": "b61a740c38d70a49fe7f618f69e2bad2"
+      "checksum": "fb1d2773c52dfeffcb27ee01c2c5421c"
     },
     "oppgavebygging.html": {
       "checksum": "f78d398098f78fb686cd4d3a29470e75"
