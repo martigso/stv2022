@@ -5053,7 +5053,7 @@
         "Package": "stortingscrape",
         "Type": "Package",
         "Title": "Access Data from the Norwegian Parliament API",
-        "Version": "0.1.3",
+        "Version": "0.1.2",
         "Authors@R": "person(\"Martin\", \"Søyland\", email = \"martin.soyland@stv.uio.no\",\n                  role = c(\"aut\", \"cre\"))",
         "Description": "Functions for retrieving general and specific data from the Norwegian Parliament,\n  through the Norwegian Parliament API at <https://data.stortinget.no>.",
         "URL": "https://github.com/martigso/stortingscrape",
@@ -5065,11 +5065,14 @@
         "License": "GPL (>= 3)",
         "VignetteBuilder": "knitr",
         "RoxygenNote": "7.2.1",
-        "Roxygen": "list(markdown = TRUE)",
         "LazyData": "true",
+        "NeedsCompilation": "no",
+        "Packaged": "2022-08-26 13:05:03 UTC; martigso",
         "Author": "Martin Søyland [aut, cre]",
         "Maintainer": "Martin Søyland <martin.soyland@stv.uio.no>",
-        "Built": "R 4.2.1; ; 2022-09-18 09:17:09 UTC; unix"
+        "Repository": "CRAN",
+        "Date/Publication": "2022-08-26 19:30:02 UTC",
+        "Built": "R 4.2.1; ; 2022-10-17 12:22:35 UTC; unix"
       }
     },
     "stringi": {
@@ -6363,10 +6366,10 @@
       "checksum": "bd09fdef701e32cf218ae9a76ef13cc6"
     },
     "notatbok_kode.R": {
-      "checksum": "5d4ab1be66df00c11c7e88448b34b92a"
+      "checksum": "d7e4edd326bd1e8648ff9d2f3111df23"
     },
     "notatbok.html": {
-      "checksum": "a22fe302ab2b4d02d345861565f5112b"
+      "checksum": "f1903d60023fea56f4b84f654ad35aa3"
     },
     "notatbok.log": {
       "checksum": "a80d9b2d472e971c69ad90b384e15e7a"
