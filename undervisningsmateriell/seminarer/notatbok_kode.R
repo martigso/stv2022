@@ -136,26 +136,26 @@ readLines("./data/ba_thesis.docx", n = 2)
 
 
 
-## ----docx-------------------------------------------------------------------------
+## ----docx, eval=FALSE-------------------------------------------------------------
+## 
+## library(textreadr)
+## 
+## ba_docx <- read_docx("./data/ba_thesis.docx")
+## 
+## ba_docx[43:46]
+## 
 
-library(textreadr)
 
-ba_docx <- read_docx("./data/ba_thesis.docx")
-
-ba_docx[43:46]
-
-
-
-## ----read_pdf---------------------------------------------------------------------
-
-ba_pdf <- read_pdf("./data/ba_thesis.pdf")
-
-ba_pdf <- ba_pdf$text[4] %>% 
-  strsplit("\\n") %>% 
-  unlist()
-
-ba_pdf[11:14]
-
+## ----read_pdf, eval=FALSE---------------------------------------------------------
+## 
+## ba_pdf <- read_pdf("./data/ba_thesis.pdf")
+## 
+## ba_pdf <- ba_pdf$text[4] %>%
+##   strsplit("\\n") %>%
+##   unlist()
+## 
+## ba_pdf[11:14]
+## 
 
 
 ## ----wiki_bilde, out.width="100%", echo = FALSE-----------------------------------

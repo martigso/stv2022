@@ -416,7 +416,7 @@ Derfor vil det kreve andre metoder for å lese inn filer med overhead. Under eks
 
 Heldigvis har andre laget løsninger for oss på dette også. Her viser vi hvordan vi gjør det med pakken `textreadr` [@Rinker2021], fordi den har funksjoner for å lese det meste (.doc, .docx, .pdf, .odt, .pptx, osv):
 
-```{r docx}
+```{r docx, eval=FALSE}
 
 library(textreadr)
 
@@ -432,7 +432,7 @@ Det er også lurt å inspisere dataene grundig før man går igang med eventuell
 
 Det samme gjelder for `.pdf`-filer:
 
-```{r read_pdf}
+```{r read_pdf, eval=FALSE}
 
 ba_pdf <- read_pdf("./data/ba_thesis.pdf")
 
