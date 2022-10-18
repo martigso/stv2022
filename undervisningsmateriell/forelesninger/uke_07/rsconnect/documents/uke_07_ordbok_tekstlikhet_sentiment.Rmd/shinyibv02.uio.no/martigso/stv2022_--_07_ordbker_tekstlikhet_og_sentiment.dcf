@@ -1,0 +1,13 @@
+name: stv2022_--_07_ordbker_tekstlikhet_og_sentiment
+title: STV2022 -- [07] Ordbøker, tekstlikhet og sentiment
+username: martigso
+account: martigso
+server: shinyibv02.uio.no
+hostUrl: https://shinyibv02.uio.no/__api__
+appId: 220
+bundleId: 1266
+url: https://shinyibv02.uio.no/content/8ee655cb-1a8b-42e6-8c75-6921b45c03c7/
+when: 1666081370.72771
+lastSyncTime: 1666081370.72772
+asMultiple: FALSE
+asStatic: TRUE
