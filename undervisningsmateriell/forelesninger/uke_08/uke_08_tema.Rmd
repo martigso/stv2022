@@ -34,7 +34,15 @@ knitr::opts_chunk$set(echo = FALSE)
 knitr::opts_chunk$set(class.source = "code-bg")
 refs <- bibtex::read.bib("../../../referanser/stv2022.bib")
 
-library(tidytext);library(quanteda);library(tidyverse);library(tidytext);library(rvest)
+# Loading packages
+library(readr)      # Read data through C++
+library(dplyr)      # Parse manipulation of data through C++
+library(pbmcapply)  # Parallelization with progress bar
+library(quanteda)
+library(tidyverse)
+library(tidytext)
+library(rvest)
+library(stm)
 
 str_break <- function(x, width = 7L) {
   x <- unlist(quanteda::tokenize_fastestword(x))
@@ -56,21 +64,24 @@ str_break <- function(x, width = 7L) {
 
 # Disposisjon
 
-- En øvelse i kategorisering
-- Om emnemodeller
-- ?
-- ?
-
+1. En øvelse i kategorisering
+1. Om emnemodellering
+1. Latent Dirichlet allocation (LDA)
+1. Structural Topic Models (STM)
+1. Emnemodeller i praksis
+    - <font style='color:#546DFB'>Climate Politics in Hard Times</font> 
+    
 # En øvelse i kategorisering
 
-- Bruk 2 minutter på å diskutere hvordan følgende tekst kan kategoriseres (gis et emne):
+- Bruk 2 minutter på å diskutere hvilken kategori (emne) teksten kan klassifiseres som:
 
 . . .
 
 > <font size="5">I Norge har vi mer enn nok plass, vi har folk som vil kjøpe hus og bygge hus som har fått lån, vi har bygningsarbeidere og entreprenører, vi har materialer og redskap. Hva er flaskehalsen? Den eneste ting politikere og byråkrater må sørge for, nemlig tillatelse til å bygge. Det er ikke regulert eller planlagt nok områder til boligbygging, selv om grunneiere står i kø for å selge. Det vi har nok av fra naturens side, nemlig plass, har politikere og byråkrater greid å gjøre til mangelvare.</font>
 
-<font size="4">Carl I. Hagen, FrPs landsmøte 1988</font>
+. . .
 
+<font size="4">Carl I. Hagen, FrPs landsmøte 1988</font>
 
 # Hva er emnemodellering
 
@@ -101,7 +112,7 @@ Emnemodellering bruker <font style='color:#842948'>sameksisterende</font> ord ti
 
 ---
 
-> <font size="5">I <font style='color:red'>Norge</font> har vi mer enn nok <font style='color:red'>plass</font>, vi har folk som vil <font style='color:blue'>kjøpe hus</font> og <font style='color:green'>bygge hus</font> som har fått <font style='color:blue'>lån</font>, vi har <font style='color:green'>bygningsarbeidere</font> og <font style='color:green'>entreprenører</font>, vi har <font style='color:green'>materialer</font> og <font style='color:green'>redskap</font>. Hva er flaskehalsen? Den eneste ting <font style='color:orange'>politikere</font> og <font style='color:orange'>byråkrater</font> må sørge for, nemlig <font style='color:orange'>tillatelse til å bygge</font>. Det er ikke <font style='color:orange'>regulert</font> eller <font style='color:orange'>planlagt</font> nok <font style='color:red'>områder</font> til <font style='color:green'>boligbygging</font>, selv om <font style='color:blue'>grunneiere</font> står i kø for å <font style='color:blue'>selge</font>. Det vi har nok av fra <font style='color:red'>naturens</font> side, nemlig <font style='color:red'>plass</font>, har <font style='color:orange'>politikere</font> og <font style='color:orange'>byråkrater</font> greid å gjøre til <font style='color:blue'>mangelvare.</font></font>
+> <font size="4">I <font style='color:red'>Norge</font> har vi mer enn nok <font style='color:red'>plass</font>, vi har folk som vil <font style='color:blue'>kjøpe hus</font> og <font style='color:green'>bygge hus</font> som har fått <font style='color:blue'>lån</font>, vi har <font style='color:green'>bygningsarbeidere</font> og <font style='color:green'>entreprenører</font>, vi har <font style='color:green'>materialer</font> og <font style='color:green'>redskap</font>. Hva er flaskehalsen? Den eneste ting <font style='color:orange'>politikere</font> og <font style='color:orange'>byråkrater</font> må sørge for, nemlig <font style='color:orange'>tillatelse til å bygge</font>. Det er ikke <font style='color:orange'>regulert</font> eller <font style='color:orange'>planlagt</font> nok <font style='color:red'>områder</font> til <font style='color:green'>boligbygging</font>, selv om <font style='color:blue'>grunneiere</font> står i kø for å <font style='color:blue'>selge</font>. Det vi har nok av fra <font style='color:red'>naturens</font> side, nemlig <font style='color:red'>plass</font>, har <font style='color:orange'>politikere</font> og <font style='color:orange'>byråkrater</font> greid å gjøre til <font style='color:blue'>mangelvare.</font></font>
 
 . . .
 
@@ -111,7 +122,7 @@ Emnemodellering bruker <font style='color:#842948'>sameksisterende</font> ord ti
 |<font style='color:blue'>Økonomi og eiendom </font>       | kjøpe, lån, mangelvare | 0.07          |
 |<font style='color:green'>Eiendomsutvikling</font>        | bygge, hus, redskap    | 0.07          |
 |<font style='color:orange'>Politikk of forvaltning</font> | politikere, byråkrater | 0.08          |
-| Stoppord                                                 | har, vi, enn, som      | 0.49          |
+| Stoppord                                                 | har, vi, enn, som      | 0.72          |
 
 # Latent Dirichlet allocation (LDA)
 
@@ -120,6 +131,12 @@ Emnemodellering bruker <font style='color:#842948'>sameksisterende</font> ord ti
   - Emner er definert som å være en fordeling over et satt vokabular
   - Emnene antas å ha eksistert før data ble generert
   - Vi vet ikke innholdet i emnene før vi kjører modellen (sjult struktur)
+
+. . .
+
+![](./lda_formula.png){width=30%}
+
+. . .
 
 - HUSK! Fokuser på å forstå det som kommer ut av modellen og hvordan vi kan validere det!
 
@@ -135,7 +152,7 @@ Emnemodellering bruker <font style='color:#842948'>sameksisterende</font> ord ti
 ## Fremgangsmåte
 
 
-![](iteration.png)
+![](iteration.png){width=30%}
 
 - Vi starter med noe og oppdaterer (iterasjoner) til bra endringer forsvinner 
 
@@ -154,452 +171,358 @@ Emnemodellering bruker <font style='color:#842948'>sameksisterende</font> ord ti
   1. "Prevalence" parameteret
       - ca som uavhengige variabler i en regresjon
   2. "Spectral" initialisering
-      - finner antall topics for deg
+      - bedre på store corpus 
+      - kan finne antall topics for deg
 
-. . .
+---
 
-OBS! 
+`r emo::ji("rotating_light")` `r emo::ji("rotating_light")` `r emo::ji("rotating_light")`
 
 > When init.type='Spectral' and K=0 the number of topics is set [...] 
   this does not estimate the 'true' number of topics and does not necessarily 
   have any particular statistical properties for consistently estimating the 
   number of topics. It can however provide a useful starting point.
 
+`r emo::ji("rotating_light")` `r emo::ji("rotating_light")` `r emo::ji("rotating_light")`
 
-# Topic Models in practice
+# Emnemodeller i praksis
 
-. . .
+<p style='font-size:36;color:#546DFB'>Climate Politics in Hard Times</p> 
 
-```{r load_data, eval=FALSE}
 
-# Loading SOTU data (should be easy by now)
-sotu <- data_corpus_sotu %>% 
-  corpus_subset(Date > as.Date("1946-01-01") & type == "SOTU")
-
-# Because the party variable is a factor, and we have more than two parties listed in this factor
-table(sotu$documents$party)
-
-# We need to drop the unused parties in our corpus
-sotu$documents$party <- droplevels(sotu$documents$party)
-table(sotu$documents$party)
-
-# Making a (sloppy) dfm
-sotu_dfm <- dfm(sotu,
-                remove_punct = TRUE,
-                remove_numbers = TRUE,
-                stem = TRUE, 
-                remove = stopwords("en"), 
-                tolower = TRUE,
-                verbose = TRUE)
-
-```
+![](./oil_price.png){width=80%}
 
 ---
 
-# Estimating LDA
 
-```{r LDA_est, eval=FALSE}
-#### LDA
-# Estimating LDA topic model with 20 topics NOTE: 
-# "max.em.its" should be way higher. It is set low here for quick convergence
-# use default value from ?stm
-sotu_lda <- stm(sotu_dfm, K = 20, data = sotu$documents, init.type = "LDA", max.em.its = 5)
-save(sotu_lda, file = "./presentations/topic_models/data/sotu_lda.rda")
+<font style='color:#4641DF'>Metadata</font>
+
+```{r load_data, eval=TRUE}
+load("./data/reps_preproc_bigram_pos.rda")
 ```
 
-```{r load_LDA, echo=FALSE, eval=FALSE}
-load("./presentations/topic_models/data/sotu_lda.rda")
+```{r show_data, eval=TRUE}
+# Metadata
+meta[2:5, c("id", "rep_id", "text")]
 ```
-
----
-
-# Checking LDA results
 
 . . .
 
-```{r check_LDA, eval=FALSE}
-# Plotting expected topic proportions
-plot(sotu_lda)
+==================================
 
-# Looking up which topics have "congress" as a high loading term
-findTopic(sotu_lda, "congress")
+<font style='color:#5641DF'>DFM</font>
 
-# Checking the highest loading words for topic 5 and 15
-labelTopics(sotu_lda, topics = c(5, 15))
-
-# Finding the 2 highest loading texts for topic 12
-top12 <- findThoughts(sotu_lda, texts = sotu$documents$texts, n = 2, topics = 12)
-
-# Printing only the first 200 words -- this is a long document, 
-# and will clog the console if printed in its entirety
-str_sub(top12$docs$`Topic 12`, 1, 200)
-
-# A small dirty solution to finding other meta data
-findThoughts(sotu_lda, texts = sotu$documents$President, n = 2, topics = 12)
-findThoughts(sotu_lda, texts = as.character(sotu$documents$party), n = 2, topics = 12)
-
+```{r show_dfm, eval=TRUE}
+# DFM
+lemma_counts[2:5, 110:113]
 ```
 
----
+## Estimere LDA
 
-# STM with set K
+```{r LDA_est, eval=FALSE, echo=-12}
+# Estimerer LDA emnemodel med 20 emner 
+oil_lda <- stm(lemma_counts, 
+               K = 20, 
+               data = meta, 
+               init.type = "LDA", 
+               max.em.its = 50)
+# OBS: "max.em.its" Skal være mye høyere, men det tar lang tid å kjøre
+# Bruk "default value" fra ?stm
 
-```{r STM_setK, eval=FALSE}
-#### STM with set amounts of topics and prevalence
-# Estimating an STM with K = 20, "Spectral" initialization, and party as independent variable
-sotu_stm <- stm(sotu_dfm, K = 20, prevalence = ~ factor(party), data = sotu$documents, init.type = "Spectral", max.em.its = 5)
-
-# save(sotu_stm, file = "./presentations/topic_models/data/sotu_stm.rda")
+save(oil_lda, file = "./data/oil_lda.rda")
 ```
 
-
-```{r STM_setK_load, echo=FALSE, eval=FALSE}
-load("./presentations/topic_models/data/sotu_stm.rda")
+```{r load_LDA, echo=FALSE, eval=TRUE}
+load("./data/oil_lda.rda")
 ```
-
----
-
-# Checking STM results
-
-. . .
-
-```{r STM_setK_check, eval=FALSE}
-# Plotting expected topic proportions
-plot(sotu_stm)
-
-# Finding topics related to the word "fiscal"
-findTopic(sotu_stm, "fiscal")
-
-# Finding 11 most top loading woirds for topic 3
-labelTopics(sotu_lda, topics = 3, n = 11)
-
-# Finding 2 most top loading texts for topic 3
-top3_stm <- findThoughts(sotu_stm, texts = sotu$documents$texts, n = 2, topics = 3)
-
-# Printing first 100 characters of the top loading texts
-str_sub(top3_stm$docs$`Topic 3`, 1, 100)
-
-# Estimating effect of party on all topics
-est_stm <- estimateEffect(~ factor(party), sotu_stm, metadata = sotu$documents)
-
-# Plotting effect of party for topics 1 through 4
-plot(est_stm, covariate = "party", topics = 1:4)
-```
-
----
-
-# Estimating STM with "optimal" K
-
-```{r STM_optimalK_estimate, eval=FALSE}
-#### STM "optimal" K
-
-# Estimating STM where the model finds the "optimal" amount of topics
-sotu_stm_optimal <- stm(sotu_dfm, K = 0, prevalence = ~ factor(party), data = sotu$documents, init.type = "Spectral", max.em.its = 5)
-
-# save(sotu_stm_optimal, file = "./presentations/topic_models/data/sotu_stm_optimal.rda")
-```
-
-```{r STM_optimalK_load, echo=FALSE, eval=FALSE}
-load("./presentations/topic_models/data/sotu_stm_optimal.rda")
-```
-
----
-
-. . .
-
-```{r STM_optimalK_check, eval=FALSE}
-# Checking number of topics
-sotu_stm_optimal$settings$dim$K
-
-# Finding topics with high load for the word "democrat", using frequent and exclusive terms only
-war <- findTopic(sotu_stm_optimal, "war", type = "frex")
-
-# Plotting expected topic proportions
-plot(sotu_stm_optimal, topics = war, labeltype = "lift")
-
-# Estimating effect for all topics
-est_stm_optimal <- estimateEffect(~ factor(party), sotu_stm_optimal, metadata = sotu$documents)
-
-# Plotting effect of the "democrat" associated topics 
-plot(est_stm_optimal, covariate = "party", topics = war)
-
-plot(est_stm_optimal, covariate = "party", 
-     topics = war, method = "difference", 
-     cov.value1 = "Democratic", cov.value2 = "Republican")
-
-```
-
----
-
-# Do MPs in Party-Centered Systems Respond to Constituency Economic Shocks
-
-- Early June 2014, the oil price was well above 100 dollars. 
-- During the autumn of 2014, the price fell week by week 
-- Below 50 dollars by January 1, 2015
-
-. . .
-
-```{r oilprice, echo=FALSE, fig.height=9, fig.width=15, eval=FALSE}
-img <- readPNG("./presentations/topic_models2/oilprice_alternative.png")
-grid.raster(img)
-rm(img)
-```
-
-
-# STM model
-
-. . .
-
-```{r estimating_oil, eval=FALSE}
-
-load("./presentations/topic_models2/data/reps_preproc_unigram.rda")
-
-meta[1:10, 1:10]
-convert(lemma_counts, "matrix")[1:10, 1:10]
-```
-
 
 . . .
 
 
-```{r estimating_oil2, eval=FALSE, tidy=FALSE}
-
-# Running the STM model (15-20 min runtime)
-st_stm <- stm(lemma_counts,                                    # Object containing the document frequency matrix
-              K = 0,                                           # Setting the amount of topics to zero (for "spectral" setting)
-              seed = 4685,                                     # Setting seed for replication purposes
-              max.em.its = 10000,                              # Setting maximum iterations
-              prevalence = ~ factor(session) * factor(county), # Setting regression formula
-              data = meta,                                     # Setting matching meta data
-              init.type = "Spectral")                          # Setting the method of initialization to "spectral
-
-# Saving the environmet
-# save.image("./presentations/topic_models2/data/reps_unigram_stm.rda")
+```txt
+....................................................................................................
+Completed E-Step (6 seconds). 
+Completed M-Step. 
+Completing Iteration 38 (approx. per word bound = -7.825, relative change = 1.931e-04) 
+....................................................................................................
+Completed E-Step (6 seconds). 
+Completed M-Step. 
+Completing Iteration 39 (approx. per word bound = -7.823, relative change = 1.845e-04) 
+....................................................................................................
 
 ```
 
+## LDA-resultater
 
 
-# Investigating the model
-
+### Viktigste emner
 
 . . .
 
+```{r, echo=TRUE, eval=FALSE}
+# ?plot.STM
+plot(oil_lda, labeltype = "frex")
+```
 
-```{r model_investigation, tidy=FALSE, eval=FALSE}
+```{r check_LDA, eval=TRUE, message=FALSE,warning=FALSE, echo=FALSE, fig.width=10, fig.height=4}
+top_ord <- stm::labelTopics(oil_lda, n = 2)
 
-load("./presentations/topic_models2/data/reps_unigram_stm.rda")
 
-# Checking how many topics we got
-st_stm$settings$dim$K
-
-# The lazy way
-plot(st_stm, labeltype = "frex")
-
-# The "slightly" more complex way -- stm$theta contains proportions for each document in each topic
-top_prop <- data.frame(topic = paste0("Topic ", 1:ncol(st_stm$theta)),
-                       m_prop = apply(st_stm$theta, 2, mean),
-                       top_frex = apply(labelTopics(st_stm, n = 4)$frex, 1, 
-                                        function(x) paste(x, collapse = ", ")))
-
-top_prop$topic <- factor(top_prop$topic, levels = top_prop$topic[order(top_prop$m_prop)])
-
-head(top_prop)
-
-# Lowest topics
-top_prop %>% 
-  arrange(desc(topic)) %>% 
-  tail(n = 20) %>% 
-  ggplot(aes(x = topic, y = m_prop * 100)) +
-  geom_bar(stat = "identity", fill = rep(c("darkcyan", "#d8b365"), 10)) +
-  geom_text(aes(label = top_frex), vjust = 0, hjust = 1.1) +
+tibble(exp_prop = apply(oil_lda$theta, 2, mean), 
+       topic = paste("Emne: ", 1:20),
+       top_ord = apply(top_ord$frex, 1, function(x) str_c(x, collapse = " og "))) %>% 
+  ggplot(., aes(x = fct_reorder(topic, exp_prop), y = exp_prop)) +
+  geom_col(fill = "darkcyan") +
+  geom_text(aes(label = top_ord),
+            color = c(rep("gray50", 6), "orange", rep("gray50", 13))) +
   coord_flip() +
-  scale_y_continuous(expand = c(0, 0), breaks = seq(0, 0.1, 0.001) * 100) +
-  labs(x = NULL, y = "Expected topic proportion")
+  labs(x = "", y = "Forventet proporsjon") +
+  scale_y_continuous(expand = c(0,0), limits = c(0, 0.10))+
+  ggdark::dark_mode() +
+  theme(axis.text.y = element_text(hjust = 0))
 
-# Topics containing "næring"
-top_prop %>% 
-  arrange(desc(topic)) %>% 
-  filter(str_detect(top_frex, "næring")) %>% 
-  ggplot(aes(x = topic, y = m_prop * 100)) +
-  geom_bar(stat = "identity", fill = rep(c("darkcyan", "#d8b365"), 2)) +
-  geom_text(aes(label = top_frex), vjust = 0, hjust = 1.1) +
+```
+
+---
+
+### Viktigste ord
+
+```{r, echo=TRUE, eval=TRUE}
+top_ord <- labelTopics(oil_lda, n = 2)
+
+top_ord
+
+```
+
+---
+
+### Søke etter ord i emner
+
+```{r, echo=TRUE, eval=TRUE}
+
+findTopic(oil_lda, "utslipp:subst", type = "frex")
+
+labelTopics(oil_lda, topics = 7, n = 5)
+
+```
+
+---
+
+### Lese topptekster i emner
+
+```{r, echo=TRUE, eval=TRUE}
+
+findThoughts(oil_lda, texts = meta$text, topics = 7)
+
+```
+
+
+# Structural Topic Model (stm)
+
+</br></br>
+
+```{r STM_setK, eval=FALSE, echo=-8}
+#### STM with satt antall emner
+oil_stm <- stm(lemma_counts, 
+               K = 20, 
+               prevalence = ~ factor(party_id), 
+               data = meta, 
+               init.type = "Spectral", 
+               max.em.its = 50)
+save(oil_stm, file = "./data/oil_stm.rda")
+```
+
+
+```{r STM_setK_load, echo=FALSE, eval=TRUE}
+load("./data/oil_stm.rda")
+```
+
+---
+
+## STM-resultater
+
+### Viktigste emner
+
+. . .
+
+```{r STM_setK_check, eval=FALSE, echo=TRUE}
+plot(oil_stm, labeltype = "frex")
+```
+
+```{r STM_setK_check2, eval=TRUE, echo=FALSE, fig.width=10, fig.height=4}
+top_ord <- stm::labelTopics(oil_stm, n = 2)
+
+data.frame(exp_prop = apply(oil_stm$theta, 2, mean), 
+           topic = paste("Emne: ", 1:20),
+           top_ord = apply(top_ord$frex, 1, function(x) str_c(x, collapse = " og "))) %>% 
+  ggplot(., aes(x = fct_reorder(topic, exp_prop), y = exp_prop)) +
+  geom_col(fill = "darkcyan") +
+  geom_text(aes(y = 0.05, label = top_ord),
+            color = c(rep("white", 10), "darkorange", rep("white", 9)))  +
   coord_flip() +
-  scale_y_continuous(expand = c(0, 0), breaks = seq(0, 0.1, 0.001) * 100) +
-  labs(x = NULL, y = "Expected topic proportion")
-
-
-
-```
-
-
-# Finding topics on oil
-
-. . .
-
-
-- Let's get back on track; we want oil!
-
-```{r top_terms_oil, eval=FALSE}
-
-terms <- labelTopics(st_stm, c(1:st_stm$settings$dim$K))
-
-
-head(terms$frex)[1:4, ]
-
-head(t(terms$frex))[, 1:4]
-
-findTopic(st_stm, "olje", n = 20)
-findTopic(st_stm, "grønn", n = 20)
-
-t(terms$frex)[, 28]
+  labs(x = "", y = "Forventet proporsjon") +
+  scale_y_continuous(expand = c(0,0), limits = c(0, 0.16))+
+  ggdark::dark_mode() +
+  theme(axis.text.y = element_text(hjust = 0))
 
 ```
 
+---
 
-. . .
+`r emo::ji("angry")` <font style='color:#987654;font-size:40'>Hva er emne 10???</font> `r emo::ji("angry")`
 
+```{r nynorsk_check, eval=TRUE, echo=TRUE}
 
-```{r top_texts_oil, tidy = FALSE, eval=FALSE}
+labelTopics(oil_stm, n = 30)$frex[10, ]
 
-# Remember to read the top texts! Bump up n to read more texts (it's low here because it's very verbose)
-findThoughts(st_stm, meta$text, topics = 28, n = 1) 
-
-# You can simplify this with str_sub(), for presentational purposes
-top_oil_texts <- findThoughts(st_stm, meta$text, topics = 28, n = 10) 
-
-top_oil_texts <- str_sub(meta$text[top_oil_texts$index$`Topic 28`], 1, 100)
-
-top_oil_texts
-
-ggplot(NULL, aes(x = 0, y = 1:10)) +
-  geom_text(aes(label = rev(top_oil_texts))) +
-  theme(axis.text = element_blank(),
-        axis.ticks = element_blank(),
-        axis.title = element_blank(),
-        axis.line = element_blank())
 ```
 
+---
 
-# Estimate effect
+### Partiforskjeller i klimaemne
 
-. . .
+```{r, echo = TRUE, eval=-4}
+# Lager plot av forventet emneandel på et tilfeldig innlegg fra hvert parti
+oil_eff <- estimateEffect(~ factor(party_id), oil_stm, metadata = meta)
 
-
-```{r est_eff, eval=FALSE}
-# Estimating effect (also here, bump up nsims to 200 or something)
-oil_effect <- estimateEffect(~ factor(session) * factor(county), stmobj = st_stm, metadata = meta, nsims = 200)
-
-# save(oil_effect, file = "./presentations/topic_models2/data/oil_effect.rda")
+plot(oil_eff, covariate = "party_id", topics = 11)
 ```
 
-# Visualize the effect
-
 . . .
 
+```{r, echo=FALSE, eval=TRUE, fig.width=10, fig.height=4}
+eff_plot_data <- plot(oil_eff, covariate = "party_id", topics = 11, omit.plot = TRUE)
 
-
-```{r plot_eff, tidy=FALSE, eval=FALSE}
-
-load("./presentations/topic_models2/data/oil_effect.rda")
-
-# Lazy plotting
-plot(oil_effect, covariate = "county", topic = 28)
-
-# Also lazy plotting
-plot(oil_effect, 
-     covariate = "county", 
-     moderator = "session", moderator.value = "2013-2014",
-     topic = 28)
-
-# Again, lazy
-plot(oil_effect, 
-     covariate = "county", 
-     moderator = "session", moderator.value = "2014-2015",
-     topic = 28)
-
-
-# But we can use the numbers used to produce the plot in a hacky manner
-oil_pred2013 <- plot(oil_effect, 
-                     covariate = "county", 
-                     moderator = "session", moderator.value = "2013-2014",
-                     topic = 28)
-
-oil_pred2014 <- plot(oil_effect, 
-                     covariate = "county", 
-                     moderator = "session", moderator.value = "2014-2015",
-                     topic = 28)
-
-
-
-
-# Combining to a data frame
-plot_data <- data.frame(fylke = oil_pred2013$uvals,
-                        y_hat_before = oil_pred2013$means[[1]],
-                        y_hat_after = oil_pred2014$means[[1]],
-                        y_hat_before_lwr_95 = oil_pred2013$cis[[1]][1, ],
-                        y_hat_before_upr_95 = oil_pred2013$cis[[1]][2, ],
-                        y_hat_after_lwr_95 = oil_pred2014$cis[[1]][1, ],
-                        y_hat_after_upr_95 = oil_pred2014$cis[[1]][2, ])
-
-# Calculating difference between moderator value 1 and 2
-plot_data$diff <- plot_data$y_hat_after - plot_data$y_hat_before
-
-
-plot_data$fylke
-
-
-library(ggplot2)
-
-plot_data$fylke <- factor(plot_data$fylke, levels = rev(levels(plot_data$fylke)))
-
-ggplot(plot_data, aes(x = fylke, y = diff)) +
-  geom_pointrange(aes(ymin = y_hat_after_lwr_95 - y_hat_after_upr_95, 
-                      ymax = y_hat_after_upr_95 - y_hat_before_lwr_95)) +
+tibble(p = eff_plot_data$uvals,
+       topic = eff_plot_data$topics,
+       m = eff_plot_data$means[[1]],
+       upr = eff_plot_data$cis[[1]][1,],
+       lwr = eff_plot_data$cis[[1]][2,]) %>% 
+  ggplot(., aes(x = fct_reorder(p, m), y = m)) +
+  geom_pointrange(aes(ymin = lwr, ymax = upr)) +
   coord_flip() +
-  geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +
-  labs(y = "Difference", x = NULL) +
-  theme_classic() +
-  theme(panel.grid.minor = element_blank(),
-        panel.grid.major.y = element_blank())
+  labs(y = "Forventet andel av innlegg", x = "Parti") +
+  ggdark::dark_mode()
 
-# :(
-
-# NOTE: The diff in diff results from the paper (based on more simulations and more complex preprocessing are "significant")
 
 ```
 
+# STM med "optimal" K
 
+```{r STM_optimalK_estimate, eval=FALSE, echo=-8}
+oil_stm_optimal <- stm(lemma_counts, 
+                       K = 0, 
+                       prevalence = ~ factor(party_id), 
+                       data = meta, 
+                       init.type = "Spectral", 
+                       max.em.its = 50)
 
-# Model fit
+save(oil_stm_optimal, file = "./data/oil_stm_optimal.rda")
+```
 
-. . .
+```{r STM_optimalK_load, echo=FALSE, eval=TRUE}
+load("./data/oil_stm_optimal.rda")
+```
 
-- Semantically interpretable topic has two qualities: 
-1. It is cohesive in the sense that high-probability words for the topic tend to co-occur within documents 
-2. It is exclusive in the sense that the top words for that topic are unlikely to appear within top words of other topics
+---
 
-- Semantic coherence:
-- Is maximized when the most probable words in a given topic frequently co-occur together
-- Semantically coherent models words which are most probable under a topic should co-occur within the same document.
-- `semanticCoherence(stm_model, documents = dfm_object, M = n_top_words)` -- default: M = 10
-
-- Exclusivity:
-- Includes some information on word frequency as well. 
-- It is based on the FREX labeling metric with the weight set to .7 in favor of exclusivity by default.
-- `exclusivity(stm_model, M = n_top_words, frexw = weight)` -- default: M = 10, frexw = 0.7
-
-- *While these measures are computationally efficient and interpretable, they cannot replace human judgment!*
-
-# Search K
+### Evaluerer "optimal" STM
 
 . . .
 
-- `searchK()` can help understand which models using different K are the most exclusive and cohesive models
+```{r STM_optimalK_check, eval=TRUE, echo=TRUE}
+# Sjekke antall topics
+oil_stm_optimal$settings$dim$K
 
-```{r searchK, eval=FALSE}
+```
+
+. . .
+
+```{r STM_optimalK_oilfind, eval=TRUE, echo=TRUE}
+
+klima <- findTopic(oil_stm_optimal, 
+                   list = c("klima:subst"), 
+                   type = "frex", 
+                   n = 50)
+
+```
+
+---
+
+```{r STM_optimalK_oilfind2, eval=TRUE, echo=TRUE}
+labelTopics(oil_stm_optimal, n = 5,
+            topics = klima)$frex[klima, ] %>% 
+  t() # (Denne er bare for å få mer forståelig output)
+
+```
+
+---
+
+```{r, echo = TRUE, eval=-4}
+# Lager plot av forventet emneandel på et tilfeldig innlegg fra hvert parti
+oil_eff <- estimateEffect(~ factor(party_id), oil_stm_optimal, metadata = meta)
+
+plot(oil_eff, covariate = "party_id", topics = klima)
+```
+
+```{r, eval=TRUE, fig.width=10, fig.height=4}
+eff_plot_data <- plot(oil_eff, covariate = "party_id", topics = klima, omit.plot = TRUE)
+
+tibble(p = rep(eff_plot_data$uvals, 2),
+       t = rep(c("Grønne skiftet (49)", "Klimamål (77)"), each = length(eff_plot_data$uvals)),
+       m = unlist(eff_plot_data$means),
+       upr = unlist(lapply(eff_plot_data$cis, function(x) x[2, ])),
+       lwr = unlist(lapply(eff_plot_data$cis, function(x) x[1, ]))) %>% 
+  ggplot(., aes(x = fct_reorder(p, m), y = m, color = factor(t))) +
+  geom_pointrange(aes(ymin = lwr, ymax = upr), position = position_dodge(width = 0.2)) +
+  coord_flip() +
+  labs(y = "Forventet andel av innlegg", x = "Parti", color = "Emne") +
+  ggdark::dark_mode()
+```
+
+
+# Statistisk validering av STM
+
+. . .
+
+- Semantisk tolkbare emner kjennetegnes av:
+    1. Det er sammenhengende; ordene med høy sannsynlighet i et emne opptrer sammen innad i dokumenter
+        - Maksismeres når de mest sannsynlige ordene dukker opp sammen
+    2. Det er eksklusivt; de høyest ladende ordene i et emne, vil ikke være toppord i andre emner
+        - Maksimeres når ord bare tilhører ett emne
+
+. . .
+
+<font style='color:#8421DF'>*Selv om disse målene er effektive og tolkbare, kan de ikke erstatte mennesklig tolkning!*</font>
+
+---
+
+```{r excl_semCoher, echo=c(1:3), eval=TRUE, fig.width=8, fig.height=5, message=FALSE, error=FALSE, warning=FALSE}
 stm_counts <- convert(lemma_counts, "stm")
 
+oil_sem_coh <- tibble(
+  sem_coh = semanticCoherence(model = oil_stm_optimal, documents = stm_counts$documents),
+  exclu = exclusivity(oil_stm_optimal),
+  emne = str_c("Emne: ", 1:98)
+)
+
+oil_sem_coh$lab <- ifelse(str_detect(oil_sem_coh$emne, "49|77"), oil_sem_coh$emne, "")
+
+ggplot(oil_sem_coh, aes(x = sem_coh, y = exclu)) +
+  geom_point() +
+  ggrepel::geom_label_repel(aes(label = lab), max.overlaps = 10) +
+  stat_density2d() +
+  labs(x = "Semantisk sammenheng", y = "Eksklusivitet") +
+  ggdark::dark_mode()
+
+```
+
+
+## Søk etter K
+
+- `searchK()` kan vise oss (statistisk) hvordan STM ser ut med forskjellig antall `K`
+
+```{r searchK, eval=FALSE, echo=-9}
 K <- c(2, 5, 10, 30, 50, 70, 100, 150, 200)
 
 set.seed(4685)
@@ -608,43 +531,101 @@ k_results <- searchK(documents = stm_counts$documents,
                      vocab = stm_counts$vocab, K = K,
                      data = stm_counts$meta)
 
-save(k_results, file = "./presentations/topic_models2/data/k_results.rda")
-
+save(k_results, file = "./data/search_k_results.rda")
 ```
 
-. . .
+---
 
+```{r loadsearchK, tidy=FALSE, eval=TRUE}
 
-```{r plotsearchK, tidy=FALSE, eval=FALSE}
+load("./data/search_k_results.rda")
+```
 
-load("./presentations/topic_models2/data/k_results.rda")
-
-# One alternative
+```{r plotsearchK, tidy=FALSE, eval=TRUE,echo=TRUE}
 plot(k_results)
+```
 
-# Another alternative
-k_result_plotdata <- data.frame(Exclusivity = k_results$results$exclus,
-                                Coherence = k_results$results$semcoh,
-                                Heldout = k_results$results$heldout,
-                                Residual = k_results$results$residual,
-                                K = k_results$results$K)
+---
 
+```{r plotsearchK2, tidy=FALSE, eval=TRUE, echo=FALSE}
+# Et annet alternativ
+k_result_plotdata <- tibble(Exclusivity = unlist(k_results$results$exclus),
+                            Coherence = unlist(k_results$results$semcoh),
+                            Heldout = unlist(k_results$results$heldout),
+                            Residual = unlist(k_results$results$residual),
+                            K = unlist(k_results$results$K)) %>% 
+  pivot_longer(., cols = c("Exclusivity", "Coherence", "Heldout", "Residual"))
 
-library(reshape2)
-
-k_result_plotdata <- melt(k_result_plotdata, measure.vars = c("Exclusivity", "Coherence",
-                                                              "Heldout", "Residual"))
 
 ggplot(k_result_plotdata, aes(x = K, y = value)) +
-  facet_wrap(~variable, scales = "free_y") +
+  facet_wrap(~name, scales = "free_y") +
   geom_point() +
   geom_line() +
   theme_classic() +
-  labs(y = NULL, x = "Number of topics")
-
-# Again, our question is not a set K model problem. But the assignment is!
+  labs(y = NULL, x = "Antall emner") +
+  ggdark::dark_mode()
 
 ```
 
 
+## Hva med eksempelet fra starten?
 
+```{r, eval=TRUE, echo=FALSE}
+
+cih <- stortingscrape::read_obt("./cih_obt.txt")
+
+lemmas_all <- cih %>% 
+  filter(grepl("[[:punct:]]|\\–|^AV$", lemma) == FALSE) %>%
+  group_by(sentence) %>% 
+  mutate(lemma = tolower(lemma),                                        # Lowercasing all lemma
+         lemma = ifelse(lemma %in% stopwords("norwegian"), NA, lemma),  # Removing stopwords
+         lemma_pos = paste(lemma, pos, sep = ":"),
+         next_lemma_pos = lead(lemma_pos),                                      # Leading lemma for bigram construction
+         lemma_pos_bigram = ifelse(grepl("^NA\\:|\\:NA$", lemma_pos) | grepl("^NA\\:|\\:NA$", next_lemma_pos),        # Constructing bibrams
+                                   NA, paste(lemma_pos, next_lemma_pos)),
+         lemma_pos = ifelse(grepl("^NA\\:|\\:NA$", lemma_pos), NA, lemma_pos)) %>%
+  filter((is.na(lemma_pos) == FALSE | is.na(lemma_pos_bigram) == FALSE))
+
+lemmas_all <- lemmas_all %>% 
+  mutate(lemma_pos_bigram = ifelse(grepl("\\sNA$", lemma_pos_bigram) == FALSE, lemma_pos_bigram, NA)) %>% 
+  filter(is.na(lemma_pos) == FALSE | is.na(lemma_pos_bigram) == FALSE)
+
+# Counting lemma bigrams
+lemma_unigrams_pos <- lemmas_all %>%
+  filter(is.na(lemma_pos) == FALSE) %>%
+  count(lemma_pos)
+
+# Counting lemma bigrams
+lemma_bigrams_pos <- lemmas_all %>%
+  filter(is.na(lemma_pos_bigram) == FALSE) %>%
+  count(lemma_pos_bigram)
+
+names(lemma_bigrams_pos)[2] <- "lemma_pos"
+
+lemma_counts <- bind_rows(lemma_unigrams_pos, lemma_bigrams_pos) %>%
+  mutate(id = "cih") %>% 
+  group_by(id) %>% 
+  filter(is.na(lemma_pos) == FALSE) %>%                              
+  count(lemma_pos) %>%                                               
+  cast_dfm(document = id, term = lemma_pos, n)
+
+cih_counts <- convert(lemma_counts, "stm")
+
+
+
+cih_pred <- fitNewDocuments(oil_stm_optimal, 
+                            documents = cih_counts$documents,
+                            newData = tibble(party_id = "FrP"),
+                            origData = meta)
+
+
+cih_theta <- cih_pred$theta[1, ] %>% round(., 3) 
+names(cih_theta) <- str_c("Emne: ", 1:oil_stm_optimal$settings$dim$K)
+
+cih_theta %>% sort(., decreasing = TRUE) %>% .[1:5]
+
+labelTopics(oil_stm_optimal, topics = c(6, 18, 59, 47, 1), n = 4)
+
+```
+
+# Referanser

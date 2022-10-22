@@ -1,0 +1,297 @@
+<word>I</word>
+"<i>"
+	"i" prep
+<word>Norge</word>
+"<norge>"
+	"Norge" subst prop <*>
+<word>har</word>
+"<har>"
+	"ha" verb pres <aux1/perf_part>
+<word>vi</word>
+"<vi>"
+	"vi" pron fl pers hum nom 1
+<word>mer</word>
+"<mer>"
+	"mye" adj komp
+<word>enn</word>
+"<enn>"
+	"enn" prep
+<word>nok</word>
+"<nok>"
+	"nok" adv
+<word>plass</word>
+"<plass>"
+	"plass" subst appell mask ub ent
+<word>,</word>
+"<,>"
+	"$," clb <komma>
+<word>vi</word>
+"<vi>"
+	"vi" pron fl pers hum nom 1
+<word>har</word>
+"<har>"
+	"ha" verb pres <aux1/perf_part>
+<word>folk</word>
+"<folk>"
+	"folk" subst appell nøyt ub fl
+<word>som</word>
+"<som>"
+	"som" sbu
+<word>vil</word>
+"<vil>"
+	"ville" verb pres <aux1/infinitiv>
+<word>kjøpe</word>
+"<kjøpe>"
+	"kjøpe" verb inf
+<word>hus</word>
+"<hus>"
+	"hus" subst appell nøyt ub ent
+<word>og</word>
+"<og>"
+	"og" konj
+<word>bygge</word>
+"<bygge>"
+	"bygge" verb inf
+<word>hus</word>
+"<hus>"
+	"hus" subst appell nøyt ub fl
+<word>som</word>
+"<som>"
+	"som" sbu
+<word>har</word>
+"<har>"
+	"ha" verb pres <aux1/perf_part>
+<word>fått</word>
+"<fått>"
+	"få" verb perf-part <aux1/perf_part> <aux1/inf>
+<word>lån</word>
+"<lån>"
+	"lån" subst appell fem ub ent
+<word>,</word>
+"<,>"
+	"$," clb <komma>
+<word>vi</word>
+"<vi>"
+	"vi" pron fl pers hum nom 1
+<word>har</word>
+"<har>"
+	"ha" verb pres <aux1/perf_part>
+<word>bygningsarbeidere</word>
+"<bygningsarbeidere>"
+	"bygningsarbeider" subst appell mask ub fl samset-leks <+arbeidere>
+<word>og</word>
+"<og>"
+	"og" konj
+<word>entreprenører</word>
+"<entreprenører>"
+	"entreprenør" subst appell mask ub fl
+<word>,</word>
+"<,>"
+	"$," clb <komma>
+<word>vi</word>
+"<vi>"
+	"vi" pron fl pers hum nom 1
+<word>har</word>
+"<har>"
+	"ha" verb pres <aux1/perf_part>
+<word>materialer</word>
+"<materialer>"
+	"materiale" subst appell nøyt ub fl
+<word>og</word>
+"<og>"
+	"og" konj
+<word>redskap</word>
+"<redskap>"
+	"redskap" subst appell mask ub ent
+<word>.</word>
+"<.>"
+	"$." clb <<< <punkt> <<<
+<word>Hva</word>
+"<hva>"
+	"hva" pron sp
+<word>er</word>
+"<er>"
+	"være" verb pres <aux1/perf_part>
+<word>flaskehalsen</word>
+"<flaskehalsen>"
+	"flaskehals" subst appell mask be ent samset-leks <+halsen>
+<word>?</word>
+"<?>"
+	"$?" clb <<< <spm> <<<
+<word>Den</word>
+"<den>"
+	"den" det dem mask ent
+<word>eneste</word>
+"<eneste>"
+	"eneste" det be kvant <adj>
+<word>ting</word>
+"<ting>"
+	"ting" subst appell mask ub ent
+<word>politikere</word>
+"<politikere>"
+	"politiker" subst appell mask ub fl
+<word>og</word>
+"<og>"
+	"og" konj
+<word>byråkrater</word>
+"<byråkrater>"
+	"byråkrat" subst appell mask ub fl
+<word>må</word>
+"<må>"
+	"måtte" verb pres <aux1/infinitiv>
+<word>sørge</word>
+"<sørge>"
+	"sørge" verb inf
+<word>for</word>
+"<for>"
+	"for" prep
+<word>,</word>
+"<,>"
+	"$," <komma>
+<word>nemlig</word>
+"<nemlig>"
+	"nemlig" adv
+<word>tillatelse</word>
+"<tillatelse>"
+	"tillatelse" subst appell mask ub ent samset-leks <-latelse>
+<word>til</word>
+"<til>"
+	"til" prep
+<word>å</word>
+"<å>"
+	"å" inf-merke
+<word>bygge</word>
+"<bygge>"
+	"bygge" verb inf
+<word>.</word>
+"<.>"
+	"$." clb <<< <punkt> <<<
+<word>Det</word>
+"<det>"
+	"det" pron nøyt ent pers 3
+<word>er</word>
+"<er>"
+	"være" verb pres <aux1/perf_part>
+<word>ikke</word>
+"<ikke>"
+	"ikke" adv
+<word>regulert</word>
+"<regulert>"
+	"regulere" verb perf-part
+<word>eller</word>
+"<eller>"
+	"eller" konj
+<word>planlagt</word>
+"<planlagt>"
+	"planlegge" verb perf-part samset-leks <+lagt>
+<word>nok</word>
+"<nok>"
+	"nok" adv
+<word>områder</word>
+"<områder>"
+	"område" subst appell nøyt ub fl samset-leks <-råder>
+<word>til</word>
+"<til>"
+	"til" prep
+<word>boligbygging</word>
+"<boligbygging>"
+	"boligbygging" subst appell fem ub ent samset-leks <+bygging>
+<word>,</word>
+"<,>"
+	"$," <komma>
+<word>selv</word>
+"<selv>"
+	"selv" adv <*elv>
+<word>om</word>
+"<om>"
+	"om" sbu
+<word>grunneiere</word>
+"<grunneiere>"
+	"grunneier" subst appell mask ub fl samset-leks <+eiere>
+<word>står</word>
+"<står>"
+	"stå" verb pres
+<word>i</word>
+"<i>"
+	"i" prep
+<word>kø</word>
+"<kø>"
+	"kø" subst appell mask ub ent
+<word>for</word>
+"<for>"
+	"for" prep
+<word>å</word>
+"<å>"
+	"å" inf-merke
+<word>selge</word>
+"<selge>"
+	"selge" verb inf
+<word>.</word>
+"<.>"
+	"$." clb <<< <punkt> <<<
+<word>Det</word>
+"<det>"
+	"det" pron nøyt ent pers 3
+<word>vi</word>
+"<vi>"
+	"vi" pron fl pers hum nom 1
+<word>har</word>
+"<har>"
+	"ha" verb pres <aux1/perf_part>
+<word>nok</word>
+"<nok>"
+	"nok" adv
+<word>av</word>
+"<av>"
+	"av" prep
+<word>fra</word>
+"<fra>"
+	"fra" prep
+<word>naturens</word>
+"<naturens>"
+	"natur" subst appell mask be ent gen
+<word>side</word>
+"<side>"
+	"side" subst appell fem ub ent
+<word>,</word>
+"<,>"
+	"$," <komma>
+<word>nemlig</word>
+"<nemlig>"
+	"nemlig" adv
+<word>plass</word>
+"<plass>"
+	"plass" subst appell mask ub ent
+<word>,</word>
+"<,>"
+	"$," clb <komma>
+<word>har</word>
+"<har>"
+	"ha" verb pres <aux1/perf_part>
+<word>politikere</word>
+"<politikere>"
+	"politiker" subst appell mask ub fl
+<word>og</word>
+"<og>"
+	"og" konj
+<word>byråkrater</word>
+"<byråkrater>"
+	"byråkrat" subst appell mask ub fl
+<word>greid</word>
+"<greid>"
+	"greie" verb perf-part
+<word>å</word>
+"<å>"
+	"å" inf-merke
+<word>gjøre</word>
+"<gjøre>"
+	"gjøre" verb inf
+<word>til</word>
+"<til>"
+	"til" prep
+<word>mangelvare</word>
+"<mangelvare>"
+	"mangelvare" subst appell fem ub ent samset-leks <+vare>
+<word>.</word>
+"<.>"
+	"$." clb <<< <punkt> <<<
