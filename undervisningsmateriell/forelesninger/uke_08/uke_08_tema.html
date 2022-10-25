@@ -647,30 +647,30 @@ eneste ting <font style='color:orange'>politikere</font> og
 <tr class="odd">
 <td style="text-align: left;"><font style='color:red'>Areal</font></td>
 <td style="text-align: left;">Norge, plass, områder</td>
-<td style="text-align: left;">0.06</td>
+<td style="text-align: left;">0.11</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><font style='color:blue'>Økonomi og
 eiendom </font></td>
 <td style="text-align: left;">kjøpe, lån, mangelvare</td>
-<td style="text-align: left;">0.07</td>
+<td style="text-align: left;">0.13</td>
 </tr>
 <tr class="odd">
 <td
 style="text-align: left;"><font style='color:green'>Eiendomsutvikling</font></td>
 <td style="text-align: left;">bygge, hus, redskap</td>
-<td style="text-align: left;">0.07</td>
+<td style="text-align: left;">0.16</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><font style='color:orange'>Politikk of
 forvaltning</font></td>
 <td style="text-align: left;">politikere, byråkrater</td>
-<td style="text-align: left;">0.08</td>
+<td style="text-align: left;">0.16</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Stoppord</td>
-<td style="text-align: left;">har, vi, enn, som</td>
-<td style="text-align: left;">0.72</td>
+<td style="text-align: left;">Andre ting</td>
+<td style="text-align: left;">nok, gjøre, må</td>
+<td style="text-align: left;">0.44</td>
 </tr>
 </tbody>
 </table>
@@ -713,14 +713,6 @@ ingenting</p></li>
 <li class="fragment"><p>Vi vet antall emner og det antallet er
 satt</p></li>
 </ol>
-</section>
-<section id="fremgangsmåte" class="slide level2">
-<h2>Fremgangsmåte</h2>
-<p><img data-src="iteration.png" style="width:30.0%" /></p>
-<ul>
-<li class="fragment">Vi starter med noe og oppdaterer (iterasjoner) til
-bra endringer forsvinner</li>
-</ul>
 </section>
 <section id="hvordan-velge-antall-emner" class="slide level2">
 <h2>Hvordan velge antall emner?</h2>
@@ -795,16 +787,16 @@ Climate Politics in Hard Times
 <section id="estimere-lda" class="slide level2">
 <h2>Estimere LDA</h2>
 <div class="sourceCode" id="cb3"><pre
-class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimerer LDA emnemodel med 20 emner </span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>oil_lda <span class="ot">&lt;-</span> <span class="fu">stm</span>(lemma_counts, </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">K =</span> <span class="dv">20</span>, </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> meta, </span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">init.type =</span> <span class="st">&quot;LDA&quot;</span>, </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">max.em.its =</span> <span class="dv">50</span>)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># OBS: &quot;max.em.its&quot; Skal være mye høyere, men det tar lang tid å kjøre</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Bruk &quot;default value&quot; fra ?stm</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(oil_lda, <span class="at">file =</span> <span class="st">&quot;./data/oil_lda.rda&quot;</span>)</span></code></pre></div>
+class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stm)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimerer LDA emnemodel med 20 emner </span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>oil_lda <span class="ot">&lt;-</span> <span class="fu">stm</span>(lemma_counts, </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">K =</span> <span class="dv">20</span>, </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> meta, </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">init.type =</span> <span class="st">&quot;LDA&quot;</span>, </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">max.em.its =</span> <span class="dv">50</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># OBS: &quot;max.em.its&quot; Skal være mye høyere, men det tar lang tid å kjøre</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Bruk &quot;default value&quot; fra ?stm</span></span></code></pre></div>
 <div class="fragment">
 <div class="sourceCode" id="cb4"><pre
 class="sourceCode txt"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>....................................................................................................</span>
@@ -1109,6 +1101,7 @@ class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb27-1"><a hre
 <li class="fragment"><code>searchK()</code> kan vise oss (statistisk)
 hvordan STM ser ut med forskjellig antall <code>K</code></li>
 </ul>
+<div class="fragment">
 <div class="sourceCode" id="cb28"><pre
 class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">30</span>, <span class="dv">50</span>, <span class="dv">70</span>, <span class="dv">100</span>, <span class="dv">150</span>, <span class="dv">200</span>)</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1117,6 +1110,7 @@ class="sourceCode r code-bg"><code class="sourceCode r"><span id="cb28-1"><a hre
 <span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>k_results <span class="ot">&lt;-</span> <span class="fu">searchK</span>(<span class="at">documents =</span> stm_counts<span class="sc">$</span>documents,</span>
 <span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">vocab =</span> stm_counts<span class="sc">$</span>vocab, <span class="at">K =</span> K,</span>
 <span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> stm_counts<span class="sc">$</span>meta)</span></code></pre></div>
+</div>
 </section>
 <section class="slide level2">
 

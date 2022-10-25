@@ -118,11 +118,11 @@ Emnemodellering bruker <font style='color:#842948'>sameksisterende</font> ord ti
 
 | Emne                                                     | Nøkkelord              | Andel av tekst|
 |:---------------------------------------------------------|:-----------------------|:--------------|
-|<font style='color:red'>Areal</font>                      | Norge, plass, områder  | 0.06          |
-|<font style='color:blue'>Økonomi og eiendom </font>       | kjøpe, lån, mangelvare | 0.07          |
-|<font style='color:green'>Eiendomsutvikling</font>        | bygge, hus, redskap    | 0.07          |
-|<font style='color:orange'>Politikk of forvaltning</font> | politikere, byråkrater | 0.08          |
-| Stoppord                                                 | har, vi, enn, som      | 0.72          |
+|<font style='color:red'>Areal</font>                      | Norge, plass, områder  | 0.11          |
+|<font style='color:blue'>Økonomi og eiendom </font>       | kjøpe, lån, mangelvare | 0.13          |
+|<font style='color:green'>Eiendomsutvikling</font>        | bygge, hus, redskap    | 0.16          |
+|<font style='color:orange'>Politikk of forvaltning</font> | politikere, byråkrater | 0.16          |
+| Andre ting                                               | nok, gjøre, må         | 0.44          |
 
 # Latent Dirichlet allocation (LDA)
 
@@ -147,15 +147,6 @@ Emnemodellering bruker <font style='color:#842948'>sameksisterende</font> ord ti
 2. Rekkefølgen på dokumentene betyr ingenting
 
 3. Vi vet antall emner og det antallet er satt
-
-
-## Fremgangsmåte
-
-
-![](iteration.png){width=30%}
-
-- Vi starter med noe og oppdaterer (iterasjoner) til bra endringer forsvinner 
-
 
 ## Hvordan velge antall emner?
 
@@ -220,6 +211,8 @@ lemma_counts[2:5, 110:113]
 ## Estimere LDA
 
 ```{r LDA_est, eval=FALSE, echo=-12}
+library(stm)
+
 # Estimerer LDA emnemodel med 20 emner 
 oil_lda <- stm(lemma_counts, 
                K = 20, 
@@ -272,9 +265,9 @@ tibble(exp_prop = apply(oil_lda$theta, 2, mean),
        topic = paste("Emne: ", 1:20),
        top_ord = apply(top_ord$frex, 1, function(x) str_c(x, collapse = " og "))) %>% 
   ggplot(., aes(x = fct_reorder(topic, exp_prop), y = exp_prop)) +
-  geom_col(fill = "darkcyan") +
+  geom_col(fill = "#004B4F") +
   geom_text(aes(label = top_ord),
-            color = c(rep("gray50", 6), "orange", rep("gray50", 13))) +
+            color = c(rep("white", 6), "orange", rep("white", 13))) +
   coord_flip() +
   labs(x = "", y = "Forventet proporsjon") +
   scale_y_continuous(expand = c(0,0), limits = c(0, 0.10))+
@@ -521,6 +514,8 @@ ggplot(oil_sem_coh, aes(x = sem_coh, y = exclu)) +
 ## Søk etter K
 
 - `searchK()` kan vise oss (statistisk) hvordan STM ser ut med forskjellig antall `K`
+
+. . .
 
 ```{r searchK, eval=FALSE, echo=-9}
 K <- c(2, 5, 10, 30, 50, 70, 100, 150, 200)
