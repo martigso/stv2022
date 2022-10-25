@@ -12,7 +12,6 @@ output:
     reveal_plugins: ["chalkboard", "notes", "zoom", "menu"]
     reveal_options:
       slideNumber: true
-      width: 1080
 css: style.css
 bibliography: stv2022.bib
 csl: american-political-science-association.csl
@@ -32,7 +31,7 @@ Martin Søyland
 # setwd("./undervisningsmateriell/forelesninger/uke_08/")
 knitr::opts_chunk$set(echo = FALSE)
 knitr::opts_chunk$set(class.source = "code-bg")
-refs <- bibtex::read.bib("../../../referanser/stv2022.bib")
+refs <- bibtex::read.bib("./stv2022.bib")
 
 # Loading packages
 library(readr)      # Read data through C++
@@ -624,3 +623,5 @@ labelTopics(oil_stm_optimal, topics = c(6, 18, 59, 47, 1), n = 4)
 ```
 
 # Referanser
+
+
