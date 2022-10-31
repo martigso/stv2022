@@ -2312,7 +2312,325 @@ Modellen sliter med å klassifisere positivt sentiment riktig. Som vi har sett f
 
 # Latente posisjoner {#posisjon}
 
+En latent variabel er en variabel som ikke kan observeres direkte, den kan kun observeres gjennom en rekke andre variabler. For eksempel, hvis en lege skal diagnosere en sykdom, kan ikke legen observere sykdommen direkte. Legen observerer symptomene, for eksempel rennende nese og vond hals, og konkluderer utfra dette med at pasienten er forkjølet. Innenfor statsvitenskap er for eksempel "tillt" og "ytringsfrihet" latente variabler i den grad disse ikke kan observeres direkte, men må utforskes gjennom en sammensetning av mange andre observerbare fenomener. 
+
+Politisk posisjon er også en latent variabel. En måte å observere den politiske posisjonen til en aktør, er gjennom språket. Ordene kan si oss mye om hvorvidt de befinner seg på en politisk skala, for eksempel på høyre- og venstresiden i politikken. Siden vi gikk gjennom dette i forelesning, bruker jeg her *populisme* som et latent konsept, og forsøker å måle dette gjennom partiprogram. 
+
+Vi starter med å laste inn noen nødvendige pakker:
+
+```{r, include = FALSE}
+library(Rttf2pt1)
+library(extrafontdb)
+```
+
+
+```{r}
+
+library(tidyverse) # Vanlig pakke for databehandling i R
+library(manifestoR) # Pakken som gjør at vi kan hente data fra Manifesto sitt API
+library(tidytext) # Vanlig pakke for tekstbehandling i R
+library(quanteda) # Pakke med mange nyttige funksjoner rundt tekstmodellering i R
+library(quanteda.textmodels) # Spesifikke funksjoner for tekstmodellering (det er her wordscore og wordfish-funksjonene finnes)
+library(quanteda.textplots) # Pakke for å plotte modeller og output fra quanteda
+
+```
+
+
+Det første vi må gjøre er å lese inn datasettet. Jeg bruker `manifestoR`-pakken for å lese inn partiprogram fra Sverige, Danmark og Norge etter 2017 (altså valgprogrammene fra de nyeste valgene per 2022). API-nøkkel må du få tak i selv gjennom å lage en bruker på https://manifesto-project.wzb.eu/information/documents/api. 
+
+```{r, eval = FALSE}
+
+mp_setapikey("manifesto_api_key_sb.txt") # Sett API-nøkkel
+
+valgprogram_corpus <- mp_corpus(countryname %in% c("Sweden", "Denmark", "Norway") & # Ønsker disse landene 
+                                  edate > as.Date("2017-01-01")) # Alle partiprogrammer fra etter 2017
+
+```
+
+```{r, eval = TRUE, include = FALSE}
+valgprogram_corpus <- readRDS("./data/valgprogram_corpus.rds")
+```
+
+Her viser jeg hvordan man estimerer `wordscores` og `wordfish`. Dette er to metoder som brukes for å estimere latent posisjon fra tekster. Den største forskjellen på dem er at `wordscores` er en form for veiledet læring, mens `wordfish` er ikke-veiledet.
+
+### Wordscores
+
+Fordi `wordscores` er en form for veiledet læring, trenger vi treningsdata for å estimere modeller som bruker denne typen modell. Denne treningsdataen skal helst komme fra sikre kilder, som for eksempel ekspert-surveyer. Jeg bruker [V-Party datasettet](https://www.v-dem.net/data/v-party-dataset/) for å finne ekspertkodere sin vurdering av hvor vidt et parti har populistiske verdier. Spørsmålet og kodingen av svarene ser slik ut:
+
+**4.1.6 Populist values type (E) (ep_type_populist_values)**
+Question: The Populist Values typology combines the categories of rhetoric (V8_Bin) and the social values (B6_Bin) for each party.
+
+Responses:
+1: Pluralist–Liberal.
+2: Pluralist–Conservative.
+3: Populist–Liberal.
+4: Populist–Conservative.
+
+Det er ikke alle partiene som har blitt kodet, derfor kunne det vært tilfellet at vi ønsket å bruke denne informasjonen for å si noe om de andre partiene sine verdier. Her ser du de partiene som har fått en kode i V-Party surveyen. 
+
+```{r}
+
+populist_precoded <- readRDS("./data/populist_precoded.rds")
+
+populist_precoded %>%
+  kableExtra::kable(row.names = F) %>%
+  kableExtra::kable_styling()
+
+```
+
+Før vi kan analysere, må dataene struktureres. Under gjør jeg en del bearbeiding av data som blant annet innebærer å omkode fra parti-id til partinavn, indikere hvilket land partiet er fra og hvilket år det er. Legg også merke til at jeg går fra et "corpus"-objekt til en dataframe ved å bruke funksjonen `tidy`. Vi har ikke jobbet mye med korpuser i dette emnet, men du kan se på det som en samling av tekster. Enkelte som jobber med kvantitativ tekstanalyse arbeider utfra korpus. I dette emnet har vi fokusert på å bruke `tidytext`, og derfor gjør jeg om fra korpus til dataframe. Om du blir forvirret av konverteringen til og fra ulike objekter, kan du ta en titt på figuren under.  
+
+```{r til-og-fra-tidy, out.width="100%", echo = FALSE}
+knitr::include_graphics("./figurer/tmwr_0501.png")
+```
+
+```{r}
+
+valgprogram_tekst <- valgprogram_corpus %>%
+  tidy() %>% # Gjør om fra et korpus til en vanlig dataframe
+  mutate(aar = str_sub(date, 1, 4)) %>% # Henter ut de fire første tegnene i "date"-variabelen, som er året
+  mutate(land = ifelse(str_detect(id, "^12"), "Norge", # I koden "id" indikerer de to første tallene hvilket land det er snakk om
+                       ifelse(str_detect(id, "^11"), "Sverige", # Derfor, hvis "id" starter med 11 skal variabelen "land" være Sverige
+                                         ifelse(str_detect(id, "^13"), "Danmark", NA)))) %>% # Også videre
+  mutate(parti = case_when(party == "12110" ~ "Green Party", # Her oppretter jeg en variabel "parti" og gir den navn avhengig av "id-koden
+                           party == "12221" ~ "Socialist Left Party",
+                           party == "12230" ~ "Red Party",
+                           party == "12320" ~ "Labour Party",
+                           party == "12420" ~ "Liberal Party",
+                           party == "12520" ~ "Christian People Party",
+                           party == "12620" ~ "Conservative Party",
+                           party == "12810" ~ "Centre Party",
+                           party == "12951" ~ "Progress Party",
+                           party == "11110" ~ "Greens",
+                           party == "11220" ~ "Left Party",
+                           party == "11320" ~ "Social Democrats",
+                           party == "11420" ~ "People’s Party",
+                           party == "11520" ~ "Christian Democrats",
+                           party == "11620" ~ "Right Party",
+                           party == "11710" ~ "Sweden Democrats",
+                           party == "11810" ~ "Centre Party",
+                           party == "13001" ~ "Liberal Alliance",
+                           party == "13110" ~ "Alternativ",
+                           party == "13320" ~ "Social Democratic Party",
+                           party == "13229" ~ "Red-Green Unity List",
+                           party == "13230" ~ "Socialist People’s Party",
+                           party == "13410" ~ "Danish Social-Liberal Party",
+                           party == "13420" ~ "Liberals",
+                           party == "13620" ~ "Conservative People’s Party",
+                           party == "13720" ~ "Danish People Party",
+                           party == "13730" ~ "The New Right")) %>%
+  mutate(land_parti = str_c(land, parti, sep = "_"), # Setter sammen variabelen land og parti for lettere å plotte senere
+         land_parti = str_replace_all(land_parti, " ", "_")) %>% # Erstatter mellomrom med understrek
+  select(land_parti, aar, title, text) # Henter ut disse variabelene til videre analyse
+
+```
+
+Ved å bruke de ferdigkodede partiene overfor, kan jeg her opprette en ny variabel `ref_score` der jeg koder inn populisme-scoren for hvert parti i hvert land som ble gitt i tabellen overfor av ekspertkoderne fra V-Party-datasettet. 
+
+```{r}
+
+valgprogram_tekst <- valgprogram_tekst %>% # Koder inn score på populisme som allerede er supplert av ekspertkoderne
+  mutate(ref_score = ifelse(land_parti == "Sverige_Sweden_Democrats", 4,
+                            ifelse(land_parti == "Sverige_Greens", 1,
+                                   ifelse(land_parti == "Sverige_Social_Democrats", 1,
+                                          ifelse(land_parti == "Sverige_Christian_Democrats", 4,
+                                                 ifelse(land_parti == "Svergie_Right_Party", 2,
+                                                        ifelse(land_parti == "Sverige_Left_Party", 1,
+                                                               ifelse(land_parti == "Danmark_Liberal_Alliance", 3,
+                                                                      ifelse(land_parti == "Danmark_Social_Democrats", 3,
+                                                                             ifelse(land_parti == "Danmark_Danish_People_Party", 4,
+                                                                                    ifelse(land_parti == "Danmark_Liberals", 1,
+                                                                                           ifelse(land_parti == "Danmark_Red-Green_Unity_List", 3,
+                                                                                                  ifelse(land_parti == "Norge_Progress_Party", 4,
+                                                                                                         ifelse(land_parti == "Norge_Labour_Party", 1,
+                                                                                                                ifelse(land_parti == "Norge_Conservative_Party", 1,
+                                                                                                                       ifelse(land_parti == "Norge_Christian_People_Party", 2, 
+                                                                                                                              ifelse(land_parti == "Norge_Socialist_Left_Party", 3, NA))))))))))))))))) %>%
+  select(land_parti, text, ref_score) # Henter ut disse variablene
+
+
+```
+
+Siden `quanteda` er vant til å jobbe med korpus-objekter, legger jeg inn informasjonen vi nettopp lagde i et korpus som jeg arbeider utfra når jeg skal estimere wordscores. Dette er for å hindre at vi ikke får matching av rader gitt de funksjonene som brukes i pakken. Som du ser er det en del tekster som fortsatt har `NA`, altså missingverdier, selv om vi har populismeverdien på enkelte av partiene.
+
+```{r}
+
+wordscore_corpus <- corpus(valgprogram_tekst) # Lager om objektet til et korpus igjen
+docvars(wordscore_corpus, field = "land_parti") <- valgprogram_tekst %>% pull(land_parti) # Legger inn en dokumentvariabel "land-parti"
+docvars(wordscore_corpus, field = "ref_score") <- valgprogram_tekst %>% pull(ref_score) # Legger inn en dokumentvariabel om populismeverdien, "ref_score"
+
+summary(wordscore_corpus)
+
+```
+
+Før vi kan utføre modelleringen, må tekstene preprosesseres. Under gjør jeg en ganske grundig preprosessering med å ta ut tall, punktsetting, stoppord og hente stammen av ordene. 
+
+```{r}
+
+valgprogram_tokens <- wordscore_corpus %>%
+  tidy() %>% # Gjør om fra korpus til dataframe igjen
+  rowid_to_column() %>% # Setter radens tall som kolonne (for å matche de samme radene senere)
+  mutate(text = str_remove_all(text, "[0-9]+")) %>% # Fjern tall fra teksten, også der tall dukker opp inni andre ord
+  select(rowid, land_parti, text) %>% # Hent ut disse variablene
+  unnest_tokens(input = text, # Tokeniser teksten fra variabelen "text"
+                output = token, # Kall den nye variabelen for "token"
+                token = "words", # Gjør om til unigram
+                strip_punct = TRUE, # Fjern punktsetting
+                strip_numeric = TRUE) %>% # Fjern tall
+  filter(!token %in% quanteda::stopwords("no")) %>% # Fjern stoppord
+  mutate(token = quanteda::char_wordstem(token, language = "no")) %>% # Hent ut stammen av ordene
+  group_by(rowid, land_parti, token) %>% # Grupper på disse variablene
+  count() %>% # Tell opp antall tokens per variablene overfor
+  ungroup() # Fjern gruppering for å ikke skape krøll senere
+
+valgprogram_dfm <- valgprogram_tokens %>% # Opprett en dokument-trekk-matrise
+  cast_dfm(document = land_parti, # Enhetene, altså radene, skal være dokumentene - som er parti i ulike land
+           term = token, # Plasser token som variabel i matrisen (dette blir kolonnene)
+           value = n) # Fyll cellene med sekk av ord, altså frekvensen av ord per dokument
+
+valgprogram_dfm$land_parti <- docvars(wordscore_corpus, field = "land_parti") # Plasser de samme variablene som variablene i dokument-trekk-matrisen
+valgprogram_dfm$ref_score <- docvars(wordscore_corpus, field = "ref_score") # som ble gjort med korpuset
+
+```
+
+Da er vi endelig klare til å kjøre `wordscores`-modellen. Funksjonen for dette er `textmodel_wordscores`, som argumenter setter du (1) dokument-trekk-matrisen og (2) referansescorene. For å kjøre samme skaleringsmetode som fra pensum, sett `smooth = 0`.
+
+```{r}
+
+valgprogram_ws <- textmodel_wordscores(x = valgprogram_dfm, # Dokument-trekk-matrise for tekstene
+                                       y = valgprogram_tekst$ref_score, # Referansescore på referansetekstene
+                                       smooth = 0) # Denne må være 0 for å kjøre Laver, Benoit og Garry (2003) sin skaleringsmetode
+
+```
+
+`predict` gir oss den predikerte posisjonen til jomfrudokumentene gitt referansedokumentene (eller; estimert populismescore til testdata gitt treningsdata). Vi kan plotte disse posisjonene med funksjonen `textplot_scale1d`. 
+
+```{r}
+
+valgprogram_pred <- predict(valgprogram_ws, 
+                            se.fit = TRUE, # TRUE for å få usikkerhetsmål på estimatene
+                            rescaling = "none", # Sett denne til "lbg" for å transformere jomfrutekstene i takt med Laver, Benoit & Garry (2003)
+                            newdata = valgprogram_dfm)
+
+textplot_scale1d(valgprogram_pred) + theme_dark()# Plotter predikert populismescore til de ulike partiprogrammene
+
+```
+
+Wordscores sin metode bruker frekvens av ord gitt et referansedokument for å måle hvor mye et ord peker i retning av en viss posisjon. Med andre ord, hvis ordet "nasjonalisme" dukker opp mange ganger i en eller flere dokumenter som er sterkt assosiert med populisme, så får dette ordet en score som vil peke andre dokumenter med samme ord i retning av å også ha populistiske verdier. For å se på hvordan modellen vår har scoret ulike ord, kan vi bruke koden under. 
+
+```{r}
+
+ord <- attributes(valgprogram_ws$wordscores) %>% # Henter ut ordene fra wordscores-objektet inne i valgprogram-modellen
+  unlist() %>% as.character() # Tar ut fra liste og gjør om til en vanlig character-vektor
+
+tibble(ord = ord, # Lager en dataframe (tibble) med ord som en variabel, fyll med ordene vi fant over
+       wordscore = round(valgprogram_ws$wordscores, 2)) %>% # Variabelen "wordscore" skal inneholde wordscorene avrundet til to desimaler
+  arrange(desc(wordscore)) %>% # Sorter dem i synkende rekkefølge
+  DT::datatable(rownames = FALSE) # Lag interaktiv tabell av dem, og ikke ta med radnummer
+
+```
+
+
+### Wordfish
+
+`wordfish` er en ikke-veiledet modell, og krever derfor ikke at vi har referanseverdier (eller treningsdata) til å begynne med. Dette er en skaleringsmetode som antar en underliggende fordeling av ord, og bruker dette som utgangspunkt for å beregene dokumentenes plassering. Det vi behøver å tenke på her, er imidlertid at tekstene vi analyserer må gi uttrykk for den aksen vi forsøker å skalere etter. Hadde vi brukt alle partiprogrammene, slik over, ville vi kanskje målt høyre-venstre-aksen, siden man kan anta et partiprogram som helhet gir uttrykk for partienes plassering til høyre eller venstre i politikken.
+
+Å bruke `wordfish` for å beregne populisme er derfor litt vanskeligere dersom vi skal ta utgangspunkt i partiprogrammene. Kanskje kunne vi hentet ut visse deler av partiprogrammene som snakker om temaer der partiene har mer sannsynlighet for å gi uttrykk for populistiske verdier? I dette eksempelet skifter jeg istedenfor til å bare fokusere på ett populistisk parti - Svergiedemokratene - over flere år. Dette kan kanskje indikere hvor vidt dette partiet har blitt mer populistisk over tid. 
+
+```{r, eval = FALSE}
+
+valgprogram_corpus <- mp_corpus(countryname == "Sweden" & # Henter ut Sverige
+                                  party == 11710 & # Partikode for Sverigedemokratene 
+                                  edate > as.Date("2000-01-01")) # Ønsker alle partiprogram etter 2000
+
+valgprogram_tekst <- valgprogram_corpus %>%
+  tidy() %>% # Gjør om til en dataframe
+  mutate(aar = str_sub(date, 1, 4)) %>% # Henter ut de fire første tegnene i "date"-variabelen, som er året
+  select(aar, title, text) # Årgang på partiprogrammet er enhet i dette tilfellet
+
+```
+
+```{r, include = FALSE}
+valgprogram_tekst <- readRDS("./data/valgprogram_tekst2.rds")
+```
+
+Tekstene må også preprosesseres og gjøres om til en dokument-trekk-matrise her. Koden under gjør samme operasjon som for wordscores over.
+
+```{r}
+
+valgprogram_tokens <- valgprogram_tekst %>%
+  mutate(text = str_remove_all(text, "[0-9]+")) %>% # Fjern tall fra teksten, også der tall dukker opp inni andre ord
+  select(aar, text) %>% # Hent ut disse variablene
+  unnest_tokens(input = text, # Tokeniser teksten fra variabelen "text"
+                output = token, # Kall den nye variabelen for "token"
+                token = "words", # Gjør om til unigram
+                strip_punct = TRUE, # Fjern punktsetting
+                strip_numeric = TRUE) %>% # Fjern tall
+  filter(!token %in% quanteda::stopwords("no")) %>% # Fjern stoppord
+  mutate(token = quanteda::char_wordstem(token, language = "no")) %>% # Hent ut stammen av ordene
+  group_by(aar, token) %>% # Grupper på disse variablene
+  count() %>% # Tell opp antall tokens per variablene overfor
+  ungroup() # Fjern gruppering for å ikke skape krøll senere
+
+valgprogram_dfm <- valgprogram_tokens %>% # Opprett en dokument-trekk-matrise
+  cast_dfm(document = aar, # Enhetene, altså radene, skal være dokumentene - som er parti i ulike land
+           term = token, # Plasser token som variabel i matrisen (dette blir kolonnene)
+           value = n) # Fyll cellene med sekk av ord, altså frekvensen av ord per dokument
+
+```
+
+Deretter kan vi kjøre `wordfish`-modellen. Dette gjøres med funksjonen `textmodel_wordfish`, og tar dokument-trekk-matrisen som argument. 
+
+```{r}
+
+valgprogram_wf <- textmodel_wordfish(valgprogram_dfm, dir = c(1,3)) # Kjører en wordfish-modell
+summary(valgprogram_wf)
+
+```
+
+For å plotte funnene kan man bruke denne koden.
+
+```{r}
+
+textplot_scale1d(valgprogram_wf) +  # Plotter modelle
+  theme_dark()
+
+```
+
+
+Ordene blir også her gitt en score. Synes du disse ordene overenstemmer med antakelsen om at skaleringen skulle fange opp populistiske verdier? 
+
+```{r}
+
+ord <- valgprogram_wf$features # Henter ut ordene fra "features" i wordfish-modellen
+
+tibble(ord = ord, # Legger inn ordene i en dataframe
+       wordfish = round(valgprogram_wf$beta, 2)) %>% # Henter ut scoren på ordene og runder av til to desimaler
+  arrange(desc(wordfish)) %>% # Sorterer i synkende rekkefølge
+  DT::datatable(rownames = FALSE) # Lager interaktiv tabell uten radnummer
+
+```
+
+Vi kan også lage en ord-pyramide. I denne pyramiden kommer ordene som har minst vekst øverst - dette skal gjerne være ord uten substansiell betydning, som for eksempel stoppord. Ord nede til venstre vekter tekstene i retning av å være til venstre på skalaen, mens ord mot høyre vekter i retning av å være til høyre på skalaen. Nok en gang kan vi vurdere om disse ordene speiler aksen vi forsøker å måle på en god måte. At "upprör" speiler den ene enden av populisme mens "aggressiv" speiler den andre kan virke noe søkt, og derfor kan det være en ide å finne bedre tekster som fanger opp populisme dersom vi vil bruke `wordfish` for å estimere populisme i partiet over tid. 
+
+```{r}
+
+textplot_scale1d(valgprogram_wf, # Plotter modellen
+                 margin = "features", # Setter ord inn i plottet
+                 highlighted = c("barn", "välja", # Gjør akkurat disse ordene tydeligere
+                                 "aggressiv", "genomför", 
+                                 "upprör"))
+
+```
+
+
+### Andre metoder
+
+Det finnes flere metoder for å skalere tekster og/eller finne latent posisjon, for eksempel korrespondanseanalyse. Sistnevnte har den fordelen at den kan estimere den latente posisjonen på flere dimensjoner. For eksempel kan den måle hvor miljøvennlig vs. vekstorientert et partiprogram er på den ene siden, og hvor byfokusert vs. distriktfokusert det er på den andre siden. For å kjøre en korrespondanseanalyse kan man bruke funksjonen `textmodel_ca`. For mer informasjon om ulike skaleringsmetoder, se [quanteda sine hjelpesider](https://tutorials.quanteda.io/machine-learning/). 
+
+
 # Noen tanker om videre læring {#videreilivet}
+
 
 # Oppsummering {#oppsummering}
 
