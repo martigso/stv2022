@@ -2353,7 +2353,7 @@ valgprogram_corpus <- readRDS("./data/valgprogram_corpus.rds")
 
 Her viser jeg hvordan man estimerer `wordscores` og `wordfish`. Dette er to metoder som brukes for å estimere latent posisjon fra tekster. Den største forskjellen på dem er at `wordscores` er en form for veiledet læring, mens `wordfish` er ikke-veiledet.
 
-### Wordscores
+## Wordscores
 
 Fordi `wordscores` er en form for veiledet læring, trenger vi treningsdata for å estimere modeller som bruker denne typen modell. Denne treningsdataen skal helst komme fra sikre kilder, som for eksempel ekspert-surveyer. Jeg bruker [V-Party datasettet](https://www.v-dem.net/data/v-party-dataset/) for å finne ekspertkodere sin vurdering av hvor vidt et parti har populistiske verdier. Spørsmålet og kodingen av svarene ser slik ut:
 
@@ -2531,7 +2531,7 @@ tibble(ord = ord, # Lager en dataframe (tibble) med ord som en variabel, fyll me
 ```
 
 
-### Wordfish
+## Wordfish
 
 `wordfish` er en ikke-veiledet modell, og krever derfor ikke at vi har referanseverdier (eller treningsdata) til å begynne med. Dette er en skaleringsmetode som antar en underliggende fordeling av ord, og bruker dette som utgangspunkt for å beregene dokumentenes plassering. Det vi behøver å tenke på her, er imidlertid at tekstene vi analyserer må gi uttrykk for den aksen vi forsøker å skalere etter. Hadde vi brukt alle partiprogrammene, slik over, ville vi kanskje målt høyre-venstre-aksen, siden man kan anta et partiprogram som helhet gir uttrykk for partienes plassering til høyre eller venstre i politikken.
 
@@ -2624,12 +2624,18 @@ textplot_scale1d(valgprogram_wf, # Plotter modellen
 ```
 
 
-### Andre metoder
+## Andre metoder
 
 Det finnes flere metoder for å skalere tekster og/eller finne latent posisjon, for eksempel korrespondanseanalyse. Sistnevnte har den fordelen at den kan estimere den latente posisjonen på flere dimensjoner. For eksempel kan den måle hvor miljøvennlig vs. vekstorientert et partiprogram er på den ene siden, og hvor byfokusert vs. distriktfokusert det er på den andre siden. For å kjøre en korrespondanseanalyse kan man bruke funksjonen `textmodel_ca`. For mer informasjon om ulike skaleringsmetoder, se [quanteda sine hjelpesider](https://tutorials.quanteda.io/machine-learning/). 
 
 
 # Noen tanker om videre læring {#videreilivet}
+
+## OSINT Telegram (hackathon prosjekt)
+
+Et eksempel på hva man kan gjøre med `R` kan dere finne [her](https://solveig.shinyapps.io/prototype/). 
+
+Hele denne prototypen er laget i R, med unntak av å bruke Telegram sitt API for å hente tekstene (her brukte vi python). Databehandlingen, entitetsrekogniseringen, sentimentanalysen, geokodingen, mappingen og appen er alle laget gjennom R. Dersom dere er nysgjerrig på koden som ligger bak, kan dere finne den [her](https://github.com/egen97/CoonAndFriends). 
 
 
 # Oppsummering {#oppsummering}
