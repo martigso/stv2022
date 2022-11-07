@@ -2307,7 +2307,175 @@ final_res %>%
 
 Modellen sliter med å klassifisere positivt sentiment riktig. Som vi har sett før, har den en tendens til å klassifisere en overvekt av tekstene inn i den dominerende kategorien - her "neutral". Vi kunne kanskje gjort en større jobb med forbehandlingen av tekstene, tatt ut flere stoppord, tatt mer hensyn til emojis, og vært mer påpasselige når vi trente modellen. Kanskje ville modellen gjort det bedre om vi beholdt enda flere tokens. Hadde vi beholdt alle observasjonene, og ikke bare trent på 1000 av dem, ville modellen også hatt mer informasjon å gå på og kunne gjort det bedre. Å prøve, justere og sjekke på denne måten er en del av den iterative prosessen. 
 
-# Temamodellering {#topicmod}
+# Emnemodellering {#topicmod}
+
+Emnemodellering er en veldig nyttig metode man kan bruke for å sortere korpus. De tidlige metodene for å estimere slike modeller (se @Blei2012) har vist seg å være veldig effektive i å sortere tekster i emner basert på innhold. Emnemodeller kan derfor være et sterkt verktøy for de som vil finne strukturer i sitt korpus og evt kategorisere tekstene inn i emner/temaer. I samfunnsvitenskap er vi likevel ofte interessert i å ta det et steg videre; vi prøver å finne årsakssammenhenger. Nyere versjoner av emnemodellering tillater oss å se på slike årsakssammenhenger: endrer temaene i korpus seg over tid? Påvirker eksterne forhold hvordan dokumentene genereres? Har trekk ved forfatteren av teksten noe å si? Alt dette kan vi finne ut av ved hjelp av strukturell emnemodellering (se @Roberts2019). I denne delen av notatboka skal vi se på hvordan vi estimerer både LDA (Latent Dirichlet Allocation) og STM (Structural Topic Model), hvordan vi kan validere og trekke ut meningsfulle estimater fra disse, og diskutere hvilke eventuelle svakheter denne analysemetoden kan ha.
+
+
+## Sette opp korpus for `stm`-pakken
+
+Pakken `stm` (Structural Topic Models, se @Roberts2019) inneholder egentlig alt vi trenger for å gå fra rå tekst til ferdig emnemodel. Likevel, for å holde den røde tråden fra resten av notatboka, vil vi bruke `tidytext` til preprosessering i denne delen også.
+
+Vi bruker data fra forelesning [\[02\]Anskaffelse og innlasting av tekst](https://shiny.uio.no/content/9db02855-a99c-438c-94da-6c411d4f3db0) som ble hentet fra [virksommeord.no](http://virksommeord.no):
+
+```{r virksomme_topics, echo=TRUE, eval=FALSE}
+
+library(tidyverse)
+library(tidytext)
+
+load("./data/virksommeord_id.rda")
+
+
+# Lager dfm
+virkord_dfm <- virkord %>% 
+  group_by(id) %>%                                 # grupperer på id variabelen
+  unnest_tokens(output = token,                    # skal dele opp data i tokens
+                input = tekst,                     # der tekst inneholder tokens
+                to_lower = FALSE) %>%              # skal ikke lower case
+  filter(str_detect(token, "[0-9]+") == FALSE) %>% # fjerner tokens med tall
+  count(token) %>%                                 # teller tokens i hver gruppe (id)
+  cast_dfm(document = id,                          # lager dfm med id som dokument ...
+           term = token,                           # token som "term"
+           value = n)                              # og n som antall ganger term er nevnt
+
+# Trimmer dfm
+virkord_dfm <- virkord_dfm %>%   
+  quanteda::dfm_trim(min_termfreq = 5) # reduserer dfm til å ikke ta med ord som nevnes mindre enn 5 ganger
+
+virkord_dfm
+
+```
+
+Merk at vi gjør ganske lite preprosessering her. Vi har ikke fjernet stoppord, gjort stemming, konvertert til små bokstaver, osv. Dette er for å illustrere et poeng med forskjell på høyt ladende ord og ord som er høyt ladende og eksklusive for et emne
+
+
+```{r load_virkdfm, echo=FALSE, eval=TRUE}
+load("./data/virksommeord_id.rda")
+load("./data/virksommeord_dfm.rda")
+
+```
+
+
+## Latent Dirichlet Allocation (LDA)
+
+Vi begynner med å estimere en LDA-modell på virksommeord-korpuset. Merk at vi likevel bruker `stm`-pakken for _Structural Topic Models_. Dette er fordi det også er mulig å estimere LDA via denne pakken og det er fint å forholde seg til ett rammeverk.^[Om man vil bruke andre pakker for emnemodellering, står ingenting i veien for det.]
+
+Selve estimeringen av modellen er ganske rett fram:
+
+```{r lda_est, echo=TRUE, eval=FALSE}
+
+library(stm)
+
+# Estimere LDA-modell
+virkord_lda <- stm(virkord_dfm,       # dfm objekt
+                   data = virkord,    # legger til metadata
+                   K = 20,            # antall emner man ønsker
+                   init.type = "LDA") # initialiseringstype, her LDA
+
+```
+
+Legg merke til at `init.type = "LDA"` er det som gjør modellen til en LDA-modell. Det kan ta ganske lang tid å estimere en emnemodell på et stort korpus, men du får noen indikasjoner på hva modellen finner underveis, i konsollen.
+
+```{r load_lda_est, echo=FALSE, eval=TRUE}
+library(stm)
+load("./data/virkord_lda.rda")
+```
+
+
+Når modellen er ferdig estimert, kan vi raskt få en oversikt over hva den har funnet med å bruke `plot()`-funksjonen på vår emnemodell. I slutten av dette kapittelet skal jeg gå gjennom hvordan man kan konstruere dette plottet selv, via `ggplot2()`.
+
+
+```{r lda_topwords, echo=TRUE, eval=TRUE}
+plot(virkord_lda)
+
+```
+
+Det er ganske åpenbart at vi ikke får veldig mye utav dette plottet. Grunnen kan man finne i dokumentasjonen (`?plot.STM`), der argumentet `labeltype` er satt til "prob" som default. Vi kan enkelt endre på dette:
+
+```{r lda_topwords2, echo=TRUE, eval=TRUE}
+plot(virkord_lda, labeltype = "frex")
+
+```
+
+Brått får vi et plot som gir oss litt mer informasjon om hva modellen har funnet. De fire måtene å organisere ord på i `STM`-pakken -- sannsynlighet ("prob"), frekvens og eksklusivitet ("frex"), Score ("score") og Lift ("lift"). Du kan lese mer om forskjellen på disse ved å se på hjelpefilen til `?labelTopics`. En god regel på hvilke av disse målene man bør sjekke i validering av en emnemodell er: bruke alle, alltid. Hver har sine styrker og svakheter (bortsett fra "prob", som stort sett ikke gir noe særlig nyttig).
+
+Nå kan vi begynne å lete etter det vi evt kunne være interessert i. La oss, for eksempel, si emne nr 7 ser interessant ut for oss. Vi kan enkelt hente ut de høyest ladede tekstene ved hjelp av `findThoughts`:
+
+```{r lda_toptexts, echo=TRUE, eval=TRUE}
+
+findThoughts(model = virkord_lda,                    # Emnemodell
+             texts = str_sub(virkord$tekst, 1, 500), # Originale tekster (her kuttet)
+             topics = c(7),                          # Emnet vi vil ha topptekst fra
+             n = 3)                                  # Antall topptekster
+
+```
+
+Her får vi ut tre tekster som ser veldig like ut. Dette er noe vi bør undersøke nærmere. Hvis vi lagrer topptekstsøket vårt i et objekt:
+
+```{r lda_store_toptextindex, echo=TRUE, eval=TRUE}
+topptekster_t7lda <- findThoughts(model = virkord_lda,                    
+                                  texts = str_sub(virkord$tekst, 1, 500), 
+                                  topics = c(7),                          
+                                  n = 5)                                  
+
+```
+
+Kan vi sjekke ut disse dokumentene i de originale dataene, fordi `findThoughts` tar vare på radnummeret til disse tekstene:
+
+```{r topptekst_meta_inspect, echo=TRUE, eval=TRUE}
+
+virkord[topptekster_t7lda$index$`Topic 7`, ]
+```
+
+Vi ser da at 3 av de 5 høyest ladede talene er fra ledere av FrP, 1 er fra en av partilederne til MDG og den siste fra partilederen til SV. Interessant! I en evt analyse bør vi gå dypere inn i toppord og lese flere topptekster osv.
+
+Om vi har spesifikke emner vi er på utkikk etter som kan identifiseres enkelt via nøkkelord, kan vi også bruke funksjonen `findTopic`:
+
+```{r lda_searchtopics, echo=TRUE, eval=TRUE}
+
+kvinde_topics <- findTopic(virkord_lda,
+                          list = "Kvinden",
+                          n = 20,
+                          type = "frex")
+
+findThoughts(model = virkord_lda,                    
+             texts = str_sub(virkord$tekst, 1, 500), 
+             topics = kvinde_topics,
+             n = 3)
+
+```
+
+Her søker jeg etter ordet "Kvinden" i topp 20 FREX-ord for hvert emne, for å se om dette ordet er viktig i noen av emnene vi har fått ut fra modellen. Merk at det i veldig store korpus er lurt å øke argumentet `n` her. Det er også viktig å validere med å se på topptekster for emnet, før man konkluderer med hva det handler om.
+
+
+Nå har vi gått gjennom grunnkonseptene i emnemodellering. Som vi ser, er det veldig viktig å validere veldig grundig når man estimerer en emnemodell. Dette innebærer å se på en god del toppord og mange av de høyest ladende tekstene for de emnene vi evt skal bruke i en analyse.
+
+## Structural Topic Model (STM)
+
+I samfunnsvitenskap er vi ofte interessert i sammenheng mellom årsaker og utfall. Her er ikke LDA-emnemodellen så hjelpsom. @Roberts2019 har derfor utviklet en strukturell emnemodell (STM) hvor man kan dytte inn det som ligner veldig på uavhengige variabler i en regresjon. Selve koden for STM er ganske lik som over:
+
+```{r stm_est, echo=TRUE, eval=FALSE}
+
+library(stm)
+
+# Estimere STM-modell
+virkord_lda <- stm(virkord_dfm,                   # dfm objekt
+                   prevalence = ~ factor(gender), # legger til kjønn som UV
+                   data = virkord,                # legger til metadata
+                   K = 20,                        # antall emner man ønsker
+                   init.type = "Spectral")        # initialiseringstype, her "spectral"
+
+```
+
+```{r load_stm, echo=FALSE, eval=TRUE}
+
+```
+
+### STM med uspesifisert K
+
+
+### Søke etter "optimal" K
+
 
 
 # Latente posisjoner {#posisjon}

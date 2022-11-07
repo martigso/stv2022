@@ -1,7 +1,7 @@
 {
   "version": 1,
   "locale": "en_US",
-  "platform": "4.2.1",
+  "platform": "4.2.2",
   "metadata": {
     "appmode": "rmd-static",
     "primary_rmd": "notatbok.Rmd",
@@ -2436,7 +2436,7 @@
         "Maintainer": "Trevor Hastie <hastie@stanford.edu>",
         "Repository": "CRAN",
         "Date/Publication": "2022-04-15 09:22:29 UTC",
-        "Built": "R 4.2.0; x86_64-pc-linux-gnu; 2022-04-29 09:12:08 UTC; unix"
+        "Built": "R 4.2.1; x86_64-pc-linux-gnu; 2022-11-01 13:53:52 UTC; unix"
       }
     },
     "globals": {
@@ -3483,6 +3483,33 @@
         "Built": "R 4.1.1; x86_64-pc-linux-gnu; 2021-08-30 12:22:53 UTC; unix"
       }
     },
+    "lda": {
+      "Source": "CRAN",
+      "Repository": "https://cloud.r-project.org",
+      "GithubRepo": null,
+      "GithubUsername": null,
+      "GithubRef": null,
+      "GithubSha1": null,
+      "description": {
+        "Package": "lda",
+        "Type": "Package",
+        "Title": "Collapsed Gibbs Sampling Methods for Topic Models",
+        "Version": "1.4.2",
+        "Date": "2015-11-22",
+        "Author": "Jonathan Chang",
+        "Maintainer": "Jonathan Chang <slycoder@gmail.com>",
+        "Description": "Implements latent Dirichlet allocation (LDA)\n\t     and related models.  This includes (but is not limited\n\t     to) sLDA, corrLDA, and the mixed-membership stochastic\n\t     blockmodel.  Inference for all of these models is\n\t     implemented via a fast collapsed Gibbs sampler written\n\t     in C.  Utility functions for reading/writing data\n\t     typically used in topic models, as well as tools for\n\t     examining posterior distributions are also included.",
+        "License": "LGPL",
+        "LazyLoad": "yes",
+        "Suggests": "Matrix, reshape2, ggplot2 (>= 1.0.0), penalized, nnet",
+        "NeedsCompilation": "yes",
+        "Packaged": "2015-11-22 08:13:39 UTC; jonathanchang",
+        "Depends": "R (>= 2.10)",
+        "Repository": "CRAN",
+        "Date/Publication": "2015-11-22 11:48:11",
+        "Built": "R 4.1.2; x86_64-pc-linux-gnu; 2022-01-17 14:16:16 UTC; unix"
+      }
+    },
     "lhs": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -3682,6 +3709,37 @@
         "Built": "R 4.2.1; ; 2022-11-01 13:35:44 UTC; unix"
       }
     },
+    "matrixStats": {
+      "Source": "CRAN",
+      "Repository": "https://cloud.r-project.org",
+      "GithubRepo": null,
+      "GithubUsername": null,
+      "GithubRef": null,
+      "GithubSha1": null,
+      "description": {
+        "Package": "matrixStats",
+        "Version": "0.62.0",
+        "Depends": "R (>= 2.12.0)",
+        "Suggests": "base64enc, ggplot2, knitr, markdown, microbenchmark,\nR.devices, R.rsp",
+        "VignetteBuilder": "R.rsp",
+        "Title": "Functions that Apply to Rows and Columns of Matrices (and to\nVectors)",
+        "Authors@R": "c(\n  person(\"Henrik\", \"Bengtsson\", role=c(\"aut\", \"cre\", \"cph\"),\n                                 email=\"henrikb@braju.com\"),\n  person(\"Constantin\", \"Ahlmann-Eltze\", role = \"ctb\"),\n  person(\"Hector\", \"Corrada Bravo\", role=\"ctb\"),\n  person(\"Robert\", \"Gentleman\", role=\"ctb\"),\n  person(\"Jan\", \"Gleixner\", role=\"ctb\"),\n  person(\"Peter\", \"Hickey\", role=\"ctb\"),\n  person(\"Ola\", \"Hossjer\", role=\"ctb\"),\n  person(\"Harris\", \"Jaffee\", role=\"ctb\"),\n  person(\"Dongcan\", \"Jiang\", role=\"ctb\"),\n  person(\"Peter\", \"Langfelder\", role=\"ctb\"),\n  person(\"Brian\", \"Montgomery\", role=\"ctb\"),\n  person(\"Angelina\", \"Panagopoulou\", role=\"ctb\"),\n  person(\"Hugh\", \"Parsonage\", role=\"ctb\"),\n  person(\"Jakob Peder\", \"Pettersen\", role=\"ctb\"))",
+        "Author": "Henrik Bengtsson [aut, cre, cph],\n  Constantin Ahlmann-Eltze [ctb],\n  Hector Corrada Bravo [ctb],\n  Robert Gentleman [ctb],\n  Jan Gleixner [ctb],\n  Peter Hickey [ctb],\n  Ola Hossjer [ctb],\n  Harris Jaffee [ctb],\n  Dongcan Jiang [ctb],\n  Peter Langfelder [ctb],\n  Brian Montgomery [ctb],\n  Angelina Panagopoulou [ctb],\n  Hugh Parsonage [ctb],\n  Jakob Peder Pettersen [ctb]",
+        "Maintainer": "Henrik Bengtsson <henrikb@braju.com>",
+        "Description": "High-performing functions operating on rows and columns of matrices, e.g. col / rowMedians(), col / rowRanks(), and col / rowSds().  Functions optimized per data type and for subsetted calculations such that both memory usage and processing time is minimized.  There are also optimized vector-based methods, e.g. binMeans(), madDiff() and weightedMedian().",
+        "License": "Artistic-2.0",
+        "LazyLoad": "TRUE",
+        "NeedsCompilation": "yes",
+        "ByteCompile": "TRUE",
+        "URL": "https://github.com/HenrikBengtsson/matrixStats",
+        "BugReports": "https://github.com/HenrikBengtsson/matrixStats/issues",
+        "RoxygenNote": "7.1.2",
+        "Packaged": "2022-04-18 21:37:10 UTC; hb",
+        "Repository": "CRAN",
+        "Date/Publication": "2022-04-19 12:12:33 UTC",
+        "Built": "R 4.2.0; x86_64-pc-linux-gnu; 2022-04-29 09:08:56 UTC; unix"
+      }
+    },
     "memoise": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -3720,7 +3778,7 @@
       "GithubSha1": null,
       "description": {
         "Package": "mgcv",
-        "Version": "1.8-40",
+        "Version": "1.8-41",
         "Author": "Simon Wood <simon.wood@r-project.org>",
         "Maintainer": "Simon Wood <simon.wood@r-project.org>",
         "Title": "Mixed GAM Computation Vehicle with Automatic Smoothness\nEstimation",
@@ -3733,10 +3791,10 @@
         "ByteCompile": "yes",
         "License": "GPL (>= 2)",
         "NeedsCompilation": "yes",
-        "Packaged": "2022-03-22 09:39:41 UTC; sw283",
+        "Packaged": "2022-10-21 11:50:05 UTC; sw283",
         "Repository": "CRAN",
-        "Date/Publication": "2022-03-29 09:50:02 UTC",
-        "Built": "R 4.2.0; x86_64-pc-linux-gnu; 'Sat, 30 Apr 2022 21:44:41 +0000'; unix"
+        "Date/Publication": "2022-10-21 13:52:37 UTC",
+        "Built": "R 4.2.1; x86_64-pc-linux-gnu; 'Mon, 31 Oct 2022 01:08:44 +0000'; unix"
       }
     },
     "mime": {
@@ -4622,6 +4680,31 @@
         "Built": "R 4.1.0; x86_64-pc-linux-gnu; 2021-08-01 19:16:25 UTC; unix"
       }
     },
+    "quadprog": {
+      "Source": "CRAN",
+      "Repository": "https://cloud.r-project.org",
+      "GithubRepo": null,
+      "GithubUsername": null,
+      "GithubRef": null,
+      "GithubSha1": null,
+      "description": {
+        "Package": "quadprog",
+        "Type": "Package",
+        "Title": "Functions to Solve Quadratic Programming Problems",
+        "Version": "1.5-8",
+        "Date": "2019-11-20",
+        "Author": "S original by Berwin A. Turlach <Berwin.Turlach@gmail.com> \n        R port by Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>\n        Fortran contributions from Cleve Moler (dposl/LINPACK and\n        (a modified version of) dpodi/LINPACK) ",
+        "Maintainer": "Berwin A. Turlach <Berwin.Turlach@gmail.com>",
+        "Description": "This package contains routines and documentation for\n        solving quadratic programming problems.",
+        "Depends": "R (>= 3.1.0)",
+        "License": "GPL (>= 2)",
+        "NeedsCompilation": "yes",
+        "Packaged": "2019-11-20 06:04:34 UTC; berwin",
+        "Repository": "CRAN",
+        "Date/Publication": "2019-11-20 08:20:02 UTC",
+        "Built": "R 4.1.1; x86_64-pc-linux-gnu; 2021-10-07 10:45:35 UTC; unix"
+      }
+    },
     "quanteda": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -5133,8 +5216,8 @@
       "description": {
         "Package": "rpart",
         "Priority": "recommended",
-        "Version": "4.1.16",
-        "Date": "2022-01-24",
+        "Version": "4.1.19",
+        "Date": "2022-10-21",
         "Authors@R": "c(person(\"Terry\", \"Therneau\", role = \"aut\",\n\t            email = \"therneau@mayo.edu\"),\n             person(\"Beth\", \"Atkinson\", role = c(\"aut\", \"cre\"),\n\t            email = \"atkinson@mayo.edu\"),\n             person(\"Brian\", \"Ripley\", role = \"trl\",\n                    email = \"ripley@stats.ox.ac.uk\",\n\t\t    comment = \"producer of the initial R port, maintainer 1999-2017\"))",
         "Description": "Recursive partitioning for classification, \n  regression and survival trees.  An implementation of most of the \n  functionality of the 1984 book by Breiman, Friedman, Olshen and Stone.",
         "Title": "Recursive Partitioning and Regression Trees",
@@ -5149,9 +5232,9 @@
         "Repository": "CRAN",
         "URL": "https://github.com/bethatkinson/rpart,\nhttps://cran.r-project.org/package=rpart",
         "BugReports": "https://github.com/bethatkinson/rpart/issues",
-        "Packaged": "2022-01-24 19:17:40 UTC; atkinson",
-        "Date/Publication": "2022-01-24 20:12:45 UTC",
-        "Built": "R 4.2.0; x86_64-pc-linux-gnu; 'Sun, 01 May 2022 01:55:02 +0000'; unix"
+        "Packaged": "2022-10-21 17:17:04 UTC; atkinson",
+        "Date/Publication": "2022-10-21 18:42:41 UTC",
+        "Built": "R 4.2.1; x86_64-pc-linux-gnu; 'Mon, 31 Oct 2022 00:51:24 +0000'; unix"
       }
     },
     "rsample": {
@@ -5583,6 +5666,39 @@
         "Repository": "CRAN",
         "Date/Publication": "2022-09-08 13:20:02 UTC",
         "Built": "R 4.2.1; x86_64-pc-linux-gnu; 2022-11-01 13:35:49 UTC; unix"
+      }
+    },
+    "stm": {
+      "Source": "CRAN",
+      "Repository": "https://cloud.r-project.org",
+      "GithubRepo": null,
+      "GithubUsername": null,
+      "GithubRef": null,
+      "GithubSha1": null,
+      "description": {
+        "Package": "stm",
+        "Title": "Estimation of the Structural Topic Model",
+        "Version": "1.3.6",
+        "Authors@R": "c(\n    person(\"Margaret\", \"Roberts\", email=\"meroberts@ucsd.edu\", role=\"aut\"),\n    person(\"Brandon\", \"Stewart\", email=\"bms4@princeton.edu\", role=c(\"aut\",\"cre\")),\n    person(\"Dustin\", \"Tingley\", email=\"dtingley@gov.harvard.edu\", role=\"aut\"),\n    person(\"Kenneth\",\"Benoit\", email=\"kbenoit@lse.ac.uk\", role=\"ctb\"))",
+        "Description": "The Structural Topic Model (STM) allows researchers \n  to estimate topic models with document-level covariates. \n  The package also includes tools for model selection, visualization,\n  and estimation of topic-covariate regressions. Methods developed in\n  Roberts et. al. (2014) <doi:10.1111/ajps.12103> and \n  Roberts et. al. (2016) <doi:10.1080/01621459.2016.1141684>. Vignette\n  is Roberts et. al. (2019) <doi:10.18637/jss.v091.i02>.",
+        "Depends": "R (>= 3.5.0), methods",
+        "LinkingTo": "Rcpp, RcppArmadillo",
+        "Imports": "Rcpp (>= 0.11.3), data.table, glmnet, grDevices, graphics,\nlda, Matrix, matrixStats, parallel, quadprog, quanteda, slam,\nsplines, stats, stringr, utils",
+        "Suggests": "clue, geometry, huge, igraph, LDAvis, KernSmooth, NLP, rsvd,\nRtsne, SnowballC, spelling, testthat, tm (>= 0.6), wordcloud",
+        "Encoding": "UTF-8",
+        "LazyData": "yes",
+        "License": "MIT + file LICENSE",
+        "URL": "http://www.structuraltopicmodel.com/",
+        "BugReports": "https://github.com/bstewart/stm/issues",
+        "RoxygenNote": "7.1.1",
+        "Language": "en-US",
+        "NeedsCompilation": "yes",
+        "Packaged": "2020-09-18 13:05:44 UTC; brandonstewart",
+        "Author": "Margaret Roberts [aut],\n  Brandon Stewart [aut, cre],\n  Dustin Tingley [aut],\n  Kenneth Benoit [ctb]",
+        "Maintainer": "Brandon Stewart <bms4@princeton.edu>",
+        "Repository": "CRAN",
+        "Date/Publication": "2020-09-18 13:50:02 UTC",
+        "Built": "R 4.1.2; x86_64-pc-linux-gnu; 2022-01-17 14:16:51 UTC; unix"
       }
     },
     "stopwords": {
@@ -6966,6 +7082,21 @@
     "data/valgprogram_tekst2.rds": {
       "checksum": "f4099320a007e291cf13592f9863d2dd"
     },
+    "data/virkord_lda.rda": {
+      "checksum": "8fb5abf7e0ff5e1f57cb91da3ce84e3d"
+    },
+    "data/virkord_stm.rda": {
+      "checksum": "cb328d4791d353028b29c0cf2574bc52"
+    },
+    "data/virksommeord_dfm.rda": {
+      "checksum": "6ff72593865affd2f44eed37ab1031c9"
+    },
+    "data/virksommeord_id.rda": {
+      "checksum": "2102eb3057f78fff835f8aec78b6839b"
+    },
+    "data/virksommeord.rda": {
+      "checksum": "ba5543b3bf206a2a4b09a30f8a9ad384"
+    },
     "data/wordfiles/_rels/.rels": {
       "checksum": "77bf61733a633ea617a4db76ef769a4d"
     },
@@ -7078,16 +7209,16 @@
       "checksum": "bd09fdef701e32cf218ae9a76ef13cc6"
     },
     "notatbok_kode.R": {
-      "checksum": "97b82ca8081abc3001deab7773589f34"
+      "checksum": "5dddfce5c00c31fd5c8ceee788d2b053"
     },
     "notatbok.html": {
-      "checksum": "058582a9ce9cc61fdfa28241f86ed0cf"
+      "checksum": "b2f682d7d26969fe8adc72259bc3a270"
     },
     "notatbok.log": {
       "checksum": "a80d9b2d472e971c69ad90b384e15e7a"
     },
     "notatbok.Rmd": {
-      "checksum": "451ce865bacd98be2d57600673bffc05"
+      "checksum": "f49dda8647838f7b1cef3879106ffd31"
     },
     "oppgavebygging.html": {
       "checksum": "f78d398098f78fb686cd4d3a29470e75"
@@ -7097,6 +7228,12 @@
     },
     "r/swapi_ex.R": {
       "checksum": "a39d39f0cc1419eccfb5c1f469fa0bd0"
+    },
+    "r/tmp_lda_est.R": {
+      "checksum": "ba751de393787dd091f2dbb68b14ed72"
+    },
+    "r/tmp_stm_est.R": {
+      "checksum": "3f0573513de3f2bb9764284b982ae2c9"
     },
     "stv2022.bib": {
       "checksum": "67fcfb31d44dfbc3dc21190bdfbc0f44"
