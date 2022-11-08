@@ -72,37 +72,6 @@
         "Built": "R 4.2.1; ; 2022-07-13 08:57:26 UTC; unix"
       }
     },
-    "DT": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "DT",
-        "Type": "Package",
-        "Title": "A Wrapper of the JavaScript Library 'DataTables'",
-        "Version": "0.25",
-        "Authors@R": "c(\n    person(\"Yihui\", \"Xie\", email = \"xie@yihui.name\", role = c(\"aut\", \"cre\")),\n    person(\"Joe\", \"Cheng\", role = \"aut\"),\n    person(\"Xianying\", \"Tan\", role = \"aut\"),\n    person(\"JJ\", \"Allaire\", role = \"ctb\"),\n    person(\"Maximilian\", \"Girlich\", role = \"ctb\"),\n    person(\"Greg\", \"Freedman Ellis\", role = \"ctb\"),\n    person(\"Johannes\", \"Rauh\", role = \"ctb\"),\n    person(\"SpryMedia Limited\", role = c(\"ctb\", \"cph\"), comment = \"DataTables in htmlwidgets/lib\"),\n    person(\"Brian\", \"Reavis\", role = c(\"ctb\", \"cph\"), comment = \"selectize.js in htmlwidgets/lib\"),\n    person(\"Leon\", \"Gersen\", role = c(\"ctb\", \"cph\"), comment = \"noUiSlider in htmlwidgets/lib\"),\n    person(\"Bartek\", \"Szopka\", role = c(\"ctb\", \"cph\"), comment = \"jquery.highlight.js in htmlwidgets/lib\"),\n    person(\"Alex\", \"Pickering\", role = c(\"ctb\")),\n    person(\"William\", \"Holmes\", role = c(\"ctb\")),\n    person(\"Mikko\", \"Marttila\", role = c(\"ctb\")),\n    person(\"Andres\", \"Quintero\", role = c(\"ctb\")),\n    person(\"RStudio, PBC\", role = \"cph\")\n    )",
-        "Maintainer": "Yihui Xie <xie@yihui.name>",
-        "Description": "Data objects in R can be rendered as HTML tables using the\n    JavaScript library 'DataTables' (typically via R Markdown or Shiny). The\n    'DataTables' library has been included in this R package. The package name\n    'DT' is an abbreviation of 'DataTables'.",
-        "URL": "https://github.com/rstudio/DT",
-        "BugReports": "https://github.com/rstudio/DT/issues",
-        "License": "GPL-3 | file LICENSE",
-        "Imports": "htmltools (>= 0.3.6), htmlwidgets (>= 1.3), jsonlite (>=\n0.9.16), magrittr, crosstalk, jquerylib, promises",
-        "Suggests": "knitr (>= 1.8), rmarkdown, shiny (>= 1.6), bslib, future,\ntestit",
-        "VignetteBuilder": "knitr",
-        "RoxygenNote": "7.2.1",
-        "Encoding": "UTF-8",
-        "NeedsCompilation": "no",
-        "Packaged": "2022-09-12 21:55:21 UTC; yihui",
-        "Author": "Yihui Xie [aut, cre],\n  Joe Cheng [aut],\n  Xianying Tan [aut],\n  JJ Allaire [ctb],\n  Maximilian Girlich [ctb],\n  Greg Freedman Ellis [ctb],\n  Johannes Rauh [ctb],\n  SpryMedia Limited [ctb, cph] (DataTables in htmlwidgets/lib),\n  Brian Reavis [ctb, cph] (selectize.js in htmlwidgets/lib),\n  Leon Gersen [ctb, cph] (noUiSlider in htmlwidgets/lib),\n  Bartek Szopka [ctb, cph] (jquery.highlight.js in htmlwidgets/lib),\n  Alex Pickering [ctb],\n  William Holmes [ctb],\n  Mikko Marttila [ctb],\n  Andres Quintero [ctb],\n  RStudio, PBC [cph]",
-        "Repository": "CRAN",
-        "Date/Publication": "2022-09-12 22:40:02 UTC",
-        "Built": "R 4.2.1; ; 2022-09-14 14:44:01 UTC; unix"
-      }
-    },
     "DiceDesign": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -212,36 +181,6 @@
         "Repository": "CRAN",
         "Date/Publication": "2021-05-03 14:06:48 UTC",
         "Built": "R 4.2.0; x86_64-pc-linux-gnu; 'Sat, 30 Apr 2022 21:43:28 +0000'; unix"
-      }
-    },
-    "LiblineaR": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Encoding": "UTF-8",
-        "Package": "LiblineaR",
-        "Title": "Linear Predictive Models Based on the LIBLINEAR C/C++ Library",
-        "Version": "2.10-12",
-        "Date": "2021-03-01",
-        "Authors@R": "c(\n        person(\"Thibault\",\"Helleputte\",email=\"thibault.helleputte@dnalytics.com\",role=c(\"cre\",\"aut\",\"cph\")),\n        person(\"Jérôme\",\"Paul\",email=\"jerome.paul@dnalytics.com\",role=c(\"aut\")),\n        person(\"Pierre\",\"Gramme\",role=c(\"aut\")) )",
-        "Description": "A wrapper around the LIBLINEAR C/C++ library for machine\n        learning (available at\n        <https://www.csie.ntu.edu.tw/~cjlin/liblinear/>). LIBLINEAR is a\n        simple library for solving large-scale regularized linear\n        classification and regression. It currently supports\n        L2-regularized classification (such as logistic regression,\n        L2-loss linear SVM and L1-loss linear SVM) as well as\n        L1-regularized classification (such as L2-loss linear SVM and\n        logistic regression) and L2-regularized support vector\n        regression (with L1- or L2-loss). The main features of\n        LiblineaR include multi-class classification (one-vs-the rest,\n        and Crammer & Singer method), cross validation for model\n        selection, probability estimates (logistic regression only) or\n        weights for unbalanced data. The estimation of the models is\n        particularly fast as compared to other libraries.",
-        "License": "GPL-2",
-        "LazyLoad": "yes",
-        "Suggests": "SparseM, Matrix",
-        "Imports": "methods",
-        "URL": "<https://www.dnalytics.com/software/liblinear/>",
-        "RoxygenNote": "7.1.1",
-        "NeedsCompilation": "yes",
-        "Packaged": "2021-03-01 21:34:36 UTC; thibault",
-        "Author": "Thibault Helleputte [cre, aut, cph],\n  Jérôme Paul [aut],\n  Pierre Gramme [aut]",
-        "Maintainer": "Thibault Helleputte <thibault.helleputte@dnalytics.com>",
-        "Repository": "CRAN",
-        "Date/Publication": "2021-03-02 06:20:13 UTC",
-        "Built": "R 4.1.2; x86_64-pc-linux-gnu; 2022-02-10 21:43:40 UTC; unix"
       }
     },
     "MASS": {
@@ -549,33 +488,6 @@
         "Built": "R 4.1.3; x86_64-pc-linux-gnu; 2022-04-01 08:58:11 UTC; unix"
       }
     },
-    "Rttf2pt1": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "Rttf2pt1",
-        "Title": "'ttf2pt1' Program",
-        "Version": "1.3.10",
-        "Author": "Winston Chang,\n    Andrew Weeks,\n    Frank M. Siegert,\n    Mark Heath,\n    Thomas Henlick,\n    Sergey Babkin,\n    Turgut Uyar,\n    Rihardas Hepas,\n    Szalay Tamas,\n    Johan Vromans,\n    Petr Titera,\n    Lei Wang,\n    Chen Xiangyang,\n    Zvezdan Petkovic,\n    Rigel,\n    I. Lee Hetherington",
-        "Maintainer": "Winston Chang <winston@stdout.org>",
-        "Description": "Contains the program 'ttf2pt1', for use with the\n    'extrafont' package. This product includes software developed by the 'TTF2PT1'\n    Project and its contributors.",
-        "Depends": "R (>= 2.15)",
-        "License": "file LICENSE",
-        "URL": "https://github.com/wch/Rttf2pt1",
-        "Encoding": "UTF-8",
-        "RoxygenNote": "6.0.1.9000",
-        "NeedsCompilation": "yes",
-        "Packaged": "2022-02-05 15:32:18 UTC; winston",
-        "License_is_FOSS": "yes",
-        "Repository": "CRAN",
-        "Date/Publication": "2022-02-07 03:10:02 UTC",
-        "Built": "R 4.2.0; x86_64-pc-linux-gnu; 2022-06-14 07:46:26 UTC; unix"
-      }
-    },
     "SQUAREM": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -629,32 +541,6 @@
         "Repository": "CRAN",
         "Date/Publication": "2020-04-01 16:50:02 UTC",
         "Built": "R 4.1.1; x86_64-pc-linux-gnu; 2021-08-17 10:17:32 UTC; unix"
-      }
-    },
-    "SparseM": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "SparseM",
-        "Version": "1.81",
-        "Authors@R": "c(\n    person(\"Roger\", \"Koenker\",  role = c(\"cre\",\"aut\"), email =  \"rkoenker@uiuc.edu\"),\n    person(c(\"Pin\", \"Tian\"), \"Ng\",  role = c(\"ctb\"),\n        comment = \"Contributions to Sparse QR code\", email =  \"pin.ng@nau.edu\"),\n    person(\"Yousef\", \"Saad\",  role = c(\"ctb\"),\n        comment = \"author of sparskit2\"),\n    person(\"Ben\", \"Shaby\", role = c(\"ctb\"),\n\tcomment = \"author of chol2csr\"))",
-        "Maintainer": "Roger Koenker <rkoenker@uiuc.edu>",
-        "Depends": "R (>= 2.15), methods",
-        "Imports": "graphics, stats, utils",
-        "Author": "Roger Koenker [cre, aut],\n  Pin Tian Ng [ctb] (Contributions to Sparse QR code),\n  Yousef Saad [ctb] (author of sparskit2),\n  Ben Shaby [ctb] (author of chol2csr)",
-        "Description": "Some basic linear algebra functionality for sparse matrices is\n  provided:  including Cholesky decomposition and backsolving as well as \n  standard R subsetting and Kronecker products.",
-        "License": "GPL (>= 2)",
-        "Title": "Sparse Linear Algebra",
-        "URL": "http://www.econ.uiuc.edu/~roger/research/sparse/sparse.html",
-        "NeedsCompilation": "yes",
-        "Repository": "CRAN",
-        "Packaged": "2021-02-18 11:10:52 UTC; roger",
-        "Date/Publication": "2021-02-18 12:00:02 UTC",
-        "Built": "R 4.1.1; x86_64-pc-linux-gnu; 2021-10-07 10:37:51 UTC; unix"
       }
     },
     "askpass": {
@@ -1157,32 +1043,6 @@
         "Repository": "CRAN",
         "Date/Publication": "2022-02-22 00:58:45 UTC",
         "Built": "R 4.1.3; ; 2022-04-01 08:56:21 UTC; unix"
-      }
-    },
-    "coda": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "coda",
-        "Version": "0.19-4",
-        "Date": "2020-09-30",
-        "Title": "Output Analysis and Diagnostics for MCMC",
-        "Authors@R": "c(person(\"Martyn\", \"Plummer\", role=c(\"aut\",\"cre\",\"trl\"),\n       \t            email=\"martyn.plummer@gmail.com\"),\n             person(\"Nicky\", \"Best\", role=\"aut\"),\n             person(\"Kate\", \"Cowles\", role=\"aut\"),\n             person(\"Karen\", \"Vines\", role=\"aut\"),\n             person(\"Deepayan\", \"Sarkar\", role=\"aut\"),\n\t     person(\"Douglas\", \"Bates\", role=\"aut\"),\n             person(\"Russell\", \"Almond\", role=\"aut\"),\n\t     person(\"Arni\", \"Magnusson\", role=\"aut\"))",
-        "Depends": "R (>= 2.14.0)",
-        "Imports": "lattice",
-        "Description": "Provides functions for summarizing and plotting the\n\toutput from Markov Chain Monte Carlo (MCMC) simulations, as\n\twell as diagnostic tests of convergence to the equilibrium\n\tdistribution of the Markov chain.",
-        "License": "GPL (>= 2)",
-        "NeedsCompilation": "no",
-        "Packaged": "2020-09-30 16:13:19 UTC; martyn",
-        "Author": "Martyn Plummer [aut, cre, trl],\n  Nicky Best [aut],\n  Kate Cowles [aut],\n  Karen Vines [aut],\n  Deepayan Sarkar [aut],\n  Douglas Bates [aut],\n  Russell Almond [aut],\n  Arni Magnusson [aut]",
-        "Maintainer": "Martyn Plummer <martyn.plummer@gmail.com>",
-        "Repository": "CRAN",
-        "Date/Publication": "2020-09-30 20:00:04 UTC",
-        "Built": "R 4.2.1; ; 2022-09-26 09:55:00 UTC; unix"
       }
     },
     "codetools": {
@@ -1722,57 +1582,6 @@
         "Built": "R 4.2.1; ; 2022-08-18 11:49:33 UTC; unix"
       }
     },
-    "extrafont": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "extrafont",
-        "Title": "Tools for Using Fonts",
-        "Version": "0.18",
-        "Author": "Winston Chang <winston@stdout.org>",
-        "Maintainer": "Winston Chang <winston@stdout.org>",
-        "Description": "Tools to using fonts other than the standard PostScript fonts.\n    This package makes it easy to use system TrueType fonts and with PDF or\n    PostScript output files, and with bitmap output files in Windows. extrafont\n    can also be used with fonts packaged specifically to be used with, such as\n    the fontcm package, which has Computer Modern PostScript fonts with math\n    symbols.",
-        "Depends": "R (>= 2.15)",
-        "Imports": "extrafontdb, grDevices, utils, Rttf2pt1",
-        "Suggests": "fontcm",
-        "License": "GPL-2",
-        "URL": "https://github.com/wch/extrafont",
-        "RoxygenNote": "7.1.2",
-        "NeedsCompilation": "no",
-        "Packaged": "2022-04-12 16:05:34 UTC; winston",
-        "Repository": "CRAN",
-        "Date/Publication": "2022-04-12 16:32:29 UTC",
-        "Built": "R 4.2.0; ; 2022-06-14 07:46:30 UTC; unix"
-      }
-    },
-    "extrafontdb": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "extrafontdb",
-        "Title": "Package for holding the database for the extrafont package",
-        "Version": "1.0",
-        "Author": "Winston Chang <winston@stdout.org>",
-        "Maintainer": "Winston Chang <winston@stdout.org>",
-        "Description": "Package for holding the database for the extrafont package",
-        "Depends": "R (>= 2.14)",
-        "License": "GPL-2",
-        "URL": "https://github.com/wch/extrafontdb",
-        "Collate": "'extrafontdb.r'",
-        "Packaged": "2012-06-04 19:39:09 UTC; winston",
-        "Repository": "CRAN",
-        "Date/Publication": "2012-06-11 15:40:11",
-        "Built": "R 4.2.0; ; 2022-06-14 07:46:25 UTC; unix"
-      }
-    },
     "fansi": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -2081,31 +1890,6 @@
         "Repository": "CRAN",
         "Date/Publication": "2021-12-08 23:00:08 UTC",
         "Built": "R 4.1.2; x86_64-pc-linux-gnu; 2021-12-21 09:33:24 UTC; unix"
-      }
-    },
-    "functional": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "functional",
-        "Type": "Package",
-        "Title": "Curry, Compose, and other higher-order functions",
-        "Version": "0.6",
-        "Date": "2014-07-15",
-        "Author": "Peter Danenberg <pcd@roxygen.org>",
-        "Maintainer": "Peter Danenberg <pcd@roxygen.org>",
-        "Description": "Curry, Compose, and other higher-order functions",
-        "License": "GPL (>= 2)",
-        "LazyLoad": "yes",
-        "Packaged": "2014-07-15 23:41:35 UTC; danenberg",
-        "NeedsCompilation": "no",
-        "Repository": "CRAN",
-        "Date/Publication": "2014-07-16 07:38:04",
-        "Built": "R 4.2.1; ; 2022-11-01 13:35:43 UTC; unix"
       }
     },
     "furrr": {
@@ -2988,37 +2772,6 @@
         "Built": "R 4.1.0; ; 2021-08-01 19:20:26 UTC; unix"
       }
     },
-    "igraph": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "igraph",
-        "Version": "1.3.5",
-        "Title": "Network Analysis and Visualization",
-        "Author": "See AUTHORS file.",
-        "Maintainer": "Tamás Nepusz <ntamas@gmail.com>",
-        "Description": "Routines for simple graphs and network analysis. It can\n  handle large graphs very well and provides functions for generating random\n  and regular graphs, graph visualization, centrality methods and much more.",
-        "Depends": "methods",
-        "Imports": "graphics, grDevices, magrittr, Matrix, pkgconfig (>= 2.0.0),\nrlang, stats, utils",
-        "Suggests": "ape, graph, igraphdata, rgl, scales, stats4, tcltk, testthat,\nwithr, digest",
-        "License": "GPL (>= 2)",
-        "URL": "https://igraph.org, https://igraph.discourse.group/",
-        "SystemRequirements": "gmp (optional), libxml2 (optional), glpk (>= 4.57,\noptional), C++11",
-        "BugReports": "https://github.com/igraph/rigraph/issues",
-        "Encoding": "UTF-8",
-        "Collate": "'adjacency.R' 'auto.R' 'assortativity.R' 'attributes.R'\n'basic.R' 'bipartite.R' 'centrality.R' 'centralization.R'\n'cliques.R' 'cocitation.R' 'cohesive.blocks.R' 'coloring.R'\n'community.R' 'components.R' 'console.R' 'conversion.R'\n'data_frame.R' 'decomposition.R' 'degseq.R' 'demo.R'\n'efficiency.R' 'embedding.R' 'env-and-data.R' 'epi.R'\n'eulerian.R' 'fit.R' 'flow.R' 'foreign.R' 'games.R' 'glet.R'\n'hrg.R' 'igraph-package.R' 'incidence.R' 'indexing.R'\n'interface.R' 'iterators.R' 'layout.R' 'layout_drl.R'\n'lazyeval.R' 'make.R' 'minimum.spanning.tree.R' 'motifs.R'\n'nexus.R' 'operators.R' 'other.R' 'package.R' 'palette.R'\n'par.R' 'paths.R' 'plot.R' 'plot.common.R' 'plot.shapes.R'\n'pp.R' 'print.R' 'printr.R' 'random_walk.R' 'rewire.R' 'scan.R'\n'scg.R' 'sgm.R' 'similarity.R' 'simple.R' 'sir.R' 'socnet.R'\n'sparsedf.R' 'structural.properties.R' 'structure.info.R'\n'test.R' 'tkplot.R' 'topology.R' 'trees.R' 'triangles.R'\n'utils.R' 'uuid.R' 'versions.R' 'weakref.R' 'zzz-deprecate.R'",
-        "RoxygenNote": "7.1.2",
-        "NeedsCompilation": "yes",
-        "Packaged": "2022-09-09 14:41:00 UTC; tamas",
-        "Repository": "CRAN",
-        "Date/Publication": "2022-09-22 07:10:02 UTC",
-        "Built": "R 4.2.1; x86_64-pc-linux-gnu; 2022-10-04 07:36:57 UTC; unix"
-      }
-    },
     "infer": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -3258,39 +3011,6 @@
         "Repository": "CRAN",
         "Date/Publication": "2022-10-02 16:20:02 UTC",
         "Built": "R 4.2.1; x86_64-pc-linux-gnu; 2022-10-03 10:38:42 UTC; unix"
-      }
-    },
-    "kableExtra": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "kableExtra",
-        "Type": "Package",
-        "Title": "Construct Complex Table with 'kable' and Pipe Syntax",
-        "Version": "1.3.4",
-        "Authors@R": "c(\n    person('Hao', 'Zhu', email = 'haozhu233@gmail.com', role = c('aut', 'cre'),\n    comment = c(ORCID = '0000-0002-3386-6076')),\n    person('Thomas', 'Travison', role = 'ctb'),\n    person('Timothy', 'Tsai', role = 'ctb'),\n    person('Will', 'Beasley', email = 'wibeasley@hotmail.com', role = 'ctb'),\n    person('Yihui', 'Xie', email = 'xie@yihui.name', role = 'ctb'),\n    person('GuangChuang', 'Yu', email = 'guangchuangyu@gmail.com', role = 'ctb'),\n    person('Stéphane', 'Laurent', role = 'ctb'),\n    person('Rob', 'Shepherd', role = 'ctb'),\n    person('Yoni', 'Sidi', role = 'ctb'), \n    person('Brian', 'Salzer', role = 'ctb'),\n    person('George', 'Gui', role = 'ctb'),\n    person('Yeliang', 'Fan', role = 'ctb'),\n    person('Duncan', 'Murdoch', role = 'ctb'),\n    person('Bill', 'Evans',  role = 'ctb')\n    )",
-        "Description": "Build complex HTML or 'LaTeX' tables using 'kable()' from 'knitr' \n    and the piping syntax from 'magrittr'. Function 'kable()' is a light weight \n    table generator coming from 'knitr'. This package simplifies the way to \n    manipulate the HTML or 'LaTeX' codes generated by 'kable()' and allows \n    users to construct complex tables and customize styles using a readable \n    syntax. ",
-        "License": "MIT + file LICENSE",
-        "LazyData": "TRUE",
-        "URL": "http://haozhu233.github.io/kableExtra/,\nhttps://github.com/haozhu233/kableExtra",
-        "BugReports": "https://github.com/haozhu233/kableExtra/issues",
-        "Depends": "R (>= 3.1.0)",
-        "Imports": "knitr (>= 1.16), magrittr, stringr (>= 1.0), xml2 (>= 1.1.1),\nrvest, rmarkdown (>= 1.6.0), scales, viridisLite, stats,\ngrDevices, htmltools, rstudioapi, glue, tools, webshot, digest,\ngraphics, svglite",
-        "Suggests": "testthat, magick, formattable, sparkline",
-        "VignetteBuilder": "knitr",
-        "Encoding": "UTF-8",
-        "RoxygenNote": "7.1.1",
-        "NeedsCompilation": "no",
-        "Packaged": "2021-02-19 18:56:12 UTC; haozhu",
-        "Author": "Hao Zhu [aut, cre] (<https://orcid.org/0000-0002-3386-6076>),\n  Thomas Travison [ctb],\n  Timothy Tsai [ctb],\n  Will Beasley [ctb],\n  Yihui Xie [ctb],\n  GuangChuang Yu [ctb],\n  Stéphane Laurent [ctb],\n  Rob Shepherd [ctb],\n  Yoni Sidi [ctb],\n  Brian Salzer [ctb],\n  George Gui [ctb],\n  Yeliang Fan [ctb],\n  Duncan Murdoch [ctb],\n  Bill Evans [ctb]",
-        "Maintainer": "Hao Zhu <haozhu233@gmail.com>",
-        "Repository": "CRAN",
-        "Date/Publication": "2021-02-20 05:50:07 UTC",
-        "Built": "R 4.1.1; ; 2021-10-07 13:20:08 UTC; unix"
       }
     },
     "knitr": {
@@ -3675,40 +3395,6 @@
         "Built": "R 4.1.3; x86_64-pc-linux-gnu; 2022-04-01 08:56:54 UTC; unix"
       }
     },
-    "manifestoR": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Encoding": "UTF-8",
-        "Package": "manifestoR",
-        "Title": "Access and Process Data and Documents of the Manifesto Project",
-        "Date": "2020-11-29",
-        "Version": "1.5.0",
-        "Authors@R": "c(person(\"Jirka\", \"Lewandowski\",\n                    role = c(\"aut\"),\n                    email = \"jirka.lewandowski@wzb.eu\"),\n             person(\"Nicolas\", \"Merz\",\n                    role = c(\"aut\"),\n                    email = \"nicolas.merz@wzb.eu\"),\n             person(\"Sven\", \"Regel\",\n                    role = c(\"aut\", \"cre\"),\n                    email = \"sven.regel@wzb.eu\"),\n             person(\"Pola\", \"Lehmann\",\n                    role = c(\"ctb\"),\n                    email = \"pola.lehmann@wzb.eu\"),\n             person(\"Paul\", \"Muscat\",\n                    role = c(\"ctb\"),\n                    email = \"paul.muscat@wzb.eu\"))",
-        "Description": "Provides access to coded election programmes from the Manifesto\n    Corpus and to the Manifesto Project's Main Dataset and routines to analyse this\n    data. The Manifesto Project <https://manifesto-project.wzb.eu> collects and\n    analyses election programmes across time and space to measure the political\n    preferences of parties. The Manifesto Corpus contains the collected and\n    annotated election programmes in the Corpus format of the package 'tm' to enable\n    easy use of text processing and text mining functionality. Specific functions\n    for scaling of coded political texts are included.",
-        "Depends": "R (>= 3.1.0), NLP (>= 0.1-3), tm (>= 0.6)",
-        "Imports": "utils, stats, methods, magrittr, httr (>= 1.0.0), jsonlite (>=\n0.9.12), functional (>= 0.6), zoo (>= 1.7-11), psych,\nbase64enc, htmlwidgets (>= 0.6), DT (>= 0.2), htmltools, purrr\n(>= 0.2.4), readr (>= 1.2.0), dplyr (>= 0.7.5), tidyselect (>=\n1.0.0), tibble (>= 2.0.0)",
-        "Suggests": "knitr, rmarkdown, testthat (>= 1.0.2), R.rsp, haven (>=\n1.0.0), readxl (>= 1.0.0), devtools (>= 1.7.0), formatR, highr",
-        "VignetteBuilder": "R.rsp",
-        "Collate": "manifestoR-package.r manifestoR-defunct.R globals.R\npipe_helpers.R cache.R db_api.R corpus.R manifesto.R codes.R\nscaling_general.R scaling_rile.R scaling_functions.R\nissue_attention.R nicheness.R clarity.R scaling_bootstrap.R\ndataset.R codebook.R dedication.R",
-        "License": "GPL (>= 3)",
-        "URL": "https://github.com/ManifestoProject/manifestoR,\nhttps://manifesto-project.wzb.eu/",
-        "BugReports": "https://github.com/ManifestoProject/manifestoR/issues",
-        "LazyData": "true",
-        "RoxygenNote": "7.1.1",
-        "NeedsCompilation": "no",
-        "Packaged": "2020-11-29 22:06:34 UTC; gitlab-runner",
-        "Author": "Jirka Lewandowski [aut],\n  Nicolas Merz [aut],\n  Sven Regel [aut, cre],\n  Pola Lehmann [ctb],\n  Paul Muscat [ctb]",
-        "Maintainer": "Sven Regel <sven.regel@wzb.eu>",
-        "Repository": "CRAN",
-        "Date/Publication": "2020-11-29 23:00:09 UTC",
-        "Built": "R 4.2.1; ; 2022-11-01 13:35:44 UTC; unix"
-      }
-    },
     "matrixStats": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -3853,32 +3539,6 @@
         "Built": "R 4.1.1; ; 2021-09-09 10:19:41 UTC; unix"
       }
     },
-    "mnormt": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "mnormt",
-        "Version": "2.1.1",
-        "Date": "2022-09-26",
-        "Title": "The Multivariate Normal and t Distributions, and Their Truncated\nVersions",
-        "Author": "Adelchi Azzalini [aut, cre],\n   Alan Genz [aut] (most Fortran code),\n   Alan Miller [ctb] (Fortran routine PHI),\n   Michael J. Wichura  [ctb] (Fortran routine PHINV),\n   G. W. Hill [ctb] (Fortran routine STDINV),\n   Yihong Ge [ctb] (Fortran routines BNVU and MVBVU).",
-        "Maintainer": "Adelchi Azzalini <adelchi.azzalini@unipd.it>",
-        "Depends": "R (>= 2.2.0)",
-        "Description": "Functions are provided for computing the density and the\n  distribution function of d-dimensional normal and \"t\" random variables,\n  possibly truncated (on one side or two sides),  and for generating random \n  vectors sampled from these distributions, except sampling from the truncated\n  \"t\". Moments of arbitrary order of a multivariate truncated normal are\n  computed, and converted to cumulants up to order 4. \n  Probabilities are computed via non-Monte Carlo methods; different routines \n  are used in the case d=1, d=2, d=3, d>3, if d denotes the dimensionality.",
-        "License": "GPL-2 | GPL-3",
-        "URL": "http://azzalini.stat.unipd.it/SW/Pkg-mnormt/",
-        "NeedsCompilation": "yes",
-        "Encoding": "UTF-8",
-        "Packaged": "2022-09-26 08:42:55 UTC; aa",
-        "Repository": "CRAN",
-        "Date/Publication": "2022-09-26 10:10:06 UTC",
-        "Built": "R 4.2.1; x86_64-pc-linux-gnu; 2022-10-04 07:35:03 UTC; unix"
-      }
-    },
     "modeldata": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -3970,37 +3630,6 @@
         "Repository": "CRAN",
         "Date/Publication": "2018-06-12 04:29:06 UTC",
         "Built": "R 4.1.0; ; 2021-08-01 19:15:33 UTC; unix"
-      }
-    },
-    "network": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "network",
-        "Version": "1.18.0",
-        "Date": "2022-10-05",
-        "Title": "Classes for Relational Data",
-        "Authors@R": "c(\n    person(\"Carter T.\", \"Butts\", role=c(\"aut\",\"cre\"), email=\"buttsc@uci.edu\"),\n    person(\"David\", \"Hunter\", role=c(\"ctb\"), email=\"dhunter@stat.psu.edu\"),\n    person(\"Mark\", \"Handcock\", role=c(\"ctb\"), email=\"handcock@stat.ucla.edu\"),\n    person(\"Skye\", \"Bender-deMoll\", role=c(\"ctb\"), email=\"skyebend@uw.edu\"),\n    person(\"Jeffrey\", \"Horner\", role=c(\"ctb\"), email=\"jeffrey.horner@gmail.com\"),\n    person(\"Li\", \"Wang\", role=c(\"ctb\"), email=\"lxwang@uw.edu\"),\n    person(\"Pavel N.\", \"Krivitsky\", role=c(\"ctb\"), email=\"pavel@statnet.org\", comment=c(ORCID=\"0000-0002-9101-3362\")),\n    person(\"Brendan\", \"Knapp\", role=c(\"ctb\"), email=\"brendan.g.knapp@gmail.com\", comment=c(ORCID=\"0000-0003-3284-4972\")),\n    person(\"Michał\", \"Bojanowski\", role=c(\"ctb\"), email = \"michal2992@gmail.com\", comment = c(ORCID = \"0000-0001-7503-852X\")),\n    person(\"Chad\", \"Klumb\", role=c(\"ctb\"), email=\"cklumb@gmail.com\"))",
-        "Maintainer": "Carter T. Butts <buttsc@uci.edu>",
-        "Depends": "R (>= 2.10), utils",
-        "Imports": "tibble, magrittr, statnet.common (>= 4.5), stats",
-        "Suggests": "sna, testthat, covr",
-        "Description": "Tools to create and modify network objects.  The network class can represent a range of relational data types, and supports arbitrary vertex/edge/graph attributes.",
-        "License": "GPL (>= 2)",
-        "URL": "https://statnet.org/",
-        "RoxygenNote": "7.2.0",
-        "Collate": "'access.R' 'as.edgelist.R' 'assignment.R' 'coercion.R'\n'constructors.R' 'dataframe.R' 'fileio.R' 'layout.R' 'misc.R'\n'network-package.R' 'operators.R' 'plot.R' 'printsum.R' 'zzz.R'",
-        "Encoding": "UTF-8",
-        "NeedsCompilation": "yes",
-        "Packaged": "2022-10-06 06:19:00 UTC; buttsc",
-        "Author": "Carter T. Butts [aut, cre],\n  David Hunter [ctb],\n  Mark Handcock [ctb],\n  Skye Bender-deMoll [ctb],\n  Jeffrey Horner [ctb],\n  Li Wang [ctb],\n  Pavel N. Krivitsky [ctb] (<https://orcid.org/0000-0002-9101-3362>),\n  Brendan Knapp [ctb] (<https://orcid.org/0000-0003-3284-4972>),\n  Michał Bojanowski [ctb] (<https://orcid.org/0000-0001-7503-852X>),\n  Chad Klumb [ctb]",
-        "Repository": "CRAN",
-        "Date/Publication": "2022-10-06 08:00:02 UTC",
-        "Built": "R 4.2.1; x86_64-pc-linux-gnu; 2022-11-01 13:36:03 UTC; unix"
       }
     },
     "nlme": {
@@ -4618,36 +4247,6 @@
         "Built": "R 4.2.1; x86_64-pc-linux-gnu; 2022-07-13 08:59:09 UTC; unix"
       }
     },
-    "psych": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "psych",
-        "Version": "2.2.9",
-        "Date": "2022-09-12",
-        "Title": "Procedures for Psychological, Psychometric, and Personality\nResearch",
-        "Authors@R": "person(\"William\", \"Revelle\", role =c(\"aut\",\"cre\"), email=\"revelle@northwestern.edu\", comment=c(ORCID  = \"0000-0003-4880-9610\") )",
-        "Description": "A general purpose toolbox for personality, psychometric theory and experimental psychology.   Functions are primarily for multivariate analysis and scale construction using factor analysis, principal component analysis, cluster analysis and reliability analysis, although others provide basic descriptive statistics. Item Response Theory is done using  factor analysis of tetrachoric and polychoric correlations. Functions for analyzing data at multiple levels include within and between group statistics, including correlations and factor analysis.   Functions for simulating and testing particular item and test structures are included. Several functions  serve as a useful front end for structural equation modeling.  Graphical displays of path diagrams, factor analysis and structural equation models are created using basic graphics. Some of the functions are written to support a book on psychometric theory as well as publications in personality research. For more information, see the <https://personality-project.org/r/> web page.",
-        "License": "GPL (>= 2)",
-        "Imports": "mnormt,parallel,stats,graphics,grDevices,methods,lattice,nlme",
-        "Suggests": "psychTools, GPArotation, lavaan, lme4, Rcsdp, graph, knitr,\nRgraphviz",
-        "LazyData": "yes",
-        "ByteCompile": "true",
-        "VignetteBuilder": "knitr",
-        "URL": "https://personality-project.org/r/psych/\nhttps://personality-project.org/r/psych-manual.pdf",
-        "NeedsCompilation": "no",
-        "Packaged": "2022-09-25 00:46:08 UTC; WR",
-        "Author": "William Revelle [aut, cre] (<https://orcid.org/0000-0003-4880-9610>)",
-        "Maintainer": "William Revelle <revelle@northwestern.edu>",
-        "Repository": "CRAN",
-        "Date/Publication": "2022-09-29 13:30:02 UTC",
-        "Built": "R 4.2.1; ; 2022-10-04 07:38:49 UTC; unix"
-      }
-    },
     "purrr": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -4739,72 +4338,6 @@
         "Repository": "CRAN",
         "Date/Publication": "2022-08-29 06:50:03 UTC",
         "Built": "R 4.2.1; x86_64-pc-linux-gnu; 2022-08-29 07:12:01 UTC; unix"
-      }
-    },
-    "quanteda.textmodels": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "quanteda.textmodels",
-        "Type": "Package",
-        "Title": "Scaling Models and Classifiers for Textual Data",
-        "Version": "0.9.5-1",
-        "Description": "Scaling models and classifiers for sparse matrix objects representing \n    textual data in the form of a document-feature matrix.  Includes original \n    implementations of 'Laver', 'Benoit', and Garry's (2003) <doi:10.1017/S0003055403000698>,\n    'Wordscores' model, Perry and 'Benoit's' (2017) <arXiv:1710.08963> class affinity scaling model, \n    and 'Slapin' and 'Proksch's' (2008) <doi:10.1111/j.1540-5907.2008.00338.x> 'wordfish'\n    model, as well as methods for correspondence analysis, latent semantic analysis,\n    and fast Naive Bayes and linear 'SVMs' specially designed for sparse textual data.",
-        "Authors@R": "c( \n    person(\"Kenneth\", \"Benoit\", email = \"kbenoit@lse.ac.uk\", role = c(\"cre\", \"aut\", \"cph\"), comment = c(ORCID = \"0000-0002-0797-564X\")), \n    person(\"Kohei\", \"Watanabe\", email = \"watanabe.kohei@gmail.com\", role = \"aut\", comment = c(ORCID = \"0000-0001-6519-5265\")), \n    person(\"Haiyan\", \"Wang\", email = \"whyinsa@yahoo.com\", role = \"aut\", comment = c(ORCID = \"0000-0003-4992-4311\")),\n    person(\"Patrick O.\", \"Perry\", email = \"patperry@gmail.com\", role = \"aut\", comment = c(ORCID = \"0000-0001-7460-127X\")),\n    person(\"Benjamin\", \"Lauderdale\", email = \"b.e.lauderdale@lse.ac.uk\", role = \"aut\", comment = c(ORCID = \"0000-0003-3090-0969\")),    \n    person(\"Johannes\", \"Gruber\", email = \"j.gruber.1@research.gla.ac.uk\", role = \"aut\", comment = c(ORCID = \"0000-0001-9177-1772\")),\n    person(\"William\", \"Lowe\", email = \"lowe@hertie-school.org\", role = \"aut\", comment = c(ORCID = \"0000-0002-1549-6163\")),\n    person(\"Vikas\", \"Sindhwani\", email = \"vikas.sindhwani@gmail.com\", role = \"cph\", \n           comment = \"authored svmlin C++ source code\"),\n    person(\"European Research Council\", role = \"fnd\", comment = \"ERC-2011-StG 283794-QUANTESS\")\n    )",
-        "Depends": "R (>= 3.1.0), methods",
-        "Imports": "glmnet, LiblineaR, Matrix (>= 1.2), quanteda (>= 2.0),\nRSpectra, Rcpp (>= 0.12.12), RcppParallel, SparseM, stringi",
-        "Suggests": "ca, covr, fastNaiveBayes, knitr, lsa, microbenchmark,\nnaivebayes, quanteda.textplots, spelling, testthat, rmarkdown",
-        "LinkingTo": "Rcpp, RcppParallel, RcppArmadillo (>= 0.7.600.1.0), quanteda",
-        "URL": "https://github.com/quanteda/quanteda.textmodels",
-        "License": "GPL-3",
-        "Encoding": "UTF-8",
-        "LazyData": "true",
-        "Language": "en-GB",
-        "RoxygenNote": "7.2.1",
-        "SystemRequirements": "C++11",
-        "Collate": "'RcppExports.R' 'quanteda.textmodels-package.R'\n'data-documentation.R' 'textmodel-methods.R'\n'textmodel_affinity.R' 'textmodel_ca.R' 'textmodel_lsa.R'\n'textmodel_lr.R' 'textmodel_nb.R' 'textmodel_svm.R'\n'textmodel_svmlin.R' 'textmodel_wordfish.R'\n'textmodel_wordscores.R' 'textplot_influence.R' 'utils.R'",
-        "VignetteBuilder": "knitr",
-        "NeedsCompilation": "yes",
-        "Packaged": "2022-10-04 22:17:40 UTC; kbenoit",
-        "Author": "Kenneth Benoit [cre, aut, cph]\n    (<https://orcid.org/0000-0002-0797-564X>),\n  Kohei Watanabe [aut] (<https://orcid.org/0000-0001-6519-5265>),\n  Haiyan Wang [aut] (<https://orcid.org/0000-0003-4992-4311>),\n  Patrick O. Perry [aut] (<https://orcid.org/0000-0001-7460-127X>),\n  Benjamin Lauderdale [aut] (<https://orcid.org/0000-0003-3090-0969>),\n  Johannes Gruber [aut] (<https://orcid.org/0000-0001-9177-1772>),\n  William Lowe [aut] (<https://orcid.org/0000-0002-1549-6163>),\n  Vikas Sindhwani [cph] (authored svmlin C++ source code),\n  European Research Council [fnd] (ERC-2011-StG 283794-QUANTESS)",
-        "Maintainer": "Kenneth Benoit <kbenoit@lse.ac.uk>",
-        "Repository": "CRAN",
-        "Date/Publication": "2022-10-04 22:40:02 UTC",
-        "Built": "R 4.2.1; x86_64-pc-linux-gnu; 2022-10-06 08:48:22 UTC; unix"
-      }
-    },
-    "quanteda.textplots": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "quanteda.textplots",
-        "Title": "Plots for the Quantitative Analysis of Textual Data",
-        "Version": "0.94.2",
-        "Authors@R": "\n    c( \n    person(\"Kenneth\", \"Benoit\", email = \"kbenoit@lse.ac.uk\", role = c(\"cre\", \"aut\", \"cph\"), comment = c(ORCID = \"0000-0002-0797-564X\")), \n    person(\"Kohei\", \"Watanabe\", email = \"watanabe.kohei@gmail.com\", role = c(\"aut\"), comment = c(ORCID = \"0000-0001-6519-5265\")), \n    person(\"Haiyan\", \"Wang\", email = \"whyinsa@yahoo.com\", role = \"aut\", comment = c(ORCID = \"0000-0003-4992-4311\")),\n    person(\"Adam\", \"Obeng\", email = \"quanteda@binaryeagle.com\", role = \"aut\", comment = c(ORCID = \"0000-0002-2906-4775\")),\n    person(\"Stefan\", \"Müller\", email = \"mullers@tcd.ie\", role = \"aut\", comment = c(ORCID = \"0000-0002-6315-4125\")),\n    person(\"Akitaka\", \"Matsuo\", email = \"a.matsuo@lse.ac.uk\", role = \"aut\", comment = c(ORCID = \"0000-0002-3323-6330\")),\n    person(\"Ian\", \"Fellows\", email = \"ian@fellstat.com\", role = \"cph\",  comment = \"authored wordcloud C source code (modified)\"),\n    person(\"European Research Council\", role = \"fnd\", comment = \"ERC-2011-StG 283794-QUANTESS\")\n    )",
-        "Description": "Plotting functions for visualising textual data.  Extends 'quanteda' and \n   related packages with plot methods designed specifically for text data, textual statistics, \n   and models fit to textual data. Plot types include word clouds, lexical dispersion plots, \n   scaling plots, network visualisations, and word 'keyness' plots.",
-        "License": "GPL-3",
-        "Imports": "quanteda, extrafont, ggplot2, ggrepel, grid, sna, igraph,\nMatrix, methods, network, RColorBrewer, Rcpp (>= 0.12.12),\nstringi",
-        "LinkingTo": "Rcpp",
-        "Suggests": "knitr, quanteda.textmodels, quanteda.textstats, rmarkdown,\nspelling, testthat, wordcloud",
-        "Encoding": "UTF-8",
-        "BugReports": "https://github.com/quanteda/quanteda.textplots/issues",
-        "Language": "en-GB",
-        "RoxygenNote": "7.2.1",
-        "NeedsCompilation": "yes",
-        "Packaged": "2022-09-01 06:46:46 UTC; kbenoit",
-        "Author": "Kenneth Benoit [cre, aut, cph]\n    (<https://orcid.org/0000-0002-0797-564X>),\n  Kohei Watanabe [aut] (<https://orcid.org/0000-0001-6519-5265>),\n  Haiyan Wang [aut] (<https://orcid.org/0000-0003-4992-4311>),\n  Adam Obeng [aut] (<https://orcid.org/0000-0002-2906-4775>),\n  Stefan Müller [aut] (<https://orcid.org/0000-0002-6315-4125>),\n  Akitaka Matsuo [aut] (<https://orcid.org/0000-0002-3323-6330>),\n  Ian Fellows [cph] (authored wordcloud C source code (modified)),\n  European Research Council [fnd] (ERC-2011-StG 283794-QUANTESS)",
-        "Maintainer": "Kenneth Benoit <kbenoit@lse.ac.uk>",
-        "Repository": "CRAN",
-        "Date/Publication": "2022-09-01 07:10:02 UTC",
-        "Built": "R 4.2.1; x86_64-pc-linux-gnu; 2022-11-01 13:36:08 UTC; unix"
       }
     },
     "quanteda.textstats": {
@@ -5549,33 +5082,6 @@
         "Built": "R 4.2.1; x86_64-pc-linux-gnu; 2022-09-27 10:55:24 UTC; unix"
       }
     },
-    "sna": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "sna",
-        "Version": "2.7",
-        "Date": "2022-05-09",
-        "Title": "Tools for Social Network Analysis",
-        "Authors@R": "person(given=c(\"Carter\", \"T.\"), family=\"Butts\", role=c(\"aut\",\"cre\",\"cph\"), email = \"buttsc@uci.edu\")",
-        "Depends": "R (>= 2.0.0), utils, statnet.common, network",
-        "Suggests": "rgl, numDeriv, SparseM",
-        "Description": "A range of tools for social network analysis, including node and graph-level indices, structural distance and covariance methods, structural equivalence detection, network regression, random graph generation, and 2D/3D network visualization.",
-        "License": "GPL (>= 2)",
-        "URL": "http://statnet.org",
-        "NeedsCompilation": "yes",
-        "Packaged": "2022-05-10 00:09:17 UTC; buttsc",
-        "Author": "Carter T. Butts [aut, cre, cph]",
-        "Maintainer": "Carter T. Butts <buttsc@uci.edu>",
-        "Repository": "CRAN",
-        "Date/Publication": "2022-06-01 05:40:02 UTC",
-        "Built": "R 4.2.1; x86_64-pc-linux-gnu; 2022-11-01 13:35:54 UTC; unix"
-      }
-    },
     "snakecase": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -5635,37 +5141,6 @@
         "Repository": "CRAN",
         "Date/Publication": "2018-04-25 03:38:09 UTC",
         "Built": "R 4.1.1; x86_64-pc-linux-gnu; 2021-09-09 10:15:31 UTC; unix"
-      }
-    },
-    "statnet.common": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "statnet.common",
-        "Version": "4.7.0",
-        "Date": "2022-09-08",
-        "Title": "Common R Scripts and Utilities Used by the Statnet Project\nSoftware",
-        "Authors@R": "c(\n    person(\"Pavel N.\", \"Krivitsky\", role=c(\"aut\",\"cre\"), email=\"pavel@statnet.org\", comment=c(ORCID=\"0000-0002-9101-3362\", affiliation=\"University of New South Wales\")),\n    person(\"Skye\", \"Bender-deMoll\", role=c(\"ctb\"), email=\"skyebend@uw.edu\"),\n    person(\"Chad\", \"Klumb\", role=c(\"ctb\"), email=\"cklumb@gmail.com\", comment=c(affiliation=\"University of Washington\")))",
-        "Description": "Non-statistical utilities used by the software developed by the Statnet Project. They may also be of use to others.",
-        "Depends": "R (>= 3.5)",
-        "Imports": "utils, methods, coda, parallel, tools",
-        "BugReports": "https://github.com/statnet/statnet.common/issues",
-        "License": "GPL-3 + file LICENSE",
-        "URL": "https://statnet.org",
-        "RoxygenNote": "7.2.1",
-        "Encoding": "UTF-8",
-        "Suggests": "covr",
-        "NeedsCompilation": "yes",
-        "Packaged": "2022-09-08 11:30:13 UTC; pavel",
-        "Author": "Pavel N. Krivitsky [aut, cre] (<https://orcid.org/0000-0002-9101-3362>,\n    University of New South Wales),\n  Skye Bender-deMoll [ctb],\n  Chad Klumb [ctb] (University of Washington)",
-        "Maintainer": "Pavel N. Krivitsky <pavel@statnet.org>",
-        "Repository": "CRAN",
-        "Date/Publication": "2022-09-08 13:20:02 UTC",
-        "Built": "R 4.2.1; x86_64-pc-linux-gnu; 2022-11-01 13:35:49 UTC; unix"
       }
     },
     "stm": {
@@ -5859,39 +5334,6 @@
         "Built": "R 4.2.1; x86_64-pc-linux-gnu; 'Sat, 13 Aug 2022 15:03:25 +0000'; unix"
       }
     },
-    "svglite": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "svglite",
-        "Version": "2.1.0",
-        "Title": "An 'SVG' Graphics Device",
-        "Description": "A graphics device for R that produces 'Scalable Vector Graphics'.\n  'svglite' is a fork of the older 'RSvgDevice' package.",
-        "Authors@R": "c(\n  person(\"Hadley\", \"Wickham\", , \"hadley@rstudio.com\", \"aut\"),\n  person(\"Lionel\", \"Henry\", , \"lionel@rstudio.com\", c(\"aut\")),\n  person(\"Thomas Lin\", \"Pedersen\", , \"thomas.pedersen@rstudio.com\", c(\"cre\", \"aut\"), comment = c(ORCID = \"0000-0002-5147-4711\")),\n  person(\"T Jake\", \"Luciani\", , \"jake@apache.org\", \"aut\"),\n  person(\"Matthieu\", \"Decorde\", , \"matthieu.decorde@ens-lyon.fr\", \"aut\"),\n  person(\"Vaudor\", \"Lise\", , \"lise.vaudor@ens-lyon.fr\", \"aut\"),\n  person(\"Tony\", \"Plate\", role = \"ctb\", comment = \"Early line dashing code\"),\n  person(\"David\", \"Gohel\", role = \"ctb\", comment = \"Line dashing code and early raster code\"),\n  person(\"Yixuan\", \"Qiu\", role = \"ctb\", comment = \"Improved styles; polypath implementation\"),\n  person(\"Håkon\", \"Malmedal\", role = \"ctb\", comment = \"Opacity code\"),\n  person(\"RStudio\", role = \"cph\")\n  )",
-        "Encoding": "UTF-8",
-        "SystemRequirements": "C++11, libpng",
-        "Depends": "R (>= 3.0.0)",
-        "Imports": "systemfonts (>= 1.0.0)",
-        "LinkingTo": "cpp11, systemfonts",
-        "Suggests": "htmltools, testthat, xml2 (>= 1.0.0), covr, fontquiver (>=\n0.2.0), knitr, rmarkdown",
-        "License": "GPL (>= 2)",
-        "URL": "https://svglite.r-lib.org, https://github.com/r-lib/svglite",
-        "BugReports": "https://github.com/r-lib/svglite/issues",
-        "RoxygenNote": "7.1.1",
-        "VignetteBuilder": "knitr",
-        "NeedsCompilation": "yes",
-        "Packaged": "2022-02-03 08:36:07 UTC; thomas",
-        "Author": "Hadley Wickham [aut],\n  Lionel Henry [aut],\n  Thomas Lin Pedersen [cre, aut]\n    (<https://orcid.org/0000-0002-5147-4711>),\n  T Jake Luciani [aut],\n  Matthieu Decorde [aut],\n  Vaudor Lise [aut],\n  Tony Plate [ctb] (Early line dashing code),\n  David Gohel [ctb] (Line dashing code and early raster code),\n  Yixuan Qiu [ctb] (Improved styles; polypath implementation),\n  Håkon Malmedal [ctb] (Opacity code),\n  RStudio [cph]",
-        "Maintainer": "Thomas Lin Pedersen <thomas.pedersen@rstudio.com>",
-        "Repository": "CRAN",
-        "Date/Publication": "2022-02-03 09:00:02 UTC",
-        "Built": "R 4.1.3; x86_64-pc-linux-gnu; 2022-04-01 09:06:33 UTC; unix"
-      }
-    },
     "sys": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -5921,39 +5363,6 @@
         "Repository": "CRAN",
         "Date/Publication": "2020-07-23 04:30:02 UTC",
         "Built": "R 4.1.0; x86_64-pc-linux-gnu; 2021-08-01 19:11:24 UTC; unix"
-      }
-    },
-    "systemfonts": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "systemfonts",
-        "Type": "Package",
-        "Title": "System Native Font Finding",
-        "Version": "1.0.4",
-        "Authors@R": "\n    c(person(given = \"Thomas Lin\",\n             family = \"Pedersen\",\n             role = c(\"aut\", \"cre\"),\n             email = \"thomas.pedersen@rstudio.com\",\n             comment = c(ORCID = \"0000-0002-5147-4711\")),\n      person(given = \"Jeroen\", \n             family = \"Ooms\", \n             role = \"aut\",\n             email = \"jeroen@berkeley.edu\",\n             comment = c(ORCID = \"0000-0002-4035-0289\")),\n      person(given = \"Devon\",\n             family = \"Govett\",\n             role = \"aut\",\n             comment = \"Author of font-manager\"),\n      person(given = \"RStudio\",\n             role = \"cph\"))",
-        "Maintainer": "Thomas Lin Pedersen <thomas.pedersen@rstudio.com>",
-        "Description": "Provides system native access to the font catalogue. As font\n    handling varies between systems it is difficult to correctly locate \n    installed fonts across different operating systems. The 'systemfonts' \n    package provides bindings to the native libraries on Windows, macOS and \n    Linux for finding font files that can then be used further by e.g. graphic\n    devices. The main use is intended to be from compiled code but 'systemfonts'\n    also provides access from R.",
-        "License": "MIT + file LICENSE",
-        "Encoding": "UTF-8",
-        "RoxygenNote": "7.1.2",
-        "Depends": "R (>= 3.2.0)",
-        "SystemRequirements": "C++11, fontconfig, freetype2",
-        "Suggests": "testthat (>= 2.1.0), covr, knitr, rmarkdown, tools",
-        "VignetteBuilder": "knitr",
-        "URL": "https://github.com/r-lib/systemfonts",
-        "BugReports": "https://github.com/r-lib/systemfonts/issues",
-        "LinkingTo": "cpp11 (>= 0.2.1)",
-        "NeedsCompilation": "yes",
-        "Packaged": "2022-02-11 12:33:22 UTC; thomas",
-        "Author": "Thomas Lin Pedersen [aut, cre]\n    (<https://orcid.org/0000-0002-5147-4711>),\n  Jeroen Ooms [aut] (<https://orcid.org/0000-0002-4035-0289>),\n  Devon Govett [aut] (Author of font-manager),\n  RStudio [cph]",
-        "Repository": "CRAN",
-        "Date/Publication": "2022-02-11 12:50:02 UTC",
-        "Built": "R 4.1.3; x86_64-pc-linux-gnu; 2022-04-01 08:59:12 UTC; unix"
       }
     },
     "textrecipes": {
@@ -6613,38 +6022,6 @@
         "Built": "R 4.2.1; x86_64-pc-linux-gnu; 2022-09-27 10:55:20 UTC; unix"
       }
     },
-    "webshot": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "webshot",
-        "Title": "Take Screenshots of Web Pages",
-        "Version": "0.5.4",
-        "Authors@R": "c(\n    person(\"Winston\", \"Chang\", email = \"winston@rstudio.com\", role = c(\"aut\", \"cre\")),\n    person(\"Yihui\", \"Xie\", role = \"ctb\"),\n    person(\"Francois\", \"Guillem\", role = \"ctb\"),\n    person(\"Barret\", \"Schloerke\", role = \"ctb\"),\n    person(\"Nicolas\", \"Perriault\", role = \"ctb\", comment = \"The CasperJS library\")\n    )",
-        "Description": "Takes screenshots of web pages, including Shiny applications and R\n    Markdown documents.",
-        "Depends": "R (>= 3.0)",
-        "Imports": "magrittr, jsonlite, callr",
-        "Suggests": "httpuv, knitr, rmarkdown, shiny, testthat (>= 3.0.0)",
-        "License": "GPL-2",
-        "SystemRequirements": "PhantomJS for taking screenshots, ImageMagick or\nGraphicsMagick and OptiPNG for manipulating images.",
-        "RoxygenNote": "7.1.2",
-        "Encoding": "UTF-8",
-        "URL": "http://wch.github.io/webshot/, https://github.com/wch/webshot/",
-        "BugReports": "https://github.com/wch/webshot/issues",
-        "Config/testthat/edition": "3",
-        "NeedsCompilation": "no",
-        "Packaged": "2022-09-26 18:03:11 UTC; winston",
-        "Author": "Winston Chang [aut, cre],\n  Yihui Xie [ctb],\n  Francois Guillem [ctb],\n  Barret Schloerke [ctb],\n  Nicolas Perriault [ctb] (The CasperJS library)",
-        "Maintainer": "Winston Chang <winston@rstudio.com>",
-        "Repository": "CRAN",
-        "Date/Publication": "2022-09-26 18:30:02 UTC",
-        "Built": "R 4.2.1; ; 2022-10-04 07:36:09 UTC; unix"
-      }
-    },
     "withr": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -6900,34 +6277,6 @@
         "Repository": "CRAN",
         "Date/Publication": "2022-09-07 22:30:02 UTC",
         "Built": "R 4.2.1; x86_64-pc-linux-gnu; 2022-09-27 10:56:47 UTC; unix"
-      }
-    },
-    "zoo": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "zoo",
-        "Version": "1.8-11",
-        "Date": "2022-09-15",
-        "Title": "S3 Infrastructure for Regular and Irregular Time Series (Z's\nOrdered Observations)",
-        "Authors@R": "c(person(given = \"Achim\", family = \"Zeileis\", role = c(\"aut\", \"cre\"), email = \"Achim.Zeileis@R-project.org\",\n                    comment = c(ORCID = \"0000-0003-0918-3766\")),\n             person(given = \"Gabor\", family = \"Grothendieck\", role = \"aut\", email = \"ggrothendieck@gmail.com\"),\n             person(given = c(\"Jeffrey\", \"A.\"), family = \"Ryan\", role = \"aut\", email = \"jeff.a.ryan@gmail.com\"),\n             person(given = c(\"Joshua\", \"M.\"), family = \"Ulrich\", role = \"ctb\", email = \"josh.m.ulrich@gmail.com\"),\n             person(given = \"Felix\", family = \"Andrews\", role = \"ctb\", email = \"felix@nfrac.org\"))",
-        "Description": "An S3 class with methods for totally ordered indexed\n             observations. It is particularly aimed at irregular time series\n             of numeric vectors/matrices and factors. zoo's key design goals\n             are independence of a particular index/date/time class and\n             consistency with ts and base R by providing methods to extend\n             standard generics.",
-        "Depends": "R (>= 3.1.0), stats",
-        "Suggests": "AER, coda, chron, ggplot2 (>= 3.0.0), mondate, scales,\nstinepack, strucchange, timeDate, timeSeries, tis, tseries, xts",
-        "Imports": "utils, graphics, grDevices, lattice (>= 0.20-27)",
-        "License": "GPL-2 | GPL-3",
-        "URL": "https://zoo.R-Forge.R-project.org/",
-        "NeedsCompilation": "yes",
-        "Packaged": "2022-09-15 15:20:12 UTC; zeileis",
-        "Author": "Achim Zeileis [aut, cre] (<https://orcid.org/0000-0003-0918-3766>),\n  Gabor Grothendieck [aut],\n  Jeffrey A. Ryan [aut],\n  Joshua M. Ulrich [ctb],\n  Felix Andrews [ctb]",
-        "Maintainer": "Achim Zeileis <Achim.Zeileis@R-project.org>",
-        "Repository": "CRAN",
-        "Date/Publication": "2022-09-17 19:50:02 UTC",
-        "Built": "R 4.2.1; x86_64-pc-linux-gnu; 2022-10-04 07:36:19 UTC; unix"
       }
     }
   },
@@ -7209,10 +6558,10 @@
       "checksum": "bd09fdef701e32cf218ae9a76ef13cc6"
     },
     "notatbok_kode.R": {
-      "checksum": "491600ce6b7759ee8e74621ac08507a1"
+      "checksum": "c234daf5163f17148373ce96019d5a98"
     },
     "notatbok.html": {
-      "checksum": "b2f682d7d26969fe8adc72259bc3a270"
+      "checksum": "574ff5d2ec9845313fd5b798044a0974"
     },
     "notatbok.log": {
       "checksum": "a80d9b2d472e971c69ad90b384e15e7a"
