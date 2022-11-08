@@ -19,15 +19,13 @@ knitr::opts_chunk$set(echo = FALSE)
 
 Dette er et `R-markdown`-dokument (`.Rmd`). Her kan vi enkelt implementere kode og resultater rundt teksten vi skriver. Dette gjøres via *chunks*:
 
-```txt
-'''{r eks_chunk, echo=TRUE}
-
+` ```{r eks_chunk, echo=TRUE} `
+```r
 klossmajor <- readLines("skjoente_ikke_du_var_borte.txt")
 
 klossmajor[1]
-'''
-
 ```
+` ``` `
 
 ```{r eks_chunk, echo=FALSE}
 
@@ -43,8 +41,8 @@ Her har jeg satt `echo=TRUE` i chunk headeren. Det gjør at koden blir repetert 
 
 Det er enkelt å visualisere resultat fra data i Rmarkdown:
 
-```txt
-'''{r ploteks, out.width="0.75\\textwidth"}
+` ```{r ploteks, out.width="0.75\\textwidth"} `
+```r
 library(ggplot2)
 
 ggplot(NULL, aes(fill = sample(letters[1:3], 200, replace = TRUE), 
@@ -54,8 +52,8 @@ ggplot(NULL, aes(fill = sample(letters[1:3], 200, replace = TRUE),
   labs(x = "Tilfeldig normalfordelte tall",
        y = "Tetthet (density)",
        fill = "Bokstaver")
-'''
 ```
+` ``` `
 ```{r ploteks,echo=FALSE, out.width="0.75\\textwidth"}
 library(ggplot2)
 
@@ -72,13 +70,11 @@ ggplot(NULL, aes(fill = sample(letters[1:3], 200, replace = TRUE),
 
 Man kan også lage separate `R`-skript som man kan hente inn i `.Rmd`-fila. Dette kan gjøre at dokumentet blir noe mer oversiktelig:
 
-```txt
+` ```{r hente_r_skript, file = "./tokenize_klossmajor.R"} `
 
-'''{r hente_r_skript, file = "./tokenize_klossmajor.R"}
 
-'''
+` ``` `
 
-```
 
 # Modellering som tar lang tid
 
@@ -110,8 +106,9 @@ plot(cases_stm, labeltype = "frex")
 
 Og en chunk som laster inn modellen, men ikke viser koden:
 
-```txt
-'''{r usynlig_modellaster, eval=TRUE, echo=FALSE}
+` ```{r usynlig_modellaster, eval=TRUE, echo=FALSE} `
+
+```r 
 library(tidytext)
 library(dplyr)
 library(stm)
@@ -128,8 +125,10 @@ cases_dfm <- cases %>% group_by(id) %>%
 
 load("./cases_stm.rda")
 plot(cases_stm, labeltype = "frex")  
-'''
+
 ```
+` ``` `
+
 ```{r lurechunk, echo=FALSE, eval=TRUE}
 load("./cases_stm.rda")
 stm::plot.STM(cases_stm, labeltype = "frex")
