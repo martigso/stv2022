@@ -19,7 +19,17 @@ knitr::opts_chunk$set(echo = FALSE)
 
 Dette er et `R-markdown`-dokument (`.Rmd`). Her kan vi enkelt implementere kode og resultater rundt teksten vi skriver. Dette gjøres via *chunks*:
 
-```{r eks_chunk, echo=TRUE}
+```txt
+'''{r eks_chunk, echo=TRUE}
+
+klossmajor <- readLines("skjoente_ikke_du_var_borte.txt")
+
+klossmajor[1]
+'''
+
+```
+
+```{r eks_chunk, echo=FALSE}
 
 klossmajor <- readLines("skjoente_ikke_du_var_borte.txt")
 
@@ -56,6 +66,61 @@ Man kan også lage separate `R`-skript som man kan hente inn i `.Rmd`-fila. Dett
 
 '''
 
+```
+
+# Modellering som tar lang tid
+
+Noen kodebiter fungerer dårlig å kjøre hver gang man skal kompilere et `.Rmd`-dokument. Det mest åpenbare eksempelet er tunge modelleringer eller iterative modelleringer (som emnemodeller). Det beste trikset for å løse dette er å lagre modellen lokalt og laste denne inn i en egen chunk. For eksempel, kan man ha en chunk som ikke kjører, men viser koden:
+
+```{r synlig_kodeviser, eval=FALSE, echo=TRUE}
+
+data(cases, package = "stortingscrape")
+
+cases <- cases$root
+
+library(tidytext)
+library(dplyr)
+library(stm)
+
+cases_dfm <- cases %>% group_by(id) %>% 
+  unnest_tokens(token, title) %>% 
+  count(token) %>% 
+  cast_dfm(., id, token, n)
+
+
+cases_stm <- stm(cases_dfm, K = 10, init.type = "Spectral")
+# save(cases_stm, file = "./cases_stm.rda")
+
+plot(cases_stm, labeltype = "frex")  
+
+```
+
+
+Og en chunk som laster inn modellen, men ikke viser koden:
+
+```txt
+'''{r usynlig_modellaster, eval=TRUE, echo=FALSE}
+library(tidytext)
+library(dplyr)
+library(stm)
+
+data(cases, package = "stortingscrape")
+
+cases <- cases$root
+
+cases_dfm <- cases %>% group_by(id) %>% 
+  unnest_tokens(token, title) %>% 
+  count(token) %>% 
+  cast_dfm(., id, token, n)
+
+
+load("./cases_stm.rda")
+plot(cases_stm, labeltype = "frex")  
+'''
+```
+```{r lurechunk, echo=FALSE, eval=TRUE}
+load("./cases_stm.rda")
+stm::plot.STM(cases_stm, labeltype = "frex")
 ```
 
 # Hurtigtaster
