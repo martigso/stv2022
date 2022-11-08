@@ -1,0 +1,13 @@
+name: stv2022_--_09_estimere_latent_posisjon_fra_tekst
+title: STV2022 -- [09] Estimere latent posisjon fra tekst
+username: martigso
+account: martigso
+server: shinyibv02.uio.no
+hostUrl: https://shinyibv02.uio.no/__api__
+appId: 228
+bundleId: 1293
+url: https://shinyibv02.uio.no/content/15281be6-0543-48c1-b343-f3d86d6a6db9/
+when: 1667914453.24545
+lastSyncTime: 1667914453.24546
+asMultiple: FALSE
+asStatic: FALSE

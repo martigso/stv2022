@@ -2486,13 +2486,13 @@ Politisk posisjon er også en latent variabel. En måte å observere den politis
 
 Vi starter med å laste inn noen nødvendige pakker:
 
-```{r, include = FALSE}
+```{r, include = FALSE, eval=FALSE}
 library(Rttf2pt1)
 library(extrafontdb)
 ```
 
 
-```{r}
+```{r, eval=FALSE}
 
 library(tidyverse) # Vanlig pakke for databehandling i R
 library(manifestoR) # Pakken som gjør at vi kan hente data fra Manifesto sitt API
@@ -2515,7 +2515,7 @@ valgprogram_corpus <- mp_corpus(countryname %in% c("Sweden", "Denmark", "Norway"
 
 ```
 
-```{r, eval = TRUE, include = FALSE}
+```{r, eval = FALSE, include = FALSE}
 valgprogram_corpus <- readRDS("./data/valgprogram_corpus.rds")
 ```
 
@@ -2536,7 +2536,7 @@ Responses:
 
 Det er ikke alle partiene som har blitt kodet, derfor kunne det vært tilfellet at vi ønsket å bruke denne informasjonen for å si noe om de andre partiene sine verdier. Her ser du de partiene som har fått en kode i V-Party surveyen. 
 
-```{r}
+```{r, eval=FALSE}
 
 populist_precoded <- readRDS("./data/populist_precoded.rds")
 
@@ -2552,7 +2552,7 @@ Før vi kan analysere, må dataene struktureres. Under gjør jeg en del bearbeid
 knitr::include_graphics("./figurer/tmwr_0501.png")
 ```
 
-```{r}
+```{r, eval=FALSE}
 
 valgprogram_tekst <- valgprogram_corpus %>%
   tidy() %>% # Gjør om fra et korpus til en vanlig dataframe
@@ -2595,7 +2595,7 @@ valgprogram_tekst <- valgprogram_corpus %>%
 
 Ved å bruke de ferdigkodede partiene overfor, kan jeg her opprette en ny variabel `ref_score` der jeg koder inn populisme-scoren for hvert parti i hvert land som ble gitt i tabellen overfor av ekspertkoderne fra V-Party-datasettet. 
 
-```{r}
+```{r, eval=FALSE}
 
 valgprogram_tekst <- valgprogram_tekst %>% # Koder inn score på populisme som allerede er supplert av ekspertkoderne
   mutate(ref_score = ifelse(land_parti == "Sverige_Sweden_Democrats", 4,
@@ -2621,7 +2621,7 @@ valgprogram_tekst <- valgprogram_tekst %>% # Koder inn score på populisme som a
 
 Siden `quanteda` er vant til å jobbe med korpus-objekter, legger jeg inn informasjonen vi nettopp lagde i et korpus som jeg arbeider utfra når jeg skal estimere wordscores. Dette er for å hindre at vi ikke får matching av rader gitt de funksjonene som brukes i pakken. Som du ser er det en del tekster som fortsatt har `NA`, altså missingverdier, selv om vi har populismeverdien på enkelte av partiene.
 
-```{r}
+```{r, eval=FALSE}
 
 wordscore_corpus <- corpus(valgprogram_tekst) # Lager om objektet til et korpus igjen
 docvars(wordscore_corpus, field = "land_parti") <- valgprogram_tekst %>% pull(land_parti) # Legger inn en dokumentvariabel "land-parti"
@@ -2633,7 +2633,7 @@ summary(wordscore_corpus)
 
 Før vi kan utføre modelleringen, må tekstene preprosesseres. Under gjør jeg en ganske grundig preprosessering med å ta ut tall, punktsetting, stoppord og hente stammen av ordene. 
 
-```{r}
+```{r, eval=FALSE}
 
 valgprogram_tokens <- wordscore_corpus %>%
   tidy() %>% # Gjør om fra korpus til dataframe igjen
@@ -2663,7 +2663,7 @@ valgprogram_dfm$ref_score <- docvars(wordscore_corpus, field = "ref_score") # so
 
 Da er vi endelig klare til å kjøre `wordscores`-modellen. Funksjonen for dette er `textmodel_wordscores`, som argumenter setter du (1) dokument-trekk-matrisen og (2) referansescorene. For å kjøre samme skaleringsmetode som fra pensum, sett `smooth = 0`.
 
-```{r}
+```{r, eval=FALSE}
 
 valgprogram_ws <- textmodel_wordscores(x = valgprogram_dfm, # Dokument-trekk-matrise for tekstene
                                        y = valgprogram_tekst$ref_score, # Referansescore på referansetekstene
@@ -2673,7 +2673,7 @@ valgprogram_ws <- textmodel_wordscores(x = valgprogram_dfm, # Dokument-trekk-mat
 
 `predict` gir oss den predikerte posisjonen til jomfrudokumentene gitt referansedokumentene (eller; estimert populismescore til testdata gitt treningsdata). Vi kan plotte disse posisjonene med funksjonen `textplot_scale1d`. 
 
-```{r}
+```{r, eval=FALSE}
 
 valgprogram_pred <- predict(valgprogram_ws, 
                             se.fit = TRUE, # TRUE for å få usikkerhetsmål på estimatene
@@ -2686,7 +2686,7 @@ textplot_scale1d(valgprogram_pred) + theme_dark()# Plotter predikert populismesc
 
 Wordscores sin metode bruker frekvens av ord gitt et referansedokument for å måle hvor mye et ord peker i retning av en viss posisjon. Med andre ord, hvis ordet "nasjonalisme" dukker opp mange ganger i en eller flere dokumenter som er sterkt assosiert med populisme, så får dette ordet en score som vil peke andre dokumenter med samme ord i retning av å også ha populistiske verdier. For å se på hvordan modellen vår har scoret ulike ord, kan vi bruke koden under. 
 
-```{r}
+```{r, eval=FALSE}
 
 ord <- attributes(valgprogram_ws$wordscores) %>% # Henter ut ordene fra wordscores-objektet inne i valgprogram-modellen
   unlist() %>% as.character() # Tar ut fra liste og gjør om til en vanlig character-vektor
@@ -2718,13 +2718,13 @@ valgprogram_tekst <- valgprogram_corpus %>%
 
 ```
 
-```{r, include = FALSE}
+```{r, include = FALSE, eval=FALSE}
 valgprogram_tekst <- readRDS("./data/valgprogram_tekst2.rds")
 ```
 
 Tekstene må også preprosesseres og gjøres om til en dokument-trekk-matrise her. Koden under gjør samme operasjon som for wordscores over.
 
-```{r}
+```{r, eval=FALSE}
 
 valgprogram_tokens <- valgprogram_tekst %>%
   mutate(text = str_remove_all(text, "[0-9]+")) %>% # Fjern tall fra teksten, også der tall dukker opp inni andre ord
@@ -2749,7 +2749,7 @@ valgprogram_dfm <- valgprogram_tokens %>% # Opprett en dokument-trekk-matrise
 
 Deretter kan vi kjøre `wordfish`-modellen. Dette gjøres med funksjonen `textmodel_wordfish`, og tar dokument-trekk-matrisen som argument. 
 
-```{r}
+```{r, eval=FALSE}
 
 valgprogram_wf <- textmodel_wordfish(valgprogram_dfm, dir = c(1,3)) # Kjører en wordfish-modell
 summary(valgprogram_wf)
@@ -2758,7 +2758,7 @@ summary(valgprogram_wf)
 
 For å plotte funnene kan man bruke denne koden.
 
-```{r}
+```{r, eval=FALSE}
 
 textplot_scale1d(valgprogram_wf) +  # Plotter modelle
   theme_dark()
@@ -2768,7 +2768,7 @@ textplot_scale1d(valgprogram_wf) +  # Plotter modelle
 
 Ordene blir også her gitt en score. Synes du disse ordene overenstemmer med antakelsen om at skaleringen skulle fange opp populistiske verdier? 
 
-```{r}
+```{r, eval=FALSE}
 
 ord <- valgprogram_wf$features # Henter ut ordene fra "features" i wordfish-modellen
 
@@ -2781,7 +2781,7 @@ tibble(ord = ord, # Legger inn ordene i en dataframe
 
 Vi kan også lage en ord-pyramide. I denne pyramiden kommer ordene som har minst vekst øverst - dette skal gjerne være ord uten substansiell betydning, som for eksempel stoppord. Ord nede til venstre vekter tekstene i retning av å være til venstre på skalaen, mens ord mot høyre vekter i retning av å være til høyre på skalaen. Nok en gang kan vi vurdere om disse ordene speiler aksen vi forsøker å måle på en god måte. At "upprör" speiler den ene enden av populisme mens "aggressiv" speiler den andre kan virke noe søkt, og derfor kan det være en ide å finne bedre tekster som fanger opp populisme dersom vi vil bruke `wordfish` for å estimere populisme i partiet over tid. 
 
-```{r}
+```{r, eval=FALSE}
 
 textplot_scale1d(valgprogram_wf, # Plotter modellen
                  margin = "features", # Setter ord inn i plottet
