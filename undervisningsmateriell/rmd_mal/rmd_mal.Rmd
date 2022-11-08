@@ -43,7 +43,8 @@ Her har jeg satt `echo=TRUE` i chunk headeren. Det gjør at koden blir repetert 
 
 Det er enkelt å visualisere resultat fra data i Rmarkdown:
 
-```{r ploteks, out.width="0.75\\textwidth"}
+```txt
+'''{r ploteks, out.width="0.75\\textwidth"}
 library(ggplot2)
 
 ggplot(NULL, aes(fill = sample(letters[1:3], 200, replace = TRUE), 
@@ -53,7 +54,7 @@ ggplot(NULL, aes(fill = sample(letters[1:3], 200, replace = TRUE),
   labs(x = "Tilfeldig normalfordelte tall",
        y = "Tetthet (density)",
        fill = "Bokstaver")
-
+'''
 ```
 
 # Laste kode fra `.R`-filer
