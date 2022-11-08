@@ -7209,7 +7209,7 @@
       "checksum": "bd09fdef701e32cf218ae9a76ef13cc6"
     },
     "notatbok_kode.R": {
-      "checksum": "5dddfce5c00c31fd5c8ceee788d2b053"
+      "checksum": "491600ce6b7759ee8e74621ac08507a1"
     },
     "notatbok.html": {
       "checksum": "b2f682d7d26969fe8adc72259bc3a270"
@@ -7218,7 +7218,7 @@
       "checksum": "a80d9b2d472e971c69ad90b384e15e7a"
     },
     "notatbok.Rmd": {
-      "checksum": "f49dda8647838f7b1cef3879106ffd31"
+      "checksum": "c669552df614974e435a800d0c00eeaa"
     },
     "oppgavebygging.html": {
       "checksum": "f78d398098f78fb686cd4d3a29470e75"
@@ -7240,9 +7240,6 @@
     },
     "stv2022.bib.bak": {
       "checksum": "9d6306b2483ccfa1cc944a52b0239f73"
-    },
-    "stv2022.bib.sav.tmp": {
-      "checksum": "64f742d90381980aea173b08b4c651e6"
     }
   },
   "users": null
