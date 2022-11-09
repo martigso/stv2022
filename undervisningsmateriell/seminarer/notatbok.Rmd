@@ -2465,7 +2465,7 @@ I samfunnsvitenskap er vi ofte interessert i sammenheng mellom årsaker og utfal
 library(stm)
 
 # Estimere STM-modell
-virkord_lda <- stm(virkord_dfm,                   # dfm objekt
+virkord_stm <- stm(virkord_dfm,                   # dfm objekt
                    prevalence = ~ factor(gender), # legger til kjønn som UV
                    data = virkord,                # legger til metadata
                    K = 20,                        # antall emner man ønsker
@@ -2483,6 +2483,29 @@ Akkurat som før, kan vi få en kjapp oversikt over emnene modellen har funnet. 
 ```{r plot_stm}
 plot(virkord_stm, labeltype = "frex")
 ```
+
+### Estimere effekt på emner
+
+Det viktigste med `stm`-pakken, er likevel å utnytte `prevalence`-funksjonen. Her har vi estimert en modell som tar hensyn til forfatterens kjønn (dette var automatisk generert med `gender`-pakken, så feil kan forekomme). Fra plottet over, ser vi at emne 17 har sterk sammenheng med ordene "stemmeret" og "kvinde"; sannsynligvis tekster fra kampen om stemmerett for kvinner (derfor også dansk-norske ord). Via funksonen `estimateEffect()` kan vi se om det stort sett er kvinnelige forfattere som har _generert_ dette emnet:
+
+```{r estimateeff}
+
+stm_gender_eff <- estimateEffect(~ factor(gender),
+                                 stmobj = virkord_stm,
+                                 metadata = virkord)
+
+plot(stm_gender_eff,
+     covariate = "gender",
+     topics = c(17))
+
+```
+
+Overraskende, sier modellen at menn har om man trekker en tilfeldig tekst innefor dette emnet, vil det være større sannsynlighet for å trekke en tekst med mannlig forfatter (dog med overlappende konfidensintervall). I en mer grundig analyse, ville vi her gått inn i emne 17 og sjekket veldig grundig hva det handlet om, sett på kjønnsvariabelen om det kan være noe feil i den, osv. Jeg kan røpe at denne effekten sannsynligvis er drevet av at det er ganske mange flere mannlige forfattere i korpuset generelt:
+
+```{r meneverywhere}
+table(virkord$gender)
+```
+
 
 ### STM med uspesifisert K
 
