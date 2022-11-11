@@ -5,9 +5,9 @@ account: martigso
 server: shinyibv02.uio.no
 hostUrl: https://shinyibv02.uio.no/__api__
 appId: 233
-bundleId: 1303
+bundleId: 1305
 url: https://shinyibv02.uio.no/content/1cd1d031-ddef-4e6d-855e-87e3bedc5fd8/
-when: 1667921561.30279
-lastSyncTime: 1667921561.30279
+when: 1668004195.53426
+lastSyncTime: 1668004195.53428
 asMultiple: FALSE
 asStatic: TRUE

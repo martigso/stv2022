@@ -1409,7 +1409,7 @@ Veiledet læring fungerer godt når vi har *merket* data, det vil si at vi vet h
 $rase_D = \alpha + \beta_1ord1 + \beta_2ord2 + \beta_3ord3 ...$^[Denne regresjonslikningen er en forenkling. Hvordan sannsynligheten for at et avsnitt handler om rase estimeres, avhenger av hvilken modell vi bruker. Likningen for logistisk regresjon er mer komplisert enn denne, og det samme gjelder SVM, random forest, og andre modeller vi kan bruke for å estimere Y. Intuisjonen er imidlertid den samme - vi bruker tilgjengelig informasjon om ordenes fordeling blant dokumentene for å måle hvor vidt avsnittet handler om rase.]
 
 
-### Merket ("labelled") data
+## Merket ("labelled") data
 
 Å jobbe med maskinlæring er omfattende, og her gir vi kun en liten introduksjon. Det kan likevel være fint å se hvordan dette gjøres i R, for å få en oversikt over hvordan det fungerer i praksis. Her viser jeg hvordan man kan klassifisere tekster. Estimering kalles klassifisering når målet er å estimere en kategorisk variabel. Hadde `Y` vært kontinuerlig, hadde vi kalt det regresjon.
 
@@ -1440,7 +1440,10 @@ tedtalks_subset %>%
           text = ~name, # Når man hovrer over søylene, skal man få opp navn på topic
           type = "bar")  %>% # Lager et stolpediagram (bar chart)
   layout(xaxis = list(title = ""), # Ønsker ikke at det skal være tekst på y-eller x-aksen
-         yaxis = list(title = "", categoryorder = "total ascending")) # Sorter søylene i synkende rekkefølge ift. y-aksen (altså antallet)
+         yaxis = list(title = "", categoryorder = "total ascending"),
+         plot_bgcolor = "black",
+         paper_bgcolor = "black",
+         font = list(color = "lightgray")) # Sorter søylene i synkende rekkefølge ift. y-aksen (altså antallet)
 
 ```
 
@@ -1477,7 +1480,7 @@ ted %>%
 I dette tilfellet er hele datasettet merket. Typisk vil vi være interessert i å bruke veiledet læring hvis vi plutselig fikk tilgang på flere TED-talks som *ikke* hadde informasjon om hvor vidt de handlet om politikk. Kanskje ville dette vært tilfellet for nyere eller eldre innlegg? Kluet er da å bruke den dataen vi har, for å trene en modell som kan klassifisere TED-talks der vi ikke vet tema.
 
 
-### Treningsdata, valideringsdata og testdata
+## Treningsdata, valideringsdata og testdata
 
 Et viktig poeng når man jobber med maskinlæring, er at modellen kan bli veldig god på å forstå mønstre og sammenhenger innad i data. Den kan faktisk bli så god at hvis du gir den en tekst, så vet den helt sikkert om denne teksten handler om politikk eller ikke. Men det at modellen er veldig god på den dataen vi bruker for å estimere modellen, betyr ikke at den kommer til å være god på data som *ikke* er brukt for å estimere modellen. Her er det variasjon og forskjelligheter som gjør at de sammenhengene modellen tenkte var brennsikre for sin egen data, ikke gjelder ellers. Dette problemet kaller *overtilpasning* (*overfitting*). 
 
@@ -1519,7 +1522,7 @@ ted_folds
 
 ```
 
-### Preprosessering 
+## Preprosessering 
 
 Tekstene må preprosesseres før vi kan bruke en modell på dem. Her bruker jeg "textrecipes", som er laget spesielt for å få en [god arbeidsflyt når man jobber med maskinklæring på tekst](https://juliasilge.com/blog/chocolate-ratings/). Under kan du se at vi får ut en dokument-term-matrise (document feature matrix, DFM), der radene er dokumenter (talks i vårt tilfelle), og variablene er ord. Siden vi har brukt TF-IDF, er verdiene en vektet representasjon av hvor viktig dette ordet er for det gitte dokumentet. Dette er akkurat slik vi har jobbet med før, men `textrecipes` pakken slenger på en pretekst foran ordet, derfor har alle ordene fortegnelsen "tfidf_text".
 
@@ -1545,7 +1548,7 @@ prep(ted_oppskrift) %>% # Iverksetter preprosesseringsstegene slik beskrevet i o
 
 ```
 
-### Velg modell
+## Velg modell
 
 Det finnes mange forskjellige modeller vi kan bruke for å estimere Y. Dere har sikkert vært borti lineær regresjon - dette er én type modell. Det finnes imidlertid flere, og noen av dem er svært avanserte. Så avanserte at noen kaller dem en "black box" - du putter data inn, modellen gjør noen kompliserte matematiske beregninger, og du får klassifiseringer ut. Dette gjelder spesielt modeller som bygger på nevrale nett og dyplæring. Vi skal ikke gå mye inn i ulike modeller i dette emnet, men pensum tar for seg applikasjonen av tre ulike modeller i statsvitenskap; support vector machine ([D'Orazio et al., 2016](https://www.cambridge.org/core/journals/political-analysis/article/separating-the-wheat-from-the-chaff-applications-of-automated-document-classification-using-support-vector-machines/1E5431CC964E45218255584A4331D423), og random forest og logistisk regresjon ([Muchlinski et al., 2016](https://www.cambridge.org/core/journals/political-analysis/article/comparing-random-forest-with-logistic-regression-for-predicting-classimbalanced-civil-war-onset-data/109E1511378A38BB4B41F721E6017FB1)). 
 
@@ -1555,7 +1558,7 @@ Hvordan implementerer vi disse modellene i R? Under demonstrerer jeg for hver av
 contrl_preds <- control_resamples(save_pred = TRUE) # Velger å lagre prediksjonene etter at modellen har kjørt
 ```
 
-#### Logistisk regresjon 
+### Logistisk regresjon 
 
 ```{r, eval = FALSE}
 
@@ -1580,7 +1583,7 @@ glm_rs <- fit_resamples( # Passer modellen ved å bruke testdata og valideringsd
 load("./data/glm_rs.rda")
 ```
 
-#### Random forest
+### Random forest
 
 ```{r, eval = FALSE}
 
@@ -1603,7 +1606,7 @@ ranger_rs <- fit_resamples(
 load("./data/ranger_rs.rda")
 ```
 
-#### SVM
+### SVM
 
 ```{r, eval = FALSE}
 
@@ -1637,7 +1640,7 @@ load("./data/svm_rs.rda")
 ```
 
 
-### Vurder hvor gode modellene er
+## Vurder hvor gode modellene er
 
 Det finnes flere måter å vurdere hvor godt en modell har gjort det, og hvilket mål man bruker avhenger gjerne av hva man er mest opptatt av. "Accuracy" er et mål som gir oss overordnet treffsikkerhet på modellen. Den spør: "Hvor mange av alle observasjonene, klarte modellen å klassifisere riktig?" Men vi kunne også vært spesielt interessert i antall sanne positive, falske positive, også videre. Modellen kommer nemlig aldri til å kunne klassifisere alle observasjonene riktig, og vi må gjøre en vurdering på hvor vidt vi ønsker en skjevhet i den ene eller andre retningen. Tenk deg for eksempel at vi har en modell som måler risikoen for å begå en kriminell handling etter å ha vært i fengsel - er det da viktigst at modellen predikerer de som begår kriminalitet feil, eller de som ikke begår kriminalitet? 
 
@@ -1705,7 +1708,7 @@ collect_metrics(final_fitted) # Sjekker hvor bra modellen gjorde det (accuracy o
 ```
 
 
-### Bruk modellen videre
+## Bruk modellen videre
 
 Hvis modellen er god nok, kan vi nå gå videre med å applisere modellen på TED-talksene der vi ikke vet tema. Det er viktig at vi validerer modellen grundig og vurderer om den er god nok, for alle målefeil tar vi med oss videre i analysen. På den positive siden, å bruke veiledet læring for å merke dataene, gjør at vi også kan gi et mål på hvor stor vi kan anta at målefeilen er.
 
@@ -2261,7 +2264,8 @@ tune_res <- tune_grid(
 )
 
 tune_res %>%
-  autoplot(type = "marginals") # Her ser vi et plott som viser noe om hvordan modellen har valgt hva som er optimalt antall tokens gitt accuracy, sensitivity og specificity. 
+  autoplot(type = "marginals") + # Her ser vi et plott som viser noe om hvordan modellen har valgt hva som er optimalt antall tokens gitt accuracy, sensitivity og specificity. 
+  ggdark::dark_mode()
 
 ```
 
@@ -2301,7 +2305,9 @@ final_res %>%
   collect_predictions() %>% # Samler prediksjonene fra modellen
   conf_mat(truth = sentiment,  # Plotter de sanne verdiene
            estimate = .pred_class) %>% # Opp mot de predikerte verdiene
-  autoplot("heatmap") # Lager et varmediagram (heatmap) som gir oss forvirringsmatrisen
+  autoplot("heatmap") + # Lager et varmediagram (heatmap) som gir oss forvirringsmatrisen
+  ggdark::dark_mode()
+
 
 ```
 
@@ -2459,7 +2465,7 @@ I samfunnsvitenskap er vi ofte interessert i sammenheng mellom årsaker og utfal
 library(stm)
 
 # Estimere STM-modell
-virkord_lda <- stm(virkord_dfm,                   # dfm objekt
+virkord_stm <- stm(virkord_dfm,                   # dfm objekt
                    prevalence = ~ factor(gender), # legger til kjønn som UV
                    data = virkord,                # legger til metadata
                    K = 20,                        # antall emner man ønsker
@@ -2468,8 +2474,38 @@ virkord_lda <- stm(virkord_dfm,                   # dfm objekt
 ```
 
 ```{r load_stm, echo=FALSE, eval=TRUE}
+load("./data/virkord_stm.rda")
+```
+
+
+Akkurat som før, kan vi få en kjapp oversikt over emnene modellen har funnet. Her vil det nok være mye likt som modellen over, men noen forskjeller kan vi se.
+
+```{r plot_stm}
+plot(virkord_stm, labeltype = "frex")
+```
+
+### Estimere effekt på emner
+
+Det viktigste med `stm`-pakken, er likevel å utnytte `prevalence`-funksjonen. Her har vi estimert en modell som tar hensyn til forfatterens kjønn (dette var automatisk generert med `gender`-pakken, så feil kan forekomme). Fra plottet over, ser vi at emne 17 har sterk sammenheng med ordene "stemmeret" og "kvinde"; sannsynligvis tekster fra kampen om stemmerett for kvinner (derfor også dansk-norske ord). Via funksonen `estimateEffect()` kan vi se om det stort sett er kvinnelige forfattere som har _generert_ dette emnet:
+
+```{r estimateeff}
+
+stm_gender_eff <- estimateEffect(~ factor(gender),
+                                 stmobj = virkord_stm,
+                                 metadata = virkord)
+
+plot(stm_gender_eff,
+     covariate = "gender",
+     topics = c(17))
 
 ```
+
+Overraskende, sier modellen at menn har om man trekker en tilfeldig tekst innefor dette emnet, vil det være større sannsynlighet for å trekke en tekst med mannlig forfatter (dog med overlappende konfidensintervall). I en mer grundig analyse, ville vi her gått inn i emne 17 og sjekket veldig grundig hva det handlet om, sett på kjønnsvariabelen om det kan være noe feil i den, osv. Jeg kan røpe at denne effekten sannsynligvis er drevet av at det er ganske mange flere mannlige forfattere i korpuset generelt:
+
+```{r meneverywhere}
+table(virkord$gender)
+```
+
 
 ### STM med uspesifisert K
 
