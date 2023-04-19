@@ -1,0 +1,55 @@
+---
+title: "STV2022 -- Timetable"
+format: pdf
+---
+
+
+
+# The weekly pattern for lectures and what weeks the different lecturers are teaching.
+
+| Uke # | Aktivitet                                                                                                    | Foreleser                  |
+|:------|:-------------------------------------------------------------------------------------------------------------|:---------------------------|
+| 34    | [Introduksjon](https://shiny.uio.no/content/71d813c6-621a-4b7e-9c4d-c4a09a047acd)                            | Eli og Martin              |
+| 35    | [Anskaffelse og innlasting av tekst](https://shiny.uio.no/content/9db02855-a99c-438c-94da-6c411d4f3db0)      | Martin                     |
+| 36    | [Forbehandling av tekst 1](https://shiny.uio.no/content/c21f421b-935e-4a16-a453-f0fc6239c8c8)                | Martin                     |
+| 37    | [Forbehandling av tekst 2](https://shiny.uio.no/content/b06d5eb3-8687-4769-98b2-d027712f5547)                | Eli                        |
+| 38    | [Bruke API – Case: Stortinget](https://shiny.uio.no/content/91ce72a8-7b85-4e5d-b784-81645dc9bfb6)            | Martin                     |
+| 41    | [Veiledet og ikke-veiledet læring](https://shiny.uio.no/content/48bdb245-5b50-4511-b61d-d365ef14cfbb)        | Eli                        |
+| 42    | [AI, maskinlæring og dyp læring ](https://shinyibv02.uio.no/content/b0d65318-435b-44d6-a85d-af22987308c4)    | Martin                     |
+| 43    | [Ordbøker, tekstlikhet og sentiment](https://shinyibv02.uio.no/content/8ee655cb-1a8b-42e6-8c75-6921b45c03c7) | Eli                        |
+| 44    | [Temamodellering](https://shinyibv02.uio.no/content/b4755f1c-ea07-4192-84ae-0de608f05801)	                   | Eli                        |
+| 46    | Oppsummering	                                                                                               | Eli og Martin              |
+
+
+# The weekly pattern for seminars
+
+| Uke # | Aktivitet                                          | 
+|:------|:---------------------------------------------------|
+| 36    | Seminar 1: Anskaffe tekst og lage dtm i R          |
+| 39    | Seminar 2: Preprosessering av tekstdata i R        |
+| 42    | Seminar 3: Veiledet og ikke-veiledet læring i R    |
+| 44    | Seminar 4: Modelleringsmetoder i R                 |
+| 46    | Seminar 5: Fra tekst til funn, Q&A og oppgavehjelp |
+
+# A list of suggested seminar leaders
+
+- Anton Kronborg <anton.kronborg@stv.uio.no>
+- Maiken Røed <maiken.roed@stv.uio.no>
+- Eric Gabo Ekeberg Nilsen <e.g.e.nilsen@stv.uio.no>
+- Bjørn Mo Forum <b.m.forum@stv.uio.no>
+- Øyvind Stiansen <oyvind.stiansen@stv.uio.no>
+- Martin Søyland <martin.soyland@stv.uio.no> (if neccessary)
+- Eli Sofie Baltzersen <e.s.baltzersen@stv.uio.no> (if neccessary)
+
+
+# Whether the course includes teaching beside lectures and seminars, e.g., simulation exercise.
+
+No
+
+# Whether you have pressing reasons for having the lectures at specific times or days
+
+Can not have later lectures than the 14-16 slot. Prefer 10-12.
+
+# Whether there are external lecturers, and if so, what weeks they are teaching.
+
+No.

@@ -1,0 +1,67 @@
+---
+title: "Pensum STV2022 (h22)"
+author:
+  - Eli Sofie Baltzersen^[e.s.baltzersen@stv.uio.no]
+  - Martin Søyland^[martin.soyland@stv.uio.no]
+#date: "`r format(Sys.time(), "%d-%m-%Y")`"
+output:
+  word_document: default
+  #pdf_document: default
+bibliography: stv2022.bib
+editor_options:
+  chunk_output_type: console
+---
+
+
+```{r setup, echo=FALSE, results='hide', warning=FALSE, error=FALSE, message=FALSE}
+refs <- bibtex::read.bib("../../referanser/stv2022.bib")
+
+names(refs)
+```
+
+
+# Bøker
+
+- `r capture.output(print(refs["Grimmer2022"]))`
+
+
+# Online bøker (kan kjøpes)
+
+
+- `r capture.output(print(refs["Feldman2006"]))`
+- `r capture.output(print(refs["Liu2012"]))`
+- `r capture.output(print(refs["Silge2017"]))`
+
+# Bøker (anbefalt lesing og tilgjengelig online)
+
+1. `r capture.output(print(refs["Jurafsky2021b"]))`
+1. `r capture.output(print(refs["Wickham2016"]))`
+
+# Artikler
+
+- `r capture.output(print(refs["Barnes2019"]))`
+- `r capture.output(print(refs["Benoit2020"]))`
+- `r capture.output(print(refs["Benoit2017"]))`
+- `r capture.output(print(refs["Blei2012"]))`
+- `r capture.output(print(refs["Chatsiou2020"]))`
+- `r capture.output(print(refs["Cooksey2014"]))`
+- `r capture.output(print(refs["dorazio_separating_2014"]))`
+- `r capture.output(print(refs["Denny2018"]))`
+- `r capture.output(print(refs["Finseraas2021"]))`
+- `r capture.output(print(refs["Hoyland2019"]))`
+- `r capture.output(print(refs["Joergensen2019"]))`
+- `r capture.output(print(refs["Lauderdale2016"]))`
+- `r capture.output(print(refs["Laver2003"]))`
+- `r capture.output(print(refs["Lowe2017"]))`
+- `r capture.output(print(refs["Lucas2015"]))`
+- `r capture.output(print(refs["muchlinski_siroky_he_kocher_2016"]))`
+- `r capture.output(print(refs["Olivella2020"]))`
+- `r capture.output(print(refs["Ongsulee2017"]))`
+- `r capture.output(print(refs["Pang2008"]))`
+- `r capture.output(print(refs["Peterson2018"]))`
+- `r capture.output(print(refs["Roberts2014"]))`
+- `r capture.output(print(refs["Slapin2008"]))`
+- `r capture.output(print(refs["datastortinget2022"]))`
+- `r capture.output(print(refs["Soeyland2022"]))`
+- `r capture.output(print(refs["Wickham2020"]))`
+- `r capture.output(print(refs["Wilkerson2017"]))`

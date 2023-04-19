@@ -301,9 +301,9 @@
   booktitle = {Sentiment Analysis: Mining Opinions, Sentiments, and Emotions},
   publisher = {Cambridge University Press},
   title     = {Introduction},
+  year      = {2015},
   isbn      = {978-1-139-08478-9},
   pages     = {1--15},
-  year      = {2015},
   url       = {https://www.cambridge.org/core/books/sentiment-analysis/3F0F24BE12E66764ACE8F179BCDA42E9},
 }
 
@@ -312,9 +312,9 @@
   booktitle = {Sentiment Analysis: Mining Opinions, Sentiments, and Emotions},
   publisher = {Cambridge University Press},
   title     = {The Problem of Sentiment Analysis},
+  year      = {2015},
   isbn      = {978-1-139-08478-9},
   pages     = {16--46},
-  year      = {2015},
   url       = {https://www.cambridge.org/core/services/aop-cambridge-core/content/view/A0AFE2C49D72C5914C34DAC763BCD931/9781139084789c2_p16-46_CBO.pdf/problem_of_sentiment_analysis.pdf},
 }
 
@@ -331,6 +331,7 @@
 
 @InBook{feldman_sanger_20061,
   author    = {Feldman, Ronen and Sanger, James},
+  chapter   = {4},
   pages     = {64-81},
   publisher = {Cambridge University Press},
   title     = {Categorization},
@@ -343,6 +344,7 @@
   
 @InBook{feldman_sanger_20062,
   author    = {Feldman, Ronen and Sanger, James},
+  chapter   = {5},
   pages     = {82-93},
   publisher = {Cambridge University Press},
   title     = {Clustering},
@@ -375,8 +377,6 @@
   pages    = {529-544},
   volume   = {20},
   abstract = {Text has always been an important data source in political science. What has changed in recent years is the feasibility of investigating large amounts of text quantitatively. The internet provides political scientists with more data than their mentors could have imagined, and the research community is providing accessible text analysis software packages, along with training and support. As a result, text-as-data research is becoming mainstream in political science. Scholars are tapping new data sources, they are employing more diverse methods, and they are becoming critical consumers of findings based on those methods. In this article, we first describe the four stages of a typical text-as-data project. We then review recent political science applications and explore one important methodological challenge—topic model instability—in greater detail.},
-  doi      = {10.1146/annurev-polisci-052615-025542},
-  eprint   = {https://doi.org/10.1146/annurev-polisci-052615-025542},
   url      = {https://doi.org/10.1146/annurev-polisci-052615-025542},
 }
 
@@ -402,6 +402,34 @@
   title     = {Sentiment Analysis and Opinion Mining},
   year      = {2012},
   url       = {https://www.cs.uic.edu/~liub/FBS/SentimentAnalysis-and-OpinionMining.pdf},
+}
+
+@InBook{Olivella2020,
+  author  = {Olivella, Santiago and Shoub, Kelsey},
+  chapter = {57},
+  title   = {Machine Learning in Political Science: Supervised Learning Models},
+  year    = {2020},
+  doi     = {10.4135/9781526486387.n59},
+  url     = {http://www.luigicurini.com/uploads/6/7/9/8/67985527/olivellashoub_hndbkresmthdpsir_ch57revised.pdf},
+}
+
+@InBook{Chatsiou2020,
+  author    = {Kakia Chatsiou and Slava Jankin Mikhaylov},
+  chapter   = {55},
+  publisher = {Sage},
+  title     = {Deep Learning for Political Science},
+  year      = {2020},
+  doi       = {10.4135/9781526486387},
+  url       = {https://arxiv.org/abs/2005.06540},
+}
+
+@InProceedings{Ongsulee2017,
+  author    = {Ongsulee, Pariwat},
+  booktitle = {2017 15th International Conference on ICT and Knowledge Engineering (ICT&KE)},
+  title     = {Artificial intelligence, machine learning and deep learning},
+  year      = {2017},
+  pages     = {1-6},
+  doi       = {10.1109/ICTKE.2017.8259629},
 }
 
 @Comment{jabref-meta: databaseType:bibtex;}
